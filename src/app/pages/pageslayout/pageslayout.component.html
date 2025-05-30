@@ -1,0 +1,60 @@
+<div class="bg-[url('/backdrop3.png')] bg-cover bg-no-repeat bg-center h-[28rem] absolute lg:w-full w-[308px]">
+<div class="bg-[url('/Rectangle12.png')] bg-cover bg-no-repeat bg-center h-full absolute lg:w-full top-[-15px]">
+ 
+
+    <div class="flex justify-between mt-8 mx-10">
+
+        <div class="flex items-center justify-center bg-white rounded-full border-red-500 border w-10 h-10">
+            <img src="/FrameE3.png" class="w-[26.53px] h-[25.81] ">
+        </div>
+
+    <div class="flex">
+      <a routerLink="dashboard" 
+      routerLinkActive="bg-[#F3F3F16E] border border-[white]" 
+      [routerLinkActiveOptions]="{ exact: false }" 
+       class="text-white border-[#E4E4E4] border-transparent w-[96px] h-[38px] flex items-center justify-center rounded-[11px]"
+      >Dashboard</a>
+
+      <a routerLink="tools" routerLinkActive="bg-[#F3F3F16E] border border-[white]" 
+      [routerLinkActiveOptions]="{ exact: false }" 
+      class="text-white border-[#E4E4E4] border-transparent w-[96px] h-[38px] flex items-center justify-center rounded-[11px]"
+      >Tools</a>
+
+       <a routerLink="staff" routerLinkActive="bg-[#F3F3F16E] border border-[white]" 
+      [routerLinkActiveOptions]="{ exact: false }" 
+      class="text-white border-[#E4E4E4] border-transparent w-[96px] h-[38px] flex items-center justify-center rounded-[11px]"
+      >Staff</a>
+
+      <a routerLink="unit" 
+      routerLinkActive="bg-[#F3F3F16E] border border-[white]" 
+      [routerLinkActiveOptions]="{ exact: false }"
+       class="text-white border-[#E4E4E4] border-transparent w-[96px] h-[38px] flex items-center justify-center rounded-[11px]"
+      >Unit</a>
+
+      <a routerLink="support" 
+      routerLinkActive="bg-[#F3F3F16E] border border-[white]" 
+      [routerLinkActiveOptions]="{ exact: false }" 
+       class="text-white border-[#E4E4E4] border-transparent w-[96px] h-[38px] flex items-center justify-center rounded-[11px]"
+      >Support</a>
+
+      <a routerLink="settings" 
+      routerLinkActive="bg-[#F3F3F16E] border border-[white]" 
+      [routerLinkActiveOptions]="{ exact: false }" 
+      class="text-white border-[#E4E4E4] border-transparent w-[96px] h-[38px] flex items-center justify-center rounded-[11px]"
+      >Settings</a>
+    </div>
+
+    <div class="flex gap-4">
+        <button><img src="/bell.png" class="w-[46px] h-[46]"></button>
+        <button (click)="logout()"><img src="/Group1.png" class="w-[46px] h-[46px]"></button>
+    </div>
+    
+    </div>
+     
+     
+  
+<div class=" mt-[1rem] bg-white mx-6 h-full  rounded-t-[30px]">
+   <router-outlet></router-outlet>
+  </div>
+  </div>
+  </div>

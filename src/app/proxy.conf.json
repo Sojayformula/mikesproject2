@@ -1,0 +1,12 @@
+{
+    "/api": {
+      "target": "https://webpay.etranzactgh.com/dev/kube/toolbox/tool-box/prod",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/api": ""
+      }
+    }
+  }
+  
