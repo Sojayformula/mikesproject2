@@ -24,7 +24,7 @@ export class UnitComponent implements OnInit{
 
 
   APIData: any[] = [];
-  selectedTab:string = 'Active'
+  selectedTab:string = 'Active';
   unitModel!: unitModel
   editModel!: updateUnitModel
 
