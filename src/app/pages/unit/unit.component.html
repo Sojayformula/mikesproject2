@@ -1,218 +1,19 @@
-<!-- 
-
-    <div class="mx-10 relative top-20 ">
-
-    <div class="flex justify-between ">
-        <div class="text-[18px] ">
-            Units
-        </div>
-
-        <div>
-            <button class="bg-[#5FA3FF] w-[108px] h-40px rounded-[6px] text-white "><span>+</span>Add Unit</button>
-        </div>
-    </div>
-
-                                 Toggle select 
-    <div class="bg-[#FAFAFA] border border-[#DCDEE3] w-[1385px] flex items-center h-[72px] px-4">
-  <div class="bg-[#EDEDED] w-[188px] h-[48px] flex items-center rounded-xl mx-2">
-    <button
-      (click)="toggleTab('Active')"
-      class="h-[36px] px-5 rounded-[10px] cursor-pointer transition-all duration-200"
-      [ngClass]="{
-        'text-white bg-gradient-to-b from-[#4393FF] to-[#5FA3FF]': selectedTab === 'Active',
-        'text-[#838383]': selectedTab !== 'Active'
-      }"
-    >
-      Active
-    </button>
-
-    <span class="mx-1 text-gray-400">|</span>
-
-    <button
-      (click)="toggleTab('Inactive')"
-      class="h-[36px] px-5 rounded-[10px] cursor-pointer transition-all duration-200"
-      [ngClass]="{
-        'text-white bg-gradient-to-b from-[#4393FF] to-[#5FA3FF]': selectedTab === 'Inactive',
-        'text-[#838383]': selectedTab !== 'Inactive'
-      }"
-    >
-      Inactive
-    </button>
-  </div>
-</div>
-
-  
-                                   table
-     <div class="mt-10">
-  <div class="overflow-x-auto">
-    <table class="min-w-full table-auto text-[#353535]" id="Data">
-      <thead class="bg-gray-100 text-left">
-        <tr>
-          <th class="px-4 py-2">
-            <div class="flex items-center space-x-2">
-              <div class="border-2 border-[#C0C4CE] w-5 h-5 rounded-md"></div>
-              <span>Unit ID</span>
-            </div>
-          </th>
-          <th class="px-4 py-2">Unit Name</th>
-          <th class="px-4 py-2">Description</th>
-          <th class="px-4 py-2">Status</th>
-          <th class="px-4 py-2">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="border-b border-gray-200" *ngFor="let item of APIData let i = index">
-          <td class="px-4 py-2">
-            <div class="flex items-center space-x-2">
-              <div class="border-2 border-[#C0C4CE] w-5 h-5 rounded-md"></div>
-              <span>#{{ item._id}}</span>
-            </div>
-          </td>
-          <td class="px-4 py-2">{{ item.name }}</td>
-          <td class="px-4 py-2">{{ item.description }}</td>
-          <td class="px-4 py-2">
-            <div 
-              class="rounded px-3 py-1 text-xs w-fit text-center"
-              [ngClass]="{
-                'bg-green-200 text-green-800': item.employmentStatus?.employmentStatus === 'Active',
-                'bg-red-200 text-red-800': item.employmentStatus?.employmentStatus=== 'Inactive',
-              }"
-            >
-              {{ item.employmentStatus}}
-            </div>
-
-          </td>
-           <td class="px-4 py-2">
-
-               
-              </td>
-              
-             
-           
-     
-         <td class="px-4 py-2 relative">
-          <button (click)="openModal(i)" class="text-gray-600 hover:text-black">&#x22EE;</button>
-        </td>
-   
-
-                 Modal centered on page 
-<div
-  *ngIf="showModal"
-  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
->
-  <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-    <h2 class="text-xl font-bold mb-4">Update Unit</h2>
-    <input
-      [(ngModel)]="editedUnit"
-      type="text"
-      class="w-full px-3 py-2 border rounded mb-4"
-      placeholder="Enter updated unit name"
-    />
-    <div class="flex justify-end space-x-2">
-      <button (click)="closeModal()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
-        Cancel
-      </button>
-      <button (click)="saveUnit()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-        Save
-      </button>
-      </div>
-      </div>
-    </div>
-      
-      
-
-
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-   
-
-    </div>
-     -->
-
-
-
-
-       <!-- <nz-modal
-  [(nzVisible)]="isFilterModalVisible"
-  [nzTitle]="modalTitleTpl"
-  (nzOnCancel)="closeFilterModal()"
-  [nzFooter]="modalFooter"
-  nzClassName="custom-modal"
->
-  <ng-template #modalTitleTpl> 
-    <div class="flex items-center gap-2">
-      <div class="rounded-full bg-blue-900 text-white text-2xl px-2 py-1">///</div>
-      <span class="text-lg font-semibold">Filter Department</span>
-    </div>
-  </ng-template>
-
-  <ng-container *nzModalContent>
-    <form>
-      <div class="filter-container">
-        <nz-form-item class="flex flex-col">
-          <label for="department" class="text-white">Department</label>
-          <select
-            id="department"
-            [(ngModel)]="editData"
-            name="department"
-            class="py-2 border rounded-lg"
-          >
-            <option value="All">All</option>
-            <option *ngFor="let dept of editData" [value]="dept.name">
-              {{ dept.name }}
-            </option>
-          </select>
-        </nz-form-item>
-      </div>
-    </form>
-  </ng-container>
-
-  <ng-template #modalFooter>
-    <div class="space-x-4 mx-4">
-      <button
-        nz-button
-        (click)="closeFilterModal()"
-        class="text-black border border-blue-900 bg-white py-1 px-4"
-      >
-        Cancel
-      </button>
-      <button
-        nz-button
-        nzType="primary"
-        (click)="applyFilters()"
-        class="text-white border border-blue-900 bg-blue-500 py-1 px-4"
-      >
-        Ok
-      </button>
-    </div>
-  </ng-template>
-</nz-modal> -->
-
-
-
-
-             
-
-
-
-
 
    <div class="mx-10 relative top-20">
   <div class="flex justify-between">
     <div class="text-[18px]">Units</div>
     <div>
-      <button class="bg-[#5FA3FF] w-[108px] h-[40px] rounded-[6px] text-white">
+      <button  nzType="default" (click)="openEditModal()"  class="bg-[#5FA3FF] w-[108px] h-[40px] rounded-[6px] text-white">
         <span>+</span>Add Unit
       </button>
     </div>
   </div>
 
+ 
+
   <!-- Toggle select -->
-  <div class="bg-[#FAFAFA] border border-[#DCDEE3] w-[1385px] flex items-center h-[72px] px-4 mt-4">
+  <div class="bg-[#FAFAFA] border border-[#DCDEE3] w-[1385px]  h-[72px] px-4 mt-4">
+     <div class="flex justify-between items-center">
     <div class="bg-[#EDEDED] w-[188px] h-[48px] flex items-center rounded-xl mx-2">
       <button
         (click)="toggleTab('Active')"
@@ -237,79 +38,193 @@
       >
         Inactive
       </button>
+      </div>
+
+              <!-- Search function -->
+      <div>
+        <input
+        type="text"
+        [(ngModel)]="searchquery"
+         (ngModelChange)="searchFunction()"
+        placeholder="Search by name"
+        class="border "
+        >
+      </div>
     </div>
   </div>
 
 
 
 
+           <!-- edit modal -->
 
-                 <nz-modal
-                  [(nzVisible)]="isFilterModalVisible"
-                  [nzTitle]="modalTitleTpl"
-                  (nzOnCancel)="closeFilterModal()"
-                  [nzFooter]="modalFooter"
-                  nzClassName="custom-modal"
-                >
-              <ng-template #modalTitleTpl>
-                <div class="flex items-center gap-2">
-                  <div class="rounded-full bg-blue-900 text-white text-2xl px-2 py-1">///</div>
-                  <span class="text-lg font-semibold">Filter Department</span>
-                </div>
-              </ng-template>
+ <nz-modal
+  [(nzVisible)]="isModalVisible"
+  nzTitle="Edit Unit"
+  (nzOnCancel)="handleCancel()"
+  [nzOkLoading]="isUpdating"
+  [nzFooter]="modalFooter"   
+>
+  <div *ngIf="selectedUnitPayload">
+    <label class="block mb-2">Name</label>
+    <input
+      nz-input
+      [(ngModel)]="selectedUnitPayload.name"
+      placeholder="Enter unit name"
+    />
 
-              <ng-container *nzModalContent>
-                <form>
-                  <div class="filter-container">
-                    <nz-form-item class="flex flex-col">
-                      <label for="department" class="text-white">Department</label>
-                      <select
-                        id="department"
-                        [(ngModel)]="APIData"
-                        name="department"
-                        class="py-2 border rounded-lg"
-                      >
-                        <option value="All">All Departments</option>
-                        <option *ngFor="let dept of APIData" [value]="dept.name">
-                          {{ dept.name }}
-                        </option>
-                      </select>
-                    </nz-form-item>
+    <label class="block my-2">Description</label>
+    <textarea
+      nz-input
+      rows="3"
+      [(ngModel)]="selectedUnitPayload.description"
+      placeholder="Enter unit description"
+    ></textarea>
+  </div>
 
-                    <nz-form-item class="flex flex-col">
-                      <label for="department" class="text-white ">/////</label>
-                      <select
-                        id="data1"
-                        [(ngModel)]="APIData"
-                        name="department"
-                        class="py-2 border rounded-lg"
-                      >
-                        <option value="All">All</option>
-                        <option *ngFor="let dept of APIData" [value]="dept.name">
-                          {{ dept.nam }}
-                        </option>
-                      </select>
-                    </nz-form-item>
-
-                    </div>
-                </form>
-              </ng-container>
-
-                <!-- Footer for Buttons   -->
-                <ng-template #modalFooter >
-                <div class="space-x-4 mx-4">
-                <button nz-button (click)="closeFilterModal()" class="text-black border border-blue-900 bg-white py-1 px-4">Cancel</button>
-                  <button nz-button nzType="primary" (click)="applyFilters()" class="text-white border border-blue-900 bg-blue-500 py-1 px-4">Ok</button> 
-                </div>
-              </ng-template> 
-          </nz-modal>
-
-
-<button (click)="openFilterModal()">View</button>
+   Custom Footer Template 
+  <ng-template #modalFooter>
+    <button nz-button (click)="handleCancel()">Cancel</button>
+    <button nz-button nzType="primary" (click)="editUnit()">Add</button>
+  </ng-template>
+</nz-modal> 
 
 
 
 
+
+
+
+
+
+
+   
+
+
+
+
+    <nz-modal
+  [(nzVisible)]="showEditModal"
+  [nzTitle]="editTitleTpl"
+  (nzOnCancel)="closeEditModal()"
+  [nzFooter]="editFooterTpl"
+  [nzMaskClosable]="true"
+  [nzStyle]="{ width: '100%', maxWidth: '90vw' }"
+  [nzBodyStyle]="{ maxHeight: '70vh', overflowY: 'auto' }"
+>
+
+   <!-- Modal Title  -->
+  <ng-template #editTitleTpl>
+    <div class="text-lg font-semibold">Edit Unit</div>
+    <hr />
+  </ng-template>
+
+   <!-- Modal Body  -->
+  <ng-container *nzModalContent>
+    <form class="space-y-4 p-4 sm:p-6">
+       <!-- Name  -->
+      <nz-form-item>
+        <label class="block text-sm font-medium text-gray-700">Name</label>
+        <input
+          type="text"
+          [(ngModel)]="addUnitData.name"
+          name="name"
+          class="w-full mt-1 p-2 border rounded-md bg-[#F2F2F2] border-[#D7D7D7]"
+        />
+      </nz-form-item>
+
+       <!-- Description  -->
+      <nz-form-item>
+        <label class="block text-sm font-medium text-gray-700">Description</label>
+        <textarea
+          [(ngModel)]="addUnitData.description"
+          name="description"
+          rows="2"
+          class="w-full mt-1 p-2 border rounded-md bg-[#F2F2F2] border-[#D7D7D7]"
+        ></textarea>
+      </nz-form-item>
+
+       <!-- Unit Head  -->
+      <nz-form-item>
+        <label class="block text-sm font-medium text-gray-700">Unit Head</label>
+        <select
+          [(ngModel)]="addUnitData.unitHead"
+          name="unitHead"
+          class="w-full mt-1 p-2 border rounded-md bg-[#F2F2F2] border-[#D7D7D7]"
+        >
+          <option *ngFor="let user of APIData" [value]="user._id">
+            {{ user.unitHead.firstName }} {{ user.unitHead.lastName }}
+          </option>
+        </select>
+      </nz-form-item>
+
+       <!-- Is Sub Unit  -->
+      <nz-form-item>
+        <label class="block text-sm font-medium text-gray-700">Is this a sub unit?</label>
+        <div class="flex flex-col sm:flex-row gap-4 mt-1">
+          <label class="inline-flex items-center space-x-2">
+            <input
+              type="checkbox"
+              [(ngModel)]="addUnitData.isSubUnit"
+              name="isSubUnitYes"
+              class="form-checkbox"
+            />
+            <span class="text-sm text-gray-700">Yes</span>
+          </label>
+          <label class="inline-flex items-center space-x-2">
+            <input type="checkbox" 
+            [(ngModel)]="addUnitData.isSubUnit"
+            class="form-checkbox" />
+            <span class="text-sm text-gray-700">No</span>
+          </label>
+        </div>
+      </nz-form-item>
+
+       <!-- Parent Unit  -->
+      <nz-form-item>
+        <label class="block text-sm font-medium text-gray-700">Parent Unit</label>
+        <select
+          [(ngModel)]="addUnitData.parentUnit"
+          name="parentUnit"
+          class="w-full mt-1 p-2 border rounded-md bg-[#F2F2F2] border-[#D7D7D7]"
+        >
+          <option *ngFor="let unit of APIData" [value]="unit._id">
+            {{ unit.unitHead.firstName }} {{ unit.unitHead.lastName }}
+          </option>
+        </select>
+      </nz-form-item>
+    </form>
+  </ng-container>
+
+   <!-- Modal Footer  -->
+  <ng-template #editFooterTpl>
+    <div class="flex flex-col sm:flex-row justify-end gap-4 px-4 pb-4">
+      <button
+        nz-button
+        (click)="closeEditModal()"
+        class="bg-white border border-gray-300 px-4 py-2 w-full sm:w-auto"
+      >
+        Cancel
+       </button>
+      <button
+        nz-button
+        nzType="primary"
+        (click)="addUnit()"
+        class="bg-blue-600 text-white px-4 py-2 w-full sm:w-auto"
+      > 
+        Save
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>
+
+
+
+
+ 
+
+
+ 
 
 
 
@@ -344,35 +259,33 @@
             <td class="px-4 py-2">{{ item.description }}</td>
             <td class="px-4 py-2">
               
-              <!-- <div 
+              <div 
                 class="rounded px-3 py-1 text-xs w-fit text-center"
                 [ngClass]="{
-                  'bg-green-200 text-green-800': item.employmentStatus === 'Active',
-                  'bg-red-200 text-red-800': item.employmentStatus === 'Inactive'
+                  'bg-green-200 text-green-800': item.organization.isActive === true,
+                  'bg-red-200 text-red-800': item.Status === 'Inactive'
                 }"
               >
-                {{ item.employmentStatus }}
-              </div> -->
+                {{ item.organization.isActive }}
+              </div>
           </td>
           
 
-             <td>
-        <!-- <button (click)="openFilterModal()">View</button> -->
-        <!-- <button (click)="editUnit()">Edit</button>
-        <button (click)="deleteUnit(unit._id)">Delete</button> -->
-             </td>
-      
+        <td class="p-2 flex gap-2">
+          <button nz-button nzType="primary" (click)="showModal()" class="text-blue-600">
+          <span class="material-symbols-outlined">stylus_note</span>
+          </button>
+
+         <button nz-button nzType="default" class="text-red-600">
+          <span class="material-symbols-outlined">delete</span>
+         </button>
+       </td>
+
+
          
 
        
-
-
-
-
-            
-            <!-- <td class="px-4 py-2 relative">
-              <button (click)="openModal(i)" class="text-gray-600 hover:text-black">&#x22EE;</button>
-            </td> -->
+           
           </tr>
         </tbody>
       </table>
@@ -383,32 +296,24 @@
 
 
   <!-- Modal centered on page -->
-  <div
+  <!-- <div
     *ngIf="showModal"
     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
   >
-    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-      <h2 class="text-xl font-bold mb-4">Add Unit</h2>
+    <div  class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+      <h2 class="text-xl font-bold mb-4">Edit Unit</h2> -->
      
 
 
-     <!-- <div *ngFor="let unit of units; let i = index" (ngSubmit)="onSubmit(unit)">
-     <div class="flex items-center space-x-4 my-2"> -->
+      <!-- <div *ngFor="let unit of units; let i = index" (ngSubmit)="onSubmit(unit)">
+     <div class="flex items-center space-x-4 my-2">  -->
 
 
-
-     
-      
-
-
-  
-   
-
-    <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded">
+    <!-- <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded">
       Save
     </button>
   </div>
-</div> 
+</div>  -->
 
 
 
@@ -428,3 +333,329 @@
     </div>
   </div>
 </div> -->
+
+
+
+
+
+             <!-- Modal -->
+    <!-- <div *ngIf="showEditModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg p-6 w-1/3 shadow-lg">
+    <h2 class="text-xl font-semibold mb-4">Edit Unit</h2>
+
+    <label class="block mb-2">Name:</label>
+    <input [(ngModel)]="editModel.name" class="border p-2 w-full mb-4" />
+
+    <label class="block mb-2">Description:</label>
+    <input [(ngModel)]="editModel.description" class="border p-2 w-full mb-4" /> -->
+
+    <!-- Optional fields if needed -->
+    <!--
+    <label class="block mb-2">Unit Head:</label>
+    <input [(ngModel)]="editModel.unitHead" class="border p-2 w-full mb-4" />
+    -->
+
+    <!-- <div class="flex justify-end gap-4">
+      <button (click)="showEditModal = false" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+      <button (click)="updateUnit()" class="px-4 py-2 bg-blue-600 text-white rounded">Update</button>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+
+
+
+                      <!-- Edit modal -->
+<!-- <nz-modal
+  [(nzVisible)]="showEditModal"
+  [nzTitle]="editTitleTpl"
+  (nzOnCancel)="closeEditModal()"
+  [nzFooter]="editFooterTpl"
+  nzClassName="custom-modal"
+   [nzMaskClosable]="true" 
+>
+   Modal Title 
+  <ng-template #editTitleTpl>
+    <div class="text-lg font-semibold">Edit Unit</div>
+    <hr>
+  </ng-template>
+
+   Modal Body
+  <ng-container *nzModalContent>
+    <form class="space-y-4 px-4">
+       Name 
+      <nz-form-item>
+        <div  class="mt-4">
+        <label class="block text-sm font-medium text-gray-700">Name</label>
+        <input
+          type="text"
+          [(ngModel)]="editModel.name"
+          name="name"
+          class="w-full mt-1 p-1 border-2 rounded-md bg-[#F2F2F2] border-[#D7D7D7]"
+        />
+        </div>
+      </nz-form-item>
+
+       Description 
+      <nz-form-item>
+        <div  class="mt-3">
+        <label class="block text-sm font-medium text-gray-700">Description</label>
+        <textarea
+          [(ngModel)]="editModel.description"
+          name="description"
+          rows="2"
+          class="w-full mt-1 p-1 border-2 rounded-md bg-[#F2F2F2] border-[#D7D7D7]"
+        ></textarea>
+        </div>
+      </nz-form-item>
+    
+
+       Unit Head
+      <nz-form-item>
+        <div  class="mt-3">        <label class="block text-sm font-medium text-gray-700">Unit Head</label>
+        <select
+          [(ngModel)]="editModel.unitHead"
+          name="unitHead"
+          class="w-full mt-1 p-1 border-2 rounded-md bg-[#F2F2F2] border-[#D7D7D7]"
+        >
+          <option *ngFor="let user of APIData" [value]="user._id">
+            {{ user.unitHead.firstName }} {{ user.unitHead.lastName }}
+          </option>
+        </select>
+        </div>
+      </nz-form-item>
+
+      
+       isSubUnit
+       <div>
+        Is this the sub unit?
+       </div>
+       <div class="flex gap-4 relative top-[-10px]">
+      <nz-form-item>
+        <div class="mt-3">
+        <label class="inline-flex items-center space-x-2">
+          <input
+            type="checkbox"
+            [(ngModel)]=" editModel.isSubUnit"
+            name="isSubUnit"
+            class="form-checkbox"
+          />
+          <span class="text-sm text-gray-700">Yes</span>
+        </label>
+        </div>
+      </nz-form-item>
+
+       <nz-form-item>
+        <div class="mt-3">
+        <label class="inline-flex items-center space-x-2">
+          <input
+            type="checkbox"
+            name="isSubUnit"
+            class="form-checkbox"
+          />
+          <span class="text-sm text-gray-700">No</span>
+        </label>
+        </div>
+      </nz-form-item>
+      </div>
+
+       Parent Unit 
+      <nz-form-item>
+        <div class="mt-3">
+        <label class="block text-sm font-medium text-gray-700">Parent Unit</label>
+        <select
+          [(ngModel)]="editModel.parentUnit"
+          name="parentUnit"
+          class="w-full mt- p-1 border-2 rounded-md bg-[#F2F2F2] border-[#D7D7D7]"
+        >
+          <option *ngFor="let unit of APIData" [value]="unit._id">
+            {{ unit.unitHead.firstName }} {{ unit.name }}
+          </option>
+        </select>
+        </div>
+      </nz-form-item>
+
+    </form>
+  </ng-container>
+
+   Modal Footer 
+  <ng-template #editFooterTpl>
+    <div class="flex justify-end gap-4 px-4 pb-4 mt-4">
+      <button nz-button (click)="closeEditModal()" class="bg-white border border-gray-300 px-4 py-1">
+        Cancel
+      </button>
+      <button nz-button nzType="primary" (click)="onSubmit()" class="bg-blue-600 text-white px-4 py-1">
+        Save
+      </button>
+    </div>
+  </ng-template>
+</nz-modal> -->
+
+
+
+
+
+
+
+              <!-- Add staff modal -->
+  <!-- <nz-modal
+  [(nzVisible)]="isFilterModalVisible"
+  [nzTitle]="modalTitleTpl"
+  (nzOnCancel)="closeFilterModal()"
+  [nzFooter]="modalFooter"
+  nzClassName="custom-modal"
+   [nzMaskClosable]="true" 
+>
+   Modal Title 
+  <ng-template #modalTitleTpl>
+    <div class="text-lg font-semibold"></div>
+    <hr>
+  </ng-template>
+
+   Modal Body
+  <ng-container *nzModalContent>
+    <form class="space-y-4 px-4">
+       Name
+      <nz-form-item>
+        <div  class="mt-4">
+        <label class="block text-sm font-medium text-gray-700"></label>
+        <input
+          type="text"
+           [(ngModel)]="filterModel.name"
+          name="name"
+          class="w-full mt-1 p-1 border-2 rounded-md bg-[#F2F2F2] border-[#D7D7D7]"
+        />
+        </div>
+      </nz-form-item>
+    
+
+       Unit Head
+      <nz-form-item>
+        <div  class="mt-3">
+        <label class="block text-sm font-medium text-gray-700"></label>
+        <select
+         [(ngModel)]="filterModel.unitHead" name="unitHead" 
+          name="unitHead"
+          class="w-full mt-1 p-1 border-2 rounded-md bg-[#F2F2F2] border-[#D7D7D7]"
+        >
+          <option *ngFor="let user of userList" [value]="user._id">
+            {{ user.firstName }} {{ user.lastName }}
+          </option>
+        </select>
+        </div>
+      </nz-form-item>
+
+       Parent Unit
+      <nz-form-item>
+        <div class="mt-3">
+        <label class="block text-sm font-medium text-gray-700"></label>
+        <select
+        
+          name="parentUnit"
+          class="w-full mt- p-1 border-2 rounded-md bg-[#F2F2F2] border-[#D7D7D7]"
+        >
+          <option *ngFor="let unit of parentUnitList" [value]="unit._id">
+            {{ unit.name }}
+          </option>
+        </select>
+        </div>
+      </nz-form-item>
+
+    </form>
+  </ng-container>
+
+   Modal Footer
+  <ng-template #modalFooter>
+    <div class="flex justify-end gap-4 px-4 pb-4 mt-4">
+      <button nz-button (click)="closeFilterModal()" class="bg-white border border-gray-300 px-4 py-1">
+        Cancel
+      </button>
+      <button nz-button nzType="primary" (click)="applyFilters()" class="bg-blue-600 text-white px-4 py-1">
+        Save
+      </button>
+    </div>
+  </ng-template>
+</nz-modal> -->
+
+
+
+
+                      <!-- Add unit modal -->
+               <!-- <div class="mt- bg-white">
+        <div class="flex items-center justify-between mx-5">
+          <div class="">
+             <p class="text-[18px] font-bold">Employees</p> 
+              <small class="text-[#828282] relative top-[-7px]">View all recent employees</small>
+          </div>  -->
+  
+                 
+           <!-- <div class="flex gap-2">
+                <nz-modal
+                  [(nzVisible)]="isFilterModalVisible"
+                  [nzTitle]="modalTitleTpl"
+                  (nzOnCancel)="closeFilterModal()"
+                  [nzFooter]="modalFooter"
+                  nzClassName="custom-modal relative top-40 w-[1440px]"
+                >
+              <ng-template #modalTitleTpl>
+                <div class="flex items-center gap-2">
+                  <div class="text-lg font-semibold">Add Unit</div>
+                  </div>
+              </ng-template>
+
+              <ng-container *nzModalContent>
+                <form>
+                  <div class="filter-container">
+                    <nz-form-item class="flex flex-col">
+                      <label for="department" class="text-white">Department</label>
+                      <select
+                        id="department"
+                        
+                        name="department"
+                        class="py-2 border-2 rounded-lg bg-[#F2F2F2] border-[#D7D7D7]"
+                      >
+                        <option value="All">All Departments</option>
+                        <option *ngFor="let dept of APIData" [value]="dept.name">
+                          {{ dept.name }}
+                        </option>
+                      </select>
+                    </nz-form-item>
+
+                    <nz-form-item class="flex flex-col">
+                      <label for="department" class="text-white ">/////</label>
+                      <select
+                        id="department"
+                        
+                        name="department"
+                        class="py-2 border rounded-lg"
+                      >
+                        <option value="All">All</option>
+                        <option *ngFor="let dept of APIData" [value]="dept.name">
+                          {{ dept.nam }}
+                        </option>
+                      </select>
+                    </nz-form-item>
+
+                    </div>
+                </form>
+              </ng-container>
+
+                 Footer for Button
+                <ng-template #modalFooter >
+                <div class="space-x-4 mx-4">
+                <button nz-button (click)="closeFilterModal()" class="text-black border border-blue-900 bg-white py-1 px-4">Cancel</button>
+                  <button nz-button nzType="primary" (click)="applyFilters()" class="text-white border border-blue-900 bg-blue-500 py-1 px-4">Ok</button> 
+                </div>
+              </ng-template> 
+          </nz-modal>
+
+          </div>
+        </div>
+    </div>   -->
+
+     <!-- <td class="px-4 py-2 relative">
+              <button (click)="openModal(i)" class="text-gray-600 hover:text-black">&#x22EE;</button>
+            </td> -->

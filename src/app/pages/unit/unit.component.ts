@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
 import { PagesService } from '../../service/pages.service';
-import { unitModel, updateUnitModel } from '../../model/pagesModel';
+import { addUnitModel, unitModel, updateUnitModel } from '../../model/pagesModel';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
@@ -12,43 +12,58 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 
 
 
+
 @Component({
   selector: 'app-unit',
-  imports: [CommonModule, FormsModule, NzDropDownModule, NzButtonModule, FormsModule, NzIconModule, NzFormModule, NzModalModule],
+  imports: [CommonModule, FormsModule, NzDropDownModule, NzButtonModule, NzIconModule, NzFormModule, NzModalModule],
   templateUrl: './unit.component.html',
   styleUrl: './unit.component.scss'
 })
 export class UnitComponent implements OnInit{
 
-  units: any[] = [];
+  unitHead:string = ''; 
 
 
-  APIData: any[] = [];
-  selectedTab:string = 'Active';
+   APIData: any[] = [];
+   selectedTab:string = 'Active';
+  // showModal = false;
+   searchquery: string = "";
+   filterModel: string ='';
+
   unitModel!: unitModel
   editModel!: updateUnitModel
+  addUnitData!: addUnitModel
 
-  constructor (private pagesService: PagesService){
+
+  showEditModal = false;
+userList: any[] = [];
+parentUnitList: any[] = [];
+
+
+
+   constructor (private pagesService: PagesService){
     this.unitModel = new unitModel()
-    this.editModel = new updateUnitModel()
+     this.editModel = new updateUnitModel()
+     this.addUnitData = new addUnitModel()
   }
 
 
   ngOnInit(): void {
    this.fetchunit() 
+   this.editUnit()
+  
   }
 
   fetchunit(){
-
     console.log('unit mode Data', this.unitModel)
-    this.pagesService.getUnit().subscribe({
+    this.pagesService.getUnit(this.unitModel).subscribe({
       next: (res)=>{
         console.log('APIData', res)
         this.APIData = res.data
       },
 
        error: (error) => {
-        console.error('Error fetching leaves:', error);
+        console.error('Error fetching unit:', error);
        
       },
       complete:()=>{
@@ -57,115 +72,172 @@ export class UnitComponent implements OnInit{
     })
   }
 
+
+
+    addUnit(){
+    console.log('Payload being sent:', this.addUnitData);
+  
+   this.pagesService.addUnit(this.addUnitData).subscribe({
+    next: (res) => {
+      alert(res.message || 'Unit updated successfully');
+      this.fetchunit();  
+      this.addUnitData = new addUnitModel(); 
+      this.showEditModal  = false;
+      
+    },
+    error: (err) => {
+      console.error(err);
+      alert('Update failed');
+    }
+  });
+}
+
+
+
+  getId(id: string){
+   this.pagesService.getId(id).subscribe({
+    next: (res)=>{
+      console.log('get me id', res)
+    },
+
+    error: (err)=>{
+      console.log('get id failed', err)
+    }
+   })
+  }
+
+
+  // editUnit(){
+  //   const Id = data.unit._id
+  //   this.pagesService.updateUnit(id, payload).subscribe({
+  //     next: (res)=>{
+  //       console.log('api data', res)
+  //     },
+
+  //     error:(err)=>{
+  //        console.log('update failed', err)
+  //     }
+  //   })
+  // }
+
+
+
+  selectedUnitId: string | null = null;
+selectedUnitPayload: any = null; // whatever payload structure you need
+
+// Called when you click Edit button, passing the item
+selectedId(item: any) {
+  this.selectedUnitId = item._id;  // save the selected unit's id
+  this.selectedUnitPayload = { /* fill with your update data or show form */ };
+  // You might want to open a modal or enable a form here
+  console.log('Selected Unit ID:', this.selectedUnitId);
+}
+
+editUnit() {
+  if (!this.selectedUnitId) {
+    console.log('No unit selected');
+    return;
+  }
+
+  this.pagesService.updateUnit(this.selectedUnitId, this.selectedUnitPayload).subscribe({
+    next: (res) => {
+      console.log('api data', res);
+      
+    },
+    error: (err) => {
+      console.log('update failed', err);
+    }
+  });
+}
+
+
+ 
+
+  // onSubmit() {
+  //   if (!this.newUnit.name) return; // basic validation
+
+  //   this.pagesService.addUnit(this.newUnit).subscribe({
+  //     next: (response) => {
+  //       // Add the new/updated unit to the table
+  //       this.units.push(response);
+
+  //       // Reset form
+  //       this.newUnit = {
+  //         name: '',
+  //         description: '',
+  //         // reset other properties
+  //       };
+  //     },
+  //     error: (err) => {
+  //       console.error('Update failed:', err);
+  //     }
+  //   });
+  // }
+
+
+
+
   toggleTab(item: string){
-    // this.fetchunit. = item === 'ALL' ? '' : item;
     this.selectedTab = item;
     this.fetchunit();
    
     console.log("toggle some",item);
   }
 
-    handleAction(unitId: string): void {
-    console.log(`Action triggered for Unit ID: ${unitId}`);
-   
+  searchFunction(){
+    this.unitModel.search = this.searchquery
+    this.fetchunit();
   }
-
-
-  // viewUnit: Unit = {
-  //   name: '', 
-    
-  // };
-
-  
-
-  //   submitUnit() {
-
-  //   this.pagesService.updateUnit(unitId, payload).subscribe({
-  //     next: response => {
-  //       console.log('Unit sent successfully', response);
-  //     },
-  //     error: err => {
-  //       console.error('Error sending unit', err);
-  //     }
-  //   });
-  // }
-
-
- 
-  //   editUnit(unit: any) {
-  //   console.log('Editing unit:', unit);
-  // }
-
-  // deleteUnit(unitId: string) {
-  //   console.log('Deleting unit with ID:', unitId);
-  //   // Call delete service here if needed
-  // }
-
-
-
-   showModal = false;
-   editData: any[] = [];
-   inputData: string = '';
-  // editForm = {
-  //   _id: '',
-  //   name: '',
-  //   description: ''
-  // };
-
- 
-
-  // openEditModal(unit: any) {
-  //   this.editForm = { ...unit };
-  //   this.showModal = true;
-  // }
-
-  updateUnit() {
-    // const payload = {
-    //   _id: this.editForm._id,
-    //   name: this.editForm.name,
-    //   description: this.editForm.description,
-    // };
-
-    this.pagesService.updateUnit(this.editModel, this .editModel.id).subscribe({
-      next: (res) => {
-        alert(res.message || 'Unit updated');
-        this.showModal = false;
-        this.fetchunit();
-      },
-      error: (err) => {
-        alert('Update failed');
-        console.error(err);
-      }
-    });
-  } 
- 
 
 
 
    isFilterModalVisible = false;
    modalFooter = '';
-  
 
-    openFilterModal() {
+
+             /// Modal///
+    openFilterModal(): void {
       console.log('Opening modal');
     this.isFilterModalVisible = true;
   }
 
-  
   closeFilterModal(): void {
     this.isFilterModalVisible = false;
   }
 
-
   applyFilters(): void {
-    // console.log('Applying filter for department:', this.selectedDepartment);
-
+    console.log('Filter applied for:',);
     this.closeFilterModal();
+     this.fetchunit();
   }
 
 
 
+  closeEditModal() {
+    this.showEditModal = false;
+  }
+openEditModal() {
+    this.showEditModal = true;
+  }
+
+
+
+
+      
+      isModalVisible = false;
+      isUpdating = false;
+
+    showModal(){
+    this.isModalVisible = true;
+  }
+
+  
+    handleCancel() {
+    this.isModalVisible = false;
+  }
+
 }
+
 
 
 
@@ -244,5 +316,120 @@ export class UnitComponent implements OnInit{
   //     this.fetchunit();
   //   });
   // }
+
+
+
+
+
+   // updateUnit1() {
+    // const payload = {
+    //   _id: this.editForm._id,
+    //   name: this.editForm.name,
+    //   description: this.editForm.description,
+    // };
+
+  //   this.pagesService.updateUnit(this.editModel, this .editModel.id).subscribe({
+  //     next: (res) => {
+  //       alert(res.message || 'Unit updated');
+  //       this.showModal = false;
+  //       this.fetchunit();
+  //     },
+  //     error: (err) => {
+  //       alert('Update failed');
+  //       console.error(err);
+  //     }
+  //   });
+  // }
+  
+//   showEditModal = false;
+//  userList: any[] = [];
+//   organizationList: any[] = [];
+//   parentUnitList: any[] = [];
+
+  // editModel: updateUnitModel & { id: string } = {
+  //   id: '',
+  //   name: '',
+  //   description: '',
+  //   unitHead: '',
+  //   organization: '',
+  //   parentUnit: '',
+  //   isSubUnit: false
+  // };
+
+
+//   loadDropdownData() {
+//     // this.pagesService.getUsers().subscribe(data => this.userList = data);
+
+//     this.pagesService.getUsers().subscribe(data => {
+//   console.log('User list:', data);
+//   this.userList = data;
+// });
+
+//     // this.pagesService.getOrganizations().subscribe(data => this.organizationList = data);
+//     // this.pagesService.getParentUnits().subscribe(data => this.parentUnitList = data);
+//   }
+
+
+
+
+ // this.editModel = {
+    //   id: unit._id,
+    //   name: unit.name,
+    //   description: unit.description,
+    //   unitHead: unit.unitHead?._id || '',
+    //   organization: unit.organization?._id || '',
+    //   parentUnit: unit.parentUnit || '',
+    //   isSubUnit: unit.isSubUnit || false
+    // };
+
+  // openEditModal() {
+  //   this.showEditModal = true;
+  // }
+
+
+  // closeEditModal() {
+  //   this.showEditModal = false;
+  // }
+
+
+  //   editModel = {
+  //   id: '',
+  //   name: '',
+  //   description: '',
+  //   unitHead: '',
+  //   organization: '',
+  //   parentUnit: '',
+  //   isSubUnit: false
+  // };
+  
+
+//  updateUnit() {}
+
+
+// onSubmit(){
+//   const payload: updateUnitModel = {
+//     name: this.editModel.name,
+//     description: this.editModel.description,
+//     unitHead: this.editModel.unitHead,
+//     organization: this.editModel.organization,
+//     parentUnit: this.editModel.parentUnit,
+//      isSubUnit: this.editModel.isSubUnit
+//   };
+
+   
+  
+//   this.pagesService.updateUnit(this.editModel.id!, payload).subscribe({
+//     next: (res) => {
+//       alert(res.message || 'Unit updated successfully');
+//       this.showEditModal = false;
+//       this.fetchunit();
+//     },
+//     error: (err) => {
+//       console.error(err);
+//       alert('Update failed');
+//     }
+//   });
+// }
+
 
 

@@ -112,7 +112,7 @@ export interface ParentUnit {
   isSubUnit: boolean
   unitHead: string
   organization: string
-  parentUnit?: string
+  parentUnit: ParentUnit
   createdAt: string
   updatedAt: string
   __v: number
@@ -125,48 +125,199 @@ export interface Pagination {
   totalPages: number
 }
 
-       
-      // editModel//
-export class updateUnitModel {
-  id!: '683727b5a625599a49949573';
-  name!: string;
-  description!: string;
-  unitHead?: string;        
-  organization?: string;     
-  parentUnit?: string;      
+
+
+        // get unit by id //
+export class unitbyIdModel{
+  id!: string;
 }
 
-export interface Root {
-  success: boolean;
-  message: string;
-  timestamp: string;
-  // data: Data;
+export interface unitbyIdResponseModel {
+  success: boolean
+  message: string
+  data: Data
+  timestamp: string
 }
 
 export interface Data {
-  _id: string;
-  name: string;
-  description: string;
-  isSubUnit: boolean;
-  unitHead: UnitHead;
-  organization: Organization;
-  parentUnit: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+  unit: Unit
+  parentUnit: ParentUnit2
+}
+
+export interface Unit {
+  _id: string
+  name: string
+  description: string
+  isSubUnit: boolean
+  unitHead: UnitHead
+  organization: Organization
+  parentUnit: ParentUnit
+  createdAt: string
+  updatedAt: string
+  __v: number
 }
 
 export interface UnitHead {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
+  _id: string
+  firstName: string
+  lastName: string
+  email: string
 }
 
 export interface Organization {
-  _id: string;
-  name: string;
-  location: string;
-  email: string;
+  _id: string
+  name: string
+  location: string
+  email: string
 }
+
+export interface ParentUnit {
+  _id: string
+  name: string
+  description: string
+  isSubUnit: boolean
+  unitHead: string
+  organization: string
+  parentUnit: ParentUnit
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+export interface ParentUnit2 {
+  _id: string
+  name: string
+  description: string
+  isSubUnit: boolean
+  unitHead: string
+  organization: string
+  parentUnit: any
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+
+
+
+
+        // addUnitodel //
+export class addUnitModel{
+   name!: string;
+  isSubUnit!: boolean;
+  unitHead!: string;
+  description!: string;
+  parentUnit!: string;
+}
+
+
+export interface addUnitResponseModel {
+  response: Response
+  status: number
+  message: string
+  name: string
+}
+
+export interface Response {
+  success: boolean
+  message: string
+  data: Data
+  timestamp: string
+}
+
+export interface Data {
+  name: string
+  description: string
+  isSubUnit: boolean
+  unitHead: string
+  organization: string
+  // parentUnit!: any
+  _id: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+
+
+
+
+
+       
+      // editUnitModel//
+export class updateUnitModel {
+  id?: string;
+  name!: string;
+  description!: string;
+  unitHead?: string;        
+   organization?: string;     
+   parentUnit?: string; 
+  isSubUnit!: boolean;     
+}
+
+export interface updateUnitResponseModel{
+  success: boolean
+  message: string
+  data: Data
+  timestamp: string
+}
+
+export interface Data {
+  unit: Unit
+  // parentUnit: ParentUnit
+}
+
+export interface Unit {
+  _id: string
+  name: string
+  description: string
+  isSubUnit: boolean
+  unitHead: UnitHead
+  organization: Organization
+  parentUnit: ParentUnit
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+export interface UnitHead {
+  _id: string
+  firstName: string
+  lastName: string
+  email: string
+}
+
+export interface Organization {
+  _id: string
+  name: string
+  location: string
+  email: string
+}
+
+export interface ParentUnit {
+  _id: string
+  name: string
+  description: string
+  isSubUnit: boolean
+  unitHead: string
+  organization: string
+  parentUnit: ParentUnit
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+export interface ParentUnit2 {
+  _id: string
+  name: string
+  description: string
+  isSubUnit: boolean
+  unitHead: string
+  organization: string
+  parentUnit: any
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
 
