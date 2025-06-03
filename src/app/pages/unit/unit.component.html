@@ -58,14 +58,14 @@
 
            <!-- edit modal -->
 
-       <nz-modal
+       <!-- <nz-modal
   [(nzVisible)]="isModalVisible"
   nzTitle="Edit Unit"
   (nzOnCancel)="handleCancel()"
   [nzOkLoading]="isUpdating"
   [nzFooter]="modalFooter"   
->
-  <div *ngIf="selectedUnitPayload">
+> -->
+  <!-- <div *ngIf="selectedUnitPayload">
     <label class="block mb-2">Name</label>
     <input
     type="text"
@@ -83,16 +83,118 @@
       [(ngModel)]="selectedUnitPayload.description"
       placeholder="Enter unit description"
     ></textarea>
-  </div>
+  </div> -->
 
-   <!-- Custom Footer Template  -->
+  <!-- <div *ngIf="selectedUnitId">
+  <h3>Edit Unit</h3>
+  <form #editForm="ngForm" (ngSubmit)="editUnit(editForm)">
+    <label>
+       Name:
+      <input name="name" [(ngModel)]="selectedUnitPayload.name" required />
+    </label><br /><br />
+
+    <label>
+       Description: 
+      <input name="description" [(ngModel)]="selectedUnitPayload.description" />
+    </label><br /><br />
+
+    <label>
+       Is Sub Unit: 
+      <input type="checkbox" name="isSubUnit" [(ngModel)]="selectedUnitPayload.isSubUnit" />
+    </label><br /><br />
+
+    <button type="submit" [disabled]="editForm.invalid">Save</button>
+    <button type="button" (click)="resetForm(editForm)">Cancel</button>
+  </form>
+</div>
+
+    Custom Footer Template  
   <ng-template #modalFooter>
   <div class="w-full flex justify-end gap-2 pt-2">
     <button nz-button (click)="handleCancel()" class="px-6">Cancel</button>
-    <button nz-button nzType="primary" (click)="editUnit()" class="px-6">Add</button>
+     <button nz-button nzType="primary" (click)="editUnit()" class="px-6">Add</button> 
   </div>
 </ng-template>
-</nz-modal> 
+</nz-modal>  -->
+
+<!-- Modal Backdrop -->
+<div *ngIf="selectedUnitId" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <!-- Modal Content -->
+  <div class="bg-white rounded-lg p-6 shadow-lg w-full max-w-md">
+    <h3 class="text-xl font-semibold mb-4">Edit Unit</h3>
+    
+    <form #editForm="ngForm" (ngSubmit)="editUnit(editForm)">
+      <div class="mb-4">
+        <label class="block mb-1">Unit Name:</label>
+        <input
+          name="name"
+          [(ngModel)]="selectedUnitPayload.name"
+          required
+          class="w-full border rounded px-3 py-2"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-1">Description:</label>
+        <input
+          name="description"
+          [(ngModel)]="selectedUnitPayload.description"
+          class="w-full border rounded px-3 py-2"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label class="inline-flex items-center">
+          <input
+            type="checkbox"
+            name="isSubUnit"
+            [(ngModel)]="selectedUnitPayload.isSubUnit"
+            class="mr-2"
+          />
+          Is Sub Unit
+        </label>
+      </div>
+
+
+      <!-- <div class="mb-4">
+  <label class="block mb-1">Parent Unit:</label>
+  <select
+    name="parentUnit"
+    [(ngModel)]="selectedUnitPayload.parentUnit"
+    class="w-full border rounded px-3 py-2"
+  >
+    <option [ngValue]="null">-- None --</option>
+    <option
+      *ngFor="let unit of APIData"
+      [ngValue]="unit._id"
+      [disabled]="unit._id === selectedUnitId"
+    >
+      {{ unit.name }}
+    </option>
+  </select>
+</div> -->
+
+
+
+      <div class="flex justify-end space-x-3">
+        <button
+          type="submit"
+          [disabled]="editForm.invalid"
+          class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          (click)="resetForm(editForm)"
+          class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 
 
 
@@ -102,11 +204,6 @@
 
 
 
-
-
-
-
-   
 
 
         <!--  ADD TO TABLE FUCTION -->
@@ -280,13 +377,18 @@
           
 
         <td class="p-2 flex gap-2">
-          <button nz-button nzType="primary" (click)="showModal()" class="text-blue-600">
+          <button nz-button nzType="primary" (click)="selectedId(item)" class="text-blue-600">
           <span class="material-symbols-outlined">stylus_note</span>
           </button>
 
          <button nz-button nzType="default" class="text-red-600">
           <span  (click)="deleteUnit(item._id)" class="material-symbols-outlined">delete</span>
          </button>
+         <!-- Button to open modal -->
+<!-- <button (click)="selectedId(item)" (click)="showModal()" class="text-blue-500 hover:underline">
+  Edit
+</button> -->
+
        </td>  
          </tr>
         </tbody>

@@ -3,7 +3,7 @@ import { AuthService } from '../../service/auth.service';
 import { PagesService } from '../../service/pages.service';
 import { addUnitModel, unitModel, updateUnitModel } from '../../model/pagesModel';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -50,7 +50,7 @@ parentUnitList: any[] = [];
 
   ngOnInit(): void {
    this.fetchunit() 
-   this.editUnit()
+  //  this.editUnit()
   
   }
 
@@ -129,22 +129,33 @@ parentUnitList: any[] = [];
 selectedUnitPayload: any = null; 
 
 
-selectedId(item: any) {
+  selectedId(item: any) {
   this.selectedUnitId = item._id;  
-  this.selectedUnitPayload = { /* fill with your update data or show form */ };
+  this.selectedUnitPayload = { ...item };
   console.log('Selected Unit ID:', this.selectedUnitId);
 }
 
-editUnit() {
+editUnit(form: NgForm) {
   if (!this.selectedUnitId) {
     console.log('No unit selected');
     return;
   }
 
-  this.pagesService.updateUnit(this.selectedUnitId, this.selectedUnitPayload).subscribe({
+
+    const payloadToSend = {
+    ...this.selectedUnitPayload,
+    unitHead: this.selectedUnitPayload?.unitHead?._id || null,
+    parentUnit: this.selectedUnitPayload?.parentUnit?._id || this.selectedUnitPayload?.parentUnit || null,
+    organization: this.selectedUnitPayload?.organization?._id || null, // optional: depends on your backend
+  };
+
+
+// this.selectedUnitPayload
+  this.pagesService.updateUnit(this.selectedUnitId, payloadToSend ).subscribe({
     next: (res) => {
       console.log('api data', res);
-         this.resetForm();
+      this.fetchunit()
+         this.resetForm(form);
     },
     error: (err) => {
       console.log('update failed', err);
@@ -153,13 +164,25 @@ editUnit() {
 }
 
 
-  // Reset the form object //
-  resetForm(): void {
-    this.selectedUnitPayload = {
-      name: '',
-      description: ''
-    };
-  }
+resetForm(form: NgForm) {
+  form.resetForm();
+  this.selectedUnitId = null;
+  this.selectedUnitPayload = null;
+}
+
+
+  // resetForm(form: any) {
+  //   form.resetForm();
+  //   this.selectedUnitId = null;
+  //   this.selectedUnitPayload = {
+  //     name: '',
+  //     description: '',
+  //     isSubUnit: false
+  //   };
+  // }
+
+
+ 
 
 
               // Delete function //
