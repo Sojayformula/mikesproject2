@@ -58,7 +58,7 @@
 
            <!-- edit modal -->
 
- <nz-modal
+       <nz-modal
   [(nzVisible)]="isModalVisible"
   nzTitle="Edit Unit"
   (nzOnCancel)="handleCancel()"
@@ -68,6 +68,8 @@
   <div *ngIf="selectedUnitPayload">
     <label class="block mb-2">Name</label>
     <input
+    type="text"
+    name="name"
       nz-input
       [(ngModel)]="selectedUnitPayload.name"
       placeholder="Enter unit name"
@@ -77,17 +79,23 @@
     <textarea
       nz-input
       rows="3"
+      name="description"
       [(ngModel)]="selectedUnitPayload.description"
       placeholder="Enter unit description"
     ></textarea>
   </div>
 
-   Custom Footer Template 
+   <!-- Custom Footer Template  -->
   <ng-template #modalFooter>
-    <button nz-button (click)="handleCancel()">Cancel</button>
-    <button nz-button nzType="primary" (click)="editUnit()">Add</button>
-  </ng-template>
+  <div class="w-full flex justify-end gap-2 pt-2">
+    <button nz-button (click)="handleCancel()" class="px-6">Cancel</button>
+    <button nz-button nzType="primary" (click)="editUnit()" class="px-6">Add</button>
+  </div>
+</ng-template>
 </nz-modal> 
+
+
+
 
 
 
@@ -101,7 +109,7 @@
    
 
 
-
+        <!--  ADD TO TABLE FUCTION -->
 
     <nz-modal
   [(nzVisible)]="showEditModal"
@@ -115,7 +123,7 @@
 
    <!-- Modal Title  -->
   <ng-template #editTitleTpl>
-    <div class="text-lg font-semibold">Edit Unit</div>
+    <div class="text-lg font-semibold">aDD Unit</div>
     <hr />
   </ng-template>
 
@@ -277,16 +285,10 @@
           </button>
 
          <button nz-button nzType="default" class="text-red-600">
-          <span class="material-symbols-outlined">delete</span>
+          <span  (click)="deleteUnit(item._id)" class="material-symbols-outlined">delete</span>
          </button>
-       </td>
-
-
-         
-
-       
-           
-          </tr>
+       </td>  
+         </tr>
         </tbody>
       </table>
     </div>

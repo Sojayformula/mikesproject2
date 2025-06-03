@@ -45,6 +45,13 @@ export class PagesService {
     return this.http.get(`${environment.baseurl}/unit/get-unit/${id}`);
   }
 
+  deleteUnit(id: string): Observable<any> {
+  return this.http.delete<any>(`${environment.baseurl}/unit/delete-unit/${id}`);
+}
+
+
+
+
 
 
 

@@ -107,8 +107,11 @@ parentUnitList: any[] = [];
   }
 
 
-  // editUnit(){
-  //   const Id = data.unit._id
+  // ditUnit(){
+  //   const Id = this.selectedId;
+  //   let payload = this.Data;
+  //   payload.unitHead = this.addUnitData.unitHead._id;
+  //   payload.parentUnit = this.addUnitData.parentUnit._id;
   //   this.pagesService.updateUnit(id, payload).subscribe({
   //     next: (res)=>{
   //       console.log('api data', res)
@@ -123,13 +126,12 @@ parentUnitList: any[] = [];
 
 
   selectedUnitId: string | null = null;
-selectedUnitPayload: any = null; // whatever payload structure you need
+selectedUnitPayload: any = null; 
 
-// Called when you click Edit button, passing the item
+
 selectedId(item: any) {
-  this.selectedUnitId = item._id;  // save the selected unit's id
+  this.selectedUnitId = item._id;  
   this.selectedUnitPayload = { /* fill with your update data or show form */ };
-  // You might want to open a modal or enable a form here
   console.log('Selected Unit ID:', this.selectedUnitId);
 }
 
@@ -142,7 +144,7 @@ editUnit() {
   this.pagesService.updateUnit(this.selectedUnitId, this.selectedUnitPayload).subscribe({
     next: (res) => {
       console.log('api data', res);
-      
+         this.resetForm();
     },
     error: (err) => {
       console.log('update failed', err);
@@ -151,29 +153,30 @@ editUnit() {
 }
 
 
- 
+  // Reset the form object //
+  resetForm(): void {
+    this.selectedUnitPayload = {
+      name: '',
+      description: ''
+    };
+  }
 
-  // onSubmit() {
-  //   if (!this.newUnit.name) return; // basic validation
 
-  //   this.pagesService.addUnit(this.newUnit).subscribe({
-  //     next: (response) => {
-  //       // Add the new/updated unit to the table
-  //       this.units.push(response);
-
-  //       // Reset form
-  //       this.newUnit = {
-  //         name: '',
-  //         description: '',
-  //         // reset other properties
-  //       };
-  //     },
-  //     error: (err) => {
-  //       console.error('Update failed:', err);
-  //     }
-  //   });
-  // }
-
+              // Delete function //
+deleteUnit(id: string) {
+  if (confirm('Are you sure you want to delete this unit?')) {
+    this.pagesService.deleteUnit(id).subscribe({
+      next: (res) => {
+        alert(res.message || 'Unit deleted successfully');
+        this.fetchunit(); 
+      },
+      error: (err) => {
+        console.error('Delete failed:', err);
+        alert('Failed to delete unit');
+      }
+    });
+  }
+}
 
 
 
