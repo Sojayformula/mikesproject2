@@ -1,8 +1,8 @@
-<div class="bg-[url('/backdrop3.png')] bg-cover bg-no-repeat bg-center h-[28rem] absolute lg:w-full w-[308px]">
-<div class="bg-[url('/Rectangle12.png')] bg-cover bg-no-repeat bg-center h-full absolute lg:w-full top-[-15px]">
+<!-- <div class="bg-[url('/backdrop3.png')] bg-cover bg-no-repeat bg-center h-[28rem] absolute lg:w-full w-[908px] ">
+<div class="bg-[url('/Rectangle12.png')] bg-cover bg-no-repeat bg-center h-full absolute lg:w-full top-[-15px] ">
  
 
-    <div class="flex justify-between mt-8 mx-10">
+    <div class="flex justify-between mt-8 mx-10 ">
 
         <div class="flex items-center justify-center bg-white rounded-full border-red-500 border w-10 h-10">
             <img src="/FrameE3.png" class="w-[26.53px] h-[25.81] ">
@@ -53,8 +53,168 @@
      
      
   
-<div class=" mt-[1rem] bg-white mx-6 h-full  rounded-t-[30px]">
+<div class=" mt-[1rem] bg-white mx-6 h-full  rounded-t-[30px] overflow-hidden">
    <router-outlet></router-outlet>
   </div>
   </div>
+  </div>  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div
+  class="bg-[url('/backdrop3.png')] bg-cover bg-no-repeat bg-center h-[28rem] absolute w-[100vw] max-w-full lg:w-full "
+>
+  <div
+    class="bg-[url('/Rectangle12.png')] bg-cover bg-no-repeat bg-center h-full absolute w-[100vw] max-w-full lg:w-full top-[-15px] "
+  >
+    <div class="flex justify-between items-center mt-8 mx-4 sm:mx-10">
+
+           Left logo
+      <div
+        class="flex items-center justify-center bg-white rounded-full border-red-500 border w-10 h-10 sm:w-12 sm:h-12"
+      >
+        <img src="/FrameE3.png" class="w-[26.53px] h-[25.81px] sm:w-[32px] sm:h-[32px]" alt="Logo" />
+      </div>
+
+       Navigation links 
+      <div class="hidden md:flex space-x-2 sm:space-x-4">
+        <a
+          routerLink="dashboard"
+          routerLinkActive="bg-[#F3F3F16E] border border-white"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="text-white border-transparent w-[80px] sm:w-[96px] h-[34px] sm:h-[38px] flex items-center justify-center rounded-[11px] text-sm sm:text-base"
+          >Dashboard</a
+        >
+
+        <a
+          routerLink="tools"
+          routerLinkActive="bg-[#F3F3F16E] border border-white"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="text-white border-transparent w-[80px] sm:w-[96px] h-[34px] sm:h-[38px] flex items-center justify-center rounded-[11px] text-sm sm:text-base"
+          >Tools</a
+        >
+
+        <a
+          routerLink="staff"
+          routerLinkActive="bg-[#F3F3F16E] border border-white"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="text-white border-transparent w-[80px] sm:w-[96px] h-[34px] sm:h-[38px] flex items-center justify-center rounded-[11px] text-sm sm:text-base"
+          >Staff</a
+        >
+
+        <a
+          routerLink="unit"
+          routerLinkActive="bg-[#F3F3F16E] border border-white"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="text-white border-transparent w-[80px] sm:w-[96px] h-[34px] sm:h-[38px] flex items-center justify-center rounded-[11px] text-sm sm:text-base"
+          >Unit</a
+        >
+
+        <a
+          routerLink="support"
+          routerLinkActive="bg-[#F3F3F16E] border border-white"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="text-white border-transparent w-[80px] sm:w-[96px] h-[34px] sm:h-[38px] flex items-center justify-center rounded-[11px] text-sm sm:text-base"
+          >Support</a
+        >
+
+        <a
+          routerLink="settings"
+          routerLinkActive="bg-[#F3F3F16E] border border-white"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="text-white border-transparent w-[80px] sm:w-[96px] h-[34px] sm:h-[38px] flex items-center justify-center rounded-[11px] text-sm sm:text-base"
+          >Settings</a
+        >
+      </div>
+
+     
+      <button
+        class="md:hidden text-white p-2 focus:outline-none"
+        aria-label="Open Menu"
+        (click)="toggleMobileMenu()"
+      >
+       
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+     
+      <div class="flex gap-2 sm:gap-4">
+        <button>
+          <img src="/bell.png" class="w-10 h-10 sm:w-[46px] sm:h-[46px]" alt="Notifications" />
+        </button>
+        <button (click)="logout()">
+          <img src="/Group1.png" class="w-10 h-10 sm:w-[46px] sm:h-[46px]" alt="Logout" />
+        </button>
+      </div>
+    </div>
+
+   
+    <div *ngIf="mobileMenuOpen" class="md:hidden bg-white mx- rounded-lg mt-4 p-4 shadow-lg overflow-hidden">
+      <a
+        routerLink="dashboard"
+        routerLinkActive="bg-[#F3F3F16E] border border-white"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="block text-gray-700 py-2 px-4 rounded-md"
+        >Dashboard</a
+      >
+      <a
+        routerLink="tools"
+        routerLinkActive="bg-[#F3F3F16E] border border-white"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="block text-gray-700 py-2 px-4 rounded-md"
+        >Tools</a
+      >
+      <a
+        routerLink="staff"
+        routerLinkActive="bg-[#F3F3F16E] border border-white"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="block text-gray-700 py-2 px-4 rounded-md"
+        >Staff</a
+      >
+      <a
+        routerLink="unit"
+        routerLinkActive="bg-[#F3F3F16E] border border-white"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="block text-gray-700 py-2 px-4 rounded-md"
+        >Unit</a
+      >
+      <a
+        routerLink="support"
+        routerLinkActive="bg-[#F3F3F16E] border border-white"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="block text-gray-700 py-2 px-4 rounded-md"
+        >Support</a
+      >
+      <a
+        routerLink="settings"
+        routerLinkActive="bg-[#F3F3F16E] border border-white"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="block text-gray-700 py-2 px-4 rounded-md"
+        >Settings</a
+      >
+    </div>
+
+   
+    <div class="mt-4 bg-white mx-4 rounded-t-[30px] p-4 sm:mx-6 overflow-hidden">
+      <router-outlet></router-outlet>
+    </div>
   </div>
+</div> 

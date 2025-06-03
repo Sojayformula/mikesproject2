@@ -125,43 +125,71 @@ parentUnitList: any[] = [];
 
 
 
-  selectedUnitId: string | null = null;
-selectedUnitPayload: any = null; 
+//   selectedUnitId: string | null = null;
+// selectedUnitPayload: any = null; 
 
 
-  selectedId(item: any) {
-  this.selectedUnitId = item._id;  
-  this.selectedUnitPayload = { ...item };
+
+selectedUnitId: string | null = null;
+selectedUnitPayload: any = null;
+
+selectedId(item: any) {
+  this.selectedUnitId = item._id;
+  this.selectedUnitPayload = { ...item,
+    unitHead: item.unitHead?._id || null,
+    parentUnit: item.parentUnit?._id || item.parentUnit || null,
+    organization: item.organization?._id || null,
+  };
   console.log('Selected Unit ID:', this.selectedUnitId);
 }
 
 editUnit(form: NgForm) {
-  if (!this.selectedUnitId) {
-    console.log('No unit selected');
-    return;
-  }
+  if (!this.selectedUnitId) return;
 
-
-    const payloadToSend = {
-    ...this.selectedUnitPayload,
-    unitHead: this.selectedUnitPayload?.unitHead?._id || null,
-    parentUnit: this.selectedUnitPayload?.parentUnit?._id || this.selectedUnitPayload?.parentUnit || null,
-    organization: this.selectedUnitPayload?.organization?._id || null, // optional: depends on your backend
-  };
-
-
-// this.selectedUnitPayload
-  this.pagesService.updateUnit(this.selectedUnitId, payloadToSend ).subscribe({
-    next: (res) => {
-      console.log('api data', res);
-      this.fetchunit()
-         this.resetForm(form);
+  this.pagesService.updateUnit(this.selectedUnitId, this.selectedUnitPayload).subscribe({
+    next: () => {
+      this.fetchunit();
+      this.resetForm(form);
     },
-    error: (err) => {
-      console.log('update failed', err);
-    }
+    error: (err) => console.log('Update failed', err),
   });
 }
+
+
+
+//   selectedId(item: any) {
+//   this.selectedUnitId = item._id;  
+//   this.selectedUnitPayload = { ...item };
+//   console.log('Selected Unit ID:', this.selectedUnitId);
+// }
+
+// editUnit(form: NgForm) {
+//   if (!this.selectedUnitId) {
+//     console.log('No unit selected');
+//     return;
+//   }
+
+
+//     const payloadToSend = {
+//     ...this.selectedUnitPayload,
+//     unitHead: this.selectedUnitPayload?.unitHead?._id || null,
+//     parentUnit: this.selectedUnitPayload?.parentUnit?._id || this.selectedUnitPayload?.parentUnit || null,
+//     organization: this.selectedUnitPayload?.organization?._id || null, // optional: depends on your backend
+//   };
+
+
+// // this.selectedUnitPayload
+//   this.pagesService.updateUnit(this.selectedUnitId, payloadToSend ).subscribe({
+//     next: (res) => {
+//       console.log('api data', res);
+//       this.fetchunit()
+//          this.resetForm(form);
+//     },
+//     error: (err) => {
+//       console.log('update failed', err);
+//     }
+//   });
+// }
 
 
 resetForm(form: NgForm) {
