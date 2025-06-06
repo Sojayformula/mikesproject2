@@ -94,40 +94,17 @@ parentUnitList: any[] = [];
 
 
 
-  getId(id: string){
-   this.pagesService.getId(id).subscribe({
-    next: (res)=>{
-      console.log('get me id', res)
-    },
+  // getId(id: string){
+  //  this.pagesService.getId(id).subscribe({
+  //   next: (res)=>{
+  //     console.log('get me id', res)
+  //   },
 
-    error: (err)=>{
-      console.log('get id failed', err)
-    }
-   })
-  }
-
-
-  // ditUnit(){
-  //   const Id = this.selectedId;
-  //   let payload = this.Data;
-  //   payload.unitHead = this.addUnitData.unitHead._id;
-  //   payload.parentUnit = this.addUnitData.parentUnit._id;
-  //   this.pagesService.updateUnit(id, payload).subscribe({
-  //     next: (res)=>{
-  //       console.log('api data', res)
-  //     },
-
-  //     error:(err)=>{
-  //        console.log('update failed', err)
-  //     }
-  //   })
+  //   error: (err)=>{
+  //     console.log('get id failed', err)
+  //   }
+  //  })
   // }
-
-
-
-//   selectedUnitId: string | null = null;
-// selectedUnitPayload: any = null; 
-
 
 
 selectedUnitId: string | null = null;
@@ -148,12 +125,18 @@ editUnit(form: NgForm) {
 
   this.pagesService.updateUnit(this.selectedUnitId, this.selectedUnitPayload).subscribe({
     next: () => {
+      alert('Table edited successfully')
       this.fetchunit();
       this.resetForm(form);
     },
-    error: (err) => console.log('Update failed', err),
+    error: (err) => {
+      console.log('Update failed', err)
+    }
   });
+
 }
+
+
 
 
 
@@ -308,6 +291,29 @@ openEditModal() {
 
 
 
+
+
+
+  // ditUnit(){
+  //   const Id = this.selectedId;
+  //   let payload = this.Data;
+  //   payload.unitHead = this.addUnitData.unitHead._id;
+  //   payload.parentUnit = this.addUnitData.parentUnit._id;
+  //   this.pagesService.updateUnit(id, payload).subscribe({
+  //     next: (res)=>{
+  //       console.log('api data', res)
+  //     },
+
+  //     error:(err)=>{
+  //        console.log('update failed', err)
+  //     }
+  //   })
+  // }
+
+
+
+//   selectedUnitId: string | null = null;
+// selectedUnitPayload: any = null; 
 
 
 

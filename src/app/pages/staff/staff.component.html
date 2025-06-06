@@ -1,1 +1,64 @@
-<p>staff works!</p>
+ <!-- Table -->
+  <div class="lg:mt-10 mt-20">
+    <div class="overflow-x-auto">
+      <table class="min-w-full table-auto text-[#353535]" id="Data">
+        <thead class="bg-gray-100 text-left">
+          <tr>
+            <th class="px-4 py-2">
+              <div class="flex items-center space-x-2">
+                <div class="border-2 border-[#C0C4CE] w-5 h-5 rounded-md"></div>
+                <span>Staff id</span>
+              </div>
+            </th>
+            <th class="px-4 py-2">Full name</th>
+            <!-- <th class="px-4 py-2">Description</th> -->
+            <th class="px-4 py-2">Employment type</th>
+            <th class="px-4 py-2">Gender</th>
+            <th class="px-4 py-2">Unit</th>
+            <th class="px-4 py-2">BirthDay</th>
+            <th class="px-4 py-2">Status</th>
+            <th class="px-4 py-2">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-gray-200" *ngFor="let item of APIData; ">
+            <td class="px-4 py-2">
+              <div class="flex items-center space-x-2">
+                <div class="border-2 border-[#C0C4CE] w-5 h-5 rounded-md"></div>
+                <span>{{ item.staffId }}</span>
+              </div>
+            </td>
+            <td class="px-4 py-2">{{ item.firstName }} {{ item.lastName }}</td>
+            <td class="px-4 py-2">{{ item.employmentType }}</td>
+            <td class="px-4 py-2">{{ item.gender }}</td>
+            <td class="px-4 py-2">{{ item.department }}</td>
+            <td class="px-4 py-2">{{ item.dateOfBirth | date: 'yyyy-MM-dd'  }}</td>
+            <td class="px-4 py-2">
+              
+               <div 
+                class="rounded px-3 py-1 text-xs w-fit text-center"
+                [ngClass]="{
+                  'bg-[#15C12924] border-2 border-[#26AB5B5C] text-[#26AB5B] w-[70px] h-[30px] rounded-[8px]': item.employmentStatus === 'Onduty',
+                   'bg-[#FFBF4024] border-2 border-[#FFBF405C] text-[#FFBF40] w-[70px] h-[30px] rounded-[8px]': item.employmentStatus === 'Onleave'
+                }"
+              >
+                {{ item.employmentStatus}} 
+              </div> 
+             
+          </td>
+
+        
+        <td class="p-2 flex gap-2">
+          <button (click)="navigate(item._id)" nz-button nzType="primary"  class="text-blue-600">
+          <span class="material-symbols-outlined">stylus_note</span>
+          </button>
+
+         <button nz-button nzType="default" class="text-red-600">
+          <span   class="material-symbols-outlined">delete</span>
+         </button>
+
+        </td> 
+         </tr>
+        </tbody>
+      </table>
+    </div>

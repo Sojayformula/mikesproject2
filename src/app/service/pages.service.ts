@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
 import { Observable } from 'rxjs/internal/Observable';
-import { addUnitModel, unitModel, updateUnitModel } from '../model/pagesModel';
+import { addUnitModel, getStaffModel, unitModel, updateUnitModel } from '../model/pagesModel';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +36,10 @@ export class PagesService {
   return this.http.post(`${environment.baseurl}/unit/create-unit`, payload);
 }
 
+   fetchMaritalStatus(item: unitModel): Observable<any> {
+  return this.http.get(`${environment.baseurl}/unit/get-units?page=1&pageSize=10`);
+}
+
   updateUnit(id: string, payload: updateUnitModel): Observable<any> {
   return this.http.patch(`${environment.baseurl}/unit/update-unit/${id}`, payload);
 }
@@ -46,8 +50,24 @@ export class PagesService {
   }
 
   deleteUnit(id: string): Observable<any> {
-  return this.http.delete<any>(`${environment.baseurl}/unit/delete-unit/${id}`);
+  return this.http.delete(`${environment.baseurl}/unit/delete-unit/${id}`);
 }
+
+getAllStaff():Observable<any> {
+  return this.http.get(`${environment.baseurl}/staff/organization/6836f4b6fbd83de4225f2b55`);
+}
+
+  getUserById(id: string, item:getStaffModel) {
+    return this.http.get<any>(`${environment.baseurl}/staff/staff/${id}`); 
+  }
+
+
+
+
+
+
+
+
 
 
 

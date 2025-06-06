@@ -2,9 +2,10 @@ export class unitModel{
     search!: string;
     page!: string;
     pageSize!: string;
+    maritalStatus!: string
 }
 
-export interface Root {
+export interface unitModelResponseModel {
   success: boolean
   message: string
   data: Daum[]
@@ -319,5 +320,111 @@ export interface ParentUnit2 {
   updatedAt: string
   __v: number
 }
+
+
+
+
+
+
+
+
+
+      //Get Staff Model //
+export class getStaffModel{
+   firstName!: string
+  lastName!: string
+   email!: string
+    gender!: string
+  nationality!: string
+  otherName!: string
+  idNumber!: string
+  idType!: string
+   dateOfBirth!: string
+   maritalStatus!: string
+  phoneNumber!: string
+ 
+}
+
+
+export interface Root {
+  success: boolean
+  message: string
+  data: Daum[]
+  timestamp: string
+}
+
+export interface Daum {
+  _id: string
+  firstName: string
+  lastName: string
+  email: string
+  employmentStatus: string
+  numberOfChildren: number
+  faceEmbedding: any[]
+  password: string
+  isFirstLogin: boolean
+  isOrganizationalHead: boolean
+  isUnitHead: boolean
+  organization: Organization
+  children: Children[]
+  educationDetails: EducationDetail[]
+  createdAt: string
+  updatedAt: string
+  __v: number
+  refreshToken?: string
+  supervisor: string
+  gender: string
+  nationality: string
+  otherName: string
+  idNumber: string
+  idType: string
+  maritalStatus: string
+  phoneNumber: string
+  employmentType: string
+  jobTitle: string
+  workLocation: string
+  dateOfBirth: string
+  unit: string
+  profilePicture?: string
+  hireDate?: string
+  staffId?: string
+  spouseName?: string
+  spousePhone?: string
+  spouseEmail?: string
+  nextOfKinFullName?: string
+  nextOfKinRelationship?: string
+  nextOfKinPhoneNumber?: string
+  nextOfKinEmail?: string
+  nextOfKinCurrentAddress?: string
+  emergencyContactFullName?: string
+  emergencyContactRelationship?: string
+  emergencyContactPhoneNumber?: string
+  emergencyContactEmail?: string
+  emergencyContactCurrentAddress?: string
+  role?: string
+  qrCode?: string
+}
+
+export interface Organization {
+  _id: string
+  name: string
+  email: string
+  location: string
+}
+
+export interface Children {
+  fullName: string
+  dob: string
+  _id: string
+}
+
+export interface EducationDetail {
+  institutionName: string
+  courseOfStudy: string
+  startDate: string
+  endDate: string
+  _id: string
+}
+
 
 
