@@ -392,3 +392,16 @@
 //      <!-- <td class="px-4 py-2 relative">
 //               <button (click)="openModal(i)" class="text-gray-600 hover:text-black">&#x22EE;</button>
 //             </td> -->
+
+// get formattedDOB(): string {
+//   return formatDate(this.staffData.supervisor.dateOfBirth, 'MM/dd/yyyy', 'en-US');
+// }
+
+// set formattedDOB(value: string) {
+//   this.staffData.supervisor.dateOfBirth = value;
+// }
+
+   // If there's any value typed, mark this step as "typed"
+  //   const isTyping = Object.values(this.staffData).some(val => val && val.toString().trim().length > 0);
+  //   this.checkboxService.setTypingStatus('person-information', isTyping);
+  // }

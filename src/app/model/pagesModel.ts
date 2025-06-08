@@ -330,23 +330,12 @@ export interface ParentUnit2 {
 
 
       //Get Staff Model //
-export class getStaffModel{
-   firstName!: string
-  lastName!: string
-   email!: string
-    gender!: string
-  nationality!: string
-  otherName!: string
-  idNumber!: string
-  idType!: string
-   dateOfBirth!: string
-   maritalStatus!: string
-  phoneNumber!: string
- 
-}
+      export class getStaffModel {
+        nationality!: string;
+        maritalStatus!: string;
+      }
 
-
-export interface Root {
+export interface getStaffResponseModel {
   success: boolean
   message: string
   data: Daum[]

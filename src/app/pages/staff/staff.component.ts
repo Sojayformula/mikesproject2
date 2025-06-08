@@ -21,11 +21,11 @@ export class StaffComponent implements OnInit {
   }
 
   fetchAllStaff(){
-    //  console.log('APIData response', this.APIData)
     this.pageService.getAllStaff().subscribe({
       next: (res)=>{
         this.APIData = res.data;
          console.log('response data', res)
+          console.log('APIData response', this.APIData)
        
       },
 
@@ -38,7 +38,7 @@ export class StaffComponent implements OnInit {
   navigate(item:string){
     // this.router.navigate([`/person-information?staffId=${id}`])
     // const data =  JSON.stringify(item)
-    this.router.navigateByUrl(`/person-information?staffId=${item}`)
+    this.router.navigateByUrl(`/editstaff-layout?staffId=${item}`)
   }
 
 }

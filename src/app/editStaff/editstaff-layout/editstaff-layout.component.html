@@ -1,0 +1,67 @@
+<div>
+
+    <div class="flex justify-between items-center bg-[#FAFAFA] border border-[#DCDEE3] w-full [1385px]  h-[72px] px-4 mt-4">
+            <div class="flex gap-6">
+            <div class="">
+                <button (click)="goBack()" class="bg-[#EFF0F3] w-[40px] h-[40px] rounded-[10px] p-[10px]">
+                    <img src="/Backarrow.png">
+                </button> 
+            </div>
+            <div class="mt-2 font-bold">
+                Add New Staff
+            </div>
+
+            </div>
+
+            <div class="flex gap-4">
+                 <button
+                  *ngIf="currentStepIndex > 0"
+                  (click)="goToPrev()"
+                  class="border border-[#727A90] w-[78px] h-[40px] rounded-[10px] text-[#727A90] text-[14px]">Previous</button>
+                <button
+                 (click)="goToNext()"
+                 [disabled]="currentStepIndex === steps.length - 1"
+                 class="bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] w-[78px] h-[40px] rounded-[10px] text-white">Next</button>
+            </div> 
+      </div>
+
+
+    <!-- Static Sidebar -->
+<div class="w-64 h-full bg-white text-black gray-800 text-whit fixed top-[12rem] left-0 shadow-lg mx-6">
+ 
+  <ul class="mt-10">
+   <li *ngFor="let step of steps" class="px-4 py-2 hover:bg-gray-700 hover:text-white">
+  <label class="relative flex items-center cursor-pointer">
+    <input
+      type="checkbox"
+      [checked]="isCheckedMap[step]"
+      class="peer hidden"
+    />
+    <div
+      class="w-5 h-5 rounded-full border-2 border-dotted border-[#D4D4D8] peer-checked:bg-green-500 flex items-center justify-center"
+    >
+      <svg
+        *ngIf="isCheckedMap[step]"
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-3 w-3 text-white"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <a [routerLink]="step" class="ml-2 capitalize">{{ step.replace('-', ' ') }}</a>
+  </label>
+</li>
+
+  </ul> 
+</div>
+
+
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+    
+</div>
+

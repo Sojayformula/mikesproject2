@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
 import { Observable } from 'rxjs/internal/Observable';
-import { addUnitModel, getStaffModel, unitModel, updateUnitModel } from '../model/pagesModel';
+import { addUnitModel, getStaffModel, getStaffResponseModel, unitModel, updateUnitModel } from '../model/pagesModel';
+import { Root } from '../model/login-model';
 
 @Injectable({
   providedIn: 'root'
@@ -57,8 +58,8 @@ getAllStaff():Observable<any> {
   return this.http.get(`${environment.baseurl}/staff/organization/6836f4b6fbd83de4225f2b55`);
 }
 
-  getUserById(id: string, item:getStaffModel) {
-    return this.http.get<any>(`${environment.baseurl}/staff/staff/${id}`); 
+  getUserById(id: string, item:getStaffModel):Observable<any>{
+    return this.http.get(`${environment.baseurl}/staff/staff/${id}`); 
   }
 
 
