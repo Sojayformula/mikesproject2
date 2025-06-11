@@ -19,6 +19,7 @@ import { EditstaffLayoutComponent } from './editStaff/editstaff-layout/editstaff
 import { StaffComponent } from './pages/staff/staff.component';
 import { EmengencycontactComponent } from './editStaff/emengencycontact/emengencycontact.component';
 import { EducationdetailsComponent } from './editStaff/educationdetails/educationdetails.component';
+import { EditPersonalInfoComponent } from './editStaff/edit-personal-info/edit-personal-info.component';
 
 
 export const routes: Routes = [
@@ -56,7 +57,8 @@ export const routes: Routes = [
                 {path: 'family-details', component: FamilyDetailsComponent},
                 {path: 'next-of-kins', component: NextOfKinsComponent},
                 {path: 'emengency-contact', component: EmengencycontactComponent},
-                {path: 'education-details', component: EducationdetailsComponent}
+                {path: 'education-details', component: EducationdetailsComponent},
+                {path: 'edit-personal-info', component: EditPersonalInfoComponent}   
               ]
             },
            ]

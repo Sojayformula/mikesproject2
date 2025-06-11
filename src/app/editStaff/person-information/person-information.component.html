@@ -3,35 +3,85 @@
  
 
 
-  <div class="mx-[17rem]">
-  <div>
-    <div class="mt-8">
+  <div class="mx-[17rem] mt-20">
+
+<!-- Edit button -->
+<div class="mt-6 flex gap-4 justify-end col-span-3 relative left-60">
+  <button
+    type="button"
+    *ngIf="!editMode"
+    (click)="onEditToggle()"
+    class="flex justify-center bg-blue- border border-[#727A90] text-[14px] text-[#727A90] w-[69.5px] h-[40px] py-2 rounded-[10px] hover:bg-gray-400 hover:text-white transition"
+  >
+     <span class="material-symbols-outlined text-[20px]">edit</span>Edit
+  </button>
+
+  <!-- Save and cancel -->
+  <ng-container *ngIf="editMode">
+    <button
+      type="button"
+      (click)="onSubmit(staffForm)"
+      
+      class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+    >
+      Save
+    </button>
+    <button
+      type="button"
+      (click)="onCancel()"
+      class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
+    >
+      Cancel
+    </button>
+  </ng-container>
+</div>
+
+
+             <!-- QRcode image -->
+<div class="flex justify-end relative left-60 mt-6">
+ <img src="/QRCode.png" class="w-[83px] h-[86px]"> 
+ </div>
+
+<!-- <img
+  *ngIf="staffData?.profilePicture"
+  [src]="getSafeProfilePicture(staffData.profilePicture)"
+  alt="Profile Picture"
+  class="object-cover w-full h-full rounded-full"
+/> -->
+
+<!-- imagePreview      -->
+
+
+  <div >
+
+    <div class="mt-[-9rem] ">
         <picture class="font-bold">Profile </picture>
         <p class="text-[#727A90] text-sm">The image will be displayed on their Profile</p>
     </div>
 
       <!-- Image Preview -->
-    <div class="lg:col-span-2 flex flex-col items-cente mt-10">
+     <div class="lg:col-span-2 flex flex-col items-cente mt-10">
       <div class="relative w-[90px] [167px] h-[90px] [167px] mb-2">
         <div class="border-[#4393FF] bg-[#4393FF1A] border rounded-full w-full h-full overflow-hidden flex items-center justify-center">
           <ng-container *ngIf="!imagePreview">
             <span class="text-gray-600 text-sm text-center">No Image</span>
           </ng-container>
           <img
-            *ngIf="imagePreview"
-            [src]="imagePreview"
+            *ngIf="staffData?.profilePicture"
+            [src]="getSafeProfilePicture(staffData.profilePicture)"
             alt="Image Preview"
             class="object-cover w-full h-full rounded-full"
           />
         </div>
       </div>
 
-      <!-- Upload image -->
+      Upload image
       <div>
         <input 
           type="file"
           id="fileInput"
           (change)="onFileSelected($event)"
+          [disabled]="!editMode"
           class="hidden"
         />
         <label
@@ -48,24 +98,23 @@
       </div>
     </div>
 
-  </div>
+  </div> 
 
 
 
-      <form  #staffForm="ngForm" (ngSubmit)="onSubmit(staffForm)" class="grid grid-cols-3 grid-rows-4 gap-4 p-6 bg-white rounded gap-y-6 gap-x-[22rem]">
-  <!-- Row 1 -->
-   
+      <form  #staffForm="ngForm" (ngSubmit)="onSubmit(staffForm)" class="grid grid-cols-3 grid-rows-4 gap-4 mt-10 bg-white rounded gap-y-6 gap-x-[22rem]">
+  <!-- Row 1 --> 
   <div >
     <label class="block w-40 text-sm font-medium text-gray-700">First Name</label>
-    <input type="text" name="firstName" [(ngModel)]="staffData.firstName"  (ngModelChange)="onInputChange('firstName', $event)"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+    <input type="text" name="firstName"  [disabled]="!editMode" [(ngModel)]="staffData.firstName"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Last Name</label>
-    <input type="text" name="lastName" [(ngModel)]="staffData.lastName" (ngModelChange)="onInputChange('lastName', $event)"   placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="lastName"  [disabled]="!editMode" [(ngModel)]="staffData.lastName"    placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
-  <div *ngIf="staffData">
-    <label class="block w-40 text-sm font-medium text-gray-700">Other</label>
-    <input type="other" name="other" [(ngModel)]="staffData.Other"  placeholder="Enter if any" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+  <div>
+    <label class="block w-40 text-sm font-medium text-gray-700">Other Name</label>
+    <input type="text" name="otherName"  [disabled]="!editMode" [(ngModel)]="staffData.otherName"  placeholder="Enter if any" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
  
  
@@ -73,22 +122,22 @@
   <!-- Row 2 -->
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Date of birth</label>
-    <input type="date" name="dateOfBirth" [(ngModel)]="formattedDOB " placeholder="Select birth date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    <input type="text" name="dateOfBirth"  [disabled]="!editMode" [(ngModel)]="formattedDOB" placeholder="Select birth date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Gender</label>
-    <input type="text" name="gender" [(ngModel)]="staffData.gender" placeholder="Chose gender" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    <input type="text" name="gender"  [disabled]="!editMode" [(ngModel)]="staffData.gender" placeholder="Chose gender" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Nationality</label>
-    <input type="text" name="nationality" [(ngModel)]="staffData.supervisor.nationality" (ngModelChange)="onInputChange('nationality', $event)" placeholder="Enter country of origin" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="nationality"  [disabled]="!editMode" [(ngModel)]="staffData.nationality"  placeholder="Enter country of origin" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
 
 
   <!-- Row 3 -->
   <div >
      <label class="block w-40 text-sm font-medium text-gray-700">Marital Status</label>
-    <input type="text" name="maritalStatus" [(ngModel)]="staffData.supervisor.maritalStatus" (ngModelChange)="onInputChange('maritalStatus', $event)"  placeholder="Select marital status" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="maritalStatus"  [disabled]="!editMode" [(ngModel)]="staffData.maritalStatus"  placeholder="Select marital status" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   
     <!-- <label class="block w-40 text-sm font-medium text-gray-700">Marital status</label>
    <select
@@ -105,31 +154,29 @@
 
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Phone number</label>
-    <input type="text" name="phoneNumber" [(ngModel)]="staffData.supervisor.phoneNumber" placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="phoneNumber"  [disabled]="!editMode" [(ngModel)]="staffData.phoneNumber" placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Enter email address</label>
-    <input type="text" name="email" [(ngModel)]="staffData.supervisor.email " (ngModelChange)="onInputChange('email', $event)"  placeholder="Enter valid email address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="email"  [disabled]="!editMode" [(ngModel)]="staffData.email"  placeholder="Enter valid email address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
 
 
    <!-- Row 4 -->
   <div >
     <label class="block w-40 text-sm font-medium text-gray-700">ID Type</label>
-    <input type="text" name="idType" [(ngModel)]="staffData.supervisor.idType" placeholder="Select ID type (e.g Nation ID, Passport)" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="idType"  [disabled]="!editMode" [(ngModel)]="staffData.idType" placeholder="Select ID type (e.g Nation ID, Passport)" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
   <div >
     <label class="block w-40 text-sm font-medium text-gray-700">ID Number</label>
-    <input type="text" name="idNumber" [(ngModel)]="staffData.supervisor.idNumber" placeholder="Enter valid ID number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="idNumber"  [disabled]="!editMode" [(ngModel)]="staffData.idNumber" placeholder="Enter valid ID number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
   <div >
     <label class="block w-40 text-sm font-medium text-gray-700">Email address</label>
-    <input type="text" name="email" [(ngModel)]="staffData.supervisor.email" placeholder="Enter valid email address"  class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="email"  [disabled]="!editMode" [(ngModel)]="staffData.email" placeholder="Enter valid email address"  class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
 
 </form>
 
 
-
-
-</div>
+<!-- </div>(ngModelChange)="onInputChange('nationality', $event)" -->

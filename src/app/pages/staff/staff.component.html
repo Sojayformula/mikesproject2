@@ -1,7 +1,7 @@
  <!-- Table -->
-  <div class="lg:mt-10 mt-20">
-    <div class="overflow-x-auto">
-      <table class="min-w-full table-auto text-[#353535]" id="Data">
+  <div class="lg:mt-10 mt-20 ">
+    <div class="verflo">
+      <table class="w-full table-aut text-[#353535]" id="Data">
         <thead class="bg-gray-100 text-left">
           <tr>
             <th class="px-4 py-2">
@@ -10,17 +10,16 @@
                 <span>Staff id</span>
               </div>
             </th>
-            <th class="px-4 py-2">Full name</th>
-            <!-- <th class="px-4 py-2">Description</th> -->
-            <th class="px-4 py-2">Employment type</th>
-            <th class="px-4 py-2">Gender</th>
-            <th class="px-4 py-2">Unit</th>
-            <th class="px-4 py-2">BirthDay</th>
-            <th class="px-4 py-2">Status</th>
-            <th class="px-4 py-2">Action</th>
+            <th class="px- py-2">Full name</th>
+            <th class="px- py-">Employment type</th>
+            <th class="px- py-2">Gender</th>
+            <th class="px- py-2">Unit</th>
+            <th class="px- py-2">BirthDay</th>
+            <th class="px- py-2">Status</th>
+            <th class="px- py-2">Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="">
           <tr class="border-b border-gray-200" *ngFor="let item of APIData; ">
             <td class="px-4 py-2">
               <div class="flex items-center space-x-2">
@@ -28,15 +27,15 @@
                 <span>{{ item.staffId }}</span>
               </div>
             </td>
-            <td class="px-4 py-2">{{ item.firstName }} {{ item.lastName }}</td>
-            <td class="px-4 py-2">{{ item.employmentType }}</td>
-            <td class="px-4 py-2">{{ item.gender }}</td>
-            <td class="px-4 py-2">{{ item.department }}</td>
-            <td class="px-4 py-2">{{ item.dateOfBirth | date: 'yyyy-MM-dd'  }}</td>
-            <td class="px-4 py-2">
-              
+            <td class="px- py-2">{{ item.firstName }} {{ item.lastName }}</td>
+            <td class="px- py-2">{{ item.employmentType }}</td>
+            <td class="px- py-2">{{ item.gender }}</td>
+            <td class="px- py-2">{{ item.unit?.name }}</td>
+            <td class="px- py-2">{{ item.dateOfBirth | date: 'yyyy-MM-dd'  }}</td>
+            
+            <td class="px- py-2">
                <div 
-                class="rounded px-3 py-1 text-xs w-fit text-center"
+                class="rounded px-3 py-1 text-xs w-fi text-center"
                 [ngClass]="{
                   'bg-[#15C12924] border-[2px] border-[#26AB5B5c] text-[#26AB5B] w-[72px] h-[31px] rounded-lg': item.employmentStatus === 'Onduty',
                    'bg-[#FFBF4024] border-2 border-[#FFBF405c] text-[#FFBF40] w-[70px] h-[30px] rounded-[8px]': item.employmentStatus === 'Onleave'
@@ -44,7 +43,6 @@
               >
                 {{ item.employmentStatus}} 
               </div> 
-             
           </td>
 
         

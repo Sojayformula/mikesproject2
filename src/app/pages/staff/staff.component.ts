@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PagesService } from '../../service/pages.service';
 import { Router } from '@angular/router';
+import { allStaffModel } from '../../model/pagesModel';
 
 @Component({
   selector: 'app-staff',
@@ -14,16 +15,23 @@ export class StaffComponent implements OnInit {
 
   APIData: any[] = [];
 
-  constructor(private pageService:PagesService, private router:Router){}
+  allStaff: allStaffModel
+
+
+
+  constructor(private pageService:PagesService, private router:Router){
+
+    this.allStaff = new allStaffModel()
+  }
 
   ngOnInit(): void {
     this.fetchAllStaff()
   }
 
   fetchAllStaff(){
-    this.pageService.getAllStaff().subscribe({
+    this.pageService.getAllStaff(this.allStaff).subscribe({
       next: (res)=>{
-        this.APIData = res.data;
+        this.APIData = res.data || [];
          console.log('response data', res)
           console.log('APIData response', this.APIData)
        
@@ -35,10 +43,12 @@ export class StaffComponent implements OnInit {
     })
   }
 
+
   navigate(item:string){
     // this.router.navigate([`/person-information?staffId=${id}`])
     // const data =  JSON.stringify(item)
-    this.router.navigateByUrl(`/editstaff-layout?staffId=${item}`)
+    this.router.navigateByUrl(`/editstaff-layout?staffId=${item}`)      
   }
+
 
 }

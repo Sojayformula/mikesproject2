@@ -405,3 +405,56 @@
   //   const isTyping = Object.values(this.staffData).some(val => val && val.toString().trim().length > 0);
   //   this.checkboxService.setTypingStatus('person-information', isTyping);
   // }
+
+
+
+
+
+  //ngOnInit(): void {
+  //   const item = this.route.snapshot.queryParamMap.get('staffId');
+  //   this.staffId = item; 
+  
+  //   console.log("my id:", this.staffId);
+  
+  //   // Step 1: Fetch staff data if staffId is available
+  //   if (this.staffId) {
+  //     this.fetchStaffData();
+  //   }
+  
+  //   // Step 2: Get staff data from the service
+  //   this.staffData = this.staffDataService.getData();
+  
+  //   // Step 3: Check if staffData exists before accessing supervisor
+  //   if (this.staffData && !this.staffData.supervisor) {
+  //     this.staffData.supervisor = { nationality: '', maritalStatus: '' };
+  //   }
+  // }
+
+         //mike's param
+    // navigate(item:string){
+  //   // this.router.navigate([`/person-information?staffId=${id}`])
+  //   // const data =  JSON.stringify(item)
+  //   this.router.navigateByUrl(`/editstaff-layout?staffId=${item}`)      
+  // }
+
+   //const item = this.route.snapshot.queryParamMap.get('staffId');
+  // this.staffId = item; 
+
+  // //  const  item = this.route.snapshot.queryParamMap.get('staffId')
+  
+  //   console.log("my id:", JSON.parse(JSON.stringify(item)))
+  // //  this.fetchMaritalStatus() 
+
+  
+
+// onFileSelected(event: any) {
+//   const file = event.target.files[0];
+//   if (file) {
+//     const reader = new FileReader();
+//     reader.onload = () => {
+//       this.imagePreview = reader.result as string;
+//       this.staffData.profilePicture = this.imagePreview;
+//     };
+//     reader.readAsDataURL(file);
+//   }
+// }

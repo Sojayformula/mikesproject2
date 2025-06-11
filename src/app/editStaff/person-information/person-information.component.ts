@@ -6,7 +6,9 @@ import { PagesService } from '../../service/pages.service';
 import { Location } from '@angular/common';
 import { StaffDataService } from '../../StaffDataService/staff-data.service';
 import { CheckboxService } from '../../checkboxService/checkbox.service';
-import { getStaffModel } from '../../model/pagesModel';
+import { allStaffModel, editStaffModel, getStaffModel } from '../../model/pagesModel';
+import imageCompression from 'browser-image-compression';
+
 
 
 @Component({
@@ -17,8 +19,11 @@ import { getStaffModel } from '../../model/pagesModel';
 })
 export class PersonInformationComponent implements OnInit{
 
-   staffData: any = {};  
+  currentStepIndex = 0;
+   staffData: any={};  
+   editStaffData: editStaffModel;
   getStaffModel: getStaffModel;
+  getAllStaff: allStaffModel;
   selectedStaff: any={};
   storedMaritalData: string = ''; 
   staffId: any;
@@ -30,6 +35,9 @@ export class PersonInformationComponent implements OnInit{
   private typingStatusService: CheckboxService,){
 
     this.getStaffModel = new getStaffModel()
+    this.editStaffData = new editStaffModel()
+
+      this.getAllStaff = new allStaffModel()
   }
 
 
@@ -43,60 +51,34 @@ export class PersonInformationComponent implements OnInit{
     console.log("my id:", JSON.parse(JSON.stringify(item)))
   //  this.fetchMaritalStatus() 
 
+
+  //  this.fetchStaffData();
+
      if (this.staffId) {
       this.fetchStaffData();
      }
 
-       this.staffData = this.staffDataService.getData();
+         this.staffData = this.staffDataService.getData();
 
   //        this.staffData = {
-  //   supervisor: { nationality: '', maritalStatus: '' }, 
+  //    supervisor: { nationality: '', maritalStatus: '' }, 
   // };
 
-    if (!this.staffData.supervisor) {
-    this.staffData.supervisor = { nationality: '', maritalStatus: '' };
-  }
+  //   if (!this.staffData.supervisor) {
+  //   this.staffData.supervisor = { nationality: '', maritalStatus: '' };
+  // }
 
   }
-
-
-
-
-// ngOnInit(): void {
-//   const item = this.route.snapshot.queryParamMap.get('staffId');
-//   this.staffId = item; 
-
-//   console.log("my id:", this.staffId);
-
-//   // Step 1: Fetch staff data if staffId is available
-//   if (this.staffId) {
-//     this.fetchStaffData();
-//   }
-
-//   // Step 2: Get staff data from the service
-//   this.staffData = this.staffDataService.getData();
-
-//   // Step 3: Check if staffData exists before accessing supervisor
-//   if (this.staffData && !this.staffData.supervisor) {
-//     this.staffData.supervisor = { nationality: '', maritalStatus: '' };
-//   }
-// }
-
-
-
-
 
 
 
     fetchStaffData() {
-    this.getStaffModel = new getStaffModel()
-    this.pagesService.getUserById(this.staffId, this.getStaffModel).subscribe({
+    this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
       next: (res ) => {
-        this.staffData = res;
-         this.staffDataService.setData(this.staffData); // ✅ store data 
+        this.staffData = res; 
         console.log('Fetched staff data:', this.staffData);
          this.loading = false;
-        
+
       },
       error: (err) => {
         console.error('Error fetching staff:', err);
@@ -109,30 +91,84 @@ export class PersonInformationComponent implements OnInit{
     }
 
 
-onSubmit(form:NgForm){}
+//     fetchStaffData() {
+//       this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
+//   next: (res) => {
+//     // this.staffData = res.data;
+//      if (res && res) {
+//       this.staffData = res;}
+
+//     // Clean up the profilePicture (remove surrounding quotes)
+//     this.staffData.profilePicture = this.staffData.profilePicture?.replace(/^"|"$/g, '');
+
+//     // If needed, also assign it to the image preview
+//     this.imagePreview = this.staffData.profilePicture;
+//   },
+//   error: (err) => {
+//     console.error('Error fetching staff:', err);
+//   }
+// });
+
+//     }
 
 
 
-  selectedFile!: File;
+
+ getSafeProfilePicture(pic?: string): string {
+  if (!pic) return '/assets/default-profile.png'; // fallback image if missing
+  return pic.replace(/^"|"$/g, '');
+}
+
+
+
+
+
+
+    
+
+  // selectedFile!: File;
 imagePreview: string | ArrayBuffer | null = null;
 
-  onFileSelected(event: Event): void {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files.length > 0) {
-    this.selectedFile = input.files[0];
+selectedFile: File | null = null;
 
+
+
+
+async onFileSelected(event: any) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const options = {
+    maxSizeMB: 1,
+    maxWidthOrHeight: 100,
+    useWebWorker: true,
+  };
+
+  try {
+    // Compress the image
+    const compressedFile = await imageCompression(file, options);
+
+    // Convert compressed file to base64 string for preview and submission
     const reader = new FileReader();
     reader.onload = () => {
-      this.imagePreview = reader.result;
+      this.imagePreview = reader.result as string;
+      this.staffData.profilePicture = this.imagePreview;
     };
-    reader.readAsDataURL(this.selectedFile);
+    reader.readAsDataURL(compressedFile);
+  } catch (error) {
+    console.error('Image compression failed:', error);
+    alert('Failed to compress image. Please try another one.');
   }
 }
 
 
 
+
+
+
+
 get formattedDOB(): string {
-  const date = this.staffData?.supervisor?.dateOfBirth;
+  const date = this.staffData?.dateOfBirth;
   return date ? formatDate(date, 'yyyy-MM-dd', 'en-US') : '';
 }
 
@@ -140,17 +176,13 @@ set formattedDOB(value: string) {
   this.staffData.supervisor.dateOfBirth = value;
 }
 
- goBack(){
+ goBackToPersonalInfo(){
     this.location.back()
   }
 
-  //   onInputChange(field: string, value: string) {
-  //   this.staffData[field] = value;
-  //   this.staffDataService.setData({ [field]: value });
-
-  //   const isTyping = Object.values(this.staffData).some(val => val && val.toString().trim().length > 0);
-  //   this.checkboxService.setTypingStatus('person-information', isTyping);
-  // }
+  next(){
+    this.router.navigate(['edit-personal-info'])
+  }
 
   onInputChange(field: string, value: string) {
   this.staffData.supervisor[field] = value;
@@ -167,4 +199,60 @@ set formattedDOB(value: string) {
 
 
 
+editMode: boolean = false;
+originalStaffData: any;
+
+onEditToggle(): void {
+  this.editMode = true;
+  // this.originalStaffData = JSON.parse(JSON.stringify(this.staffData));
 }
+
+onCancel(): void {
+  this.editMode = false;
+  // this.staffData = JSON.parse(JSON.stringify(this.originalStaffData));
+}
+
+onSubmit(form: NgForm): void {
+
+ const payload = {
+    _id: this.staffId, 
+    profilePicture: this.staffData?.profilePicture || '',
+    firstName: form.value.firstName,
+    lastName: form.value.lastName,
+    otherName: form.value.otherName || '',
+    email: form.value.email,
+    dateOfBirth: form.value.dateOfBirth,
+    nationality: form.value.nationality,
+    gender: form.value.gender,
+    idType: form.value.idType,
+    phoneNumber: form.value.phoneNumber,
+    idNumber: form.value.idNumber,
+    maritalStatus: form.value.maritalStatus
+  };
+
+  console.log('Submitting payload:', this.editStaffData);
+
+
+  this.pagesService.getEditStaff(this.staffId, payload ).subscribe({
+    next: (res) => {
+      console.log('patch', res)
+      // console.log('Form submited successfully', this.staffData)
+       alert('Form updated successfull')
+
+    },
+
+    error: (err) => {
+      console.log('error', err)
+      console.log('Failed to submit form')
+      alert('Form update failed')
+    }
+  })
+ }
+
+
+}
+
+
+
+
+// .supervisor?

@@ -5,6 +5,8 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
 import { environment } from '../../environment/environment';
 import { loginModel } from '../../model/login-model';
+//import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
     @Component({
       selector: 'app-signin',
@@ -14,16 +16,7 @@ import { loginModel } from '../../model/login-model';
     })
     export class SigninComponent {
 
-  //       loginData: loginModel = {
-  //   email: '',
-  //   password: ''
-  // };
-
-  //   loginData = {
-  //   email: '',
-  //   password: ''
-  // };
-
+    
       loginData: loginModel
 
       show = false;
@@ -42,6 +35,7 @@ import { loginModel } from '../../model/login-model';
     }
 
     onSubmit(item:NgForm){
+       this.isLoading = true;
        console.log('Login payload:', this.loginData);
 
 

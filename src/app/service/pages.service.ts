@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
 import { Observable } from 'rxjs/internal/Observable';
-import { addUnitModel, getStaffModel, getStaffResponseModel, unitModel, updateUnitModel } from '../model/pagesModel';
+import { addUnitModel, allStaffModel, editStaffModel, getStaffModel, getStaffResponseModel, unitModel, updateUnitModel } from '../model/pagesModel';
 import { Root } from '../model/login-model';
 
 @Injectable({
@@ -54,38 +54,77 @@ export class PagesService {
   return this.http.delete(`${environment.baseurl}/unit/delete-unit/${id}`);
 }
 
-getAllStaff():Observable<any> {
-  return this.http.get(`${environment.baseurl}/staff/organization/6836f4b6fbd83de4225f2b55`);
+getAllStaff(item: allStaffModel):Observable<any> {
+  // return this.http.get(`${environment.baseurl}/staff/all-staffs`);
+
+     console.log("give me unit",item)
+    let url = `${environment.baseurl}/staff/all-staffs`     
+
+    let isFirstParam = true;
+
+    if (item.page) {
+      url += `${isFirstParam ? '?' : '&'}page=${item.page}`;
+      isFirstParam = false;
+    }
+    if (item.pageSize) {
+      url += `${isFirstParam ? '?' : '&'}pageSize=${item.pageSize}`;
+      isFirstParam = false;
+    }
+      if (item.unit) {
+      url += `${isFirstParam ? '?' : '&'}unit=${item.unit}`;
+      isFirstParam = false;
+    }
+      if (item.search) {
+      url += `${isFirstParam ? '?' : '&'}search=${item.search}`;
+      isFirstParam = false;
+    }
+      if (item.gender) {
+      url += `${isFirstParam ? '?' : '&'}gender=${item.gender}`;
+      isFirstParam = false;
+    }
+      if (item.maritalStatus) {
+      url += `${isFirstParam ? '?' : '&'}maritalStatus=${item.maritalStatus}`;
+      isFirstParam = false;
+    }
+      if (item.employmentType) {
+      url += `${isFirstParam ? '?' : '&'}employmentType=${item.employmentType}`;
+      isFirstParam = false;
+    }
+      if (item.workLocation) {
+      url += `${isFirstParam ? '?' : '&'}workLocation=${item.workLocation}`;
+      isFirstParam = false;
+    }
+      if (item.staffStatus) {
+      url += `${isFirstParam ? '?' : '&'}staffStatus=${item.staffStatus}`;
+      isFirstParam = false;
+    }
+
+    return this.http.get(url)
+  
 }
 
-  getUserById(id: string, item:getStaffModel):Observable<any>{
+  getUserById(id: string, item: allStaffModel):Observable<any>{
     return this.http.get(`${environment.baseurl}/staff/staff/${id}`); 
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  getOrganizations(): Observable<any> {
-    return this.http.get<any>(`${environment.baseurl}/organizations`); 
+  getEditStaff(id: string, payload: editStaffModel): Observable<any> {
+    return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
   }
 
-  getParentUnits(): Observable<any> {
-    return this.http.get<any>(`${environment.baseurl}/units`); 
-  }
+
+
+
+
+
+
+  // getParentUnits(): Observable<any> {
+  //   return this.http.get<any>(`${environment.baseurl}/units`);    getStaffModel
+  // }
+
+  //   getOrganizations(): Observable<any> {
+  //   return this.http.get<any>(`${environment.baseurl}/organizations`); 
+  // }
 
 
 }

@@ -70,7 +70,7 @@ export interface UnitHead {
   isOrganizationalHead: boolean
   isUnitHead: boolean
   role?: string
-  organization: string
+  organization: Organization
   createdAt: string
   updatedAt: string
   __v: number
@@ -111,8 +111,8 @@ export interface ParentUnit {
   name: string
   description: string
   isSubUnit: boolean
-  unitHead: string
-  organization: string
+  unitHead: UnitHead
+  organization: Organization
   parentUnit: ParentUnit
   createdAt: string
   updatedAt: string
@@ -177,8 +177,8 @@ export interface ParentUnit {
   name: string
   description: string
   isSubUnit: boolean
-  unitHead: string
-  organization: string
+  unitHead: UnitHead
+  organization: Organization
   parentUnit: ParentUnit
   createdAt: string
   updatedAt: string
@@ -190,9 +190,9 @@ export interface ParentUnit2 {
   name: string
   description: string
   isSubUnit: boolean
-  unitHead: string
-  organization: string
-  parentUnit: any
+  unitHead: UnitHead
+  organization: Organization
+  parentUnit: ParentUnit
   createdAt: string
   updatedAt: string
   __v: number
@@ -206,9 +206,9 @@ export interface ParentUnit2 {
 export class addUnitModel{
    name!: string;
   isSubUnit!: boolean;
-  unitHead!: string;
+  unitHead!: UnitHead;
   description!: string;
-  parentUnit!: string;
+  parentUnit!: ParentUnit;
 }
 
 
@@ -230,8 +230,8 @@ export interface Data {
   name: string
   description: string
   isSubUnit: boolean
-  unitHead: string
-  organization: string
+  unitHead: UnitHead
+  organization: Organization
   // parentUnit!: any
   _id: string
   createdAt: string
@@ -300,8 +300,8 @@ export interface ParentUnit {
   name: string
   description: string
   isSubUnit: boolean
-  unitHead: string
-  organization: string
+  unitHead: UnitHead
+  organization: Organization
   parentUnit: ParentUnit
   createdAt: string
   updatedAt: string
@@ -313,13 +313,95 @@ export interface ParentUnit2 {
   name: string
   description: string
   isSubUnit: boolean
-  unitHead: string
-  organization: string
-  parentUnit: any
+  unitHead: UnitHead
+  organization: Organization
+  parentUnit: ParentUnit
   createdAt: string
   updatedAt: string
   __v: number
 }
+
+
+
+
+
+
+
+
+
+
+export class editStaffModel{
+  _id!: string
+  profilePicture!: string
+  firstName!: string
+  lastName!: string
+  otherName!: string
+  email!: string
+  dateOfBirth!: string
+  nationality!: string
+  gender!: string
+  idType!: string
+  phoneNumber!: string
+  idNumber!: string
+  maritalStatus!: string
+
+}
+
+
+export interface editStaffResponseModel {
+  profilePicture: string
+  firstName: string
+  lastName: string
+  otherName: string
+  email: string
+  dateOfBirth: string
+  nationality: string
+  gender: string
+  idType: string
+  phoneNumber: string
+  idNumber: string
+  maritalStatus: string
+  jobTitle: string
+  unit: string[]
+  employmentType: string
+  hireDate: string
+  workLocation: string
+  staffId: string
+  supervisor: string[]
+  role: string
+  emergencyContactFullName: string
+  emergencyContactRelationship: string
+  emergencyContactPhoneNumber: string
+  emergencyContactEmail: string
+  emergencyContactCurrentAddress: string
+  spouseName: string
+  spousePhone: string
+  spouseEmail: string
+  marriageCertificateUrl: string
+  numberOfChildren: number
+  children: Children[]
+  educationDetails: EducationDetail[]
+  nextOfKinFullName: string
+  nextOfKinRelationship: string
+  nextOfKinPhoneNumber: string
+  nextOfKinEmail: string
+  nextOfKinCurrentAddress: string
+}
+
+export interface Children {
+  fullName: string
+  dob: string
+  birthCertificateUrl: string
+}
+
+export interface EducationDetail {
+  institutionName: string
+  courseOfStudy: string
+  startDate: string
+  endDate: string
+  certificateUrl: string
+}
+
 
 
 
@@ -333,6 +415,7 @@ export interface ParentUnit2 {
       export class getStaffModel {
         nationality!: string;
         maritalStatus!: string;
+
       }
 
 export interface getStaffResponseModel {
@@ -361,7 +444,7 @@ export interface Daum {
   updatedAt: string
   __v: number
   refreshToken?: string
-  supervisor: string
+  supervisor: Supervisor
   gender: string
   nationality: string
   otherName: string
@@ -373,7 +456,7 @@ export interface Daum {
   jobTitle: string
   workLocation: string
   dateOfBirth: string
-  unit: string
+  unit?: Unit
   profilePicture?: string
   hireDate?: string
   staffId?: string
@@ -414,6 +497,180 @@ export interface EducationDetail {
   endDate: string
   _id: string
 }
+
+
+
+// AllStaffModel//
+export class allStaffModel {
+  unit!: string;
+  search!: string;
+  page!: number;
+  pageSize!: number;
+  gender!: string;
+  maritalStatus!: string;
+  employmentType!: string;
+  workLocation!: string;
+  staffStatus!: string;
+}
+
+export interface Root {
+  message: string
+  data: Daum[]
+  pagination: Pagination
+}
+
+export interface Daum {
+  _id: string
+  profilePicture?: string
+  firstName: string
+  lastName: string
+  otherName: string
+  email: string
+  dateOfBirth: string
+  nationality: string
+  gender: string
+  idType: string
+  phoneNumber: string
+  idNumber: string
+  maritalStatus: string
+  employmentStatus: string
+  unit?: Unit
+  jobTitle: string
+  employmentType: string
+  hireDate?: string
+  workLocation: string
+  supervisor: Supervisor
+  staffId?: string
+  spouseName?: string
+  spousePhone?: string
+  spouseEmail?: string
+  numberOfChildren: number
+  children: Children[]
+  educationDetails: EducationDetail[]
+  nextOfKinFullName?: string
+  nextOfKinRelationship?: string
+  nextOfKinPhoneNumber?: string
+  nextOfKinEmail?: string
+  nextOfKinCurrentAddress?: string
+  emergencyContactFullName?: string
+  emergencyContactRelationship?: string
+  emergencyContactPhoneNumber?: string
+  emergencyContactEmail?: string
+  emergencyContactCurrentAddress?: string
+  faceEmbedding: any[]
+  password: string
+  isFirstLogin: boolean
+  isOrganizationalHead: boolean
+  isUnitHead: boolean
+  role?: string
+  organization: Organization
+  createdAt: string
+  updatedAt: string
+  __v: number
+  qrCode?: string
+  refreshToken?: string
+}
+
+export interface Unit {
+  _id: string
+  name: string
+  description: string
+  isSubUnit: boolean
+  unitHead: UnitHead
+  organization: Organization
+  parentUnit: ParentUnit
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+export interface Supervisor {
+  _id: string
+  profilePicture?: string
+  firstName: string
+  lastName: string
+  otherName: string
+  email: string
+  dateOfBirth: string
+  nationality: string
+  gender: string
+  idType: string
+  phoneNumber: string
+  idNumber: string
+  maritalStatus: string
+  employmentStatus: string
+  unit: string
+  jobTitle: string
+  employmentType: string
+  hireDate?: string
+  workLocation: string
+  supervisor: string
+  staffId?: string
+  spouseName?: string
+  spousePhone?: string
+  spouseEmail?: string
+  numberOfChildren: number
+  children: Children[]
+  educationDetails: EducationDetail[]
+  nextOfKinFullName?: string
+  nextOfKinRelationship?: string
+  nextOfKinPhoneNumber?: string
+  nextOfKinEmail?: string
+  nextOfKinCurrentAddress?: string
+  emergencyContactFullName?: string
+  emergencyContactRelationship?: string
+  emergencyContactPhoneNumber?: string
+  emergencyContactEmail?: string
+  emergencyContactCurrentAddress?: string
+  faceEmbedding: any[]
+  password: string
+  isFirstLogin: boolean
+  isOrganizationalHead: boolean
+  isUnitHead: boolean
+  role?: string
+  organization: Organization
+  createdAt: string
+  updatedAt: string
+  __v: number
+  qrCode?: string
+  refreshToken?: string
+}
+
+export interface Children {
+  fullName: string
+  dob: string
+  _id: string
+}
+
+export interface EducationDetail {
+  institutionName: string
+  courseOfStudy: string
+  startDate: string
+  endDate: string
+  _id: string
+}
+
+export interface Children2 {
+  fullName: string
+  dob: string
+  _id: string
+}
+
+export interface EducationDetail2 {
+  institutionName: string
+  courseOfStudy: string
+  startDate: string
+  endDate: string
+  _id: string
+}
+
+export interface Pagination {
+  total: number
+  page: number
+  pageSize: number
+  totalPages: number
+}
+
 
 
 
