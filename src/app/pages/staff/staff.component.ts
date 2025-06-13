@@ -44,11 +44,20 @@ export class StaffComponent implements OnInit {
   }
 
 
-  navigate(item:string){
-    // this.router.navigate([`/person-information?staffId=${id}`])
-    // const data =  JSON.stringify(item)
-    this.router.navigateByUrl(`/editstaff-layout?staffId=${item}`)      
-  }
+  // navigate(item:string){
+  //   // this.router.navigate([`/person-information?staffId=${id}`])
+  //   // const data =  JSON.stringify(item)
+  //   this.router.navigateByUrl(`/editstaff-layout?staffId=${item}`)      
+  // }
+
+  navigate(item: any) {
+  const staffId = typeof item === 'string' ? item : item._id;
+  console.log('Navigating with staffId:', staffId);
+  this.router.navigate(['/editstaff-layout/person-information'], {
+    queryParams: { staffId }
+  });
+}
+
 
 
 }

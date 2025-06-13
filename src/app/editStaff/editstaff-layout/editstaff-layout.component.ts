@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 import { filter } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CheckboxService } from '../../checkboxService/checkbox.service';
+import { StaffDataService } from '../../StaffDataService/staff-data.service';
+import { PagesService } from '../../service/pages.service';
+import { allStaffModel } from '../../model/pagesModel';
 
 @Component({
   selector: 'app-editstaff-layout',
@@ -19,29 +22,28 @@ export class EditstaffLayoutComponent {
 
   isChecked = false;
   inputValue = '';
+  staffId: any
+  employeeData: any;
+  isSidebarOpen = false;
+ 
 
   isCheckedMap: { [key: string]: boolean } = {};
 
 
-    constructor(private location:Location, private router: Router, private typingStatusService: CheckboxService){
-
-  this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
-        const step = this.steps.find(s => event.url.includes(s));
-        if (step) {
-          this.currentStepIndex = this.steps.indexOf(step);
-        }
-      });
-
-    this.typingStatusService.typingStatus$.subscribe((statusMap) => {
-      this.isCheckedMap = { ...statusMap };
-    });
-  
-
-
+    constructor( private staffDataService:StaffDataService, 
+      private location:Location, private router: Router, private route:ActivatedRoute, 
+      private typingStatusService: CheckboxService){
 
   }
+
+
+
+ ngOnInit() {
+  // Initialize all as false
+  // this.steps.forEach(step => this.isCheckedMap[step] = false);
+}
+
+
 
   goBack() {
     this.router.navigate(['/staff']); 

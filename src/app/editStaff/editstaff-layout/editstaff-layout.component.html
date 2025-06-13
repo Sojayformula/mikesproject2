@@ -27,7 +27,7 @@
 
 
     <!-- Static Sidebar -->
-<div class="w-64 h-full bg-white text-black gray-800 text-whit fixed top-[12rem] left-0 shadow-lg mx-6">
+<!-- <div class="w-64 h-full bg-white text-black gray-800 text-whit fixed top-[12rem] left-0 shadow-lg mx-6">
  
   <ul class="mt-10">
    <li *ngFor="let step of steps" class="px-4 py-2 hover:bg-gray-700 hover:text-white">
@@ -55,13 +55,111 @@
   </label>
 </li>
 
+
   </ul> 
-</div>
+</div>  -->
 
 
-    <div>
+
+
+ <ul class="w-60 relative top-16 ">
+<li *ngFor="let step of steps" class="px-4 py-2 hover:bg-gray-700 hover:text-white relative w-60 ">
+  <label class="relative flex items-center cursor-pointer">
+    <input
+      type="checkbox"
+      [checked]="isCheckedMap[step]"
+      class="peer hidden"
+    />
+    <div
+      class="w-5 h-5 rounded-full border-2 border-dotted border-[#D4D4D8] peer-checked:bg-green-500 flex items-center justify-center"
+    >
+      <svg
+        *ngIf="isCheckedMap[step]"
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-3 w-3 text-white"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <a
+      [routerLink]="[step]"
+      [queryParamsHandling]="'preserve'"
+      class="ml-2 capitalize"
+    >
+      {{ step.replace('-', ' ') }}
+    </a>
+  </label>
+</li>
+</ul> 
+
+ <div class="mt-[-14rem]">
         <router-outlet></router-outlet>
     </div>
     
 </div>
+
+
+<!-- Responsive Sidebar -->
+<!-- Toggle Button (Visible on Mobile Only)
+<button
+  class="md:hidden fixed top-4 left-4 z-50 bg-gray-800 text-white px-3 py-2 rounded"
+  (click)="isSidebarOpen = !isSidebarOpen"
+>
+  ☰
+</button>
+
+<-- Sidebar -->
+ <!-- <ul
+  [ngClass]="{
+    'block': isSidebarOpen,
+    'hidden': !isSidebarOpen
+  }"
+  class="w-full md:w-60 md:block md:fixed md:top-16 md:left-0 md:h-screen bg-white shadow z-40 p-4"
+>
+  <li
+    *ngFor="let step of steps"
+    class="px-4 py-2 hover:bg-gray-700 hover:text-white w-full"
+  >
+    <label class="relative flex items-center cursor-pointer">
+      <input
+        type="checkbox"
+        [checked]="isCheckedMap[step]"
+        class="peer hidden"
+      />
+      <div
+        class="w-5 h-5 rounded-full border-2 border-dotted border-[#D4D4D8] peer-checked:bg-green-500 flex items-center justify-center"
+      >
+        <svg
+          *ngIf="isCheckedMap[step]"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-3 w-3 text-white"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="3"
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+      </div>
+      <a
+        [routerLink]="[step]"
+        [queryParamsHandling]="'preserve'"
+        class="ml-2 capitalize"
+        (click)="isSidebarOpen = false"  
+      >
+        {{ step.replace('-', ' ') }}
+      </a>
+    </label>
+  </li>
+</ul> -->
+
+
+   
 

@@ -14,7 +14,7 @@ import { forgotpasswordModel } from '../../model/forgotpassword-model';
 export class ForgotpaswordComponent {
 
    errorMessage = '';
-   email = '';
+    email: string = '';
 
   loginData: forgotpasswordModel
 
@@ -32,7 +32,7 @@ onSubmit(form: NgForm): void {
 
   const formData = form.value; 
 
-  this.authService.forgotpassword(formData).subscribe({
+  this.authService.forgotpassword(this.email).subscribe({
     next: (res) => {
       if (res?.response?.success) {
         console.log('OTP sent successfully');

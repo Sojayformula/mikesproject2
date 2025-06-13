@@ -8,12 +8,14 @@ import { StaffDataService } from '../../StaffDataService/staff-data.service';
 import { CheckboxService } from '../../checkboxService/checkbox.service';
 import { allStaffModel, editStaffModel, getStaffModel } from '../../model/pagesModel';
 import imageCompression from 'browser-image-compression';
+import { _fixedSizeVirtualScrollStrategyFactory } from '@angular/cdk/scrolling';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 
 
 @Component({
   selector: 'app-person-information',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatProgressSpinner],
   templateUrl: './person-information.component.html',
   styleUrl: './person-information.component.scss'
 })
@@ -27,12 +29,16 @@ export class PersonInformationComponent implements OnInit{
   selectedStaff: any={};
   storedMaritalData: string = ''; 
   staffId: any;
-  loading = true;
+  isLoading = false;
+  
+  // selectedFile!: File;
+imagePreview: string | ArrayBuffer | null = null;
+
 
   constructor(private router: Router, private pagesService: PagesService,
     private route:ActivatedRoute, private location:Location, 
     private staffDataService: StaffDataService,private checkboxService:CheckboxService,
-  private typingStatusService: CheckboxService,){
+  ){
 
     this.getStaffModel = new getStaffModel()
     this.editStaffData = new editStaffModel()
@@ -52,23 +58,14 @@ export class PersonInformationComponent implements OnInit{
   //  this.fetchMaritalStatus() 
 
 
-  //  this.fetchStaffData();
-
      if (this.staffId) {
       this.fetchStaffData();
      }
 
-         this.staffData = this.staffDataService.getData();
-
-  //        this.staffData = {
-  //    supervisor: { nationality: '', maritalStatus: '' }, 
-  // };
-
-  //   if (!this.staffData.supervisor) {
-  //   this.staffData.supervisor = { nationality: '', maritalStatus: '' };
-  // }
+          this.staffData = this.staffDataService.getData();
 
   }
+
 
 
 
@@ -77,7 +74,7 @@ export class PersonInformationComponent implements OnInit{
       next: (res ) => {
         this.staffData = res; 
         console.log('Fetched staff data:', this.staffData);
-         this.loading = false;
+         this.isLoading = false;
 
       },
       error: (err) => {
@@ -91,29 +88,6 @@ export class PersonInformationComponent implements OnInit{
     }
 
 
-//     fetchStaffData() {
-//       this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
-//   next: (res) => {
-//     // this.staffData = res.data;
-//      if (res && res) {
-//       this.staffData = res;}
-
-//     // Clean up the profilePicture (remove surrounding quotes)
-//     this.staffData.profilePicture = this.staffData.profilePicture?.replace(/^"|"$/g, '');
-
-//     // If needed, also assign it to the image preview
-//     this.imagePreview = this.staffData.profilePicture;
-//   },
-//   error: (err) => {
-//     console.error('Error fetching staff:', err);
-//   }
-// });
-
-//     }
-
-
-
-
  getSafeProfilePicture(pic?: string): string {
   if (!pic) return '/assets/default-profile.png'; // fallback image if missing
   return pic.replace(/^"|"$/g, '');
@@ -122,16 +96,10 @@ export class PersonInformationComponent implements OnInit{
 
 
 
+   
 
 
-    
-
-  // selectedFile!: File;
-imagePreview: string | ArrayBuffer | null = null;
-
-selectedFile: File | null = null;
-
-
+// selectedFile: File | null = null;
 
 
 async onFileSelected(event: any) {
@@ -204,16 +172,18 @@ originalStaffData: any;
 
 onEditToggle(): void {
   this.editMode = true;
-  // this.originalStaffData = JSON.parse(JSON.stringify(this.staffData));
+  
 }
 
 onCancel(): void {
   this.editMode = false;
-  // this.staffData = JSON.parse(JSON.stringify(this.originalStaffData));
+ 
 }
 
-onSubmit(form: NgForm): void {
 
+
+onSubmit(form: NgForm): void {
+  this.isLoading =true;
  const payload = {
     _id: this.staffId, 
     profilePicture: this.staffData?.profilePicture || '',
@@ -236,8 +206,8 @@ onSubmit(form: NgForm): void {
   this.pagesService.getEditStaff(this.staffId, payload ).subscribe({
     next: (res) => {
       console.log('patch', res)
-      // console.log('Form submited successfully', this.staffData)
-       alert('Form updated successfull')
+      //  alert('Form updated successfull')
+       this.isLoading = false;
 
     },
 
@@ -251,8 +221,3 @@ onSubmit(form: NgForm): void {
 
 
 }
-
-
-
-
-// .supervisor?

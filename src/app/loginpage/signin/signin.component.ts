@@ -5,12 +5,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
 import { environment } from '../../environment/environment';
 import { loginModel } from '../../model/login-model';
-//import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
     @Component({
       selector: 'app-signin',
-      imports: [CommonModule, FormsModule],
+      imports: [CommonModule, FormsModule, MatProgressSpinnerModule],
       templateUrl: './signin.component.html',
       styleUrl: './signin.component.scss'
     })
@@ -53,8 +53,8 @@ import { loginModel } from '../../model/login-model';
             // }else{
             //   this.router.navigate(['dashboard'])
             // }
+            this.isLoading = true;
           
-
           },
           error: (err) => {
             console.error('Login failed:', err);

@@ -16,7 +16,9 @@ export class AuthService {
     return this.http.post(environment.baseurl + '/authentication/login', item)
   }
 
-  forgotpassword(item: forgotpasswordModel):Observable<any>{
-    return this.http.post(environment.baseurl + '/authentication/forget-password', item)
+  forgotpassword(email: string):Observable<any>{
+    return this.http.post(environment.baseurl + '/authentication/forget-password', {email})
   }
-}  
+} 
+
+// forgotpasswordModel   

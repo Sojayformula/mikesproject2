@@ -14,7 +14,7 @@
   <div class="grid grid-cols-3 gap-[10rem]">
     <div class="w-[6rem]">
     <label class="font-semibold text-[13px] font-outfit">Spouse's Name</label>
-    <input type="text" placeholder="Enter full name of spouse" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="spouseName" [(ngModel)]="data.supervisor.spouseName" placeholder="Enter full name of spouse" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     <div class="mt-10">
         <p class="font-semibold font-outfit text-[16px] w-[10rem]">Children Information</p>
         <p class="text-[#727A90] text-[12px] w-[42rem]">Base on the total number of children entered above, the same number of fields will appear below to enter each child's full... </p>
@@ -23,12 +23,12 @@
 
     <div class="w-[9rem]">
     <label class="font-semibold text-[13px] font-outfit">Spouse's Phone Number</label>
-    <input type="text" placeholder="Phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="spousePhone" [(ngModel)]="data.supervisor.spousePhone" placeholder="Phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
     <div class="">
     <label class="font-semibold text-[13px] font-outfit">Spouse's Email</label>
-    <input type="text" placeholder="Enter address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="spouseEmail" [(ngModel)]="data.supervisor.email" placeholder="Enter address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
   </div>
@@ -37,24 +37,26 @@
   <div class="grid grid-cols-3 gap-6">
     <div>
      <label class="font-semibold text-[13px] font-outfit">Number of Children</label>
-    <input type="text" placeholder="Enter nu30-;l
+    <input type="text" name="numberOfChild" [(ngModel)]="data.supervisor.numberOfChildren"  placeholder="Enter nu30-;l
     mbers(eg. 2)" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
     <div></div>
     <div></div>
   </div>
 
-  <!-- Row 3: Input 5 under column 1, Input 6 under column 2 -->
+  <!-- Row 3: Input 5 under column 1, Input 6 under column 2      *ngFor="let child of data.supervisor.children; let i = index"   [name]="'age'+ i "  [value]="child.dob"     -->
   <div class="grid grid-cols-3 gap-[10rem]">
     <div>
      <label class="font-semibold text-[13px] font-outfit">Child 1</label>
-    <input type="text" placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="child1" [(ngModel)]="data.supervisor.children[0].fullName"  placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
     <div>
      <label class="font-semibold text-[13px] font-outfit">Age</label>
-    <input type="text" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="age1" [value]="data.supervisor.children[0]?.dob" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
     </div>
+7
+
     <div></div>
   </div>
 
@@ -62,22 +64,35 @@
   <div class="grid grid-cols-3 gap-[10rem]">
     <div>
         <label class="font-semibold text-[13px] font-outfit">Child 2</label>
-    <input type="text" placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="child2"  [(ngModel)]="data.supervisor.children[1].fullName" placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
+ 
     <div>
         <label class="font-semibold text-[13px] font-outfit">Age</label>
-    <input type="text" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="childdob"  [(ngModel)]="data.supervisor.children[1].dob" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
     </div>
+
     <div></div>
   </div>
 
 
-  <div class="flex justify-center items-center border-2 border-[#4393FF] bg-[#F8FAFF] w-[1058px] h-[172px] rounded-[] mb-8">
-    <div class="">
+
+   <div class="mb-4 space-y-6">
+    <div>
+        <p class="text-[16px] font-bold">Docs</p>
+        <p class="text-[#727A90]">Upload birth certificates for each child listed above. You can upload multiple files.</p>
+    </div>
+  
+
+    
+;    <div class="flex justify-center items-center border-2 border-dotted border-[#4393FF] bg-[#F8FAFF] w-[1058px] h-[172px] rounded-[] mb-8">
+      <div class="">
         hhhh
         <p class="flex flex-grow">OR</p>
     </div>
+  </div>
+
   </div>
 
 </form>
