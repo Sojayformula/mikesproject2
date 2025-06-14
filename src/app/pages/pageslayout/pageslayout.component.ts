@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Token } from '@angular/compiler';
+//import { Token } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 

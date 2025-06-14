@@ -1,3 +1,146 @@
-<div class="mx-[17rem] ">
-<p>educationdetails works!</p>
+
+<div class="mx-[17rem] mt-10 ">
+
+    <div>
+        <p class="font-bold font-outfit">Education Background</p>
+        <p class="text-[#727A90] text-sm font-outfit">Academic and professional qualifications.</p>
+    </div>
+
+
+    <form class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[22rem] mt-10 font-outfit">
+        <!-- Row ---1 -->
+         <div>
+            <label class="block w-20">Full Name</label>
+            <input
+            type="text"
+            name="name"
+            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+        </div>
+
+         <div>
+             <label class="block w-20">Relationship</label>
+            <input
+            type="text"
+            name="name"
+            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+         </div>
+
+         <div>
+             <label class="block w-40">Phone Number</label>
+            <input
+            type="text"
+            name="name"
+            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+         </div>
+
+                  <!-- Row ---2 -->        
+          <div>
+            <label class="block w-40">Email Address</label>
+            <input
+            type="text"
+            name="name"
+            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+        </div>
+
+         <div>
+             <label class="block w-40">Enter Current Address</label>
+            <input
+            type="text"
+            name="name"
+            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+         </div>
+
+          <div>
+             <label class="block w-40">Enter Current Address</label>
+            <input
+            type="text"
+            name="name"
+            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+         </div>
+
+
+
+
+
+
+
+
+         <div
+  class="border-2 border-dashed border-blue-400 w-[1150px] h-[172px] p-6 rounded-md text-center cursor-pointer bg-[#F8FAFF]"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+  [ngClass]="{ 'bg-blue-50': isDragging }"
+>
+  <div class="flex justify-center">
+  <img src="/upload.png" class="w-[42px] h-[42px] ">
+  </div>
+  <p class="text-gray-500 text-sm mt-2">Drag your file(s) and start uploading</p>
+
+    <div class="flex items-center justify-center my-1">
+  <div class="flex-gro w-20 h-px bg-gray-300"></div>
+  <span class="px-4 text-gray-500 text-sm">OR</span>
+  <div class="flex-gro w-20 h-px bg-gray-300"></div>
 </div>
+
+  <button (click)="fileInput.click()" class="text-sm border-2 rounded-lg w-[95px] h-[30px] my-1">Browse file</button>
+
+  <input
+    type="file"
+    webkitdirectory
+    directory
+    multiple
+    (change)="onFileSelected($event)"
+    #fileInput
+    class="hidden"
+  />
+</div>
+
+
+         <div *ngIf="selectedFiles.length > 0" class="mt-4 space-y-2">
+  <div
+    *ngFor="let file of selectedFiles; let i = index"
+    class="flex items-center gap-4 border p-2 rounded-md justify-between lg:w-[1150px] lg:right-[26rem] relative lg:top-[12rem]"
+  >
+    <!-- File Icon and Info -->
+    <div class="flex items-center gap-4 ">
+      <!-- Icon -->
+      <div>
+        <ng-container [ngSwitch]="getFileType(file)">
+          <i *ngSwitchCase="'image'" class="text-blue-500">🖼️</i>
+          <i *ngSwitchCase="'pdf'" class="text-red-500">📄</i>
+          <i *ngSwitchCase="'word'" class="text-indigo-500">📘</i>
+          <i *ngSwitchCase="'excel'" class="text-green-500">📗</i>
+          <i *ngSwitchCase="'text'" class="text-gray-500">📑</i>
+          <i *ngSwitchDefault class="text-gray-600">📁</i>
+        </ng-container>
+      </div>
+
+      <!-- File Info -->
+      <div>
+        <p class="text-sm font-medium">{{ file.name }}</p>
+        <p class="text-xs text-gray-500">{{ formatSize(file.size) }}</p>
+      </div>
+    </div>
+
+    <!-- Cancel Button -->
+    <button
+      (click)="removeFile(i)"
+      class="border-2 border-[#858585] text-[#858585] hover:text-gray-700 text-sm bg-gray-300 rounded-full w-[20px] h-[20px] "
+      title="Remove File"
+    >
+      ✖
+    </button>
+  </div>
+</div>
+       
+    </form>
+
+</div>
+
