@@ -61,18 +61,37 @@
       <!-- Image Preview -->
      <div class="lg:col-span-2 flex flex-col items-cente mt-10">
       <div class="relative w-[90px] [167px] h-[90px] [167px] mb-2">
-        <div class="border-[#4393FF] bg-[#4393FF1A] border rounded-full w-full h-full overflow-hidden flex items-center justify-center">
+        <div class="border-[#4393FF] bg-[#4393FF1A] border rounded-full w-full h-full overflow-hidden fle items-center justify-center">
           <ng-container *ngIf="!imagePreview">
-            <span class="text-gray-600 text-sm text-center">No Image</span>
+            <span class="text-gray-600 text-sm text-center ">No Image</span>
           </ng-container>
-          <img
+          <!-- <img
             *ngIf="staffData?.profilePicture"
             [src]="getSafeProfilePicture(staffData.profilePicture)"
             alt="Image Preview"
-            class="object-cover w-full h-full rounded-full"
+            class="object-cover w-full h-full rounded-full relative right-[19px]"
+          /> -->
+        <div class="-32 h-24 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center mt-[-25px]">
+          <img
+            *ngIf="imagePreview; else savedImage"
+            [src]="imagePreview"
+            alt="Preview Image"
+            class="h-full w-auto object-cover"
           />
+          
+          <ng-template #savedImage>
+            <img
+              *ngIf="staffData?.profilePicture"
+              [src]="getSafeProfilePicture(staffData.profilePicture)"
+              alt="Saved Image"
+              class="h-full w-auto object-cover "
+            />
+          </ng-template>
         </div>
-      </div>
+
+
+          </div>
+        </div>
 
       <!-- Upload image -->
       <div>

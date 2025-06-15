@@ -103,13 +103,20 @@ getAllStaff(item: allStaffModel):Observable<any> {
   
 }
 
-  getUserById(id: string, item: allStaffModel):Observable<any>{
+  // getUserById(id: string, item: allStaffModel):Observable<any>{
+  //   return this.http.get(`${environment.baseurl}/staff/unit/${id}`); 
+  // }
+    getUserById(id: string, item: allStaffModel):Observable<any>{
     return this.http.get(`${environment.baseurl}/staff/staff/${id}`); 
   }
 
 
   getEditStaff(id: string, payload: editStaffModel): Observable<any> {
     return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
+  }
+
+    getEducation(id: string):Observable<any>{
+    return this.http.get(`${environment.baseurl}/staff/unit/${id}`); 
   }
 
 

@@ -14,7 +14,7 @@ import { StaffDataService } from '../../StaffDataService/staff-data.service';
 })
 export class EducationdetailsComponent implements OnInit {
 
-  employeeData: any ={};
+  employeeData: any = {};
   getAllStaff: allStaffModel
   staffId: any;
   selectedStep: string = '';
@@ -35,7 +35,7 @@ export class EducationdetailsComponent implements OnInit {
     this.staffId = item;
 
     console.log("my id:", this.staffId);
-       this.fetchEduDetails();
+        this.fetchEduDetails();
   });
   }
 
@@ -46,10 +46,14 @@ export class EducationdetailsComponent implements OnInit {
         const employee = res.data.find((staff: any) => staff._id === this.staffId);
         if (employee) {
           this.staffDataService.setData(employee); // 🔥 Save globally
-          this.employeeData = employee;            // 💾 Local assignment
+          this.employeeData = employee;           // 💾 Local assignment
+        //this.employeeData = res
+           console.log('Response:', res);
           console.log('Matched Employee:', this.employeeData);
+      
+
         } else {
-        // console.warn('No matching employee found for staffId:', this.staffId);
+         console.warn('No matching employee found for staffId:', this.staffId);
         }
       },
       error: (err) => {
@@ -57,6 +61,36 @@ export class EducationdetailsComponent implements OnInit {
       }
     });
   }
+
+// fetchEduDetails() {
+//   this.pagesService.getAllStaff(this.staffId, this.getAllStaff).subscribe({
+//     next: (res) => {
+//       console.log('API response:', res); // ✅ Log to inspect structure
+
+//       // ✅ Safety checks to avoid TypeError
+//       if (!res || !Array.isArray(res.data)) {
+//         console.warn('Unexpected or empty response format:', res);
+//         return;
+//       }
+
+//       // ✅ Attempt to find the employee
+//       const employee = res.data.find((staff: any) => staff._id === this.staffId);
+
+//       if (employee) {
+//         this.staffDataService.setData(employee); // 🔥 Save globally
+//         this.employeeData = employee;            // 💾 Local assignment
+//         console.log('Matched Employee:', this.employeeData);
+//       } else {
+//         console.warn('No matching employee found for staffId:', this.staffId);
+//       }
+//     },
+//     error: (err) => {
+//       console.error('Failed to fetch data', err);
+//     }
+//   });
+// }
+
+
 
 
   removeFile(index: number) {
