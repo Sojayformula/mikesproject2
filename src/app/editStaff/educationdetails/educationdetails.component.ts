@@ -2,6 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { PagesService } from '../../service/pages.service';
+import { allStaffModel } from '../../model/pagesModel';
+import { StaffDataService } from '../../StaffDataService/staff-data.service';
 
 @Component({
   selector: 'app-education-details',
@@ -12,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 export class EducationdetailsComponent implements OnInit {
 
   employeeData: any ={};
+  getAllStaff: allStaffModel
   staffId: any;
   selectedStep: string = '';
   selectedFiles: File[] = [];
@@ -19,7 +23,9 @@ export class EducationdetailsComponent implements OnInit {
 
 
 
-  constructor(private route:ActivatedRoute){}
+  constructor(private route:ActivatedRoute, private pagesService:PagesService, private staffDataService:StaffDataService){
+    this.getAllStaff = new allStaffModel()
+  }
 
 
 
@@ -34,7 +40,24 @@ export class EducationdetailsComponent implements OnInit {
   }
 
 
-  fetchEduDetails(){}
+   fetchEduDetails() {
+    this.pagesService.getAllStaff(this.getAllStaff).subscribe({
+      next: (res) => {
+        const employee = res.data.find((staff: any) => staff._id === this.staffId);
+        if (employee) {
+          this.staffDataService.setData(employee); // 🔥 Save globally
+          this.employeeData = employee;            // 💾 Local assignment
+          console.log('Matched Employee:', this.employeeData);
+        } else {
+        // console.warn('No matching employee found for staffId:', this.staffId);
+        }
+      },
+      error: (err) => {
+        console.error('Failed to fetch data', err);
+      }
+    });
+  }
+
 
   removeFile(index: number) {
   this.selectedFiles.splice(index, 1);

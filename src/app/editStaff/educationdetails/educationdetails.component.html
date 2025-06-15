@@ -10,66 +10,79 @@
     <form class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[22rem] mt-10 font-outfit ">
         <!-- Row ---1 -->
          <div>
-            <label class="block w-20">Full Name</label>
+            <label class="block w-40">Intitution Name</label>
             <input
             type="text"
-            name="name"
+            name="institutionName"
+            [(ngModel)]="employeeData.educationDetails.institutionName"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
         </div>
 
          <div>
-             <label class="block w-20">Relationship</label>
+             <label class="block w-40">Course of Study</label>
             <input
             type="text"
-            name="name"
+            name="courseOfStudy"
+             [(ngModel)]="employeeData.educationDetails.fullName"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
          </div>
 
          <div>
-             <label class="block w-40">Phone Number</label>
+             <label class="block w-40">Start Date</label>
             <input
             type="text"
-            name="name"
+            name="StartDate"
+             [(ngModel)]="employeeData.educationDetails.fullName"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
          </div>
 
                   <!-- Row ---2 -->        
           <div>
-            <label class="block w-40">Email Address</label>
+            <label class="block w-40">Intitution Name</label>
             <input
             type="text"
-            name="name"
+            name="intitutionname"
+             [(ngModel)]="employeeData.educationDetails.fullName"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
         </div>
 
          <div>
-             <label class="block w-40">Enter Current Address</label>
+             <label class="block w-40">End Date</label>
             <input
             type="text"
-            name="name"
+            name="endDate"
+             [(ngModel)]="employeeData.educationDetails.fullName"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
          </div>
 
           <div>
-             <label class="block w-40">Enter Current Address</label>
+             <label class="block w-40">Start Date</label>
             <input
             type="text"
-            name="name"
+            name="Startdate"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
          </div>
 
 
+  <div>
+
+    <div class="">
+    <p class="font-bold font-outfit text-[16px]">Docs</p>
+    <p class="text-[#727A90] text-[12px] font-outfit w-80">Upload a scanned copy of the spouse's marriagecertificate.</p>
+    </div>
+
+
+ 
 
 
 
-
-   <div class="mb-10">
+   <div class="mb-10 mt-10">
 
          <div
   class="border-2 border-dashed border-blue-400 w-[1150px] h-[172px] p-6 rounded-md text-center cursor-pointer bg-[#F8FAFF]"
@@ -141,6 +154,7 @@
 </div>
 
 </div>
+ </div>
        
     </form>
     
