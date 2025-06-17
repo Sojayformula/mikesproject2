@@ -253,7 +253,9 @@ export class updateUnitModel {
   unitHead?: string;        
    organization?: string;     
    parentUnit?: string; 
-  isSubUnit!: boolean;     
+  isSubUnit!: boolean;   
+  
+  institutionName!: string
 }
 
 export interface updateUnitResponseModel{
@@ -320,6 +322,33 @@ export interface ParentUnit2 {
   updatedAt: string
   __v: number
 }
+
+// editEducationModel
+export class educationModel{
+  id?: string;
+  institutionName!: string
+  courseOfStudy!: string
+  startDate!: string
+  endDate!: string
+  //   _id?: string;
+  // educationDetails!: educationModel[];
+}
+
+export interface EducationEntry {
+  _id?: string; 
+  institutionName: string;
+  courseOfStudy: string;
+  startDate: string;
+  endDate: string;
+}
+export interface PatchEducationPayload {
+  _id: string;
+  educationDetails: EducationEntry[];
+}
+
+
+
+
 
 
 

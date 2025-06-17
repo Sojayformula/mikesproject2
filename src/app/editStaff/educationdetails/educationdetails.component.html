@@ -1,21 +1,68 @@
 
 <div class="mx-[17rem] mt-10">
 
+   
+
+    <!-- Edit button -->
+<div class="mt- flex gap-4 justify-end col-span-3 relative left-40 top-[-8.5rem]">
+  <button
+    type="button"
+    *ngIf="!editMode"
+    (click)="onEditToggle()"
+    class="flex justify-center bg-blue- border border-[#727A90] text-[14px] text-[#727A90] w-[69.65px] h-[40px] py-2 rounded-[10px] hover:bg-gray-400 hover:text-white transition"
+  >
+     <span class="material-symbols-outlined text-[20px]">edit</span>Edit
+  </button>
+
+  <!-- Save and cancel -->
+
+       <ng-container *ngIf="isLoading">
+  <div class="mt-6 flex justify-center relative top-[-15px]">
+    <mat-spinner [diameter]="30"></mat-spinner>
+  </div>
+</ng-container>
+
+  <ng-container *ngIf="editMode">
+    <button
+      type="submit"
+      
+      class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+    >
+      Save
+    </button>
+  
+    <button
+      type="button"
+      (click)="onCancel()"
+      class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
+    >
+      Cancel
+    </button>
+  </ng-container>
+  </div>
+
+<!-- (click)="onSubmit(eduform)" -->
+
+
     <div>
         <p class="font-bold font-outfit">Education Background</p>
         <p class="text-[#727A90] text-sm font-outfit">Academic and professional qualifications.</p>
     </div>
 
-     <div>
-    <form *ngIf="employeeData?.educationDetails?.[0]" class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[22rem] mt-10 font-outfit ">
+
+
+            <!-- FORM -->
+    <form #eduform = "ngForm" (ngSubmit)="onSubmit(eduform)" class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[22rem] mt-10 font-outfit ">
         <!-- Row ---1 -->
+
          <div >
             <label class="block w-40">Intitution Name</label>
             <input
             type="text"
             name="institutionName0"
             placeholder="Enter name of institution"
-            [(ngModel)]="employeeData?.educationDetails[0].institutionName"
+            [(ngModel)]="educationData.educationDetails[0].institutionName"
+            [disabled]="!editMode"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
         </div>
@@ -27,7 +74,8 @@
             type="text"
             name="courseOfStudy"
             placeholder="Enter major or course"
-             [(ngModel)]="employeeData.educationDetails[0].courseOfStudy"
+             [(ngModel)]="educationData.educationDetails[0].courseOfStudy"
+             [disabled]="!editMode"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
          </div>
@@ -37,9 +85,10 @@
              <label class="block w-40">Start Date</label>
             <input
             type="date"
-            name="StartDate"
+            name="StartDate0"
             placeholder="Select program start date"
-            [(ngModel)]="employeeData.educationDetails[0].startDate"
+            [(ngModel)]="educationData.educationDetails[0].startDate"
+            [disabled]="!editMode"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
          </div>
@@ -47,11 +96,12 @@
                   <!-- Row ---2       -->
           <div >
             <label class="block w-40">Intitution Name</label>
-            <input
+            <input     *ngIf="educationData?.educationDetails?.[0]" 
             type="text"
             name="institutionName1"
             placeholder="Enter name of institution"
-             [(ngModel)]="employeeData.educationDetails[1].institutionName"
+             [(ngModel)]="educationData.educationDetails[1].institutionName"
+             [disabled]="!editMode"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
         </div>
@@ -62,21 +112,96 @@
             type="date"
             name="endDate"
             placeholder="Select program end date"
-            [(ngModel)]="employeeData.educationDetails[0].endDate"
+            [(ngModel)]="educationData.educationDetails[0].endDate"
+            [disabled]="!editMode"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
          </div>
 
-          <div >
+          <div>
              <label class="block w-40">Start Date</label>
             <input
             type="date"
-            name="Startdate"
+            name="Startdate1"
             placeholder="select program start date"
-            [(ngModel)]="employeeData.educationDetails[1].startDate"
+            [(ngModel)]="educationData.educationDetails[1].startDate"
+            [disabled]="!editMode"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
          </div>
+
+
+
+          <!-- <form #eduform="ngForm" (ngSubmit)="onSubmit(eduform)">
+  <div
+    *ngFor="let edu of educationData.educationDetails; let i = index"
+    class="grid grid-cols-2 gap-4 mb-6"
+  >
+    Institution Name
+    <div>
+      <label>Institution Name</label>
+      <input
+        type="text"
+        name="institutionName{{i}}"
+        [(ngModel)]="edu.institutionName"
+        [disabled]="!editMode"
+        class="form-input"
+      />
+    </div>
+
+    Course of Study
+    <div>
+      <label>Course of Study</label>
+      <input
+        type="text"
+        name="courseOfStudy{{i}}"
+        [(ngModel)]="edu.courseOfStudy"
+        [disabled]="!editMode"
+        class="form-input"
+      />
+    </div>
+
+    Start Date
+    <div>
+      <label>Start Date</label>
+      <input
+        type="date"
+        name="startDate{{i}}"
+        [(ngModel)]="edu.startDate"
+        [disabled]="!editMode"
+        class="form-input"
+      />
+    </div>
+
+    End Date
+    <div>
+      <label>End Date</label>
+      <input
+        type="date"
+        name="endDate{{i}}"
+        [(ngModel)]="edu.endDate"
+        [disabled]="!editMode"
+        class="form-input"
+      />
+    </div>
+  </div>
+
+  <div *ngIf="editMode">
+    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">
+      Save
+    </button>
+    <button type="button" (click)="onCancel()" class="bg-gray-400 text-white px-4 py-2 rounded">
+      Cancel
+    </button>
+  </div> -->
+
+
+
+
+
+
+
+
 
   <div>
 
@@ -129,9 +254,9 @@
     *ngFor="let file of selectedFiles; let i = index"
     class="flex items-center gap-4 border p-2 rounded-md justify-between lg:w-[1150px] lg:right-[26rem] relativ lg:top-[12rem]"
   >
-    <!-- File Icon and Info -->
+    File Icon and Info
     <div class="flex items-center gap-4 ">
-      <!-- Icon -->
+      Icon
       <div>
         <ng-container [ngSwitch]="getFileType(file)">
           <i *ngSwitchCase="'image'" class="text-blue-500">🖼️</i>
@@ -143,14 +268,14 @@
         </ng-container>
       </div>
 
-      <!-- File Info -->
+      File Info
       <div>
         <p class="text-sm font-medium">{{ file.name }}</p>
         <p class="text-xs text-gray-500">{{ formatSize(file.size) }}</p>
       </div>
     </div>
 
-    <!-- Cancel Button -->
+    Cancel Button
     <button
       (click)="removeFile(i)"
       class="border-2 border-[#858585] text-[#858585] hover:text-gray-700 text-sm bg-gray-300 rounded-full w-[20px] h-[20px] "
@@ -165,120 +290,5 @@
  </div>
        
     </form>
-     </div>
-    
 
 </div>
-
-
-
-   <!-- <form class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[22rem] mt-10 font-outfit">
-  Row 1
-  <div *ngIf="employeeData?.educationDetails?.[0]">
-    <label class="block w-40">Institution Name</label>
-    <input
-      type="text"
-      name="institutionName0"
-      placeholder="Enter name of institution"
-      [(ngModel)]="employeeData.educationDetails[0].institutionName"
-      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3"
-    />
-  </div>
-
-  <div *ngIf="employeeData?.educationDetails?.[0]">
-    <label class="block w-40">Course of Study</label>
-    <input
-      type="text"
-      name="courseOfStudy0"
-      placeholder="Enter major or course"
-      [(ngModel)]="employeeData.educationDetails[0].courseOfStudy"
-      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3"
-    />
-  </div>
-
-  <div *ngIf="employeeData?.educationDetails?.[0]">
-    <label class="block w-40">Start Date</label>
-    <input
-      type="date"
-      name="startDate0"
-      [(ngModel)]="employeeData.educationDetails[0].startDate"
-      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3"
-    />
-  </div>
-
-  Row 2
-  <div *ngIf="employeeData?.educationDetails?.[1]">
-    <label class="block w-40">Institution Name</label>
-    <input
-      type="text"
-      name="institutionName1"
-      placeholder="Enter name of institution"
-      [(ngModel)]="employeeData.educationDetails[1].institutionName"
-      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3"
-    />
-  </div>
-
-  <div *ngIf="employeeData?.educationDetails?.[1]">
-    <label class="block w-40">End Date</label>
-    <input
-      type="date"
-      name="endDate1"
-      [(ngModel)]="employeeData.educationDetails[1].endDate"
-      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3"
-    />
-  </div>
-
-  <div *ngIf="employeeData?.educationDetails?.[1]">
-    <label class="block w-40">Start Date</label>
-    <input
-      type="date"
-      name="startDate1"
-      [(ngModel)]="employeeData.educationDetails[1].startDate"
-      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3"
-    />
-  </div>
-</form>
- -->
-
-<!-- <div *ngIf="employeeData?.educationDetails?.length">
-  <div *ngFor="let edu of employeeData.educationDetails; let i = index">
-    Institution Name
-    <label class="block w-40">Institution Name {{ i + 1 }}</label>
-    <input
-      type="text"
-      [(ngModel)]="edu.institutionName"
-      name="institutionName{{ i }}"
-      class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 mb-4 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-    />
-
-    Course of Study
-    <label class="block w-40">Course of Study</label>
-    <input
-      type="text"
-      [(ngModel)]="edu.courseOfStudy"
-      name="courseOfStudy{{ i }}"
-      class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 mb-4 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-    />
-
-    Start Date
-    <label class="block w-40">Start Date {{ i + 1 }}</label>
-    <input
-      type="date"
-      [(ngModel)]="edu.startDate"
-      name="startDate{{ i }}"
-      class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 mb-4 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-    />
-
-    End Date
-    <label class="block w-40">End Date {{ i + 1 }}</label>
-    <input
-      type="date"
-      [(ngModel)]="edu.endDate"
-      name="endDate{{ i }}"
-      class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 mb-6 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-    />
-
-    <hr class="my-6" />
-  </div>
-</div>
- -->

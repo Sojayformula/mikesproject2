@@ -1,4 +1,4 @@
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule, formatDate, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,11 +51,12 @@ export class EmploymentDetailsComponent implements OnInit{
 
     console.log("my id:", this.staffId);
 
-    // if (this.staffId) {
-    //   this.fetchEmployees(); 
-    // }
-     this.fetchEmployees();
+    if (this.staffId) {
+      this.fetchEmployees(); 
+    } 
   });
+
+  this.steps.forEach(step => this.isCheckedMap[step] = false);
 
    }
 
@@ -76,12 +77,12 @@ export class EmploymentDetailsComponent implements OnInit{
   //  }
 
   fetchEmployees() {
-    this.pagesService.getAllStaff(this.getAllStaff).subscribe({
+    this.pagesService.getAllStaff(this.staffId, this.getAllStaff).subscribe({
       next: (res) => {
         const employee = res.data.find((staff: any) => staff._id === this.staffId);
         if (employee) {
-          this.staffDataService.setData(employee); // 🔥 Save globally
-          this.employeeData = employee;            // 💾 Local assignment
+          this.staffDataService.setData(employee); 
+          this.employeeData = employee;            
           console.log('Matched Employee:', this.employeeData);
         } else {
         // console.warn('No matching employee found for staffId:', this.staffId);
@@ -115,6 +116,47 @@ export class EmploymentDetailsComponent implements OnInit{
 //   const value = input.value;
 //   this.typingStatusService.setTypingStatus('employment-details', value.trim().length > 0);
 // }
+
+
+ get formattedDOB(){
+  const date = this.employeeData?.supervisor.hireDate;
+  return date ? formatDate(date, 'yyyy-MM-dd', 'en-US') : '';
+}
+set formattedDOB(value: string) {
+  this.employeeData.supervisor.hireDate = value;
+} 
+
+
+
+
+
+currentStepIndex = 0;
+steps = ['personal-details', 'education', 'employment-details', 'review']; // Example steps
+isCheckedMap: { [key: string]: boolean } = {};
+
+// Call this in ngOnInit or constructor to initialize the map
+// ngOnInit() {
+//   this.steps.forEach(step => this.isCheckedMap[step] = false);
+// }
+
+goToNext() {
+  if (this.currentStepIndex < this.steps.length - 1) {
+    const currentStep = this.steps[this.currentStepIndex];
+    this.isCheckedMap[currentStep] = true; // Mark current step as complete
+    this.currentStepIndex++;
+
+    const nextStep = this.steps[this.currentStepIndex];
+    this.router.navigate([nextStep], { queryParamsHandling: 'preserve' });
+  }
+}
+
+goToPrev() {
+  if (this.currentStepIndex > 0) {
+    this.currentStepIndex--;
+    const prevStep = this.steps[this.currentStepIndex];
+    this.router.navigate([prevStep], { queryParamsHandling: 'preserve' });
+  }
+}
 
 
 

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
 import { Observable } from 'rxjs/internal/Observable';
-import { addUnitModel, allStaffModel, editStaffModel, getStaffModel, getStaffResponseModel, unitModel, updateUnitModel } from '../model/pagesModel';
+import { addUnitModel, allStaffModel, editStaffModel, educationModel, getStaffModel, getStaffResponseModel, PatchEducationPayload, unitModel, updateUnitModel } from '../model/pagesModel';
 import { Root } from '../model/login-model';
 
 @Injectable({
@@ -54,7 +54,7 @@ export class PagesService {
   return this.http.delete(`${environment.baseurl}/unit/delete-unit/${id}`);
 }
 
-getAllStaff(item: allStaffModel):Observable<any> {
+getAllStaff(id: string, item: allStaffModel):Observable<any> {
   // return this.http.get(`${environment.baseurl}/staff/all-staffs`);
 
      console.log("give me unit",item)
@@ -103,22 +103,48 @@ getAllStaff(item: allStaffModel):Observable<any> {
   
 }
 
-  // getUserById(id: string, item: allStaffModel):Observable<any>{
-  //   return this.http.get(`${environment.baseurl}/staff/unit/${id}`); 
-  // }
+  fetchStaff(item:allStaffModel):Observable<any>{
+    return this.http.get(`${environment.baseurl}/staff/all-staffs`); 
+  }
+
     getUserById(id: string, item: allStaffModel):Observable<any>{
     return this.http.get(`${environment.baseurl}/staff/staff/${id}`); 
   }
+
+
+
+
+
+
+
+
+
+
+  getUEduById(id: string):Observable<any>{
+    return this.http.get(`${environment.baseurl}/staff/staff/${id}`); 
+  }
+  
+  // , item: allStaffModel
 
 
   getEditStaff(id: string, payload: editStaffModel): Observable<any> {
     return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
   }
 
-    getEducation(id: string):Observable<any>{
-    return this.http.get(`${environment.baseurl}/staff/unit/${id}`); 
-  }
+  //   patch(id: string, payload: educationModel): Observable<any> {
+  //   return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
+  // }
 
+  //   patchEducation(id: string, payload:educationModel):Observable<any>{
+  //   return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
+  // }
+
+  patchEducation(id: string, payload: PatchEducationPayload): Observable<any> {
+  return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload);
+}
+
+
+ 
 
 
 

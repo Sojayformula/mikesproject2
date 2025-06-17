@@ -40,7 +40,7 @@ export class EditstaffLayoutComponent {
 
  ngOnInit() {
   // Initialize all as false
-  // this.steps.forEach(step => this.isCheckedMap[step] = false);
+  this.steps.forEach(step => this.isCheckedMap[step] = false);
 }
 
 
@@ -77,7 +77,5 @@ goToPrev() {
   }
 
   
-
-
 
 }

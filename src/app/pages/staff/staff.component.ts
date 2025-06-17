@@ -16,6 +16,7 @@ export class StaffComponent implements OnInit {
   APIData: any[] = [];
 
   allStaff: allStaffModel
+  
 
 
 
@@ -29,7 +30,7 @@ export class StaffComponent implements OnInit {
   }
 
   fetchAllStaff(){
-    this.pageService.getAllStaff(this.allStaff).subscribe({
+    this.pageService.fetchStaff(this.allStaff).subscribe({
       next: (res)=>{
         this.APIData = res.data || [];
          console.log('response data', res)
@@ -41,6 +42,9 @@ export class StaffComponent implements OnInit {
         console.log('Failed to fetch staff', err)
       }
     })
+  }
+  staffId(staffId: any, allStaff: allStaffModel) {
+    throw new Error('Method not implemented.');
   }
 
 

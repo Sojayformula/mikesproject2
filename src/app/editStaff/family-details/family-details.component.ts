@@ -49,7 +49,7 @@ export class FamilyDetailsComponent implements OnInit {
 
 
     fetchFamiltDetails() {
-    this.pagesService.getAllStaff(this.getAllStaff).subscribe({
+    this.pagesService.getAllStaff(this.staffId, this.getAllStaff).subscribe({
       next: (res) => {
         const employee = res.data.find((staff: any) => staff._id === this.staffId);
         if (employee) {

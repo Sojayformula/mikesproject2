@@ -22,7 +22,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 export class PersonInformationComponent implements OnInit{
 
   currentStepIndex = 0;
-   staffData: any={};  
+   staffData: any;  
    editStaffData: editStaffModel;
   getStaffModel: getStaffModel;
   getAllStaff: allStaffModel;
@@ -67,9 +67,9 @@ imagePreview: string | ArrayBuffer | null = null;
   }
 
 
+// getUserById
 
-
-    fetchStaffData() {
+     fetchStaffData() {
     this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
       next: (res ) => {
         this.staffData = res; 
@@ -86,6 +86,8 @@ imagePreview: string | ArrayBuffer | null = null;
          }
     });
     }
+
+
 
 
  getSafeProfilePicture(pic?: string): string {
@@ -194,7 +196,7 @@ onCancel(): void {
 
 
 
-onSubmit(form: NgForm): void {
+Submit(form: NgForm) {
   this.isLoading =true;
  const payload = {
     _id: this.staffId, 

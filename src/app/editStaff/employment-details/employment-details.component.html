@@ -6,26 +6,27 @@
         <p class="text-[#727A90] text-[12px] w-60">Official job Information</p>
     </div>
 
-    <form *ngIf="employeeData" #staffForm="ngForm" (ngSubmit)="onSubmit(staffForm)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-4 p-6 bg-white rounded gap-y-6 gap-x-[22rem]">
+    <form #staffForm="ngForm" (ngSubmit)="onSubmit(staffForm)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-4 p-6 bg-white rounded gap-y-6 gap-x-[22rem]">
   <!-- Row 1 -->
    
   <div class="">
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Job Title</label>
-    <input  type="text" name="jobTitle" [(ngModel)]="employeeData.supervisor.jobTitle" (ngModelChange)="onInputChange($event)"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+    <input  type="text" name="jobTitle" [(ngModel)]="employeeData.jobTitle" (ngModelChange)="onInputChange($event)"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Unit</label>
-    <input type="text" name="unit" [(ngModel)]="employeeData.unit.name" [value]="employeeData" placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="unit" [(ngModel)]="employeeData.unit.name" (ngModelChange)="onInputChange($event)" placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
+
 
   <!-- Row 2 -->
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Employment Type</label>
-    <input type="text" name="text" [(ngModel)]="employeeData.employmentType" placeholder="Select birth date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    <input type="text" name="employmentType" [(ngModel)]="employeeData.employmentType" placeholder="Select birth date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Hire Date</label>
-    <input type="text" name="gender" [(ngModel)]="employeeData.hireDate" placeholder="Chose gender" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    <input type="date" name="gender" [(ngModel)]="formattedDOB" placeholder="Hired Date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
   
 
@@ -37,7 +38,7 @@
 
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Supervisor</label>
-    <input type="text" name="phoneNumber" [value]="employeeData?.supervisor.firstName + ' ' + employeeData?.supervisor.lastName" placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="supervisor" [value]="employeeData?.firstName + ' ' + employeeData?.lastName" placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
 
 </form>

@@ -17,11 +17,16 @@
                  <button
                   *ngIf="currentStepIndex > 0"
                   (click)="goToPrev()"
-                  class="border border-[#727A90] w-[78px] h-[40px] rounded-[10px] text-[#727A90] text-[14px]">Previous</button>
+                  class="border border-[#727A90] w-[78px] h-[40px] rounded-[10px] text-[#727A90] text-[14px]">
+                  Previous
+                </button>
+
                 <button
                  (click)="goToNext()"
                  [disabled]="currentStepIndex === steps.length - 1"
-                 class="bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] w-[78px] h-[40px] rounded-[10px] text-white">Next</button>
+                 class="bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] w-[78px] h-[40px] rounded-[10px] text-white">
+                 Next
+                </button>
             </div> 
       </div>
 

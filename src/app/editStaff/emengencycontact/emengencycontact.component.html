@@ -7,23 +7,26 @@
     </div>
 
 
-    <form class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[22rem] mt-10 font-outfit">
+    <form #emergencyForm="ngForm" (ngSubmit)="onSubmit(emergencyForm)" class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[22rem] mt-10 font-outfit">
         <!-- Row ---1 -->
          <div>
             <label class="block w-20">Full Name</label>
             <input
             type="text"
-            name="name"
+            name="fullName"
+             [(ngModel)]="emergencyData.emergencyContactFullName "
             placeholder="Enter next of kin's full name"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
         </div>
 
+
          <div>
              <label class="block w-20">Relationship</label>
             <input
             type="text"
-            name="name"
+            name="Relationship"
+            [(ngModel)]="emergencyData.emergencyContactRelationship"
             placeholder="E.g Mother, Brother, Friend"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -33,7 +36,8 @@
              <label class="block w-40">Phone Number</label>
             <input
             type="text"
-            name="name"
+            name="phoneNumber"
+            [(ngModel)]="emergencyData.emergencyContactPhoneNumber"
             placeholder="Enter active contact number"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -44,7 +48,8 @@
             <label class="block w-40">Email Address</label>
             <input
             type="text"
-            name="name"
+            name="email"
+            [(ngModel)]="emergencyData.emergencyContactEmail"
             placeholder="Enter email address (if available)"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -54,7 +59,8 @@
              <label class="block w-40">Enter Current Address</label>
             <input
             type="text"
-            name="name"
+            name="address"
+            [(ngModel)]="emergencyData.emergencyContactCurrentAddress"
             placeholder="Enter current address"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
