@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PagesService } from '../../service/pages.service';
 import { allStaffModel } from '../../model/pagesModel';
 import { FormsModule, NgForm } from '@angular/forms';
+import { CheckboxService } from '../../checkboxService/checkbox.service';
 
 @Component({
   selector: 'app-next-of-kins',
@@ -18,18 +19,26 @@ export class NextOfKinsComponent implements OnInit {
    getAllStaff: allStaffModel;
    isLoading = false
 
-  constructor(private router:Router, private location:Location, private pagesService:PagesService, private route:ActivatedRoute){
+  constructor( private typingStatusService: CheckboxService, private router:Router, private location:Location, private pagesService:PagesService, private route:ActivatedRoute){
     this.getAllStaff = new allStaffModel
   }
 
 
   ngOnInit(): void {
-      const item = this.route.snapshot.queryParamMap.get('staffId');
-  this.staffId = item; 
+  //     const item = this.route.snapshot.queryParamMap.get('staffId');
+  // this.staffId = item; 
 
-  //  const  item = this.route.snapshot.queryParamMap.get('staffId')
+  // //  const  item = this.route.snapshot.queryParamMap.get('staffId')
   
-    console.log("my id:", JSON.parse(JSON.stringify(item)))
+  //   console.log("my id:", JSON.parse(JSON.stringify(item)))
+
+   this.route.queryParamMap.subscribe((params) => {
+    const item = params.get('staffId');
+    this.staffId = item;
+
+    console.log("my id:", this.staffId);
+
+  });
 
     this.fetchNextOfKinData()
     
@@ -63,4 +72,15 @@ export class NextOfKinsComponent implements OnInit {
     this.location.back()
   }
 
+
+    onInputChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+
+    // ✅ This line sets the typing status for this step
+   this.typingStatusService.setTypingStatus('next-of-kins', value.trim().length > 0);
+  }
+
 }
+
+

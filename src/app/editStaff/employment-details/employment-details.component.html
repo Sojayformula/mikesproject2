@@ -1,44 +1,90 @@
 
 
 <div class="lg:mx-[17rem] mt- lg:mt-12 ">
+
+
+  <!-- Edit button -->
+<div class="mt- flex gap-4 justify-end col-span-3 relative left-40 top-[-8rem]">
+  <button
+    type="button"
+    *ngIf="!editMode"
+    (click)="onEditToggle()"
+    class="flex justify-center bg-blue- border border-[#727A90] text-[14px] text-[#727A90] w-[69.65px] h-[40px] py-2 rounded-[10px] hover:bg-gray-400 hover:text-white transition"
+  >
+     <span class="material-symbols-outlined text-[20px]">edit</span>Edit
+  </button>
+
+  <!-- Save and cancel -->
+
+       <ng-container *ngIf="isLoading">
+  <div class="mt-6 flex justify-center relative top-[-15px]">
+    <mat-spinner [diameter]="30"></mat-spinner>
+  </div>
+</ng-container>
+
+  <ng-container *ngIf="editMode">
+    <button
+      type="button"
+      (click)="onSubmit(staffForm)"
+      
+      class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+    >
+      Save
+    </button>
+  
+    <button
+      type="button"
+      (click)="onCancel()"
+      class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
+    >
+      Cancel
+    </button>
+  </ng-container>
+  </div>
+
+
+
     <div class="">
         <p class="font-bold font-outfit w-60">Employment Details</p>
         <p class="text-[#727A90] text-[12px] w-60">Official job Information</p>
     </div>
+
+
+                              <!-- FORM -->
 
     <form #staffForm="ngForm" (ngSubmit)="onSubmit(staffForm)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-4 p-6 bg-white rounded gap-y-6 gap-x-[22rem]">
   <!-- Row 1 -->
    
   <div class="">
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Job Title</label>
-    <input  type="text" name="jobTitle" [(ngModel)]="employeeData.jobTitle" (ngModelChange)="onInputChange($event)"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+    <input  type="text" name="jobTitle" [disabled]="!editMode" [(ngModel)]="employeeData.jobTitle" (ngModelChange)="onInputChange($event)"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Unit</label>
-    <input type="text" name="unit" [(ngModel)]="employeeData.unit.name" (ngModelChange)="onInputChange($event)" placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="unit" [disabled]="!editMode" [(ngModel)]="employeeData.unit.name" (ngModelChange)="onInputChange($event)" placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
 
 
   <!-- Row 2 -->
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Employment Type</label>
-    <input type="text" name="employmentType" [(ngModel)]="employeeData.employmentType" placeholder="Select birth date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    <input type="text" name="employmentType" [disabled]="!editMode" [(ngModel)]="employeeData.employmentType" placeholder="Select birth date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Hire Date</label>
-    <input type="date" name="gender" [(ngModel)]="formattedDOB" placeholder="Hired Date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    <input type="date" name="gender" [disabled]="!editMode" [(ngModel)]="formattedDOB" placeholder="Hired Date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
   
 
   <!-- Row 3 -->
   <div>
      <label class="block w-40 text-sm font-medium text-gray-700">Work Location</label>
-    <input type="text" name="maritalStatus" [(ngModel)]="employeeData.workLocation" placeholder="Select marital status" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/> 
+    <input type="text" name="maritalStatus" [disabled]="!editMode" [(ngModel)]="employeeData.workLocation" placeholder="Select marital status" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/> 
   </div>
 
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Supervisor</label>
-    <input type="text" name="supervisor" [value]="employeeData?.firstName + ' ' + employeeData?.lastName" placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="supervisor" [disabled]="!editMode" [value]="employeeData?.firstName + ' ' + employeeData?.lastName" placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
 
 </form>

@@ -24,6 +24,9 @@ export class EducationdetailsComponent implements OnInit {
   isLoading = false
    editEduData: editStaffModel;
 
+   editMode: boolean = false;
+originalStaffData: any;
+
    educationData = {
   educationDetails: [
     {
@@ -76,9 +79,6 @@ export class EducationdetailsComponent implements OnInit {
     console.log("my id:", this.staffId);
         this.fetchEduDetails();
   });
-
-
-
 
   }
 
@@ -190,16 +190,25 @@ export class EducationdetailsComponent implements OnInit {
 
 
 
-
 onSubmit(eduform: NgForm): void {
   if (!eduform.valid) return;
 
   this.isLoading = true;
 
-  // const payload = {
-  //   _id: this.staffId,
-  //   educationDetails: this.educationData.educationDetails
-  // };
+  //   const formData = new FormData();
+  // // Append the form data manually or stringify and send JSON if backend accepts it that way
+  // formData.append('educationDetails', JSON.stringify(this.educationData.educationDetails));
+  // // Append files
+  // for (let i = 0; i < this.selectedFiles.length; i++) {
+  //    formData.append('files', this.selectedFiles[i]);
+  // //   for (const [key, value] of formData.entries()) {
+  // // console.log(`${key}:`, value);
+  //  // }
+  // }
+
+ 
+
+
 
   const payload: PatchEducationPayload = {
   _id: this.staffId,
@@ -237,12 +246,6 @@ onSubmit(eduform: NgForm): void {
 // this.educationData = JSON.parse(JSON.stringify(employee));
 
 
-
-
-
-editMode: boolean = false;
-originalStaffData: any;
-
 onEditToggle(): void {
   this.editMode = true;
   
@@ -252,11 +255,6 @@ onCancel(): void {
   this.editMode = false;
  
 }
-
-
-
- 
-
 
 
 
@@ -274,21 +272,33 @@ onCancel(): void {
     this.isDragging = false;
   }
 
+
   onDrop(event: DragEvent) {
-    event.preventDefault();
-    this.isDragging = false;
-    const files = event.dataTransfer?.files;
-    if (files && files.length > 0) {
-      this.selectedFiles = Array.from(files);
-    }
+  event.preventDefault();
+  this.isDragging = false;
+  const files = event.dataTransfer?.files;
+  if (files && files.length > 0) {
+    this.addFiles(files);
   }
+}
 
   onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      this.selectedFiles = Array.from(input.files);
-    }
+  const input = event.target as HTMLInputElement;
+  if (input.files) {
+    this.addFiles(input.files);
   }
+}
+
+
+
+  addFiles(fileList: FileList) {
+  for (let i = 0; i < fileList.length; i++) {
+    this.selectedFiles.push(fileList[i]);
+  }
+}
+
+
+
 
   formatSize(bytes: number): string {
     if (bytes < 1024) return bytes + ' B';
@@ -305,6 +315,5 @@ onCancel(): void {
     if (type.startsWith('text/')) return 'text';
     return 'other';
   }
-
 
 }

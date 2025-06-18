@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
 import { Observable } from 'rxjs/internal/Observable';
-import { addUnitModel, allStaffModel, editStaffModel, educationModel, getStaffModel, getStaffResponseModel, PatchEducationPayload, unitModel, updateUnitModel } from '../model/pagesModel';
+import { addUnitModel, allStaffModel, editFamilyModel, editStaffModel, educationModel, getStaffModel, getStaffResponseModel, PatchEducationPayload, unitModel, updateUnitModel } from '../model/pagesModel';
 import { Root } from '../model/login-model';
 
 @Injectable({
@@ -131,9 +131,9 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
     return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
   }
 
-  //   patch(id: string, payload: educationModel): Observable<any> {
-  //   return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
-  // }
+    patchFamilyDetails(id: string, payload: editFamilyModel): Observable<any> {
+    return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
+  }
 
   //   patchEducation(id: string, payload:educationModel):Observable<any>{
   //   return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
@@ -142,6 +142,9 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
   patchEducation(id: string, payload: PatchEducationPayload): Observable<any> {
   return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload);
 }
+//   patchEducation(id: string, payload: formData: FormData): Observable<any> {
+//   return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload);
+// }
 
 
  

@@ -25,7 +25,7 @@
   <ng-container *ngIf="editMode">
     <button
       type="submit"
-      
+      (click)="onSubmit(eduform)"
       class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
     >
       Save
@@ -40,8 +40,6 @@
     </button>
   </ng-container>
   </div>
-
-<!-- (click)="onSubmit(eduform)" -->
 
 
     <div>
@@ -132,77 +130,6 @@
 
 
 
-          <!-- <form #eduform="ngForm" (ngSubmit)="onSubmit(eduform)">
-  <div
-    *ngFor="let edu of educationData.educationDetails; let i = index"
-    class="grid grid-cols-2 gap-4 mb-6"
-  >
-    Institution Name
-    <div>
-      <label>Institution Name</label>
-      <input
-        type="text"
-        name="institutionName{{i}}"
-        [(ngModel)]="edu.institutionName"
-        [disabled]="!editMode"
-        class="form-input"
-      />
-    </div>
-
-    Course of Study
-    <div>
-      <label>Course of Study</label>
-      <input
-        type="text"
-        name="courseOfStudy{{i}}"
-        [(ngModel)]="edu.courseOfStudy"
-        [disabled]="!editMode"
-        class="form-input"
-      />
-    </div>
-
-    Start Date
-    <div>
-      <label>Start Date</label>
-      <input
-        type="date"
-        name="startDate{{i}}"
-        [(ngModel)]="edu.startDate"
-        [disabled]="!editMode"
-        class="form-input"
-      />
-    </div>
-
-    End Date
-    <div>
-      <label>End Date</label>
-      <input
-        type="date"
-        name="endDate{{i}}"
-        [(ngModel)]="edu.endDate"
-        [disabled]="!editMode"
-        class="form-input"
-      />
-    </div>
-  </div>
-
-  <div *ngIf="editMode">
-    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">
-      Save
-    </button>
-    <button type="button" (click)="onCancel()" class="bg-gray-400 text-white px-4 py-2 rounded">
-      Cancel
-    </button>
-  </div> -->
-
-
-
-
-
-
-
-
-
   <div>
 
     <div class="">
@@ -210,14 +137,9 @@
     <p class="text-[#727A90] text-[12px] font-outfit w-80">Upload a scanned copy of the spouse's marriagecertificate.</p>
     </div>
 
-
- 
-
-
-
    <div class="mb-10 mt-10">
 
-         <div
+    <div
   class="border-2 border-dashed border-blue-400 w-[1150px] h-[172px] p-6 rounded-md text-center cursor-pointer bg-[#F8FAFF]"
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
@@ -239,8 +161,6 @@
 
   <input
     type="file"
-    webkitdirectory
-    directory
     multiple
     (change)="onFileSelected($event)"
     #fileInput
@@ -249,14 +169,15 @@
 </div>
 
 
+
          <div *ngIf="selectedFiles.length > 0" class="mt-4 space-y-2">
   <div
     *ngFor="let file of selectedFiles; let i = index"
     class="flex items-center gap-4 border p-2 rounded-md justify-between lg:w-[1150px] lg:right-[26rem] relativ lg:top-[12rem]"
   >
-    File Icon and Info
+    <!-- File Icon and Info -->
     <div class="flex items-center gap-4 ">
-      Icon
+      <!-- Icon -->
       <div>
         <ng-container [ngSwitch]="getFileType(file)">
           <i *ngSwitchCase="'image'" class="text-blue-500">🖼️</i>
@@ -268,14 +189,14 @@
         </ng-container>
       </div>
 
-      File Info
+      <!-- File Info -->
       <div>
         <p class="text-sm font-medium">{{ file.name }}</p>
         <p class="text-xs text-gray-500">{{ formatSize(file.size) }}</p>
       </div>
     </div>
 
-    Cancel Button
+    <!-- Cancel Button -->
     <button
       (click)="removeFile(i)"
       class="border-2 border-[#858585] text-[#858585] hover:text-gray-700 text-sm bg-gray-300 rounded-full w-[20px] h-[20px] "

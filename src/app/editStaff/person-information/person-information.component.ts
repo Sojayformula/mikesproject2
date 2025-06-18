@@ -30,6 +30,9 @@ export class PersonInformationComponent implements OnInit{
   storedMaritalData: string = ''; 
   staffId: any;
   isLoading = false;
+
+  editMode: boolean = false;
+originalStaffData: any;
   
   // selectedFile!: File;
 imagePreview: string | ArrayBuffer | null = null;
@@ -49,13 +52,21 @@ imagePreview: string | ArrayBuffer | null = null;
 
 
    ngOnInit(): void {
-   const item = this.route.snapshot.queryParamMap.get('staffId');
-  this.staffId = item; 
+  //  const item = this.route.snapshot.queryParamMap.get('staffId');
+  // this.staffId = item; 
 
-  //  const  item = this.route.snapshot.queryParamMap.get('staffId')
+  // //  const  item = this.route.snapshot.queryParamMap.get('staffId')
   
-    console.log("my id:", JSON.parse(JSON.stringify(item)))
-  //  this.fetchMaritalStatus() 
+  //   console.log("my id:", JSON.parse(JSON.stringify(item)))
+  // //  this.fetchMaritalStatus() 
+
+   this.route.queryParamMap.subscribe((params) => {
+    const item = params.get('staffId');
+    this.staffId = item;
+
+    console.log("my id:", this.staffId);
+
+  });
 
 
      if (this.staffId) {
@@ -97,13 +108,6 @@ imagePreview: string | ArrayBuffer | null = null;
 
 
 
-
-   
-
-
-// selectedFile: File | null = null;
-
-
 async onFileSelected(event: any) {
   const file = event.target.files[0];
   if (!file) return;
@@ -143,12 +147,7 @@ async onFileSelected(event: any) {
 // }
 
 
-
-
-
-
-
-
+            //  CONVERTED DATE //
 get formattedDOB(): string {
   const date = this.staffData?.dateOfBirth;
   return date ? formatDate(date, 'yyyy-MM-dd', 'en-US') : '';
@@ -157,6 +156,8 @@ get formattedDOB(): string {
 set formattedDOB(value: string) {
   this.staffData.supervisor.dateOfBirth = value;
 }
+
+
 
  goBackToPersonalInfo(){
     this.location.back()
@@ -181,8 +182,9 @@ set formattedDOB(value: string) {
 
 
 
-editMode: boolean = false;
-originalStaffData: any;
+
+
+    // EDIT FORM //
 
 onEditToggle(): void {
   this.editMode = true;

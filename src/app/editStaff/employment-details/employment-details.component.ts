@@ -6,30 +6,27 @@ import { CheckboxService } from '../../checkboxService/checkbox.service';
 import { PagesService } from '../../service/pages.service';
 import { allStaffModel } from '../../model/pagesModel';
 import { StaffDataService } from '../../StaffDataService/staff-data.service';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 
 @Component({
   selector: 'app-employment-details',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, MatProgressSpinner],
   templateUrl: './employment-details.component.html',
   styleUrl: './employment-details.component.scss'
 })
 export class EmploymentDetailsComponent implements OnInit{
     
-    // employeeData: any[]=[];
-    // employeeData: any = null;
-    employeeData: any = { 
-  //         unit: { name: '' },
-  // employmentType: '',
-  // hireDate: '',
-  // workLocation: '',
-  // supervisor: ''
-    }
+    employeeData: any = { }
     currentStep = 0;
     getAllStaff: allStaffModel;
      staffId: any
      selectedEmployee: string =''
      selectedStep: string = '';
+
+     editMode: boolean = false;
+     originalStaffData: any;
+     isLoading = false
 
     
 
@@ -51,30 +48,15 @@ export class EmploymentDetailsComponent implements OnInit{
 
     console.log("my id:", this.staffId);
 
-    if (this.staffId) {
-      this.fetchEmployees(); 
-    } 
   });
 
-  this.steps.forEach(step => this.isCheckedMap[step] = false);
+   if (this.staffId) {
+      this.fetchEmployees(); 
+    } 
+
+  // this.steps.forEach(step => this.isCheckedMap[step] = false);
 
    }
-
-
-  //  fetchEmployees(){
-  //   console.log('fetched data', this.getAllStaff)
-  //   this.pagesService.getAllStaff(this.getAllStaff).subscribe({
-  //   next: (res) => {
-  //     this.employeeData = res.data;
-  //     console.log('Api response', res)
-
-  //   },
-
-  //   error:(err)=>{
-  //     console.log('Failed to fetch data', err)
-  //   }
-  //   })
-  //  }
 
   fetchEmployees() {
     this.pagesService.getAllStaff(this.staffId, this.getAllStaff).subscribe({
@@ -134,28 +116,37 @@ currentStepIndex = 0;
 steps = ['personal-details', 'education', 'employment-details', 'review']; // Example steps
 isCheckedMap: { [key: string]: boolean } = {};
 
-// Call this in ngOnInit or constructor to initialize the map
-// ngOnInit() {
-//   this.steps.forEach(step => this.isCheckedMap[step] = false);
+
+
+// goToNext() {
+//   if (this.currentStepIndex < this.steps.length - 1) {
+//     const currentStep = this.steps[this.currentStepIndex];
+//     this.isCheckedMap[currentStep] = true; // Mark current step as complete
+//     this.currentStepIndex++;
+
+//     const nextStep = this.steps[this.currentStepIndex];
+//     this.router.navigate([nextStep], { queryParamsHandling: 'preserve' });
+//   }
 // }
 
-goToNext() {
-  if (this.currentStepIndex < this.steps.length - 1) {
-    const currentStep = this.steps[this.currentStepIndex];
-    this.isCheckedMap[currentStep] = true; // Mark current step as complete
-    this.currentStepIndex++;
+// goToPrev() {
+//   if (this.currentStepIndex > 0) {
+//     this.currentStepIndex--;
+//     const prevStep = this.steps[this.currentStepIndex];
+//     this.router.navigate([prevStep], { queryParamsHandling: 'preserve' });
+//   }
+// }
 
-    const nextStep = this.steps[this.currentStepIndex];
-    this.router.navigate([nextStep], { queryParamsHandling: 'preserve' });
-  }
+
+
+onEditToggle(): void {
+  this.editMode = true;
+  
 }
 
-goToPrev() {
-  if (this.currentStepIndex > 0) {
-    this.currentStepIndex--;
-    const prevStep = this.steps[this.currentStepIndex];
-    this.router.navigate([prevStep], { queryParamsHandling: 'preserve' });
-  }
+onCancel(): void {
+  this.editMode = false;
+ 
 }
 
 

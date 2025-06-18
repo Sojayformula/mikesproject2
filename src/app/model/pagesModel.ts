@@ -703,3 +703,48 @@ export interface Pagination {
 
 
 
+// export class editFamilyModel{
+//    spouseName!: string
+//   spousePhone!: string
+//   spouseEmail!: string
+//   numberOfChildren!: number
+//   children!: Children[]
+// }
+
+// export interface editFamilyModel {
+//   supervisor: {
+//     _id: string;
+//     spouseName: string;
+//     spousePhone: string;
+//     spouseEmail: string;
+//     numberOfChildren: number;
+//     children: Children[];
+//   };
+ 
+// }
+
+//  export interface Child {
+//   fullName: string;
+//   dob: string; // or Date, depending on your API
+//   _id: string;
+// }
+
+export interface Child {
+  fullName: string;
+  dob: string;
+  _id?: string;
+}
+
+export interface editFamilyModel {
+  supervisor: string[]; // ✅ now an array of MongoDB ObjectIds
+  spouseName: string;
+  spousePhone: string;
+  spouseEmail: string;
+  numberOfChildren: number;
+  children: Children[];
+}
+
+
+
+
+
