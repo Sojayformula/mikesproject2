@@ -20,6 +20,9 @@ export class EmengencycontactComponent {
    getAllStaff: allStaffModel;
    isLoading = false
 
+   editMode =false
+   originalData: any
+
   constructor(private router:Router, private pagesService:PagesService, private route:ActivatedRoute){
     this.getAllStaff = new allStaffModel
   }
@@ -60,6 +63,19 @@ export class EmengencycontactComponent {
   //     goBack(){
   //   this.location.back()
   // }
+
+  //  Edit  function
+onEditToggle(): void {
+  this.editMode = true;
+  this.originalData = JSON.parse(JSON.stringify(this.emergencyData)); // deep copy
+}
+
+// Cancel function
+onCancel(): void {
+  this.editMode = false;
+  this.emergencyData = JSON.parse(JSON.stringify(this.originalData)); // restore
+}
+
 
     Submit(form:NgForm){}
  

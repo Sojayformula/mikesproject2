@@ -1,9 +1,8 @@
 
-
-<div class="mx-8 lg:mx-[17rem] lg:mt-[-46.2rem] overflow-hidden">
+<div class="mx-8 lg:mx-[17rem] lg:mt-[-51.5rem] ">
 
     <!-- Edit button -->
-<div class="mt- flex gap-4 justify-end col-span-3 relative left-40 top-[-6rem] lg:top-[-3rem]">
+<div class="mt- flex justify-end col-span-3 relative left-[7rem] md:left-40 top-[-6rem] md:top-[2.3rem] ">
   <button
     type="button"
     *ngIf="!editMode"
@@ -43,8 +42,8 @@
 
               <!-- QRcode image -->
    <div class="flex justify-end">        
-    <div class="flex  relative w-20 lg:left-60 top-[-4rem] ">
-    <img src="/QRCode.png" class="w-[83px] h-[86px]"> 
+    <div class="flex  relative w-20 lg:left-[11rem] top-[-4rem] md:top-[4.3rem]">
+    <img src="/QRCode.png" class="w-[83px] h-[86px] "> 
     </div>
     </div> 
 
@@ -115,7 +114,7 @@
 
   <!-- Row 4: Input 7 under column 1, Input 8 under column 2 -->
   <div class="grid grid-cols-3 gap-[24rem] md:gap -[10rem]">
-    <!-- <div class="flex flex-col"> 
+    <div class="flex flex-col"> 
         <label class="font-semibold text-[13px] font-outfit">Child </label>
     <input type="text" name="child2" [disabled]="!editMode"  [(ngModel)]="data.supervisor.children[1].fullName" placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
@@ -126,7 +125,7 @@
     <input type="text" name="childdob" [disabled]="!editMode"  [(ngModel)]="data.supervisor.children[1].dob" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
     </div>
 
-    <div></div> -->
+    <div></div>
   </div>
 
 

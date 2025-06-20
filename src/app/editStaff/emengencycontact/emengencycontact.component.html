@@ -1,13 +1,60 @@
 
-<div class="mx-[17rem] mt-10">
+<div class="mx-[17rem] mt-[-49rem]">
 
+    <!-- Edit button -->
+<div class="top-[-15rem] py-[-30rem] flex gap-4 justify-end col-span-3 relative  md:left-[10rem] md:top-[-3.5px] ">
+  <button
+    type="button"
+    *ngIf="!editMode"
+    (click)="onEditToggle()"
+    class="flex justify-center border border-[#727A90] text-[14px] text-[#727A90] w-[69.65px] h-[40px] py-2 rounded-[10px] hover:bg-gray-400 hover:text-white transition"
+  >
+     <span class="material-symbols-outlined text-[20px]">edit</span>Edit
+  </button> 
+
+   <!-- Save and cancel  -->
+
+       <!-- <ng-container *ngIf="isLoading">
+  <div class="mt-6 flex justify-center relative top-[-15px]">
+    <mat-spinner [diameter]="30"></mat-spinner>
+  </div>
+</ng-container> -->
+
+  <ng-container *ngIf="editMode">
+    <button
+      type="button"
+       (click)="Submit(emergencyData)"
+      class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+    >
+      Save
+    </button>
+  
+     <button
+      type="button"
+      class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
+    >
+      Cancel
+    </button> 
+  </ng-container>
+  </div>
+
+
+
+             <!-- QRcode image -->
+   <div class="flex justify-end">        
+    <div class="flex relative w-20 md:left-[11rem] top-[-13rem] md:top-[1.8rem]">
+    <img src="/QRCode.png" class="w-[83px] h-[86px]"> 
+    </div>
+    </div> 
+
+  <div>
     <div>
         <p class="font-bold font-outfit">Emergency Contact</p>
         <p class="text-[#727A90] text-sm font-outfit">Contact in case of emergency</p>
     </div>
 
 
-    <form #emergencyForm="ngForm" (ngSubmit)="Submit(emergencyForm)" class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[22rem] mt-10 font-outfit">
+    <form #emergencyForm="ngForm" (ngSubmit)="Submit(emergencyForm)" class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[22rem] font-outfit mt-12">
         <!-- Row ---1 -->
          <div>
             <label class="block w-20">Full Name</label>

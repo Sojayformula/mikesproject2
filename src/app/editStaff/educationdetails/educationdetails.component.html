@@ -1,10 +1,10 @@
 
-<div class="mx-[17rem] mt-10">
+<div class="mx-[17rem] md:mt-[-49rem]">
 
    
 
     <!-- Edit button -->
-<div class="mt- flex gap-4 justify-end col-span-3 relative left-10 lg:left-40 top-[-7.5rem]">
+<div class="mt- flex gap-4 justify-end col-span-3 relative left-10 md:left-40 md:top-[-0.2rem]">
   <button
     type="button"
     *ngIf="!editMode"
@@ -42,6 +42,14 @@
   </div>
 
 
+                 <!-- QRcode image -->
+   <div class="flex justify-end">        
+    <div class="flex relative w-20 md:left-[11rem] top-[-13rem] md:top-[1.8rem]">
+    <img src="/QRCode.png" class="w-[83px] h-[86px]"> 
+    </div>
+    </div> 
+
+
     <div>
         <p class="font-bold font-outfit">Education Background</p>
         <p class="text-[#727A90] text-sm font-outfit">Academic and professional qualifications.</p>
@@ -50,7 +58,7 @@
 
 
             <!-- FORM -->
-    <form #eduform = "ngForm" (ngSubmit)="onSubmit(eduform)" class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[22rem] mt-10 font-outfit ">
+    <form #eduform = "ngForm" (ngSubmit)="onSubmit(eduform)" class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[22rem] mt-12 font-outfit ">
         <!-- Row ---1 -->
 
          <div >

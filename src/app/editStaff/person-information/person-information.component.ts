@@ -202,9 +202,9 @@ onCancel(): void {
   this.staffData = JSON.parse(JSON.stringify(this.originalData)); // restore
 }
 
-reset() {
-  this.staffData = structuredClone(this.originalData); // Restore original
-}
+// reset() {
+//   this.staffData = structuredClone(this.originalData); // Restore original
+// }
 
 
 
