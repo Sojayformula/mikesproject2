@@ -216,12 +216,21 @@ Submit(form: NgForm): void {
     }
   }
 
+  // onFileSelected(event: Event) {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files) {
+  //     this.selectedFiles = Array.from(input.files);
+  //   }
+  // }
   onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      this.selectedFiles = Array.from(input.files);
-    }
+  const input = event.target as HTMLInputElement;
+  if (input.files?.length) {
+    const files = Array.from(input.files);
+    this.selectedFiles.push(...files);
+    input.value = ''; 
   }
+}
+
 
   formatSize(bytes: number): string {
     if (bytes < 1024) return bytes + ' B';
@@ -243,6 +252,7 @@ Submit(form: NgForm): void {
 
 
 
+
 //  Edit  function
 onEditToggle(): void {
   this.editMode = true;
@@ -255,9 +265,9 @@ onCancel(): void {
   this.data = JSON.parse(JSON.stringify(this.originalData)); // restore
 }
 
-reset() {
-  this.data = structuredClone(this.originalData); // Restore original
-}
+// reset() {
+//   this.data = structuredClone(this.originalData); // Restore original
+// }
 
 
 }

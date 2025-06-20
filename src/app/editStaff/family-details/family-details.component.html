@@ -1,9 +1,9 @@
 
 
-<div class="mx-[17rem] lg:mt-[-46.2rem]">
+<div class="mx-8 lg:mx-[17rem] lg:mt-[-46.2rem] overflow-hidden">
 
     <!-- Edit button -->
-<div class="mt- flex gap-4 justify-end col-span-3 relative left-40 top-[-3rem]">
+<div class="mt- flex gap-4 justify-end col-span-3 relative left-40 top-[-6rem] lg:top-[-3rem]">
   <button
     type="button"
     *ngIf="!editMode"
@@ -40,6 +40,16 @@
   </ng-container>
   </div>
 
+
+              <!-- QRcode image -->
+   <div class="flex justify-end">        
+    <div class="flex  relative w-20 lg:left-60 top-[-4rem] ">
+    <img src="/QRCode.png" class="w-[83px] h-[86px]"> 
+    </div>
+    </div> 
+
+
+
     <div class="mt-10">
         <p class="font-outfit font-bold text-[16px]">Family Details</p>
         <p class="font-outfit text-[#727A90] text-[12px]">Information for family-related benefit and records,</p>
@@ -48,18 +58,20 @@
 
 
                    <!-- FAMILY FORM -->
-<form #staffForm="ngForm" (ngSubmit)="Submit(staffForm)"
-  class="grid gap-10 bg-white rounded-lg mt-10   ">
+<form #staffForm="ngForm" (ngSubmit)="Submit(staffForm) "
+  class="grid gap-10 bg-white rounded-lg mt-10 ">
 
-  <!-- Row 1: 3 input fields -->
-  <div class="grid grid-cols-3 gap- [10rem]">
-    <div class="w-[6rem]">
-    <label class="font-semibold text-[13px] font-outfit">Spouse's Name</label>
-    <input type="text" name="spouseName"  [(ngModel)]="data.supervisor.spouseName" placeholder="Enter full name of spouse" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-    <div class="mt-10">
+  <!-- Row 1: 3  -->
+  <div class="grid md:grid-cols-3 grid-cols-2 gap- [10rem]">
+    <div class="w-[6rem] ">
+    <label class="font-semibold text-[13px] font-outfit ">Spouse's Name</label>
+    <input type="text" name="spouseName" [disabled]="!editMode" [(ngModel)]="data?.supervisor.spouseName" placeholder="Enter full name of spouse" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+   
+       <div class="mt-10">
         <p class="font-semibold font-outfit text-[16px] w-[10rem]">Children Information</p>
         <p class="text-[#727A90] text-[12px] w-[42rem]">Base on the total number of children entered above, the same number of fields will appear below to enter each child's full... </p>
     </div>
+
     </div>
 
     <div class="w-[9rem]">
@@ -67,7 +79,7 @@
     <input type="text" name="spousePhone" [disabled]="!editMode" [(ngModel)]="data.supervisor.spousePhone" placeholder="Phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
-    <div class="">
+    <div class="mt-10 md:mt-0">
     <label class="font-semibold text-[13px] font-outfit">Spouse's Email</label>
     <input type="text" name="spouseEmail" [disabled]="!editMode" [(ngModel)]="data.supervisor.email" placeholder="Enter address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
@@ -86,7 +98,7 @@
   </div>
 
   <!-- Row 3: Input 5 under column 1, Input 6 under column 2      *ngFor="let child of data.supervisor.children; let i = index"   [name]="'age'+ i "  [value]="child.dob"     -->
-  <div class="grid grid-cols-3 gap- [10rem]"> 
+  <div class="grid grid-cols-3 gap-[24rem] lg:gap- [10rem]"> 
     <div class="flex flex-col">
      <label class="font-semibold text-[13px] font-outfit">Child </label>
     <input type="text" name="child1" [disabled]="!editMode" [(ngModel)]="data.supervisor.children[0].fullName"  placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
@@ -102,19 +114,19 @@
   </div>
 
   <!-- Row 4: Input 7 under column 1, Input 8 under column 2 -->
-  <div class="grid grid-cols-3 gap- [10rem]">
-    <div class="flex flex-col">
+  <div class="grid grid-cols-3 gap-[24rem] md:gap -[10rem]">
+    <!-- <div class="flex flex-col"> 
         <label class="font-semibold text-[13px] font-outfit">Child </label>
     <input type="text" name="child2" [disabled]="!editMode"  [(ngModel)]="data.supervisor.children[1].fullName" placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
  
     <div class="flex flex-col">
-        <label class="font-semibold text-[13px] font-outfit">Age</label>
+    <label class="font-semibold text-[13px] font-outfit">Age</label>
     <input type="text" name="childdob" [disabled]="!editMode"  [(ngModel)]="data.supervisor.children[1].dob" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
     </div>
 
-    <div></div>
+    <div></div> -->
   </div>
 
 
@@ -134,7 +146,7 @@
    <div class="mb-10 mt-10">
 
          <div
-  class="border-2 border-dashed border-blue-400 w-[1150px] h-[172px] p-6 rounded-md text-center cursor-pointer bg-[#F8FAFF]"
+  class="border-2 border-dashed border-blue-400 w-[43rem] md:w-[1150px] h-[172px] p-6 rounded-md text-center cursor-pointer bg-[#F8FAFF]"
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
   (drop)="onDrop($event)"
@@ -155,8 +167,7 @@
 
   <input
     type="file"
-    webkitdirectory
-    directory
+     directory
     multiple
     (change)="onFileSelected($event)"
     #fileInput
@@ -165,7 +176,7 @@
 </div>
 
 
-         <div *ngIf="selectedFiles.length > 0" class="mt-4 space-y-2">
+  <div *ngIf="selectedFiles.length > 0" class="mt-4 space-y-2">
   <div
     *ngFor="let file of selectedFiles; let i = index"
     class="flex items-center gap-4 border p-2 rounded-md justify-between lg:w-[1150px] lg:right-[26rem] relativ lg:top-[12rem]"
@@ -204,15 +215,7 @@
 
 </div>
  </div>
-
-
-
-
-
-
-
   </div>
 
 </form>
- 
 </div>

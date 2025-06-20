@@ -19,6 +19,9 @@ export class NextOfKinsComponent implements OnInit {
    getAllStaff: allStaffModel;
    isLoading = false
 
+   originalData: any
+   editMode = false;
+
   constructor( private typingStatusService: CheckboxService, private router:Router, private location:Location, private pagesService:PagesService, private route:ActivatedRoute){
     this.getAllStaff = new allStaffModel
   }
@@ -82,6 +85,19 @@ export class NextOfKinsComponent implements OnInit {
 
   }
 
-  Submit(){}
+  
+//  Edit  function
+onEditToggle(): void {
+  this.editMode = true;
+  this.originalData = JSON.parse(JSON.stringify(this.nextOfKinsData)); // deep copy
+}
+
+// Cancel function
+onCancel(): void {
+  this.editMode = false;
+  this.nextOfKinsData = JSON.parse(JSON.stringify(this.originalData)); // restore
+}
+
+  Submit(form: NgForm){}
 
 }

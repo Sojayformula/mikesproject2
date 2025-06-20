@@ -185,12 +185,21 @@ onCancel(): void {
     }
   }
 
+  // onFileSelected(event: Event) {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files) {
+  //     this.selectedFiles = Array.from(input.files);
+  //   }
+  // }
   onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      this.selectedFiles = Array.from(input.files);
-    }
+  const input = event.target as HTMLInputElement;
+  if (input.files?.length) {
+    const files = Array.from(input.files);
+    this.selectedFiles.push(...files);
+    input.value = ''; 
   }
+}
+
 
   formatSize(bytes: number): string {
     if (bytes < 1024) return bytes + ' B';

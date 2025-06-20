@@ -1,9 +1,9 @@
 
-<div class="lg:mx-[17rem] mt- lg:mt-[-44rem] ">
+<div class="mx-8 lg:mx-[17rem] mt- lg:mt-[-44rem] ">
 
 
   <!-- Edit button -->
-<div class="mt- flex gap-4 justify-end col-span-3 relative lg:left-40 top-[-6rem] lg:top-[-5.2rem]">
+<div class="flex justify-end col-span-3 relative lg:left-40 top-[-6rem] lg:top-[-5.2rem]">
   <button
     type="button"
     *ngIf="!editMode"
@@ -41,6 +41,14 @@
   </ng-container>
   </div>
 
+
+
+              <!-- QRcode image -->
+    <div class="flex justify-end">        
+    <div class="flex relative w-20 lg:left-60 top-[-4rem] ">
+    <img src="/QRCode.png" class="w-[83px] h-[86px]"> 
+    </div>
+    </div> 
 
 
     <div class="">
@@ -102,7 +110,7 @@
    <div class="mb-10 mt-10">
 
          <div
-  class="border-2 border-dashed border-blue-400 w-[1150px] h-[172px] p-6 rounded-md text-center cursor-pointer bg-[#F8FAFF]"
+  class="border-2 border-dashed border-blue-400 w-[45rem] lg:w-[1150px] h-[172px] p-6 rounded-md text-center cursor-pointer bg-[#F8FAFF]"
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
   (drop)="onDrop($event)"
@@ -124,8 +132,7 @@
 
   <input
     type="file"
-    webkitdirectory
-    directory
+     directory
     multiple
     (change)="onFileSelected($event)"
     #fileInput
@@ -139,9 +146,9 @@
     *ngFor="let file of selectedFiles; let i = index"
     class="flex items-center gap-4 border p-2 rounded-md justify-between lg:w-[1150px] lg:right-[26rem] relativ lg:top-[12rem]"
   >
-    File Icon and Info
+    <!-- File Icon and Info -->
     <div class="flex items-center gap-4 ">
-      Icon
+      <!-- Icon -->
       <div>
         <ng-container [ngSwitch]="getFileType(file)">
           <i *ngSwitchCase="'image'" class="text-blue-500">🖼️</i>
@@ -153,14 +160,14 @@
         </ng-container>
       </div>
 
-      File Info
+      <!-- File Info -->
       <div>
         <p class="text-sm font-medium">{{ file.name }}</p>
         <p class="text-xs text-gray-500">{{ formatSize(file.size) }}</p>
       </div>
     </div>
 
-    Cancel Button
+    <!-- Cancel Button -->
     <button
       (click)="removeFile(i)"
       class="border-2 border-[#858585] text-[#858585] hover:text-gray-700 text-[10px] bg-gray-300 rounded-full w-[20px] h-[20px] "

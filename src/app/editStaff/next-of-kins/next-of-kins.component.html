@@ -1,5 +1,47 @@
 
-<div class="mx-[17rem] mt-10">
+<div class="lg:mx-[17rem] mx-10 lg:mt-[-44rem] ">
+
+
+       <!-- Edit button -->
+<div class="flex justify-end col-span-3 relative left-[8rem] lg:left-40 top-[-6rem] lg:top-[-5.2rem]">
+  <button
+    type="button"
+    *ngIf="!editMode"
+    (click)="onEditToggle()"
+    class="flex justify-center bg-blue- border border-[#727A90] text-[14px] text-[#727A90] w-[69.65px] h-[40px] py-2 rounded-[10px] hover:bg-gray-400 hover:text-white transition relative right-[7.8rem] lg:right-0"
+  >
+     <span class="material-symbols-outlined text-[20px]">edit</span>Edit
+  </button>
+
+  <!-- Save and cancel -->
+
+       <!-- <ng-container *ngIf="isLoading">
+  <div class="mt-6 flex justify-center relative top-[-15px]">
+    <mat-spinner [diameter]="30"></mat-spinner>
+  </div>
+</ng-container> -->
+
+  <ng-container *ngIf="editMode">
+    <button
+      type="button"
+      (click)="Submit(nextOfKinForm)"
+      class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+    >
+      Save
+    </button>
+  
+    <button
+      type="button"
+      (click)="onCancel()"
+      class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
+    >
+      Cancel
+    </button>
+  </ng-container>
+  </div>
+
+
+
 
     <div>
         <p class="font-bold font-outfit">Next of Kin</p>
@@ -7,13 +49,14 @@
     </div>
 
 
-    <form #nextOfKinForm="ngForm" (ngSubmit)="onSubmit(nextOfKinForm)" class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[22rem] mt-10 font-outfit">
+    <form #nextOfKinForm="ngForm" (ngSubmit)="onSubmit(nextOfKinForm)" class="grid grid-rows-2 grid-cols-2 lg:grid-cols-3 gap-y-8 gap-10 lg:gap-x-[22rem] mt-10 font-outfit">
         <!-- Row ---1 -->
          <div>
             <label class="block w-20">Full Name</label>
             <input
             type="text"
             name="fullName"
+            [disabled]="!editMode" 
             [(ngModel)]="nextOfKinsData.nextOfKinFullName"
             placeholder="Enter next of kin's full name"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -25,6 +68,7 @@
             <input
             type="text"
             name="Relationship"
+            [disabled]="!editMode" 
             [(ngModel)]="nextOfKinsData.nextOfKinRelationship"
             placeholder="E.g Mother, Brother, Friend"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -36,6 +80,7 @@
             <input
             type="text"
             name="phoneNumber"
+            [disabled]="!editMode" 
             [(ngModel)]="nextOfKinsData.nextOfKinPhoneNumber"
             placeholder="Enter active contact number"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -48,6 +93,7 @@
             <input
             type="text"
             name="email"
+            [disabled]="!editMode" 
             [(ngModel)]="nextOfKinsData.nextOfKinEmail"
             placeholder="Enter email address (if availabe)"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -59,6 +105,7 @@
             <input
             type="text"
             name="address"
+            [disabled]="!editMode" 
             [(ngModel)]="nextOfKinsData.nextOfKinCurrentAddress"
             placeholder="current address"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
