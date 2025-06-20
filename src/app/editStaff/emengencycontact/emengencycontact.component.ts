@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { allStaffModel } from '../../model/pagesModel';
 import { PagesService } from '../../service/pages.service';
@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './emengencycontact.component.scss'
 })
 export class EmengencycontactComponent {
+  @ViewChild('formRef') formRef!: NgForm;
+
 
   emergencyData: any
   staffId: any
@@ -59,7 +61,7 @@ export class EmengencycontactComponent {
   //   this.location.back()
   // }
 
-    onSubmit(form:NgForm){}
+    Submit(form:NgForm){}
  
 
 }

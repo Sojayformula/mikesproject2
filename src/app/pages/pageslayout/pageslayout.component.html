@@ -61,23 +61,15 @@
 
 
 
-
-
-
-
-
-
-
-
-
+     
 
    <div
-  class="bg-[url('/backdrop3.png')] bg-cover bg-no-repeat bg-center h-[28rem] absolute w-[100vw] max-w-full lg:w-full "
+  class="bg-[url('/backdrop3.png')] bg-cover bg-no-repeat bg-center h-[28rem] absolute w-[52rem] max-w-ful lg:w-full "
 >
   <div
-    class="bg-[url('/Rectangle12.png')] bg-cover bg-no-repeat bg-center h-full absolute w-[100vw] max-w-full lg:w-full top-[-15px] "
+    class="bg-[url('/Rectangle12.png')] bg-cover bg-no-repeat bg-center h-full absolute w-[52rem] max-w-ful lg:w-full top-[-15px] "
   >
-    <div class="flex justify-between items-center mt-8 mx-4 sm:mx-10">
+    <div  class="flex justify-between items-center mt-8 mx-4 sm:mx-10">
 
             <!-- Left logo  -->
       <div
@@ -88,7 +80,7 @@
 
         <!-- Navigation links   -->
       <div class="hidden md:flex space-x-2 sm:space-x-4">
-        <a
+        <a 
           routerLink="dashboard"
           routerLinkActive="bg-[#F3F3F16E] border border-white"
           [routerLinkActiveOptions]="{ exact: false }"
@@ -141,7 +133,7 @@
       <button
         class="md:hidden text-white p-2 focus:outline-none"
         aria-label="Open Menu"
-        (click)="toggleMobileMenu()"
+         (click)="toggleMobileMenu()"
       >
        
         <svg
@@ -167,7 +159,7 @@
     </div>
 
    
-    <div *ngIf="mobileMenuOpen" class="md:hidden bg-white mx- rounded-lg mt-4 p-4 shadow-lg overflow-hidden">
+    <div *ngIf="mobileMenuOpen" class="md:hidden bg-white w-48 h-[24rem] py-4 text-[30px] text-center left-80 fixed z-10 rounded-lg  shadow-lg overflow-hidden">
       <a
         routerLink="dashboard"
         routerLinkActive="bg-[#F3F3F16E] border border-white"

@@ -1,5 +1,5 @@
 import { CommonModule, formatDate, Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CheckboxService } from '../../checkboxService/checkbox.service';
@@ -7,6 +7,7 @@ import { PagesService } from '../../service/pages.service';
 import { allStaffModel } from '../../model/pagesModel';
 import { StaffDataService } from '../../StaffDataService/staff-data.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { EditService } from '../../editservice/edit.service';
 
 
 @Component({
@@ -16,13 +17,19 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
   styleUrl: './employment-details.component.scss'
 })
 export class EmploymentDetailsComponent implements OnInit{
+  @ViewChild('formRef') formRef!: NgForm;
+
     
-    employeeData: any = { }
+    employeeData: any = {}
     currentStep = 0;
     getAllStaff: allStaffModel;
      staffId: any
      selectedEmployee: string =''
      selectedStep: string = '';
+     originalData: any;
+
+     selectedFiles: File[] = [];
+     isDragging = false;
 
      editMode: boolean = false;
      originalStaffData: any;
@@ -32,7 +39,7 @@ export class EmploymentDetailsComponent implements OnInit{
 
  
 
-   constructor( private staffDataService: StaffDataService, private router: Router, private location:Location, private route:ActivatedRoute, 
+   constructor(public editService:EditService, private staffDataService: StaffDataService, private router: Router, private location:Location, private route:ActivatedRoute, 
     private typingStatusService: CheckboxService, private pagesService: PagesService){
 
       this.getAllStaff = new allStaffModel()
@@ -67,7 +74,7 @@ export class EmploymentDetailsComponent implements OnInit{
           this.employeeData = employee;            
           console.log('Matched Employee:', this.employeeData);
         } else {
-        // console.warn('No matching employee found for staffId:', this.staffId);
+        
         }
       },
       error: (err) => {
@@ -139,23 +146,92 @@ isCheckedMap: { [key: string]: boolean } = {};
 
 
 
+
+
+//  Edit  function
 onEditToggle(): void {
   this.editMode = true;
-  
+  this.originalData = JSON.parse(JSON.stringify(this.employeeData)); // deep copy
 }
 
+// Cancel function
 onCancel(): void {
   this.editMode = false;
+  this.employeeData = JSON.parse(JSON.stringify(this.originalData)); // restore
+}
+
+
+
+  removeFile(index: number) {
+  this.selectedFiles.splice(index, 1);
+}
+
+ onDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      this.selectedFiles = Array.from(files);
+    }
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.selectedFiles = Array.from(input.files);
+    }
+  }
+
+  formatSize(bytes: number): string {
+    if (bytes < 1024) return bytes + ' B';
+    else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    else return (bytes / 1048576).toFixed(1) + ' MB';
+  }
+
+  getFileType(file: File): string {
+    const type = file.type;
+    if (type.startsWith('image/')) return 'image';
+    if (type === 'application/pdf') return 'pdf';
+    if (type === 'application/msword' || type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') return 'word';
+    if (type === 'application/vnd.ms-excel' || type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') return 'excel';
+    if (type.startsWith('text/')) return 'text';
+    return 'other';
+  }
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+// onEditToggle(): void {
+//   this.editMode = true;
+  
+// }
+
+// onCancel(): void {
+//   this.editMode = false;
  
-}
+// }
 
-
-
-}
-
-
-
-
+// Submit(form:NgForm){}
 
 
 //   const data = this.staffDataService.getData();
@@ -171,4 +247,8 @@ onCancel(): void {
   // } else {
   //   console.warn('staffId is not set!');
   // }
+
+  // reset() {
+//   this.employeeData = structuredClone(this.originalData); // Restore original
+// }
 

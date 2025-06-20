@@ -139,12 +139,12 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
   //   return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
   // }
 
-  patchEducation(id: string, payload: PatchEducationPayload): Observable<any> {
-  return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload);
-}
-//   patchEducation(id: string, payload: formData: FormData): Observable<any> {
+//   patchEducation(id: string, payload: PatchEducationPayload): Observable<any> {
 //   return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload);
 // }
+  patchEducation(id: string, formData: FormData): Observable<any> {
+  return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, formData);
+}
 
 
  

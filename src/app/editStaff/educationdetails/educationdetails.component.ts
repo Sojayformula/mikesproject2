@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PagesService } from '../../service/pages.service';
@@ -14,6 +14,8 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
   styleUrl: './educationdetails.component.scss'
 })
 export class EducationdetailsComponent implements OnInit {
+  @ViewChild('formRef') formRef!: NgForm;
+
 
   // educationData: any = {};
    getAllStaff: allStaffModel
@@ -207,16 +209,21 @@ onSubmit(eduform: NgForm): void {
   // }
 
  
+   const formData = new FormData();
+formData.append('_id', this.staffId);
+formData.append('educationDetails', JSON.stringify(this.educationData.educationDetails));
+for (let i = 0; i < this.selectedFiles.length; i++) {
+  formData.append('files', this.selectedFiles[i]);
+}
 
 
+//   const payload: PatchEducationPayload = {
+//   _id: this.staffId,
+//   educationDetails: this.educationData.educationDetails
+// };
 
-  const payload: PatchEducationPayload = {
-  _id: this.staffId,
-  educationDetails: this.educationData.educationDetails
-};
 
-
-  this.pagesService.patchEducation(this.staffId, payload).subscribe({
+  this.pagesService.patchEducation(this.staffId, formData).subscribe({
     next: (res) => {
       console.log('PATCH response:', res);
 

@@ -1,5 +1,5 @@
 import { CommonModule, formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PagesService } from '../../service/pages.service';
@@ -10,6 +10,10 @@ import { allStaffModel, editStaffModel, getStaffModel } from '../../model/pagesM
 import imageCompression from 'browser-image-compression';
 import { _fixedSizeVirtualScrollStrategyFactory } from '@angular/cdk/scrolling';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { EditService } from '../../editservice/edit.service';
+
+import { ChangeDetectorRef } from '@angular/core';
+import { Subscription, take } from 'rxjs';
 
 
 
@@ -20,6 +24,11 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
   styleUrl: './person-information.component.scss'
 })
 export class PersonInformationComponent implements OnInit{
+
+  @ViewChild('staffForm') formRef!: NgForm;
+
+  
+  private sub!: Subscription;
 
   currentStepIndex = 0;
    staffData: any;  
@@ -33,13 +42,15 @@ export class PersonInformationComponent implements OnInit{
 
   editMode: boolean = false;
 originalStaffData: any;
+ formData: any = {};         // Bound to the form via [(ngModel)]
+  originalData: any = {};
   
   // selectedFile!: File;
 imagePreview: string | ArrayBuffer | null = null;
 
 
-  constructor(private router: Router, private pagesService: PagesService,
-    private route:ActivatedRoute, private location:Location, 
+  constructor(private cd: ChangeDetectorRef, private router: Router, private pagesService: PagesService,
+    private route:ActivatedRoute, private location:Location, public editService:EditService, 
     private staffDataService: StaffDataService,private checkboxService:CheckboxService,
   ){
 
@@ -74,11 +85,10 @@ imagePreview: string | ArrayBuffer | null = null;
      }
 
           this.staffData = this.staffDataService.getData();
-
+     
   }
 
 
-// getUserById
 
      fetchStaffData() {
     this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
@@ -86,6 +96,10 @@ imagePreview: string | ArrayBuffer | null = null;
         this.staffData = res; 
         console.log('Fetched staff data:', this.staffData);
          this.isLoading = false;
+
+          this.staffData = structuredClone(res);     
+          this.originalStaffData = structuredClone(res);
+          console.log('Fetched staff data:', this.staffData);
 
       },
       error: (err) => {
@@ -97,9 +111,6 @@ imagePreview: string | ArrayBuffer | null = null;
          }
     });
     }
-
-
-
 
  getSafeProfilePicture(pic?: string): string {
   if (!pic) return '/assets/default-profile.png'; // fallback image if missing
@@ -179,21 +190,20 @@ set formattedDOB(value: string) {
   this.checkboxService.setTypingStatus('person-information', isTyping);
 }
 
-
-
-
-
-
-    // EDIT FORM //
-
+//  Edit  function
 onEditToggle(): void {
   this.editMode = true;
-  
+  this.originalData = JSON.parse(JSON.stringify(this.staffData)); // deep copy
 }
 
+// Cancel function
 onCancel(): void {
   this.editMode = false;
- 
+  this.staffData = JSON.parse(JSON.stringify(this.originalData)); // restore
+}
+
+reset() {
+  this.staffData = structuredClone(this.originalData); // Restore original
 }
 
 
@@ -217,6 +227,7 @@ Submit(form: NgForm) {
   };
 
   console.log('Submitting payload:', this.editStaffData);
+  console.log('Submit triggered in child:', form.value); 
 
 
   this.pagesService.getEditStaff(this.staffId, payload ).subscribe({
@@ -224,7 +235,7 @@ Submit(form: NgForm) {
       console.log('patch', res)
       //  alert('Form updated successfull')
        this.isLoading = false;
-
+    
     },
 
     error: (err) => {
@@ -236,4 +247,114 @@ Submit(form: NgForm) {
  }
 
 
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      //   this.sub = this.editService.action$.subscribe(action => {
+    //   if (action === 'edit') this.editMode = true;
+    //   if (action === 'cancel') this.resetForm();
+    //   if (action === 'save') this.submitForm();
+    // });
+
+ // resetForm() {
+  //   this.editMode = false;
+
+  //   // Revert changes by restoring the backup copy
+  //   // this.staffData = structuredClone(this.originalData); 
+  // }
+
+  // submitForm() {
+  //   if (this.editMode) {
+  //     console.log('Saving data:', this.staffData);
+  //     this.editMode = false;
+
+  //     // Optionally update originalData if save is successful
+  //     this.originalData = structuredClone(this.staffData);
+  //   }
+  // }
+
+  // ngOnDestroy(): void {
+  //   this.sub.unsubscribe();
+  // }
+   
+  //enterEditMode() {
+//     this.editMode = true;
+//     // Save a new copy before user starts editing
+//     // this.originalData = structuredClone(this.staffData);
+//     this.originalData = JSON.parse(JSON.stringify(this.staffData));
+   
+//   }
+
+//  resetForm() {
+//     console.log('Reset in ChildTwo');
+//     this.editMode = false;
+//   }
+
+//    submitForm() {
+//     if (this.editMode) {
+//       console.log('Submitting:', this.formData);
+//       this.editMode = false;
+//     }
+//   }
+
+//   ngOnDestroy(): void {
+//     this.sub.unsubscribe();
+//   }
+
+
+  // EDIT FORM //
+
+// onEditToggle(): void {
+//   this.editMode = true;
+  
+// }
+
+// onCancel(): void {
+//   this.editMode = false;
+ 
+// }
+
+// toggleEdit() {
+//   this.editService.enableEdit();
+// }
+
+// cancelEdit() {
+//   this.editService.disableEdit();
+// }
+
+
+
+//   onToggleEdit() {
+//     const isEditing = this.editService.editModeSubject.getValue();
+//     if (isEditing) {
+//       // TODO: Save changes to server here
+//       console.log('Saving:', this.formData);
+//     } else {
+//       this.editService.enableEdit();
+//     }
+//   }

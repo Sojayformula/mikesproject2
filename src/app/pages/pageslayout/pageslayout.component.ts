@@ -18,12 +18,15 @@ logout(){
   this.router.navigate(['/homepage'])
 }
 
-
 mobileMenuOpen = false;
 
 toggleMobileMenu() {
   this.mobileMenuOpen = !this.mobileMenuOpen;
 }
+
+
+
+
 
   
 

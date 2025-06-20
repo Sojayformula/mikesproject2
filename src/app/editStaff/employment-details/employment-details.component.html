@@ -1,10 +1,9 @@
 
-
-<div class="lg:mx-[17rem] mt- lg:mt-12 ">
+<div class="lg:mx-[17rem] mt- lg:mt-[-44rem] ">
 
 
   <!-- Edit button -->
-<div class="mt- flex gap-4 justify-end col-span-3 relative left-40 top-[-8rem]">
+<div class="mt- flex gap-4 justify-end col-span-3 relative lg:left-40 top-[-6rem] lg:top-[-5.2rem]">
   <button
     type="button"
     *ngIf="!editMode"
@@ -52,12 +51,12 @@
 
                               <!-- FORM -->
 
-    <form #staffForm="ngForm" (ngSubmit)="onSubmit(staffForm)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-4 p-6 bg-white rounded gap-y-6 gap-x-[22rem]">
+    <form #staffForm="ngForm" (ngSubmit)="onSubmit(staffForm)" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2  gap-10 p-6 bg-white rounded gap-y-6 lg:gap-x-[22rem] mt-10">
   <!-- Row 1 -->
    
-  <div class="">
+  <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Job Title</label>
-    <input  type="text" name="jobTitle" [disabled]="!editMode" [(ngModel)]="employeeData.jobTitle" (ngModelChange)="onInputChange($event)"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+    <input  type="text" name="jobTitle"  [(ngModel)]="employeeData.jobTitle" (ngModelChange)="onInputChange($event)"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Unit</label>
@@ -87,7 +86,104 @@
     <input type="text" name="supervisor" [disabled]="!editMode" [value]="employeeData?.firstName + ' ' + employeeData?.lastName" placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
 
+
+
+
+
+   <div class="mb-4 space-y-6">
+    
+     <div>
+
+    <div class="">
+    <p class="font-bold font-outfit text-[16px]">Docs</p>
+    <p class="text-[#727A90] text-[12px] font-outfit w-80">Upload a scanned copy of the spouse's marriagecertificate.</p>
+    </div>
+
+   <div class="mb-10 mt-10">
+
+         <div
+  class="border-2 border-dashed border-blue-400 w-[1150px] h-[172px] p-6 rounded-md text-center cursor-pointer bg-[#F8FAFF]"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+  [ngClass]="{ 'bg-blue-50': isDragging }"
+>
+  <div class="flex justify-center">
+  <img src="/upload.png" class="w-[42px] h-[42px] ">
+  </div>
+  <p class="text-gray-500 text-sm mt-2">Drag your file(s) and start uploading</p>
+
+    <div class="flex items-center justify-center my-1">
+  <div class="flex-gro w-20 h-px bg-gray-300"></div>
+  <span class="px-4 text-gray-500 text-sm">OR</span>
+  <div class="flex-gro w-20 h-px bg-gray-300"></div>
+  </div>
+
+
+  <button (click)="fileInput.click()" class="text-sm border-2 rounded-lg w-[95px] h-[30px] my-1">Browse file</button>
+
+  <input
+    type="file"
+    webkitdirectory
+    directory
+    multiple
+    (change)="onFileSelected($event)"
+    #fileInput
+    class="hidden"
+  />
+</div>
+
+
+   <div *ngIf="selectedFiles.length > 0" class="mt-4 space-y-2">
+  <div
+    *ngFor="let file of selectedFiles; let i = index"
+    class="flex items-center gap-4 border p-2 rounded-md justify-between lg:w-[1150px] lg:right-[26rem] relativ lg:top-[12rem]"
+  >
+    File Icon and Info
+    <div class="flex items-center gap-4 ">
+      Icon
+      <div>
+        <ng-container [ngSwitch]="getFileType(file)">
+          <i *ngSwitchCase="'image'" class="text-blue-500">🖼️</i>
+          <i *ngSwitchCase="'pdf'" class="text-red-500">📄</i>
+          <i *ngSwitchCase="'word'" class="text-indigo-500">📘</i>
+          <i *ngSwitchCase="'excel'" class="text-green-500">📗</i>
+          <i *ngSwitchCase="'text'" class="text-gray-500">📑</i>
+          <i *ngSwitchDefault class="text-gray-600">📁</i>
+        </ng-container>
+      </div>
+
+      File Info
+      <div>
+        <p class="text-sm font-medium">{{ file.name }}</p>
+        <p class="text-xs text-gray-500">{{ formatSize(file.size) }}</p>
+      </div>
+    </div>
+
+    Cancel Button
+    <button
+      (click)="removeFile(i)"
+      class="border-2 border-[#858585] text-[#858585] hover:text-gray-700 text-[10px] bg-gray-300 rounded-full w-[20px] h-[20px] "
+      title="Remove File"
+    >
+      ✖
+    </button>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+
 </form>
+</div> 
+
+
+
+
+
+
+
 
 
 

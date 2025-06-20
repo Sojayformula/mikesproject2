@@ -1,5 +1,5 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CheckboxService } from '../../checkboxService/checkbox.service';
 import { StaffDataService } from '../../StaffDataService/staff-data.service';
@@ -8,6 +8,7 @@ import { PagesService } from '../../service/pages.service';
 import { allStaffModel, editFamilyModel, PatchEducationPayload } from '../../model/pagesModel';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Child } from '../../model/pagesModel';
+import { EditService } from '../../editservice/edit.service';
 
 @Component({
   selector: 'app-family-details',
@@ -16,6 +17,8 @@ import { Child } from '../../model/pagesModel';
   styleUrl: './family-details.component.scss'
 })
 export class FamilyDetailsComponent implements OnInit {
+  @ViewChild('formRef') formRef!: NgForm;
+
 
   originalData: any = {};
   data: any = {}
@@ -30,7 +33,7 @@ export class FamilyDetailsComponent implements OnInit {
   isDragging = false;
  
 
-  constructor(private router:Router, private location:Location, private pagesService:PagesService,
+  constructor(public editService:EditService, private router:Router, private location:Location, private pagesService:PagesService,
     private checkboxService:CheckboxService, private staffDataService:StaffDataService, private route:ActivatedRoute ){
 
       this.getAllStaff = new allStaffModel()
@@ -51,9 +54,14 @@ export class FamilyDetailsComponent implements OnInit {
     }
     // this.fetchFamiltDetails();
   
-
     this.data = this.staffDataService.getData();
+
+    this.originalData = structuredClone(this.data); 
      }
+
+
+
+
 
      goBack(){
     this.location.back()
@@ -84,7 +92,7 @@ export class FamilyDetailsComponent implements OnInit {
 
 
 
-onSubmit(form: NgForm): void {
+Submit(form: NgForm): void {
   if (form.invalid) return;
 
   // const supervisorPayload: editFamilyModel = {
@@ -245,6 +253,10 @@ onEditToggle(): void {
 onCancel(): void {
   this.editMode = false;
   this.data = JSON.parse(JSON.stringify(this.originalData)); // restore
+}
+
+reset() {
+  this.data = structuredClone(this.originalData); // Restore original
 }
 
 

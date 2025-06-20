@@ -3,20 +3,20 @@
  
 
 
-  <div class="mx-[17rem] mt-[4rem] relative mb-20">
+  <div class="mx-8 lg:mx-[19rem] mt-36 lg:mt-[-40rem] relative ">
 
 <!-- Edit button -->
-<div class="mt- flex gap-4 justify-end col-span-3 relative left-40 top-[-9rem]">
+<div class="top-[-15rem] py-[-30rem] flex gap-4 justify-end col-span-3 relative right-16  lg:left-48 md:top-[-29.5rem] lg:top-[-9.2rem]">
   <button
     type="button"
     *ngIf="!editMode"
     (click)="onEditToggle()"
-    class="flex justify-center bg-blue- border border-[#727A90] text-[14px] text-[#727A90] w-[69.65px] h-[40px] py-2 rounded-[10px] hover:bg-gray-400 hover:text-white transition"
+    class="flex justify-center border border-[#727A90] text-[14px] text-[#727A90] w-[69.65px] h-[40px] py-2 rounded-[10px] hover:bg-gray-400 hover:text-white transition"
   >
      <span class="material-symbols-outlined text-[20px]">edit</span>Edit
-  </button>
+  </button> 
 
-  <!-- Save and cancel -->
+   <!-- Save and cancel  -->
 
        <ng-container *ngIf="isLoading">
   <div class="mt-6 flex justify-center relative top-[-15px]">
@@ -28,26 +28,25 @@
     <button
       type="button"
       (click)="Submit(staffForm)"
-      
       class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
     >
       Save
     </button>
   
-    <button
+     <button
       type="button"
       (click)="onCancel()"
       class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
     >
       Cancel
-    </button>
+    </button> 
   </ng-container>
   </div>
 
 
 
              <!-- QRcode image -->
-<div class="flex justify-end relative left-60 top-[-4rem]">
+<div class="flex justify-end relative lg:left-60 top-[-4rem]">
  <img src="/QRCode.png" class="w-[83px] h-[86px]"> 
  </div>
 
@@ -119,7 +118,7 @@
 
 
 
-      <form  #staffForm="ngForm" (ngSubmit)="Submit(staffForm)" class="grid grid-cols-3 grid-rows-4 gap-4 mt-10 bg-white rounded gap-y-6 gap-x-[22rem] ">
+      <form  #staffForm="ngForm" (ngSubmit)="Submit(staffForm)" class="grid grid-cols-2 grid-row-2 mg:grid-cols-2 mg:grid-rows-6 lg:grid-cols-3 lg:grid-rows-4 mt-10 bg-white rounded gap-y-6 lg:gap-x-[22rem] ">
   <!-- Row 1 --> 
   <div >
     <label class="block w-40 text-sm font-medium text-gray-700">First Name</label>
@@ -127,11 +126,11 @@
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Last Name</label>
-    <input type="text" name="lastName"  [disabled]="!editMode" [(ngModel)]="staffData.lastName" (ngModelChange)="onInputChange($event, '')"  placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="lastName"  [(ngModel)]="staffData.lastName" (ngModelChange)="onInputChange($event, '')"  placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Other Name</label>
-    <input type="text" name="otherName"  [disabled]="!editMode" [(ngModel)]="staffData.otherName" (ngModelChange)="onInputChange($event, '')" placeholder="Enter if any" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+    <input type="text" name="otherName"  [(ngModel)]="staffData.otherName" (ngModelChange)="onInputChange($event, '')" placeholder="Enter if any" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
  
  
@@ -139,31 +138,31 @@
   <!-- Row 2 -->
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Date of birth</label>
-    <input type="text" name="dateOfBirth"  [disabled]="!editMode" [(ngModel)]="formattedDOB" (ngModelChange)="onInputChange($event, '')"  placeholder="Select birth date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    <input type="text" name="dateOfBirth"  [(ngModel)]="formattedDOB" (ngModelChange)="onInputChange($event, '')"  placeholder="Select birth date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Gender</label>
-    <input type="text" name="gender"  [disabled]="!editMode" [(ngModel)]="staffData.gender" (ngModelChange)="onInputChange( $event, '')"  placeholder="Chose gender" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    <input type="text" name="gender"  [(ngModel)]="staffData.gender" (ngModelChange)="onInputChange( $event, '')"  placeholder="Chose gender" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Nationality</label>
-    <input type="text" name="nationality"  [disabled]="!editMode" [(ngModel)]="staffData.nationality" (ngModelChange)="onInputChange($event, '')"  placeholder="Enter country of origin" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="nationality"  [(ngModel)]="staffData.nationality" (ngModelChange)="onInputChange($event, '')"  placeholder="Enter country of origin" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
 
 
   <!-- Row 3 -->
   <div >
      <label class="block w-40 text-sm font-medium text-gray-700">Marital Status</label>
-    <input type="text" name="maritalStatus"  [disabled]="!editMode" [(ngModel)]="staffData.maritalStatus" (ngModelChange)="onInputChange($event, '')"  placeholder="Select marital status" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="maritalStatus"   [(ngModel)]="staffData.maritalStatus" (ngModelChange)="onInputChange($event, '')"  placeholder="Select marital status" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
 
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Phone number</label>
-    <input type="text" name="phoneNumber"  [disabled]="!editMode" [(ngModel)]="staffData.phoneNumber" (ngModelChange)="onInputChange($event, '')"  placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="phoneNumber"  [(ngModel)]="staffData.phoneNumber" (ngModelChange)="onInputChange($event, '')"  placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Enter email address</label>
-    <input type="text" name="email"  [disabled]="!editMode" [(ngModel)]="staffData.email" (ngModelChange)="onInputChange( $event, '')"  placeholder="Enter valid email address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="email"  (ngModelChange)="onInputChange($event, 'email')"  [(ngModel)]="staffData.email" (ngModelChange)="onInputChange( $event, '')"  placeholder="Enter valid email address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
 
 
@@ -178,7 +177,7 @@
   </div>
   <div >
     <label class="block w-40 text-sm font-medium text-gray-700">Email address</label>
-    <input type="text" name="email"  [disabled]="!editMode" [(ngModel)]="staffData.email" (ngModelChange)="onInputChange($event, 'email')"  placeholder="Enter valid email address"  class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="email"  (ngModelChange)="onInputChange($event, 'email')"  [disabled]="!editMode" [(ngModel)]="staffData.email" (ngModelChange)="onInputChange($event, 'email')"  placeholder="Enter valid email address"  class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
 
 </form>

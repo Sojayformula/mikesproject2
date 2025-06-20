@@ -79,8 +79,9 @@ export class NextOfKinsComponent implements OnInit {
 
     // ✅ This line sets the typing status for this step
    this.typingStatusService.setTypingStatus('next-of-kins', value.trim().length > 0);
+
   }
 
+  Submit(){}
+
 }
-
-
