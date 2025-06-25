@@ -20,6 +20,15 @@ import { StaffComponent } from './pages/staff/staff.component';
 import { EmengencycontactComponent } from './editStaff/emengencycontact/emengencycontact.component';
 import { EducationdetailsComponent } from './editStaff/educationdetails/educationdetails.component';
 import { EditPersonalInfoComponent } from './editStaff/edit-personal-info/edit-personal-info.component';
+import { EditsettingsComponent } from './editStaff/settingsfolder/editsettings/editsettings.component';
+import { EmergencyContactComponent2 } from './editStaff/settingsfolder/emergency-contact/emergency-contact.component';
+import { EmploymentDetailsComponent2 } from './editStaff/settingsfolder/employment-details/employment-details.component';
+import { FamilyDetailsComponent2 } from './editStaff/settingsfolder/family-details/family-details.component';
+import { NextOfKinComponent2 } from './editStaff/settingsfolder/next-of-kin/next-of-kin.component';
+import { PersonalInformationComponent2 } from './editStaff/settingsfolder/personal-information/personal-information.component';
+import { EducationBackgroundComponent2 } from './editStaff/settingsfolder/education-background/education-background.component';
+
+
 
 
 export const routes: Routes = [
@@ -55,13 +64,27 @@ export const routes: Routes = [
                 {path: 'person-information', component: PersonInformationComponent},
                 {path: 'employment-details', component: EmploymentDetailsComponent},
                 {path: 'family-details', component: FamilyDetailsComponent},
-                {path: 'next-of-kins', component: NextOfKinsComponent},
+                {path: 'next-of-kins', component: NextOfKinComponent2},
                 {path: 'emengency-contact', component: EmengencycontactComponent},
                 {path: 'education-details', component: EducationdetailsComponent},
                 {path: 'edit-personal-info', component: EditPersonalInfoComponent}   
               ]
             },
            ]
+           },
+
+
+           { path: 'editsettings', component: EditsettingsComponent,
+            children:[
+              {path: '', redirectTo: 'personal-information', pathMatch: 'full'},
+              {path: 'personal-information', component: PersonalInformationComponent2},
+              {path: 'employment-details', component: EmploymentDetailsComponent2},
+               {path: 'family-details', component: FamilyDetailsComponent2},
+               {path: 'next-of-kin', component: NextOfKinComponent2},
+               {path: 'emergency-contact', component: EmergencyContactComponent2},
+              {path: 'education-details', component: EducationBackgroundComponent2 },
+                
+            ]
            }
 
         ]

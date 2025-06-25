@@ -1,14 +1,14 @@
-import { CommonModule, formatDate, Location } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { EditService } from '../../../editservice/edit.service';
+import { CheckboxService } from '../../../checkboxService/checkbox.service';
+import { StaffDataService } from '../../../StaffDataService/staff-data.service';
+import { PagesService } from '../../../service/pages.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CheckboxService } from '../../checkboxService/checkbox.service';
-import { PagesService } from '../../service/pages.service';
-import { allStaffModel } from '../../model/pagesModel';
-import { StaffDataService } from '../../StaffDataService/staff-data.service';
+import { allStaffModel } from '../../../model/pagesModel';
+import { CommonModule, formatDate } from '@angular/common';
+import { Location } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { EditService } from '../../editservice/edit.service';
-
 
 @Component({
   selector: 'app-employment-details',
@@ -16,11 +16,11 @@ import { EditService } from '../../editservice/edit.service';
   templateUrl: './employment-details.component.html',
   styleUrl: './employment-details.component.scss'
 })
-export class EmploymentDetailsComponent implements OnInit{
-  @ViewChild('formRef') formRef!: NgForm;
+export class EmploymentDetailsComponent2 {
 
-    
-    employeeData: any = {}
+
+
+   employeeData: any = {}
     currentStep = 0;
     getAllStaff: allStaffModel;
      staffId: any
@@ -58,17 +58,17 @@ export class EmploymentDetailsComponent implements OnInit{
   });
 
    if (this.staffId) {
-      this.fetchEmployees(); 
+      //this.etchEmployees(); 
     } 
 
   // this.steps.forEach(step => this.isCheckedMap[step] = false);
 
    }
 
-  // fetchEmployees() {
-  //   this.pagesService.getEmploymentId(this.staffId, this.getAllStaff).subscribe({
+  // etchEmployees() {
+  //   this.pagesService.getAllStaff(this.staffId, this.getAllStaff).subscribe({
   //     next: (res) => {
-  //       const employee = res.find((staff: any) => staff._id === this.staffId);
+  //       const employee = res.data.find((staff: any) => staff._id === this.staffId);
   //       if (employee) {
   //         this.staffDataService.setData(employee); 
   //         this.employeeData = employee;            
@@ -82,29 +82,6 @@ export class EmploymentDetailsComponent implements OnInit{
   //     }
   //   });
   // }
-
-
-   fetchEmployees() {
-    this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
-      next: (res ) => {
-        this.employeeData = res; 
-        console.log('Fetched staff data:', this.employeeData);
-         this.isLoading = false;
-
-          this.employeeData = structuredClone(res);     
-          this.originalStaffData = structuredClone(res);
-          console.log('Fetched staff data:', this.employeeData);
-
-      },
-      error: (err) => {
-        console.error('Error fetching staff:', err);
-      },
-
-         complete: () => {
-
-         }
-    });
-    }
 
 
     goBack(){
@@ -122,13 +99,7 @@ export class EmploymentDetailsComponent implements OnInit{
     // ✅ This line sets the typing status for this step
     this.typingStatusService.setTypingStatus('employment-details', value.trim().length > 0);
   }
-
-// onInputChange(event: Event) {
-//   const input = event.target as HTMLInputElement;
-//   const value = input.value;
-//   this.typingStatusService.setTypingStatus('employment-details', value.trim().length > 0);
-// }
-
+  
 
  get formattedDOB(){
   const date = this.employeeData?.supervisor.hireDate;
@@ -208,12 +179,7 @@ onCancel(): void {
     }
   }
 
-  // onFileSelected(event: Event) {
-  //   const input = event.target as HTMLInputElement;
-  //   if (input.files) {
-  //     this.selectedFiles = Array.from(input.files);
-  //   }
-  // }
+ 
   onFileSelected(event: Event) {
   const input = event.target as HTMLInputElement;
   if (input.files?.length) {
@@ -245,42 +211,3 @@ onCancel(): void {
 
 
 }
-
-
-
-
-
-
-
-
-// onEditToggle(): void {
-//   this.editMode = true;
-  
-// }
-
-// onCancel(): void {
-//   this.editMode = false;
- 
-// }
-
-// Submit(form:NgForm){}
-
-
-//   const data = this.staffDataService.getData();
-  // if (data) {
-  //   this.employeeData = data;
-  //   console.log('✅ Received data in child:', this.employeeData);
-  // } else {
-  //   console.warn('⚠️ No staff data found in service');
-  // }
-  //   // this.fetchEmployees();
-  //     if (this.staffId) {
-  //   this.fetchEmployees();
-  // } else {
-  //   console.warn('staffId is not set!');
-  // }
-
-  // reset() {
-//   this.employeeData = structuredClone(this.originalData); // Restore original
-// }
-

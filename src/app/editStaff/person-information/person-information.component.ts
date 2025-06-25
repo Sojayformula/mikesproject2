@@ -47,6 +47,7 @@ originalStaffData: any;
   
   // selectedFile!: File;
 imagePreview: string | ArrayBuffer | null = null;
+ isCheckedMap: { [key: string]: boolean } = {};
 
 
   constructor(private cd: ChangeDetectorRef, private router: Router, private pagesService: PagesService,
@@ -58,6 +59,7 @@ imagePreview: string | ArrayBuffer | null = null;
     this.editStaffData = new editStaffModel()
 
       this.getAllStaff = new allStaffModel()
+
   }
 
 
@@ -70,6 +72,7 @@ imagePreview: string | ArrayBuffer | null = null;
   
   //   console.log("my id:", JSON.parse(JSON.stringify(item)))
   // //  this.fetchMaritalStatus() 
+
 
    this.route.queryParamMap.subscribe((params) => {
     const item = params.get('staffId');
@@ -84,7 +87,7 @@ imagePreview: string | ArrayBuffer | null = null;
       this.fetchStaffData();
      }
 
-          this.staffData = this.staffDataService.getData();
+      this.staffData = this.staffDataService.getData();
      
   }
 
@@ -183,12 +186,31 @@ set formattedDOB(value: string) {
 
   this.staffDataService.setData({ supervisor: this.staffData.supervisor });
 
-  // Detect typing (check if any field has value)
+  // Detect typing 
   const isTyping = Object.values(this.staffData.supervisor).some(
     val => val && val.toString().trim().length > 0
   );
   this.checkboxService.setTypingStatus('person-information', isTyping);
 }
+
+// onInputChange(field: string, value: string) {
+//   this.staffData[field] = value;
+
+//   this.staffDataService.setData(this.staffData);
+
+//   // Check if ANY field has a value
+//   const isTyping = Object.values(this.staffData).some(
+//     val => val && val.toString().trim().length > 0
+//   );
+
+//   // ✅ Update checkbox
+//   this.checkboxService.setTypingStatus('person-information', isTyping);
+// }
+
+
+
+
+
 
 //  Edit  function
 onEditToggle(): void {
@@ -201,10 +223,6 @@ onCancel(): void {
   this.editMode = false;
   this.staffData = JSON.parse(JSON.stringify(this.originalData)); // restore
 }
-
-// reset() {
-//   this.staffData = structuredClone(this.originalData); // Restore original
-// }
 
 
 

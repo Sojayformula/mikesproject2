@@ -1,7 +1,7 @@
-<div class="">
+
+  <div class="overflow-hidden">
 
 <div class=" flex justify-between items-center  bg-[#FAFAFA] border border-[#DCDEE3] w-full [1385px] h-[72px] px-4 mt-4">      
-
 
 <!-- <button *ngIf="!(editService.editMode$ | async)" (click)="toggleEdit()">Edit</button>
 
@@ -24,7 +24,7 @@
                 </button> 
             </div>
             <div class="mt-2 font-bold">
-                Add New Staff
+                Back
             </div>
             </div>
 
@@ -75,14 +75,22 @@
                 </button> -->
             
       </div>
+  
+                  <!-- QRcode image -->
+       <div class="flex justify-end mt-4 mx-12">
+    <img src="/QRCode.png" class="w-[83px] h-[86px]"> 
+    </div>
 
 
+
+<div class="flex mt-[-100px]">
+<div>
 <!-- ✅ Mobile Toggle Button (Only shows on small screens) -->
  
 <button
 type="button"
-  class="md:hidden relative top-4  bg-gray-800 text-white px-3 py-2 rounded"
-  (click)="isSidebarOpen  = !isSidebarOpen"
+  class="lg:hidden z-10 relative top-4  bg-gray-800 text-white px-3 py-2 rounded"
+  (click)="isSidebarOpen = !isSidebarOpen"
 >
   ☰
 </button>
@@ -107,8 +115,10 @@ type="button"
         [checked]="isCheckedMap[step]"
         class="peer hidden"
       />
-      <div
 
+
+                   <!-- CHECK BOX -->
+      <div
         class="w-5 h-5 rounded-full border-2 border-dotted border-[#D4D4D8] peer-checked:bg-green-500 flex items-center justify-center"
       >
         <svg
@@ -132,19 +142,36 @@ type="button"
         [queryParamsHandling]="'preserve'"
         class="ml-2 capitalize"
         (click)="isSidebarOpen = false"
+        routerLinkActive="bg-gray-300 shadow-lg shadow-black hover:text-white hover:bg-gray-700"
       >
         {{ step.replace('-', ' ') }}
       </a>
     </label>
   </li>
 </ul>
-
-
-<!-- <div class="lg:mt-[-14rem] overflow-hidden lg:overflow-visible"> -->
-        <router-outlet></router-outlet>
-    <!-- </div> -->
     
 </div> 
+
+
+  
+
+<div>
+<div class="mt-8">
+      <router-outlet></router-outlet>
+     </div>
+   </div>
+    
+
+   
+
+    
+
+
+
+
+
+  
+
 
 
 

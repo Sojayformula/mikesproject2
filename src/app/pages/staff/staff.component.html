@@ -1,6 +1,15 @@
  <!-- Table -->
   <div class="lg:mt-10 mt-20 ">
-    <div class="verflo">
+
+    <div class="flex justify-end mx-20">
+      <button (click)="addNavigate(APIData._id)" 
+      class="bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] w-[113px] h-[40px] rounded-[6px] text-white text-[14px]">
+        <span class="text-[14px]">+</span>
+        Add Staff
+      </button>
+    </div>
+
+    <div class="verflo mt-10">
       <table class="w-full table-aut text-[#353535]" id="Data">
         <thead class="bg-gray-100 text-left">
           <tr>
@@ -27,7 +36,19 @@
                 <span>{{ item.staffId }}</span>
               </div>
             </td>
-            <td class="px- py-2">{{ item.firstName }} {{ item.lastName }}</td>
+            <td class="flex gap-2 px- py-2">
+              <div>
+               <img 
+            [src]="APIData.profilePicture || '/Preview.png'" 
+            alt="Profile Preview"
+            class="w-[42px] h-[42px] rounded-full object-cover border"
+          />
+          </div>
+           <div class="flex items-center">
+              {{ item.firstName }} {{ item.lastName }}
+           </div>
+            </td>
+
             <td class="px- py-2">{{ item.employmentType }}</td>
             <td class="px- py-2">{{ item.gender }}</td>
             <td class="px- py-2">{{ item.unit?.name }}</td>

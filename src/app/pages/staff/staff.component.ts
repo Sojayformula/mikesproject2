@@ -13,9 +13,10 @@ import { allStaffModel } from '../../model/pagesModel';
 })
 export class StaffComponent implements OnInit {
 
-  APIData: any[] = [];
+  APIData: any;
 
   allStaff: allStaffModel
+  staffId!: string;
   
 
 
@@ -29,6 +30,7 @@ export class StaffComponent implements OnInit {
     this.fetchAllStaff()
   }
 
+  // this.staffId, 
   fetchAllStaff(){
     this.pageService.fetchStaff(this.allStaff).subscribe({
       next: (res)=>{
@@ -40,19 +42,21 @@ export class StaffComponent implements OnInit {
 
       error: (err)=>{
         console.log('Failed to fetch staff', err)
+      },
+
+      complete:()=>{
+        console.log('complete')
       }
     })
   }
-  staffId(staffId: any, allStaff: allStaffModel) {
-    throw new Error('Method not implemented.');
+ 
+
+
+  addNavigate(item:string){
+    // this.router.navigate([`/person-information?staffId=${id}`])
+    // const data =  JSON.stringify(item)
+    this.router.navigateByUrl(`/editsettings?staffId=${item}`)      
   }
-
-
-  // navigate(item:string){
-  //   // this.router.navigate([`/person-information?staffId=${id}`])
-  //   // const data =  JSON.stringify(item)
-  //   this.router.navigateByUrl(`/editstaff-layout?staffId=${item}`)      
-  // }
 
   navigate(item: any) {
   const staffId = typeof item === 'string' ? item : item._id;

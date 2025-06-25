@@ -1,4 +1,4 @@
-
+  
    <div class="mx-10 relative top-20">
   <div class="flex justify-between">
     <div class="text-[18px]">Units</div>
@@ -93,25 +93,6 @@
       </div>
 
 
-      <!-- <div class="mb-4">
-  <label class="block mb-1">Parent Unit:</label>
-  <select
-    name="parentUnit"
-    [(ngModel)]="selectedUnitPayload.parentUnit"
-    class="w-full border rounded px-3 py-2"
-  >
-    <option [ngValue]="null">-- None --</option>
-    <option
-      *ngFor="let unit of APIData"
-      [ngValue]="unit._id"
-      [disabled]="unit._id === selectedUnitId"
-    >
-      {{ unit.name }}
-    </option>
-  </select>
-</div> -->
-
-
 
       <div class="flex justify-end space-x-3">
         <button
@@ -135,23 +116,25 @@
 
 
 
-
-
-
-
-
-
-
-
         <!--  ADD TO TABLE MODAL -->
 
-    <nz-modal
+    <!-- <nz-modal
   [(nzVisible)]="showEditModal"
   [nzTitle]="editTitleTpl"
   (nzOnCancel)="closeEditModal()"
   [nzFooter]="editFooterTpl"
   [nzMaskClosable]="true"
    [nzClosable]="false"
+  [nzStyle]="{ width: '100%', maxWidth: '90vw' }"
+  [nzBodyStyle]="{ maxHeight: '70vh', overflowY: 'auto' }"
+> -->
+<nz-modal
+  [(nzVisible)]="showEditModal"
+  [nzTitle]="editTitleTpl"
+  (nzOnCancel)="closeEditModal()"
+  [nzFooter]="editFooterTpl"
+  [nzMaskClosable]="true"
+  [nzClosable]="false"
   [nzStyle]="{ width: '100%', maxWidth: '90vw' }"
   [nzBodyStyle]="{ maxHeight: '70vh', overflowY: 'auto' }"
 >
@@ -174,17 +157,11 @@
     <hr />
   </ng-template>
 
-   <!-- Modal Title  -->
-  <!-- <ng-template #editTitleTpl>
-    <div class="text-lg font-semibold ">Add Unit</div>
-    <hr />
-  </ng-template> -->
-
 
 
    <!-- Modal Body  -->
   <ng-container *nzModalContent>
-    <form class="space-y-4 p-4 sm:p-6">
+    <form class="space-y-4 p-4 sm:p-6" >
       
       <nz-form-item>
         <label class="block text-sm font-medium text-gray-700">Name</label>
@@ -222,21 +199,24 @@
       </nz-form-item>
 
       
-      <nz-form-item>
+      <nz-form-item >
         <label class="block text-sm font-medium text-gray-700">Is this a sub unit?</label>
         <div class="flex flex-col sm:flex-row gap-4 mt-1">
           <label class="inline-flex items-center space-x-2">
             <input
-              type="checkbox"
+              type="radio"
               [(ngModel)]="addUnitData.isSubUnit"
-              name="isSubUnitYes"
+              [value]="true"
+              name="parentunit"
               class="form-checkbox"
             />
             <span class="text-sm text-gray-700">Yes</span>
           </label>
           <label class="inline-flex items-center space-x-2">
-            <input type="checkbox" 
+            <input type="radio" 
             [(ngModel)]="addUnitData.isSubUnit"
+            [value]="false"
+             name="subUnit"
             class="form-checkbox" />
             <span class="text-sm text-gray-700">No</span>
           </label>
@@ -244,7 +224,7 @@
       </nz-form-item>
 
       
-      <nz-form-item>
+      <nz-form-item  *ngIf="addUnitData.isSubUnit">
         <label class="block text-sm font-medium text-gray-700">Parent Unit</label>
         <select
           [(ngModel)]="addUnitData.parentUnit"
@@ -252,7 +232,7 @@
           class="w-full mt-1 p-2 border rounded-md bg-[#F2F2F2] border-[#D7D7D7]"
         >
           <option *ngFor="let unit of APIData" [value]="unit._id">
-            {{ unit.unitHead.firstName }} {{ unit.unitHead.lastName }}
+            {{ unit.parentUnit?.name || 'N/A' }}
           </option>
         </select>
       </nz-form-item>
@@ -297,7 +277,6 @@
             </th>
             <th class="px-4 py-2">Unit Name</th>
             <th class="px-4 py-2">Description</th>
-            <th class="px-4 py-2">Status</th>
             <th class="px-4 py-2">Action</th>
           </tr>
         </thead>
@@ -311,8 +290,8 @@
             </td>
             <td class="px-4 py-2">{{ item.name }}</td>
             <td class="px-4 py-2">{{ item.description }}</td>
-            <td class="px-4 py-2">
-              
+
+            <!-- <td class="px-4 py-2">
               <div 
                 class="rounded px-3 py-1 text-xs w-fit text-center"
                 [ngClass]="{
@@ -323,7 +302,7 @@
                 {{ item.organization.isActive }}
               </div>
           </td>
-          
+           -->
 
         <td class="p-2 flex gap-2">
           <button nz-button nzType="primary" (click)="selectedId(item)" class="text-blue-600">
@@ -333,10 +312,6 @@
          <button nz-button nzType="default" class="text-red-600">
           <span  (click)="deleteUnit(item._id)" class="material-symbols-outlined">delete</span>
          </button>
-         <!-- Button to open modal -->
-<!-- <button (click)="selectedId(item)" (click)="showModal()" class="text-blue-500 hover:underline">
-  Edit
-</button> -->
 
        </td>  
          </tr>
@@ -346,6 +321,9 @@
   </div>
 
 
+
+
+ 
 
 
  

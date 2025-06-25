@@ -1,14 +1,13 @@
-import { CommonModule, Location } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CheckboxService } from '../../checkboxService/checkbox.service';
-import { StaffDataService } from '../../StaffDataService/staff-data.service';
+import { Component } from '@angular/core';
+import { allStaffModel, Child, editFamilyModel } from '../../../model/pagesModel';
 import { FormsModule, NgForm } from '@angular/forms';
-import { PagesService } from '../../service/pages.service';
-import { allStaffModel, editFamilyModel, PatchEducationPayload } from '../../model/pagesModel';
+import { EditService } from '../../../editservice/edit.service';
+import { CheckboxService } from '../../../checkboxService/checkbox.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { StaffDataService } from '../../../StaffDataService/staff-data.service';
+import { PagesService } from '../../../service/pages.service';
+import { CommonModule, Location } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { Child } from '../../model/pagesModel';
-import { EditService } from '../../editservice/edit.service';
 
 @Component({
   selector: 'app-family-details',
@@ -16,12 +15,12 @@ import { EditService } from '../../editservice/edit.service';
   templateUrl: './family-details.component.html',
   styleUrl: './family-details.component.scss'
 })
-export class FamilyDetailsComponent implements OnInit {
-  @ViewChild('formRef') formRef!: NgForm;
+export class FamilyDetailsComponent2 {
 
 
-  originalData: any = {};
-  data: any 
+
+   originalData: any = {};
+  data: any = {}
    getAllStaff: allStaffModel;
   //  familyModel: editFamilyModel
    staffId: any
@@ -31,9 +30,6 @@ export class FamilyDetailsComponent implements OnInit {
      selectedStep: string = '';
   selectedFiles: File[] = [];
   isDragging = false;
-
-  originalStaffData: any;
-  
  
 
   constructor(public editService:EditService, private router:Router, private location:Location, private pagesService:PagesService,
@@ -53,7 +49,7 @@ export class FamilyDetailsComponent implements OnInit {
      })
 
     if (this.staffId) {
-      this.fetchStaffData(); 
+     // this.etchFamiltDetails(); 
     }
     // this.fetchFamiltDetails();
   
@@ -71,8 +67,8 @@ export class FamilyDetailsComponent implements OnInit {
   }
 
 
-  //   fetchFamiltDetails() {
-  //   this.pagesService.getfamilyId(this.staffId, this.getAllStaff).subscribe({
+  //   etchFamiltDetails() {
+  //   this.pagesService.getAllStaff(this.staffId, this.getAllStaff).subscribe({
   //     next: (res) => {
   //       const employee = res.data.find((staff: any) => staff._id === this.staffId);
   //       if (employee) {
@@ -80,7 +76,7 @@ export class FamilyDetailsComponent implements OnInit {
   //         this.data = employee;            // 💾 Local assignment
   //         console.log('Matched Employee:', this.data);
   //       } else {
-  //       // console.warn('No matching employee found for staffId:', this.staffId);
+       
   //       }
   //     },
   //     error: (err) => {
@@ -90,54 +86,9 @@ export class FamilyDetailsComponent implements OnInit {
   // }
 
 
-     fetchStaffData() {
-    this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
-      next: (res ) => {
-        this.data = res; 
-        console.log('Fetched staff data:', this.data);
-         this.isLoading = false;
-
-          this.data = structuredClone(res);     
-          this.originalStaffData = structuredClone(res);
-          
-
-      },
-      error: (err) => {
-        console.error('Error fetching staff:', err);
-      },
-
-         complete: () => {
-
-         }
-    });
-    }
-
-
-   
-       
-
-
 
 Submit(form: NgForm): void {
   if (form.invalid) return;
-
-  // const supervisorPayload: editFamilyModel = {
-  //    supervisor: {_id: this.data.supervisor._id,
-  //     spouseName: this.data.supervisor.spouseName,
-  //     spousePhone: this.data.supervisor.spousePhone,
-  //     spouseEmail: this.data.supervisor.spouseEmail,
-  //     numberOfChildren: this.data.supervisor.numberOfChildren,
-  //     //  children: this.data.supervisor.children.map(child => ({
-  //     //   fullName: child.fullName,
-  //     //   dob: child.dob,
-  //     //   _id: child._id
-  //     children: this.data.supervisor.children.map((child: Child) => ({
-  // fullName: child.fullName,
-  // dob: child.dob,
-  // _id: child._id
-  //     }))
-  //   }
-  // };
 
   const supervisorPayload: editFamilyModel = {
   supervisor: [this.data.supervisor._id], // ✅ Send as an array of MongoDB IDs
@@ -163,48 +114,6 @@ Submit(form: NgForm): void {
     }
   });
 }
-
-// onSubmit(eduform: NgForm): void {
-//   if (!eduform.valid) return;
-
-//   this.isLoading = true;
-
-//   // const payload = {
-//   //   _id: this.staffId,
-//   //   educationDetails: this.educationData.educationDetails
-//   // };
-
-//   const payload: PatchEducationPayload = {
-//   _id: this.staffId,
-//   educationDetails: this.data.supervisor
-// };
-
-
-//   this.pagesService.patchEducation(this.staffId, payload).subscribe({
-//     next: (res) => {
-//       console.log('PATCH response:', res);
-
-//       if (res?.supervisor) {
-//         this.data.supervisor = res.supervisor;
-//       }
-
-//       this.editMode = false;
-//       this.isLoading = false;
-//     },
-//     error: (err) => {
-//       console.error('error', err);
-//       alert('Form update failed');
-//       this.isLoading = false;
-//     }
-//   });
-// }
-
-
-
-
-
-
-
 
 
     onInputChange(field: string, value: string) {
@@ -242,12 +151,7 @@ Submit(form: NgForm): void {
     }
   }
 
-  // onFileSelected(event: Event) {
-  //   const input = event.target as HTMLInputElement;
-  //   if (input.files) {
-  //     this.selectedFiles = Array.from(input.files);
-  //   }
-  // }
+
   onFileSelected(event: Event) {
   const input = event.target as HTMLInputElement;
   if (input.files?.length) {
@@ -275,10 +179,6 @@ Submit(form: NgForm): void {
   }
 
 
-
-
-
-
 //  Edit  function
 onEditToggle(): void {
   this.editMode = true;
@@ -290,36 +190,5 @@ onCancel(): void {
   this.editMode = false;
   this.data = JSON.parse(JSON.stringify(this.originalData)); // restore
 }
-
-// reset() {
-//   this.data = structuredClone(this.originalData); // Restore original
-// }
-
-
-
-
-
-
-
-
-
-getFileIcon(url: string): string {
-  if (!url) return '📁';
-
-  const ext = url.split('.').pop()?.toLowerCase();
-  switch (ext) {
-    case 'pdf': return '📄';
-    case 'jpg':
-    case 'jpeg':
-    case 'png': return '🖼️';
-    case 'doc':
-    case 'docx': return '📘';
-    case 'xls':
-    case 'xlsx': return '📗';
-    default: return '📁';
-  }
-}
-
-
 
 }

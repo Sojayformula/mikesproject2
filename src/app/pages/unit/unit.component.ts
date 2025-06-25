@@ -24,7 +24,7 @@ export class UnitComponent implements OnInit{
   unitHead:string = ''; 
 
 
-   APIData: any[] = [];
+   APIData: any;
    selectedTab:string = 'Active';
   // showModal = false;
    searchquery: string = "";
@@ -58,8 +58,9 @@ parentUnitList: any[] = [];
     console.log('unit mode Data', this.unitModel)
     this.pagesService.getUnit(this.unitModel).subscribe({
       next: (res)=>{
-        console.log('APIData', res)
         this.APIData = res.data
+        console.log('APIData', res)
+        
       },
 
        error: (error) => {

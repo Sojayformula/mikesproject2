@@ -22,6 +22,7 @@ mobileMenuOpen = false;
 
 toggleMobileMenu() {
   this.mobileMenuOpen = !this.mobileMenuOpen;
+  
 }
 
 

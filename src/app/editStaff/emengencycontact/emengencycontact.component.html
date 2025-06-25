@@ -1,8 +1,8 @@
 
-<div class="mx-[17rem] mt-[-49rem]">
+<div class="mx-8 md:mx-0 ">
 
     <!-- Edit button -->
-<div class="top-[-15rem] py-[-30rem] flex gap-4 justify-end col-span-3 relative  md:left-[10rem] md:top-[-3.5px] ">
+<div class="top-[-6rem] py-[-30rem] flex gap-4 justify-end col-span-3 relative   ">
   <button
     type="button"
     *ngIf="!editMode"
@@ -39,14 +39,6 @@
   </div>
 
 
-
-             <!-- QRcode image -->
-   <div class="flex justify-end">        
-    <div class="flex relative w-20 md:left-[11rem] top-[-13rem] md:top-[1.8rem]">
-    <img src="/QRCode.png" class="w-[83px] h-[86px]"> 
-    </div>
-    </div> 
-
   <div>
     <div>
         <p class="font-bold font-outfit">Emergency Contact</p>
@@ -54,7 +46,7 @@
     </div>
 
 
-    <form #emergencyForm="ngForm" (ngSubmit)="Submit(emergencyForm)" class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[22rem] font-outfit mt-12">
+    <form #emergencyForm="ngForm" (ngSubmit)="Submit(emergencyForm)" class="grid grid-rows-2 md:grid-cols-3 grid-cols-2 gap-y-8 gap-x-20 font-outfit mt-20">
         <!-- Row ---1 -->
          <div>
             <label class="block w-20">Full Name</label>

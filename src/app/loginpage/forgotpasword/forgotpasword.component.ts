@@ -28,8 +28,6 @@ export class ForgotpaswordComponent {
   }
 
 onSubmit(form: NgForm): void {
-
-
   const formData = form.value; 
 
   this.authService.forgotpassword(this.email).subscribe({

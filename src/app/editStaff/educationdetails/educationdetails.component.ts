@@ -14,7 +14,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
   styleUrl: './educationdetails.component.scss'
 })
 export class EducationdetailsComponent implements OnInit {
-  @ViewChild('formRef') formRef!: NgForm;
+  // @ViewChild('formRef') formRef!: NgForm;
 
 
   // educationData: any = {};

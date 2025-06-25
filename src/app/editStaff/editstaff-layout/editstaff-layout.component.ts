@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 import { filter, take } from 'rxjs';
@@ -15,6 +15,8 @@ import { FamilyDetailsComponent } from '../family-details/family-details.compone
 import { PersonInformationComponent } from '../person-information/person-information.component';
 import { EmengencycontactComponent } from '../emengencycontact/emengencycontact.component';
 
+
+
 @Component({
   selector: 'app-editstaff-layout',
   imports: [RouterModule, CommonModule, FormsModule],
@@ -23,11 +25,11 @@ import { EmengencycontactComponent } from '../emengencycontact/emengencycontact.
 })
 export class EditstaffLayoutComponent {
 
-   @ViewChild(EducationdetailsComponent) educationdetailsComponent!: EducationdetailsComponent;
-  @ViewChild(EmploymentDetailsComponent) employmentDetailsComponent!: EmploymentDetailsComponent;
-  @ViewChild(FamilyDetailsComponent) familyDetailsComponent!: FamilyDetailsComponent;
-   @ViewChild(PersonInformationComponent) PersonInformationComponent!: PersonInformationComponent;
-  @ViewChild(EmengencycontactComponent) EmergencyContactComponent!: EmengencycontactComponent;
+  //  @ViewChild(EducationdetailsComponent) educationdetailsComponent!: EducationdetailsComponent;
+  // @ViewChild(EmploymentDetailsComponent) employmentDetailsComponent!: EmploymentDetailsComponent;
+  // @ViewChild(FamilyDetailsComponent) familyDetailsComponent!: FamilyDetailsComponent;
+  //  @ViewChild(PersonInformationComponent) PersonInformationComponent!: PersonInformationComponent;
+  // @ViewChild(EmengencycontactComponent) EmergencyContactComponent!: EmengencycontactComponent;
 
   steps = ['person-information', 'employment-details', 'family-details', 'next-of-kins', 'emengency-contact', 'education-details' ];
   currentStepIndex = 0;
@@ -35,6 +37,7 @@ export class EditstaffLayoutComponent {
   isChecked = false;
   inputValue = '';
   isSidebarOpen = false;
+  staffId: any
  
 
   isCheckedMap: { [key: string]: boolean } = {};
@@ -43,23 +46,29 @@ export class EditstaffLayoutComponent {
       private editControlService:EditService, private location:Location, private router: Router, private route:ActivatedRoute, 
       private typingStatusService: CheckboxService){
 
-      }
+      // this.steps.forEach(step => this.isCheckedMap[step] = false);
+  }
+
+  //       handleInputChange(step: string, hasValue: boolean) {
+  //      this.isCheckedMap[step] = hasValue;
+  // }
 
 
 
- ngOnInit() {
-  // Initialize all as false
+ngOnInit() {
   this.steps.forEach(step => this.isCheckedMap[step] = false);
 
-  //   this.editService.editMode$.subscribe(() => {
-  //   this.cd.detectChanges();  // Force change detection
-  // });
+
+   this.steps.forEach(step => this.isCheckedMap[step] = false);
+  this.typingStatusService.typingStatus$.subscribe((statusMap) => {
+    this.steps.forEach((step) => {
+      this.isCheckedMap[step] = !!statusMap[step];
+    });
+
+    this.cd.detectChanges(); 
+  });
 
 }
-
-// ngAfterViewInit() {
-//   this.cd.detectChanges();
-// }
 
 
 
@@ -86,31 +95,21 @@ goToPrev() {
   }
 }
 
-
-  onInputChange() {
-    this.isChecked = this.inputValue.trim().length > 0;
-  }
-
-  
+ 
 mobileMenuOpen = false;
 
 toggleMobileMenu() {
   this.mobileMenuOpen = !this.mobileMenuOpen;
+  
 }
 
-originalData: any;
-formData: any;
+// originalData: any;
+// formData: any;
 
- save() {
-    console.log('Save called:', this.employeeData);
-    this.originalData = structuredClone(this.employeeData); // update backup
-  }
-
-  // reset() {
-  //   this.employeeData = structuredClone(this.originalData);
-  //   this.editService.disableEdit();
-  // }
-
+//  save() {
+//     console.log('Save called:', this.employeeData);
+//     this.originalData = structuredClone(this.employeeData); // update backup
+//   }
 
 }
 

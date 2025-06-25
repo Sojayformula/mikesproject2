@@ -1,0 +1,183 @@
+
+
+ 
+
+
+  <div class="mt-[20rem]">
+
+<!-- Edit button -->
+<div class="top-[-15rem] py-[-30rem] flex gap-4 justify-end col-span-3 relative  lg:left-48 md:top-[-29.5rem] lg:top-[-9.2rem]">
+  <!-- <button
+    type="button"
+    *ngIf="!editMode"
+    (click)="onEditToggle()"
+    class="flex justify-center border border-[#727A90] text-[14px] text-[#727A90] w-[69.65px] h-[40px] py-2 rounded-[10px] hover:bg-gray-400 hover:text-white transition"
+  >
+     <span class="material-symbols-outlined text-[20px]">edit</span>Edit
+  </button>  -->
+
+   <!-- Save and cancel  -->
+
+       <!-- <ng-container *ngIf="isLoading">
+  <div class="mt-6 flex justify-center relative top-[-15px]">
+    <mat-spinner [diameter]="30"></mat-spinner>
+  </div>
+</ng-container>
+
+  <ng-container *ngIf="editMode">
+    <button
+      type="button"
+      (click)="submit(staff)"
+      class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+    >
+      Save
+    </button>
+  
+     <button
+      type="button"
+      (click)="onCancel()"
+      class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
+    >
+      Cancel
+    </button> 
+  </ng-container> -->
+  </div>
+
+
+  <div >
+
+    <div class="mt-[-9rem] ">
+        <picture class="font-bold">Profile </picture>
+        <p class="text-[#727A90] text-sm">The image will be displayed on their Profile</p>
+    </div>
+
+      <!-- Image Preview -->
+     <div class="lg:col-span-2 flex flex-col items-cente mt-10">
+      <div class="relative w-[90px] [167px] h-[90px] [167px] mb-2">
+        <div class="border-[#4393FF] bg-[#4393FF1A] border rounded-full w-full h-full overflow-hidden fle items-center justify-center">
+          <ng-container *ngIf="!imagePreview">
+            <span class="text-gray-600 text-sm text-center ">No Image</span>
+          </ng-container>
+          <!-- <img
+            *ngIf="staffData?.profilePicture"
+            [src]="getSafeProfilePicture(staffData.profilePicture)"
+            alt="Image Preview"
+            class="object-cover w-full h-full rounded-full relative right-[19px]"
+          /> -->
+        <div class="-32 h-24 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center mt-[-25px]">
+          <img
+            *ngIf="imagePreview; else savedImage"
+            [src]="imagePreview"
+            alt="Preview Image"
+            class="h-full w-auto object-cover"
+          />
+          
+          <ng-template #savedImage>
+            <img
+              *ngIf="staffData?.profilePicture"
+              [src]="getSafeProfilePicture(staffData.profilePicture)"
+              alt="Saved Image"
+              class="h-full w-auto object-cover "
+            />
+          </ng-template>
+        </div>
+
+
+          </div>
+        </div>
+
+      <!-- Upload image -->
+      <div>
+        <input 
+          type="file"
+          id="fileInput"
+          (change)="onFileSelected($event)"
+          [disabled]="!editMode"
+          class="hidden"
+        />
+        <!-- <label
+          for="fileInput"
+          class="text-sm bg-[#4393FF1A] text-[#4393FF] px-3 py-1 rounded cursor-pointer"
+        >
+          Upload Image
+        </label> -->
+      </div>
+
+      <div class="mt-6">
+       <p class="font-bold">Personal Information</p> 
+        <p class="text-[#727A90] text-sm">Basic personaldetails of the staff</p>
+      </div>
+    </div>
+  </div> 
+
+
+
+      <form  #staff="ngForm" class="grid grid-cols-2 grid-row-2 mg:grid-cols-2 mg:grid-rows-6 lg:grid-cols-3 lg:grid-rows-4 mt-10 bg-white rounded gap-y-6 md:gap-x-20 ">
+  <!-- Row 1 --> 
+  <div >
+    <label class="block w-40 text-sm font-medium text-gray-700">First Name</label>
+    <input type="text" name="firstName"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+  </div>
+  <div>
+    <label class="block w-40 text-sm font-medium text-gray-700">Last Name</label>
+    <input type="text" name="lastName"  placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+  </div>
+  <div>
+    <label class="block w-40 text-sm font-medium text-gray-700">Other Name</label>
+    <input type="text" name="otherName" placeholder="Enter if any" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+  </div>
+ 
+ 
+
+  <!-- Row 2 -->
+  <div>
+    <label class="block w-40 text-sm font-medium text-gray-700">Date of birth</label>
+    <input type="text" name="dateOfBirth"  placeholder="Select birth date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+  </div>
+  <div>
+    <label class="block w-40 text-sm font-medium text-gray-700">Gender</label>
+    <input type="text" name="gender" placeholder="Chose gender" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+  </div>
+  <div>
+    <label class="block w-40 text-sm font-medium text-gray-700">Nationality</label>
+    <input type="text" name="nationality"  placeholder="Enter country of origin" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+  </div>
+
+
+  <!-- Row 3 -->
+  <div >
+     <label class="block w-40 text-sm font-medium text-gray-700">Marital Status</label>
+    <input type="text" name="maritalStatus"    placeholder="Select marital status" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+  </div>
+
+  <div>
+    <label class="block w-40 text-sm font-medium text-gray-700">Phone number</label>
+    <input type="text" name="phoneNumber" placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+  </div>
+  <div>
+    <label class="block w-40 text-sm font-medium text-gray-700">Enter email address</label>
+    <input type="text" name="email"  placeholder="Enter valid email address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+  </div>
+
+
+   <!-- Row 4 -->
+  <div class="">
+    <label class="block w-40 text-sm font-medium text-gray-700">ID Type</label>
+    <input type="text" name="idType" placeholder="Select ID type (e.g Nation ID, Passport)" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+  </div>
+  <div >
+    <label class="block w-40 text-sm font-medium text-gray-700">ID Number</label>
+    <input type="text" name="idNumber" placeholder="Enter valid ID number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+  </div>
+  <div >
+    <label class="block w-40 text-sm font-medium text-gray-700">Email address</label>
+    <input type="text" name="email" placeholder="Enter valid email address"  class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+  </div>
+
+</form>
+</div>
+
+
+<!-- </div>(ngModelChange)="onInputChange('nationality', $event)" -->
+
+<!-- [(ngModel)]="staffData.phoneNumber" (ngModelChange)="onInputChange($event, '')" -->

@@ -63,9 +63,7 @@
 
      
 
-   <div
-  class="bg-[url('/backdrop3.png')] bg-cover bg-no-repeat bg-center h-[28rem] absolute w-[52rem] max-w-ful lg:w-full "
->
+   <div class="bg-[url('/backdrop3.png')] bg-cover bg-no-repeat bg-center h-[28rem] absolute w-[52rem] max-w-ful lg:w-full ">
   <div
     class="bg-[url('/Rectangle12.png')] bg-cover bg-no-repeat bg-center h-full absolute w-[52rem] max-w-ful lg:w-full top-[-15px] "
   >
@@ -134,6 +132,7 @@
         class="md:hidden text-white p-2 focus:outline-none"
         aria-label="Open Menu"
          (click)="toggleMobileMenu()"
+
       >
        
         <svg
@@ -165,6 +164,7 @@
         routerLinkActive="bg-[#F3F3F16E] border border-white"
         [routerLinkActiveOptions]="{ exact: false }"
         class="block text-gray-700 py-2 px-4 rounded-md"
+         (click)="mobileMenuOpen = false"
         >Dashboard</a
       >
       <a
@@ -172,6 +172,7 @@
         routerLinkActive="bg-[#F3F3F16E] border border-white"
         [routerLinkActiveOptions]="{ exact: false }"
         class="block text-gray-700 py-2 px-4 rounded-md"
+         (click)="mobileMenuOpen = false"
         >Tools</a
       >
       <a
@@ -179,6 +180,7 @@
         routerLinkActive="bg-[#F3F3F16E] border border-white"
         [routerLinkActiveOptions]="{ exact: false }"
         class="block text-gray-700 py-2 px-4 rounded-md"
+         (click)="mobileMenuOpen = false"
         >Staff</a
       >
       <a
@@ -186,6 +188,7 @@
         routerLinkActive="bg-[#F3F3F16E] border border-white"
         [routerLinkActiveOptions]="{ exact: false }"
         class="block text-gray-700 py-2 px-4 rounded-md"
+         (click)="mobileMenuOpen = false"
         >Unit</a
       >
       <a
@@ -193,6 +196,7 @@
         routerLinkActive="bg-[#F3F3F16E] border border-white"
         [routerLinkActiveOptions]="{ exact: false }"
         class="block text-gray-700 py-2 px-4 rounded-md"
+         (click)="mobileMenuOpen = false"
         >Support</a
       >
       <a
@@ -200,6 +204,7 @@
         routerLinkActive="bg-[#F3F3F16E] border border-white"
         [routerLinkActiveOptions]="{ exact: false }"
         class="block text-gray-700 py-2 px-4 rounded-md"
+         (click)="mobileMenuOpen = false"
         >Settings</a
       >
     </div>

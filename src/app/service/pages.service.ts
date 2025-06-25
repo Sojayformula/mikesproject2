@@ -58,7 +58,7 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
   // return this.http.get(`${environment.baseurl}/staff/all-staffs`);
 
      console.log("give me unit",item)
-    let url = `${environment.baseurl}/staff/all-staffs`     
+    let url = `${environment.baseurl}/staff/all-staffs/${id}`     
 
     let isFirstParam = true;
 
@@ -105,26 +105,32 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
 
   fetchStaff(item:allStaffModel):Observable<any>{
     return this.http.get(`${environment.baseurl}/staff/all-staffs`); 
+    // /${id}   :id: string, 
   }
+
 
     getUserById(id: string, item: allStaffModel):Observable<any>{
-    return this.http.get(`${environment.baseurl}/staff/staff/${id}`); 
+    return this.http.get(`${environment.baseurl}/staff/${id}`);
+   
   }
 
+    getfamilyId(id: string, item: allStaffModel):Observable<any>{
+    return this.http.get(`${environment.baseurl}/staff/${id}`);
+   
+  }
 
-
-
-
-
+     getEmploymentId(id: string, item: allStaffModel):Observable<any>{
+    return this.http.get(`${environment.baseurl}/staff/${id}`);
+   
+  }
 
 
 
 
   getUEduById(id: string):Observable<any>{
-    return this.http.get(`${environment.baseurl}/staff/staff/${id}`); 
+    return this.http.get(`${environment.baseurl}/staff/${id}`); 
   }
   
-  // , item: allStaffModel
 
 
   getEditStaff(id: string, payload: editStaffModel): Observable<any> {
@@ -134,6 +140,11 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
     patchFamilyDetails(id: string, payload: editFamilyModel): Observable<any> {
     return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
   }
+
+      getAddStaff(payload:editStaffModel): Observable<any> {
+    return this.http.patch(`${environment.baseurl}/staff/bulk`, payload); 
+  }
+
 
   //   patchEducation(id: string, payload:educationModel):Observable<any>{
   //   return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
