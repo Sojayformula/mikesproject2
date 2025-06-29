@@ -1,8 +1,16 @@
+<div class="navigation-buttons mt-4 flex justify-end gap-4 relative right-[1rem]">
+  <button type="button" *ngIf="!isFirstStep" (click)="goPrev()"  class=" border-2 border-[#727A90] w-[88px] h-[40px] rounded-[10px] text-[14px]">Previous</button>
 
-<div class="md:mt-[-2.5rem] mx-14">
+  <button type="button" *ngIf="!isLastStep" (click)="goNext()" (click)="goNext()" class=" bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] text-white w-[88px] h-[40px] rounded-[10px] text-[14px]">Next</button>
 
-    <!-- Edit button -->
-<div class="mt- flex justify-end col-span-3 relative left-[7rem] md:left-40 top-[-6rem] md:top-[2.3rem] ">
+  <!-- <button type="button" *ngIf="isLastStep" (click)="submit()">Submit</button> -->
+</div>
+
+
+<div class="mt-24 mx-14 md:mx-0">
+
+
+  <!-- <div class="mt- flex justify-end col-span-3 relative left-[7rem] md:left-40 top-[-6rem] md:top-[2.3rem] ">
   <button
     type="button"
     *ngIf="!editMode"
@@ -12,42 +20,8 @@
      <span class="material-symbols-outlined text-[20px]">edit</span>Edit
   </button>
 
-  <!-- Save and cancel -->
-
-       <ng-container *ngIf="isLoading">
-  <div class="mt-6 flex justify-center relative top-[-15px]">
-    <mat-spinner [diameter]="30"></mat-spinner>
-  </div>
-</ng-container>
-
-  <ng-container *ngIf="editMode">
-    <button
-      type="button"
-      (click)="Submit(staffForm)"
-      class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
-    >
-      Save
-    </button>
-  
-    <button
-      type="button"
-      (click)="onCancel()"
-      class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
-    >
-      Cancel
-    </button>
-  </ng-container>
-  </div>
-
-
-              <!-- QRcode image -->
-   <div class="flex justify-end ">        
-    <div class="flex  relative w-20 lg:left-[11rem] top-[-4rem] md:top-[4.3rem]">
-    <img src="/QRCode.png" class="w-[83px] h-[86px] "> 
-    </div>
-    </div> 
-
-
+ 
+  </div> -->
 
     <div class="mt-10">
         <p class="font-outfit font-bold text-[16px]">Family Details</p>
@@ -57,14 +31,13 @@
 
 
                    <!-- FAMILY FORM -->
-<form #staffForm="ngForm" (ngSubmit)="Submit(staffForm) "
-  class="grid gap-10 bg-white rounded-lg mt-10">
+<form #staffForm="ngForm" class="grid gap-10 bg-white rounded-lg mt-10">
 
   <!-- Row 1: 3  -->
   <div class="grid md:grid-cols-3 grid-cols-1 gap- [10rem]">
     <div class="w-[6rem] ">
     <label class="font-semibold text-[13px] font-outfit ">Spouse's Name</label>
-    <input type="text" name="spouseName" [disabled]="!editMode" [(ngModel)]="data?.supervisor.spouseName" placeholder="Enter full name of spouse" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="spouseName" [(ngModel)]="formData.spouseName"  placeholder="Enter full name of spouse" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
    
        <div class="mt-10">
         <p class="font-semibold font-outfit text-[16px] w-[10rem]">Children Information</p>
@@ -75,12 +48,12 @@
 
     <div class="w-[9rem]">
     <label class="font-semibold text-[13px] font-outfit">Spouse's Phone Number</label>
-    <input type="text" name="spousePhone" [disabled]="!editMode" [(ngModel)]="data.supervisor.spousePhone" placeholder="Phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="spousePhone" [(ngModel)]="formData.spousePhone" placeholder="Phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
     <div class="mt-10 md:mt-0">
     <label class="flex font-semibold text-[13px] font-outfit">Spouse's Email</label>
-    <input type="text" name="spouseEmail" [disabled]="!editMode" [(ngModel)]="data.supervisor.email" placeholder="Enter address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="spouseEmail" [(ngModel)]="formData.spouseEmail" placeholder="Enter address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
   </div>
@@ -89,40 +62,41 @@
   <div class="grid md:grid-cols-3 grid-cols-1 md:gap-6">
     <div>
      <label class="flex font-semibold text-[13px] font-outfit">Number of Children</label>
-    <input type="text" name="numberOfChild" [disabled]="!editMode" [(ngModel)]="data.supervisor.numberOfChildren"  placeholder="Enter nu30-;l mbers(eg. 2)" 
+    <input type="text" name="numberOfChild" [(ngModel)]="formData.numberOfChildren"  placeholder="Enter nu30-;l mbers(eg. 2)" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
     <div></div>
     <div></div>
   </div>
 
-  <!-- Row 3: Input 5 under column 1, Input 6 under column 2      *ngFor="let child of data.supervisor.children; let i = index"   [name]="'age'+ i "  [value]="child.dob"     -->
-  <div class="grid  md:grid-cols-3 lg:gap- [10rem]"> 
+  <!-- Row 3: Input 5 -->
+  <div *ngIf="formData.children && formData.children.length > 0" class="grid  md:grid-cols-3 lg:gap- [10rem]"> 
     <div class="flex flex-col">
      <label class="font-semibold text-[13px] font-outfit">Child </label>
-    <input type="text" name="child1" [disabled]="!editMode" [(ngModel)]="data.supervisor.children[0].fullName"  placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="child1" [(ngModel)]="formData.children[0].fullName"  placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
     <div class="flex flex-col">
      <label class="font-semibold text-[13px] font-outfit">Age</label>
-    <input type="text" name="age1" [disabled]="!editMode" [value]="data.supervisor.children[0]?.dob" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="date" [(ngModel)]="formData.dateOfBirth" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
     </div>
 
+    <!-- [(ngModel)]="formData.children?.[0]?.fullName" -->
 
     <div></div>
   </div>
 
-  <!-- Row 4: Input 7 under column 1, Input 8 under column 2 -->
-  <div class="grid md:grid-cols-3 md:gap -[10rem]">
+  <!-- Row 4: Input 7  -->
+  <div *ngIf="formData.children && formData.children.length > 1" class="grid md:grid-cols-3 md:gap -[10rem]">
     <div class="flex flex-col"> 
         <label class="font-semibold text-[13px] font-outfit">Child </label>
-    <input type="text" name="child2" [disabled]="!editMode"  [(ngModel)]="data.supervisor.children[1].fullName" placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="child2" [(ngModel)]="formData.children[1].fullName"  placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
  
     <div class="flex flex-col">
     <label class="font-semibold text-[13px] font-outfit">Age</label>
-    <input type="text" name="childdob" [disabled]="!editMode"  [(ngModel)]="data.supervisor.children[1].dob" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="date" [(ngModel)]="formData.dateOfBirth" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
     </div>
 
     <div></div>

@@ -1,3 +1,5 @@
+//import { Child } from "../modelchild/modelchild";
+
 export class unitModel{
     search!: string;
     page!: string;
@@ -119,6 +121,10 @@ export interface ParentUnit {
   __v: number
 }
 
+
+
+
+
 export interface Pagination {
   total: number
   page: number
@@ -197,6 +203,8 @@ export interface ParentUnit2 {
   updatedAt: string
   __v: number
 }
+
+
 
 
 
@@ -348,8 +356,53 @@ export interface PatchEducationPayload {
 
 
 
+  //  ADD NEW StAFF MODEL //
+export class addNewStaffModel{
+ _id?: string;
+ profilePicture!: string;
+  firstName!: string;
+  lastName!: string;
+  otherName!: string;
+  email!: string;
+  dateOfBirth!: string;
+  nationality!: string;
+  gender!: string;
+  idType!: string;
+  phoneNumber!: string;
+  idNumber!: string;
+  maritalStatus!: string;
+  jobTitle!: string;
+  unit!: string[]; 
+  employmentType!: string;
+  hireDate!: string;
+  workLocation!: string;
+  staffId!: string;
+  supervisor!: string[]; 
+  role!: string; 
+  emergencyContactFullName!: string;
+  emergencyContactRelationship!: string;
+  emergencyContactPhoneNumber!: string;
+  emergencyContactEmail!: string;
+  emergencyContactCurrentAddress!: string;
+  spouseName!: string;
+  spousePhone!: string;
+  spouseEmail!: string;
+  marriageCertificateUrl!: string;
+  numberOfChildren!: number;
+  children!: Child[];
+  educationDetails!: EducationDetail[];
+  nextOfKinFullName!: string;
+  nextOfKinRelationship!: string;
+  nextOfKinPhoneNumber!: string;
+  nextOfKinEmail!: string;
+  nextOfKinCurrentAddress!: string;
 
-
+   institutionName!: string
+  courseOfStudy!: string
+  startDate!: string
+  endDate!: string
+  
+}
 
 
 
@@ -377,7 +430,8 @@ export class editStaffModel{
 }
 
 
-export interface editStaffResponseModel {
+export interface Doum {
+  _id: string
   profilePicture: string
   firstName: string
   lastName: string
@@ -430,6 +484,50 @@ export interface EducationDetail {
   endDate: string
   certificateUrl: string
 }
+
+// export class editStaffResponseModel{
+//   _id!: string
+//    nationality!: string
+//   gender!: string
+//   idType!: string
+//   phoneNumber!: string
+//   idNumber!: string
+//   maritalStatus!: string
+//   jobTitle!: string
+//   unit!: string[]
+//   employmentType!: string
+//   hireDate!: string
+//   workLocation!: string
+//   staffId!: string
+//   supervisor!: string[]
+//   educationDetails!: EducationDetail[]
+//   startDate!: string
+//   endDate!: string
+// }
+
+export interface EditEmploymentModel {
+  _id: string;
+  employmentType: string;
+  jobTitle: string;
+  unit: string[]; 
+  hireDate: string;
+  workLocation: string;
+  supervisor: string[]; 
+  educationDetails: EducationDetail[];
+}
+
+export interface EducationDetail {
+  institutionName: string;
+  courseOfStudy: string;
+  startDate: string;
+  endDate: string;
+  _id: string;
+  // certificateUrl: string;
+}
+
+
+
+
 
 
 
@@ -548,7 +646,7 @@ export interface Root {
   pagination: Pagination
 }
 
-export interface Daum {
+export interface responseDaumModel {
   _id: string
   profilePicture?: string
   firstName: string
@@ -702,32 +800,6 @@ export interface Pagination {
 
 
 
-
-// export class editFamilyModel{
-//    spouseName!: string
-//   spousePhone!: string
-//   spouseEmail!: string
-//   numberOfChildren!: number
-//   children!: Children[]
-// }
-
-// export interface editFamilyModel {
-//   supervisor: {
-//     _id: string;
-//     spouseName: string;
-//     spousePhone: string;
-//     spouseEmail: string;
-//     numberOfChildren: number;
-//     children: Children[];
-//   };
- 
-// }
-
-//  export interface Child {
-//   fullName: string;
-//   dob: string; // or Date, depending on your API
-//   _id: string;
-// }
 
 export interface Child {
   fullName: string;

@@ -1,5 +1,13 @@
+<div class="navigation-buttons mt-4 flex justify-end gap-4 mx-10">
+  <button type="button" *ngIf="!isFirstStep" (click)="goPrev()"  class=" border-2 border-[#727A90] w-[88px] h-[40px] rounded-[10px] text-[14px]">Previous</button>
 
-<div class="mt-44">
+  <button type="button" *ngIf="!isLastStep" (click)="goNext()" class=" bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] text-white w-[88px] h-[40px] rounded-[10px] text-[14px]">Next</button>
+
+  <!-- <button type="button" *ngIf="isLastStep" (click)="submit()">Submit</button> -->
+</div>
+
+
+<div class="mt-24">
 
   <div>
     <div>
@@ -8,14 +16,14 @@
     </div>
 
 
-    <form #emergencyForm="ngForm" (ngSubmit)="Submit(emergencyForm)" class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[5rem] font-outfit mt-12">
+    <form #emergencyForm="ngForm" class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[5rem] font-outfit mt-12">
         <!-- Row ---1 -->
          <div>
             <label class="block w-20">Full Name</label>
             <input
             type="text"
             name="fullName"
-             [(ngModel)]="emergencyData.emergencyContactFullName "
+              [(ngModel)]="formData.emergencyContactFullName "
             placeholder="Enter next of kin's full name"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -27,7 +35,7 @@
             <input
             type="text"
             name="Relationship"
-            [(ngModel)]="emergencyData.emergencyContactRelationship"
+             [(ngModel)]="formData.emergencyContactRelationship"
             placeholder="E.g Mother, Brother, Friend"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -38,7 +46,7 @@
             <input
             type="text"
             name="phoneNumber"
-            [(ngModel)]="emergencyData.emergencyContactPhoneNumber"
+             [(ngModel)]="formData.emergencyContactPhoneNumber"
             placeholder="Enter active contact number"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -50,7 +58,7 @@
             <input
             type="text"
             name="email"
-            [(ngModel)]="emergencyData.emergencyContactEmail"
+             [(ngModel)]="formData.emergencyContactEmail"
             placeholder="Enter email address (if available)"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -61,7 +69,7 @@
             <input
             type="text"
             name="address"
-            [(ngModel)]="emergencyData.emergencyContactCurrentAddress"
+             [(ngModel)]="formData.emergencyContactCurrentAddress"
             placeholder="Enter current address"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />

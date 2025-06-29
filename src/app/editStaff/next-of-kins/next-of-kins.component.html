@@ -3,7 +3,7 @@
 
 
        <!-- Edit button -->
-<div class="flex justify-end col-span-3 relative  top-[-6rem] ">
+<div class="flex justify-end col-span-3 relative  top- [-6rem] ">
   <button
     type="button"
     *ngIf="!editMode"
@@ -11,7 +11,7 @@
     class="flex justify-center bg-blue- border border-[#727A90] text-[14px] text-[#727A90] w-[69.65px] h-[40px] py-2 rounded-[10px] hover:bg-gray-400 hover:text-white transition relative right-[7.8rem] lg:right-0"
   >
      <span class="material-symbols-outlined text-[20px]">edit</span>Edit
-  </button>
+  </button> 
 
   <!-- Save and cancel -->
 
@@ -47,7 +47,7 @@
     </div>
 
 
-    <form #nextOfKinForm="ngForm" (ngSubmit)="onSubmit(nextOfKinForm)" class="grid grid-rows-2 grid-cols-2 lg:grid-cols-3 gap-y-8 gap-20 mt-20 font-outfit">
+    <form #nextOfKinForm="ngForm" class="grid grid-rows-2 grid-cols-2 lg:grid-cols-3 gap-y-8 gap-20 mt-20 font-outfit">
         <!-- Row ---1 -->
          <div>
             <label class="block w-20">Full Name</label>

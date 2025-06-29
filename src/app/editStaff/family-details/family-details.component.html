@@ -88,13 +88,13 @@
   </div>
 
   <!-- Row 3: Input 5 under column 1, Input 6 under column 2      *ngFor="let child of data.supervisor.children; let i = index"   [name]="'age'+ i "  [value]="child.dob"     -->
-  <div class="grid grid-cols-3 gap-[24rem] lg:gap- [10rem]"> 
+  <div *ngIf="data.children && data.children.length > 0" class="grid grid-cols-3 gap-[24rem] lg:gap- [10rem]"> 
     <div class="flex flex-col">
      <label class="font-semibold text-[13px] font-outfit">Child </label>
     <input type="text" name="child1" [disabled]="!editMode" [(ngModel)]="data.supervisor.children[0].fullName"  placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
-    <div class="flex flex-col">
+    <div *ngIf="data.children && data.children.length > 0" class="flex flex-col">
      <label class="font-semibold text-[13px] font-outfit">Age</label>
     <input type="text" name="age1" [disabled]="!editMode" [value]="data.supervisor.children[0].dob" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
     </div>
@@ -104,14 +104,14 @@
   </div>
 
   <!-- Row 4: Input 7 under column 1, Input 8 under column 2 -->
-  <div class="grid grid-cols-3 gap-[24rem] md:gap -[10rem]">
+  <div *ngIf="data.children && data.children.length > 1" class="grid grid-cols-3 gap-[24rem] md:gap -[10rem]">
     <div class="flex flex-col"> 
         <label class="font-semibold text-[13px] font-outfit">Child </label>
     <input type="text" name="child2" [disabled]="!editMode" [(ngModel)]="data.supervisor.children[1].fullName" placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
  
-    <div class="flex flex-col">
+    <div *ngIf="data.children && data.children.length > 1" class="flex flex-col">
     <label class="font-semibold text-[13px] font-outfit">Age</label>
     <input type="text" name="age2" [disabled]="!editMode"  [(ngModel)]="data.supervisor.children[1].dob" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
     </div>

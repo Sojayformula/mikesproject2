@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { allStaffModel, editStaffModel, getStaffModel } from '../../../model/pagesModel';
+import { addNewStaffModel, allStaffModel, editStaffModel, getStaffModel } from '../../../model/pagesModel';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StaffDataService } from '../../../StaffDataService/staff-data.service';
 import { CheckboxService } from '../../../checkboxService/checkbox.service';
@@ -9,6 +9,8 @@ import { CommonModule, formatDate, Location } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import imageCompression from 'browser-image-compression';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { AddstaffService } from '../../../addstaffservice/addstaff.service'; 
+import { FormsServiceService } from '../formService/forms-service.service';
 
 @Component({
   selector: 'app-personal-information',
@@ -17,11 +19,11 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
   styleUrl: './personal-information.component.scss'
 })
 export class PersonalInformationComponent2 implements OnInit {
-  @ViewChild('staff') formRef!: NgForm;
+
 
 
   
- // private sub!: Subscription;
+
 
   currentStepIndex = 0;
    staffData: any;  
@@ -35,16 +37,18 @@ export class PersonalInformationComponent2 implements OnInit {
 
   editMode: boolean = false;
 originalStaffData: any;
- formData: any = {};         // Bound to the form via [(ngModel)]
+ //formData: any = {};      
   originalData: any = {};
   
   // selectedFile!: File;
 imagePreview: string | ArrayBuffer | null = null;
+formData: Partial<addNewStaffModel> = {};
 
 
   constructor(private cd: ChangeDetectorRef, private router: Router, private pagesService: PagesService,
     private route:ActivatedRoute, private location:Location, public editService:EditService, 
-    private staffDataService: StaffDataService,private checkboxService:CheckboxService,
+    private staffDataService: StaffDataService,private checkboxService:CheckboxService,  public formService: AddstaffService,
+    public formsServiceService: FormsServiceService, public AddstaffService: AddstaffService
   ){
 
     this.getStaffModel = new getStaffModel()
@@ -54,35 +58,21 @@ imagePreview: string | ArrayBuffer | null = null;
   }
 
 
+//   ngOnInit() {
+//   this.formData = this.formService.formData;
+//   console.log('Restored formData:', this.formData);
+// }
 
-   ngOnInit(): void {
-    //  this.staffData = this.staffDataService.getData();
-     
-  }
+ngOnInit() {
+  this.formData = this.formsServiceService.formData || {};
+  console.log('Loaded form data in ngOnInit:', this.formData);
+}
 
 
 
-    //  etchStaffData() {
-    // this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
-    //   next: (res ) => {
-    //     this.staffData = res; 
-    //     console.log('Fetched staff data:', this.staffData);
-    //      this.isLoading = false;
 
-    //       this.staffData = structuredClone(res);     
-    //       this.originalStaffData = structuredClone(res);
-    //       console.log('Fetched staff data:', this.staffData);
 
-    //   },
-    //   error: (err) => {
-    //     console.error('Error fetching staff:', err);
-    //   },
 
-    //      complete: () => {
-
-    //      }
-    // });
-    // }
 
  getSafeProfilePicture(pic?: string): string {
   if (!pic) return '/assets/default-profile.png'; // fallback image if missing
@@ -135,9 +125,7 @@ set formattedDOB(value: string) {
     this.location.back()
   }
 
-  next(){
-    this.router.navigate(['edit-personal-info'])
-  }
+
 
   onInputChange(field: string, value: string) {
   this.staffData.supervisor[field] = value;
@@ -163,133 +151,70 @@ onCancel(): void {
   this.staffData = JSON.parse(JSON.stringify(this.originalData)); // restore
 }
 
-// Submit(form:NgForm){}
 
 
+  get isLastStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getNextStep(currentUrl) === null;
+  }
 
-
-  // ubmit() {
-  //   if (this.formRef.valid) {
-  //     console.log('Employment Info Submitted:', this.formRef.value);
-  //   } else {
-  //     console.warn('Employment Info form is invalid');
-  //   }
+  // get isFirstStep(): boolean {
+  //   const currentUrl = this.router.url;
+  //   return this.formService.getPrevStep(currentUrl) === null;
   // }
 
 
 
+  // routeFormData(){
+  // const state = history.state as { formData: Partial<addNewStaffModel> };
+
+  // console.log('History state:', state);
+
+  // if (state?.formData) {
+  //   this.formData = state.formData;
+  //   console.log('Loaded form data:', this.formData);
+  // } else {
+  //   console.warn('No formData found in history state');
+  // }
+  // }
 
 
+ // goNext() {
+//   console.log('Going to next step with form data:', this.formData); 
 
+//   const currentUrl = this.router.url;
+//   const next = this.formService.getNextStep(currentUrl);
 
-// submit(form: NgForm) {
-//   this.isLoading =true;
-//  const payload = {
-//     _id: this.staffId, 
-//     profilePicture: this.staffData?.profilePicture || '',
-//     firstName: form.value.firstName,
-//     lastName: form.value.lastName,
-//     otherName: form.value.otherName || '',
-//     email: form.value.email,
-//     dateOfBirth: form.value.dateOfBirth,
-//     nationality: form.value.nationality,
-//     gender: form.value.gender,
-//     idType: form.value.idType,
-//     phoneNumber: form.value.phoneNumber,
-//     idNumber: form.value.idNumber,
-//     maritalStatus: form.value.maritalStatus
-//   };
-
-//   console.log('Submitting payload:', this.editStaffData);
-//   console.log('Submit triggered in child:', form.value); 
-
-
-
-//       console.log('Employment Info Submitted:', this.formRef.value);
-//   this.pagesService.getAddStaff(this.staffId, payload ).subscribe({
-//     next: (res) => {
-//       console.log('patch', res)
-//       //  alert('Form updated successfull')
-//        this.isLoading = false;
-    
-//     },
-  
-
-//     error: (err) => {
-//       console.log('error', err)
-//       console.log('Failed to submit form')
-//       alert('Form update failed')
-//     }
-//   })
-//  }
-
-
-submit(): void {
-  if (!this.formRef || !this.formRef.valid) {
-    console.warn('Form is invalid or missing');
-    return;
-  }
-
-  const form = this.formRef;
-  this.isLoading = true;
-
-  const payload = {
-    _id: this.staffId,
-    profilePicture: this.staffData?.profilePicture || '',
-    firstName: form.value.firstName,
-    lastName: form.value.lastName,
-    otherName: form.value.otherName || '',
-    email: form.value.email,
-    dateOfBirth: form.value.dateOfBirth,
-    nationality: form.value.nationality,
-    gender: form.value.gender,
-    idType: form.value.idType,
-    phoneNumber: form.value.phoneNumber,
-    idNumber: form.value.idNumber,
-    maritalStatus: form.value.maritalStatus
-  };
-
-  console.log('✅ Submitting form with payload:', payload);
-
-  this.pagesService.getAddStaff(payload).subscribe({
-    next: (res) => {
-      console.log('✅ Staff updated successfully:', res);
-      this.isLoading = false;
-    },
-    error: (err) => {
-      console.error('❌ Error updating staff:', err);
-      alert('Form update failed');
-      this.isLoading = false;
-    }
-  });
-}
-
-
-
-
-// submit(): void {
-//   if (!form.valid) {
-//     console.warn('Form is invalid');
-//     return;
+//   if (next) {
+//     this.router.navigate([next], {
+//       relativeTo: this.route.parent,
+//       state: { formData: this.formData }  // ✅ Send data here
+//     });
 //   }
-
-//   this.isLoading = true;
-
-//   const payload = { ...this.staffData };
-
-//   this.pagesService.getAddStaff(payload).subscribe({
-//     next: (res) => {
-//       console.log('✅ Staff created:', res);
-//       this.isLoading = false;
-//     },
-//     error: (err) => {
-//       console.error('❌ Error creating staff:', err);
-//       this.isLoading = false;
-//     }
-//   });
 // }
 
 
+goNext() {
+  // 🔐 Save the data entered on this page   formService      
+  this.formsServiceService.updateData(this.formData);
 
+  // 🔁 Continue to next step
+  const currentUrl = this.router.url;
+  const next = this.formsServiceService.getNextStep(currentUrl);
+  if (next) {
+    this.router.navigate([next], { relativeTo: this.route.parent });
+  }
+}
+// goNext() {
+//   this.formsServiceService.updateData(this.formData);
+
+//   const next = this.formService.getNextStep(this.router.url);
+//   console.log('Next step:', next);
+//   if (next) {
+//     this.router.navigate([next]);
+//   }
+// }
+
+  
 
 }

@@ -1,28 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { EditService } from '../../../editservice/edit.service';
 import { CheckboxService } from '../../../checkboxService/checkbox.service';
 import { StaffDataService } from '../../../StaffDataService/staff-data.service';
 import { PagesService } from '../../../service/pages.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { allStaffModel } from '../../../model/pagesModel';
+import { addNewStaffModel, allStaffModel } from '../../../model/pagesModel';
 import { CommonModule, formatDate } from '@angular/common';
 import { Location } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { AddstaffService } from '../../../addstaffservice/addstaff.service';
+import { FormsServiceService } from '../formService/forms-service.service';
+import { UnitHead } from '../../../model/pagesModel';
 
 @Component({
   selector: 'app-employment-details',
-  imports: [FormsModule, CommonModule, MatProgressSpinner],
+  imports: [FormsModule, CommonModule],
   templateUrl: './employment-details.component.html',
   styleUrl: './employment-details.component.scss'
 })
-export class EmploymentDetailsComponent2 {
+export class EmploymentDetailsComponent2 implements OnInit{
 
 
-
-   employeeData: any = {}
+  unitList: any[] = [];            
+  supervisorList: any[] = [];  
+   employeeData: any
+   unitData: any
+    allStaff: allStaffModel
     currentStep = 0;
-    getAllStaff: allStaffModel;
+    //getAllStaff: allStaffModel;
      staffId: any
      selectedEmployee: string =''
      selectedStep: string = '';
@@ -34,54 +40,104 @@ export class EmploymentDetailsComponent2 {
      editMode: boolean = false;
      originalStaffData: any;
      isLoading = false
+      formData: Partial<addNewStaffModel> = {};
 
     
 
  
 
    constructor(public editService:EditService, private staffDataService: StaffDataService, private router: Router, private location:Location, private route:ActivatedRoute, 
-    private typingStatusService: CheckboxService, private pagesService: PagesService){
+    private typingStatusService: CheckboxService, private pagesService: PagesService, private pageService: PagesService, 
+    public formService: AddstaffService, public formsServiceService: FormsServiceService){
 
-      this.getAllStaff = new allStaffModel()
-
-   }
-
-
-   ngOnInit(): void {
-
-   this.route.queryParamMap.subscribe((params) => {
-    const item = params.get('staffId');
-    this.staffId = item;
-
-    console.log("my id:", this.staffId);
-
-  });
-
-   if (this.staffId) {
-      //this.etchEmployees(); 
-    } 
-
-  // this.steps.forEach(step => this.isCheckedMap[step] = false);
+      this.allStaff = new allStaffModel()
 
    }
 
-  // etchEmployees() {
-  //   this.pagesService.getAllStaff(this.staffId, this.getAllStaff).subscribe({
-  //     next: (res) => {
-  //       const employee = res.data.find((staff: any) => staff._id === this.staffId);
-  //       if (employee) {
-  //         this.staffDataService.setData(employee); 
-  //         this.employeeData = employee;            
-  //         console.log('Matched Employee:', this.employeeData);
-  //       } else {
-        
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.error('Failed to fetch data', err);
-  //     }
-  //   });
-  // }
+
+   
+ngOnInit() {
+  this.formData = this.formsServiceService.formData || {};
+  console.log('Loaded form data in ngOnInit:', this.formData);
+
+  this.fetchAllStaff()
+  this.fetchUnit()
+}
+
+
+
+
+
+ fetchAllStaff(){
+    this.pageService.fetchStaff(this.allStaff).subscribe({
+      next: (res)=>{
+        this.employeeData = res.data || [];
+         console.log('response data', res)
+          console.log('APIData response', this.employeeData)
+       
+      },
+
+      error: (err)=>{
+        console.log('Failed to fetch staff', err)
+      },
+
+      complete:()=>{
+        console.log('complete')
+      }
+    })
+  }
+
+
+   fetchUnit(){
+    this.pageService.fetchStaff(this.allStaff).subscribe({
+      next: (res)=>{
+        this.unitData = res.data || [];
+         console.log('response data', res)
+          console.log('APIData response', this.employeeData)
+       
+      },
+
+      error: (err)=>{
+        console.log('Failed to fetch staff', err)
+      },
+
+      complete:()=>{
+        console.log('complete')
+      }
+    })
+  }
+
+
+
+
+
+ get isLastStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getNextStep(currentUrl) === null;
+  }
+
+  get isFirstStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getPrevStep(currentUrl) === null;
+  }
+
+   
+
+  goNext() {
+  this.formsServiceService.updateData(this.formData);
+  const next = this.formsServiceService.getNextStep(this.router.url);
+  if (next) {
+    this.router.navigate([next]);
+  }
+}
+
+  goPrev() {
+    const currentUrl = this.router.url;
+    const prev = this.formsServiceService.getPreviousStep(currentUrl);
+    if (prev) {
+      this.router.navigate([prev], { relativeTo: this.route.parent });
+    }
+  }
 
 
     goBack(){
@@ -206,6 +262,25 @@ onCancel(): void {
     return 'other';
   }
 
+
+
+
+
+//  goNext() {
+//   this.formsServiceService.updateData(this.formData);
+//   const next = this.formService.getNextStep(this.router.url);
+//   if (next) {
+//     this.router.navigate([next]);
+//   }
+// }
+
+//   goPrev() {
+//     const currentUrl = this.router.url;
+//     const prev = this.formService.getPrevStep(currentUrl);
+//     if (prev) {
+//       this.router.navigate([prev], { relativeTo: this.route.parent });
+//     }
+//   }
 
 
 

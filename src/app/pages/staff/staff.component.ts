@@ -51,6 +51,8 @@ export class StaffComponent implements OnInit {
   }
  
 
+ 
+
 
   addNavigate(item:string){
     // this.router.navigate([`/person-information?staffId=${id}`])

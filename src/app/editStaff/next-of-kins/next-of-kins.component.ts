@@ -2,7 +2,7 @@ import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PagesService } from '../../service/pages.service';
-import { allStaffModel } from '../../model/pagesModel';
+import { allStaffModel, EditEmploymentModel } from '../../model/pagesModel';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CheckboxService } from '../../checkboxService/checkbox.service';
 
@@ -66,8 +66,6 @@ export class NextOfKinsComponent implements OnInit {
          }
     });
     }
-
-    onSubmit(form:NgForm){}
  
   
 
@@ -80,7 +78,7 @@ export class NextOfKinsComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     const value = input.value;
 
-    // ✅ This line sets the typing status for this step
+    // This line sets the typing status for this step
    this.typingStatusService.setTypingStatus('next-of-kins', value.trim().length > 0);
 
   }
@@ -98,6 +96,37 @@ onCancel(): void {
   this.nextOfKinsData = JSON.parse(JSON.stringify(this.originalData)); // restore
 }
 
-  Submit(form: NgForm){}
+  Submit(form: NgForm) {
+    this.isLoading = true;
+  
+  const payload: Partial<EditEmploymentModel> = {
+    _id: this.staffId,
+    employmentType: form.value.employmentType,
+    jobTitle: form.value.jobTitle,
+    unit: [form.value.unitId], 
+    hireDate: form.value.hireDate,
+    workLocation: form.value.workLocation,
+    supervisor: [form.value.supervisorId], 
+    educationDetails: []
+  
+    };
+  
+    console.log('PATCH payload:', payload);
+    console.log('Unit being sent:', form.value.unitId);
+  console.log('Supervisor being sent:', form.value.supervisorId);
+  
+  
+    this.pagesService.patchEmployment(this.staffId, payload).subscribe({
+      next: (res) => {
+        console.log('Success:', res);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error:', err);
+        alert('Update failed');
+        this.isLoading = false;
+      }
+    });
+  }
 
 }

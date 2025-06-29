@@ -1,137 +1,61 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PagesService } from '../../../service/pages.service';
 import { StaffDataService } from '../../../StaffDataService/staff-data.service';
-import { allStaffModel, editStaffModel } from '../../../model/pagesModel';
+import { addNewStaffModel, allStaffModel, editStaffModel } from '../../../model/pagesModel';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { AddstaffService } from '../../../addstaffservice/addstaff.service';
+import { FormsServiceService } from '../formService/forms-service.service';
 
 @Component({
   selector: 'app-education-details',
-  imports: [FormsModule, CommonModule, MatProgressSpinner],
+  imports: [FormsModule, CommonModule],
   templateUrl: './education-background.component.html',
   styleUrl: './education-background.component.scss'
 })
 export class EducationBackgroundComponent2 implements OnInit {
 
-
-
-  
- 
-   getAllStaff: allStaffModel
+  addNewStaff: addNewStaffModel
+  //  getAllStaff: allStaffModel
   staffId: any;
   selectedStep: string = '';
   selectedFiles: File[] = [];
   isDragging = false;
   isLoading = false
-   editEduData: editStaffModel;
+  formData: Partial<addNewStaffModel> = {};
 
    editMode: boolean = false;
 originalStaffData: any;
 
-   educationData = {
-  educationDetails: [
-    {
-      institutionName: '',
-      courseOfStudy: '',
-      startDate: '',
-      endDate: ''
-    },
-    {
-      institutionName: '',
-      courseOfStudy: '',
-      startDate: '',
-      endDate: ''
-    }
-  ]
-};
+// In your component.ts
+showAllField: boolean = false;
 
 
+  constructor(private route:ActivatedRoute, private pagesService:PagesService, private staffDataService:StaffDataService,
+     public formService: AddstaffService, private router:Router, public formsServiceService: FormsServiceService){
 
+    this.addNewStaff = new addNewStaffModel()
 
-  constructor(private route:ActivatedRoute, private pagesService:PagesService, private staffDataService:StaffDataService){
-    this.getAllStaff = new allStaffModel()
-    this.editEduData = new editStaffModel()
-
-      this.educationData = {
-  educationDetails: [
-    {
-      institutionName: '',
-      courseOfStudy: '',
-      startDate: '',
-      endDate: ''
-    },
-    {
-      institutionName: '',
-      courseOfStudy: '',
-      startDate: '',
-      endDate: ''
-    }
-  ]
-};
-  }
+   }
 
 
 
   ngOnInit() {
-    this.route.queryParamMap.subscribe((params) => {
-    const item = params.get('staffId');
-    this.staffId = item;
-
-    console.log("my id:", this.staffId);
-        //this.etchEduDetails();
-  });
-
-  }
+  this.formData = this.formsServiceService.formData || {};
+  console.log('Loaded form data in ngOnInit:', this.formData);
+}
 
 
-  //  etchEduDetails() {
-  //   this.pagesService.getUEduById(this.staffId).subscribe({
-  //     next: (res) => {
-  //     this.educationData = res;
-  //     console.log('educationDetails:', this.educationData.educationDetails);
-  //     console.log('Length:', this.educationData.educationDetails?.length);
+showField() {
+  this.showAllField = true;
+}
 
-  //     },
-  //     error: (err) => {
-  //       console.error('Failed to fetch data', err);
-  //     }
-  //   });
-  // }
+cancelShowField() {
+  this.showAllField = false;
+}
 
-
-
-// onSubmit(eduform: NgForm): void {
-//   if (!eduform.valid) return;
-
-//   this.isLoading = true;
- 
-//    const formData = new FormData();
-// formData.append('_id', this.staffId);
-// formData.append('educationDetails', JSON.stringify(this.educationData.educationDetails));
-// for (let i = 0; i < this.selectedFiles.length; i++) {
-//   formData.append('files', this.selectedFiles[i]);
-// }
-
-//   this.pagesService.patchEducation(this.staffId, formData).subscribe({
-//     next: (res) => {
-//       console.log('PATCH response:', res);
-
-//       if (res?.educationDetails) {
-//         this.educationData.educationDetails = res.educationDetails;
-//       }
-
-//       this.editMode = false;
-//       this.isLoading = false;
-//     },
-//     error: (err) => {
-//       console.error('error', err);
-//       alert('Form update failed');
-//       this.isLoading = false;
-//     }
-//   });
-// }
 
 
 onEditToggle(): void {
@@ -204,5 +128,111 @@ onCancel(): void {
     return 'other';
   }
 
+
+          // NEXT AND PREVIOUS FUNCTIONS //
+   get isLastStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getNextStep(currentUrl) === null;
+  }
+
+  get isFirstStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getPrevStep(currentUrl) === null;
+  }
+
+   goNext() {
+  this.formsServiceService.updateData(this.formData);
+  const next = this.formsServiceService.getNextStep(this.router.url);
+  if (next) {
+    this.router.navigate([next]);
+  }
 }
+
+  goPrev() {
+    const currentUrl = this.router.url;
+    const prev = this.formsServiceService.getPreviousStep(currentUrl);
+    if (prev) {
+      this.router.navigate([prev], { relativeTo: this.route.parent });
+    }
+  }
+
+
+
+
+  submit() {
+  const finalData = this.formsServiceService.formData as addNewStaffModel;
+
+  this.pagesService.getAddNewStaff(finalData).subscribe({
+    next: (res) => {
+      console.log('Final form submitted!', finalData);
+      alert('Form submitted!');
+    },
+    error: (err) => {
+      console.log('Failed to submit form', err);
+    }
+  });
+}
+
+
+
+  
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// onSubmit(eduform: NgForm): void {
+//   if (!eduform.valid) return;
+
+//   this.isLoading = true;
+ 
+//    const formData = new FormData();
+// formData.append('_id', this.staffId);
+// formData.append('educationDetails', JSON.stringify(this.educationData.educationDetails));
+// for (let i = 0; i < this.selectedFiles.length; i++) {
+//   formData.append('files', this.selectedFiles[i]);
+// }
+
+//   this.pagesService.patchEducation(this.staffId, formData).subscribe({
+//     next: (res) => {
+//       console.log('PATCH response:', res);
+
+//       if (res?.educationDetails) {
+//         this.educationData.educationDetails = res.educationDetails;
+//       }
+
+//       this.editMode = false;
+//       this.isLoading = false;
+//     },
+//     error: (err) => {
+//       console.error('error', err);
+//       alert('Form update failed');
+//       this.isLoading = false;
+//     }
+//   });
+// }
 

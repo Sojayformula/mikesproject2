@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { allStaffModel } from '../../../model/pagesModel';
+import { addNewStaffModel, allStaffModel } from '../../../model/pagesModel';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PagesService } from '../../../service/pages.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AddstaffService } from '../../../addstaffservice/addstaff.service';
+import { FormsServiceService } from '../formService/forms-service.service';
 
 @Component({
   selector: 'app-emergency-contact',
@@ -23,23 +25,19 @@ export class EmergencyContactComponent2 {
 
    editMode =false
    originalData: any
+   formData: Partial<addNewStaffModel> = {};
 
-  constructor(private router:Router, private pagesService:PagesService, private route:ActivatedRoute){
+  constructor(private router:Router, private pagesService:PagesService, private route:ActivatedRoute,
+   public formService:AddstaffService, public formsServiceService: FormsServiceService
+  ){
     this.getAllStaff = new allStaffModel
   }
 
 
-  ngOnInit(): void {
-      const item = this.route.snapshot.queryParamMap.get('staffId');
-  this.staffId = item; 
-
-  //  const  item = this.route.snapshot.queryParamMap.get('staffId')
-  
-    console.log("my id:", JSON.parse(JSON.stringify(item)))
-
-    //this.etchEmergencyData()
-    
-  }
+ngOnInit() {
+  this.formData = this.formsServiceService.formData || {};
+  console.log('Loaded form data in ngOnInit:', this.formData);
+}
 
 
 
@@ -76,6 +74,37 @@ onCancel(): void {
 
 
     Submit(form:NgForm){}
+
+
+
+    
+
+
+  get isLastStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getNextStep(currentUrl) === null;
+  }
+
+  get isFirstStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getPrevStep(currentUrl) === null;
+  }
+
+ goNext() {
+  this.formsServiceService.updateData(this.formData);
+  const next = this.formsServiceService.getNextStep(this.router.url);
+  if (next) {
+    this.router.navigate([next]);
+  }
+}
+
+  goPrev() {
+    const currentUrl = this.router.url;
+    const prev = this.formsServiceService.getPreviousStep(currentUrl);
+    if (prev) {
+      this.router.navigate([prev], { relativeTo: this.route.parent });
+    }
+  }
  
 
 }

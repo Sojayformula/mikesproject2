@@ -9,6 +9,7 @@ import { allStaffModel, editFamilyModel, PatchEducationPayload } from '../../mod
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Child } from '../../model/pagesModel';
 import { EditService } from '../../editservice/edit.service';
+//import { Child } from '../../modelchild/modelchild';
 
 @Component({
   selector: 'app-family-details',
@@ -93,7 +94,8 @@ export class FamilyDetailsComponent implements OnInit {
      fetchStaffData() {
     this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
       next: (res ) => {
-        this.data = res; 
+        this.data = res;     
+
         console.log('Fetched staff data:', this.data);
          this.isLoading = false;
 
@@ -120,27 +122,8 @@ export class FamilyDetailsComponent implements OnInit {
 
 Submit(form: NgForm): void {
   if (form.invalid) return;
-
-  // const supervisorPayload: editFamilyModel = {
-  //    supervisor: {_id: this.data.supervisor._id,
-  //     spouseName: this.data.supervisor.spouseName,
-  //     spousePhone: this.data.supervisor.spousePhone,
-  //     spouseEmail: this.data.supervisor.spouseEmail,
-  //     numberOfChildren: this.data.supervisor.numberOfChildren,
-  //     //  children: this.data.supervisor.children.map(child => ({
-  //     //   fullName: child.fullName,
-  //     //   dob: child.dob,
-  //     //   _id: child._id
-  //     children: this.data.supervisor.children.map((child: Child) => ({
-  // fullName: child.fullName,
-  // dob: child.dob,
-  // _id: child._id
-  //     }))
-  //   }
-  // };
-
   const supervisorPayload: editFamilyModel = {
-  supervisor: [this.data.supervisor._id], // ✅ Send as an array of MongoDB IDs
+  supervisor: [this.data.supervisor._id], // Send as an array of MongoDB IDs
   spouseName: this.data.supervisor.spouseName,
   spousePhone: this.data.supervisor.spousePhone,
   spouseEmail: this.data.supervisor.spouseEmail,
@@ -288,17 +271,8 @@ onEditToggle(): void {
 // Cancel function
 onCancel(): void {
   this.editMode = false;
-  this.data = JSON.parse(JSON.stringify(this.originalData)); // restore
+  this.data = JSON.parse(JSON.stringify(this.originalData)); 
 }
-
-// reset() {
-//   this.data = structuredClone(this.originalData); // Restore original
-// }
-
-
-
-
-
 
 
 

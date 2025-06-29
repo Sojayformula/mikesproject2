@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
 import { Observable } from 'rxjs/internal/Observable';
-import { addUnitModel, allStaffModel, editFamilyModel, editStaffModel, educationModel, getStaffModel, getStaffResponseModel, PatchEducationPayload, unitModel, updateUnitModel } from '../model/pagesModel';
+import { addNewStaffModel, addUnitModel, allStaffModel, EditEmploymentModel, editFamilyModel, editStaffModel, educationModel, getStaffModel, getStaffResponseModel, PatchEducationPayload, responseDaumModel, UnitHead, unitModel, updateUnitModel } from '../model/pagesModel';
 import { Root } from '../model/login-model';
 
 @Injectable({
@@ -105,7 +105,7 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
 
   fetchStaff(item:allStaffModel):Observable<any>{
     return this.http.get(`${environment.baseurl}/staff/all-staffs`); 
-    // /${id}   :id: string, 
+   
   }
 
 
@@ -132,30 +132,50 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
   }
   
 
-
-  getEditStaff(id: string, payload: editStaffModel): Observable<any> {
-    return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
+// editStaffModel
+  getEditStaff(id: string, payload: editStaffModel ): Observable<any> {
+    return this.http.patch(`${environment.baseurl}/staff/${id}`, payload); 
   }
 
     patchFamilyDetails(id: string, payload: editFamilyModel): Observable<any> {
-    return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
-  }
-
-      getAddStaff(payload:editStaffModel): Observable<any> {
-    return this.http.patch(`${environment.baseurl}/staff/bulk`, payload); 
+    return this.http.patch(`${environment.baseurl}/staff/${id}`, payload); 
   }
 
 
-  //   patchEducation(id: string, payload:educationModel):Observable<any>{
-  //   return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload); 
-  // }
+                   formData: addNewStaffModel = new addNewStaffModel();
+      getAddNewStaff(payload:addNewStaffModel): Observable<any> {
+    return this.http.post(`${environment.baseurl}/staff/create-staff`, payload); 
+  }
+
+    patchEducation(id: string, formData: FormData): Observable<any> {
+  return this.http.patch(`${environment.baseurl}/staff/${id}`, formData);
+}
+
+    patchEmployment(id: string, payload: Partial<EditEmploymentModel>):Observable<any>{
+    return this.http.patch(`${environment.baseurl}/staff/${id}`, payload); 
+  }
+  //  payload: Partial<editStaffResponseModel>  payload:editStaffResponseModel
+
+
+  getUnits(): Observable<any> {
+   return this.http.get(`${environment.baseurl}/staff/all-staffs?page=1&pageSize=10`); 
+}
+
+getStaff(): Observable<any> {
+   return this.http.get(`${environment.baseurl}/staff/all-staffs?page=1&pageSize=10`); 
+}
+
+
+
+
+
+
+
 
 //   patchEducation(id: string, payload: PatchEducationPayload): Observable<any> {
 //   return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload);
 // }
-  patchEducation(id: string, formData: FormData): Observable<any> {
-  return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, formData);
-}
+
 
 
  

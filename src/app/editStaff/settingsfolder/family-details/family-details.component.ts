@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { allStaffModel, Child, editFamilyModel } from '../../../model/pagesModel';
+import { Component, OnInit } from '@angular/core';
+import { addNewStaffModel, allStaffModel, Child, editFamilyModel } from '../../../model/pagesModel';
 import { FormsModule, NgForm } from '@angular/forms';
 import { EditService } from '../../../editservice/edit.service';
 import { CheckboxService } from '../../../checkboxService/checkbox.service';
@@ -8,14 +8,17 @@ import { StaffDataService } from '../../../StaffDataService/staff-data.service';
 import { PagesService } from '../../../service/pages.service';
 import { CommonModule, Location } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { AddstaffService } from '../../../addstaffservice/addstaff.service';
+import { FormsServiceService } from '../formService/forms-service.service';
+
 
 @Component({
   selector: 'app-family-details',
-  imports: [FormsModule, CommonModule, MatProgressSpinner],
+  imports: [FormsModule, CommonModule],
   templateUrl: './family-details.component.html',
   styleUrl: './family-details.component.scss'
 })
-export class FamilyDetailsComponent2 {
+export class FamilyDetailsComponent2 implements OnInit{
 
 
 
@@ -30,90 +33,35 @@ export class FamilyDetailsComponent2 {
      selectedStep: string = '';
   selectedFiles: File[] = [];
   isDragging = false;
+  formData: Partial<addNewStaffModel> = {};
  
 
   constructor(public editService:EditService, private router:Router, private location:Location, private pagesService:PagesService,
-    private checkboxService:CheckboxService, private staffDataService:StaffDataService, private route:ActivatedRoute ){
+    private checkboxService:CheckboxService, private staffDataService:StaffDataService, 
+    private route:ActivatedRoute, public formService: AddstaffService, public formsServiceService: FormsServiceService ){
 
       this.getAllStaff = new allStaffModel()
       // this.familyModel = new editFamilyModel()
     }
 
-  ngOnInit(): void {
-
-     this.route.queryParamMap.subscribe((params) => {
-    const item = params.get('staffId');
-    this.staffId = item;
-
-    console.log("my id:", this.staffId);
-     })
-
-    if (this.staffId) {
-     // this.etchFamiltDetails(); 
-    }
-    // this.fetchFamiltDetails();
-  
-    this.data = this.staffDataService.getData();
-
-    this.originalData = structuredClone(this.data); 
-     }
+  ngOnInit() {
+  this.formData = this.formsServiceService.formData || {};
+  console.log('Loaded form data in ngOnInit:', this.formData);
 
 
+   if (!this.formData.children || this.formData.children.length < 2) {
+    this.formData.children = [
+      { fullName: '', dob: '' },
+      { fullName: '', dob: '' }
+    ];
+  }
 
+}
 
 
      goBack(){
     this.location.back()
   }
-
-
-  //   etchFamiltDetails() {
-  //   this.pagesService.getAllStaff(this.staffId, this.getAllStaff).subscribe({
-  //     next: (res) => {
-  //       const employee = res.data.find((staff: any) => staff._id === this.staffId);
-  //       if (employee) {
-  //         this.staffDataService.setData(employee); // 🔥 Save globally
-  //         this.data = employee;            // 💾 Local assignment
-  //         console.log('Matched Employee:', this.data);
-  //       } else {
-       
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.error('Failed to fetch data', err);
-  //     }
-  //   });
-  // }
-
-
-
-Submit(form: NgForm): void {
-  if (form.invalid) return;
-
-  const supervisorPayload: editFamilyModel = {
-  supervisor: [this.data.supervisor._id], // ✅ Send as an array of MongoDB IDs
-  spouseName: this.data.supervisor.spouseName,
-  spousePhone: this.data.supervisor.spousePhone,
-  spouseEmail: this.data.supervisor.spouseEmail,
-  numberOfChildren: this.data.supervisor.numberOfChildren,
-  children: this.data.supervisor.children.map((child: Child) => ({
-    fullName: child.fullName,
-    dob: child.dob,
-    _id: child._id
-  }))
-};
-
-
-  this.pagesService.patchFamilyDetails(this.staffId, supervisorPayload).subscribe({
-    next: (res) => {
-      console.log('Supervisor updated successfully');
-     
-    },
-    error: (err) => {
-      console.error('Error updating supervisor', err);
-    }
-  });
-}
 
 
     onInputChange(field: string, value: string) {
@@ -190,5 +138,36 @@ onCancel(): void {
   this.editMode = false;
   this.data = JSON.parse(JSON.stringify(this.originalData)); // restore
 }
+
+
+    // NEXT AND PREVIOUS FUNCTIONS //
+   get isLastStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getNextStep(currentUrl) === null;
+  }
+
+  get isFirstStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getPrevStep(currentUrl) === null;
+  }
+
+  
+   goNext() {
+  this.formsServiceService.updateData(this.formData);
+  const next = this.formsServiceService.getNextStep(this.router.url);
+  if (next) {
+    this.router.navigate([next]);
+  }
+}
+
+  goPrev() {
+    const currentUrl = this.router.url;
+    const prev = this.formsServiceService.getPreviousStep(currentUrl);
+    if (prev) {
+      this.router.navigate([prev], { relativeTo: this.route.parent });
+    }
+  }
+
+  
 
 }

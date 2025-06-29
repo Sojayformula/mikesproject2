@@ -1,48 +1,16 @@
 
+<!-- <button (click)="goNext()" class="bg-red-500 z-10">Next</button> -->
+<div class="navigation-buttons mt-4 flex justify-end gap-4 ">
+  <!-- <button type="button" *ngIf="!isFirstStep" (click)="goPrev()"  class=" border-2 border-[#727A90] w-[88px] h-[40px] rounded-[10px] text-[14px]">Previous</button> -->
+
+  <button type="button" *ngIf="!isLastStep"  (click)="goNext()" class=" bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] text-white w-[88px] h-[40px] rounded-[10px] text-[14px]">Next</button>
+
+</div>
+
 
  
 
-
-  <div class="mt-[20rem]">
-
-<!-- Edit button -->
-<div class="top-[-15rem] py-[-30rem] flex gap-4 justify-end col-span-3 relative  lg:left-48 md:top-[-29.5rem] lg:top-[-9.2rem]">
-  <!-- <button
-    type="button"
-    *ngIf="!editMode"
-    (click)="onEditToggle()"
-    class="flex justify-center border border-[#727A90] text-[14px] text-[#727A90] w-[69.65px] h-[40px] py-2 rounded-[10px] hover:bg-gray-400 hover:text-white transition"
-  >
-     <span class="material-symbols-outlined text-[20px]">edit</span>Edit
-  </button>  -->
-
-   <!-- Save and cancel  -->
-
-       <!-- <ng-container *ngIf="isLoading">
-  <div class="mt-6 flex justify-center relative top-[-15px]">
-    <mat-spinner [diameter]="30"></mat-spinner>
-  </div>
-</ng-container>
-
-  <ng-container *ngIf="editMode">
-    <button
-      type="button"
-      (click)="submit(staff)"
-      class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
-    >
-      Save
-    </button>
-  
-     <button
-      type="button"
-      (click)="onCancel()"
-      class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
-    >
-      Cancel
-    </button> 
-  </ng-container> -->
-  </div>
-
+  <div class="mt-60">
 
   <div >
 
@@ -116,15 +84,15 @@
   <!-- Row 1 --> 
   <div >
     <label class="block w-40 text-sm font-medium text-gray-700">First Name</label>
-    <input type="text" name="firstName"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+    <input type="text" name="firstName" [(ngModel)]="formData.firstName" placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Last Name</label>
-    <input type="text" name="lastName"  placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="lastName" [(ngModel)]="formData.lastName" placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Other Name</label>
-    <input type="text" name="otherName" placeholder="Enter if any" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+    <input type="text" name="otherName" [(ngModel)]="formData.otherName"  placeholder="Enter if any" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
  
  
@@ -132,46 +100,46 @@
   <!-- Row 2 -->
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Date of birth</label>
-    <input type="text" name="dateOfBirth"  placeholder="Select birth date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    <input type="text" name="dateOfBirth" [(ngModel)]="formData.dateOfBirth"  placeholder="Select birth date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Gender</label>
-    <input type="text" name="gender" placeholder="Chose gender" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    <input type="text" name="gender" [(ngModel)]="formData.gender"  placeholder="Chose gender" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Nationality</label>
-    <input type="text" name="nationality"  placeholder="Enter country of origin" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="nationality" [(ngModel)]="formData.nationality"  placeholder="Enter country of origin" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
 
 
   <!-- Row 3 -->
   <div >
      <label class="block w-40 text-sm font-medium text-gray-700">Marital Status</label>
-    <input type="text" name="maritalStatus"    placeholder="Select marital status" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="maritalStatus" [(ngModel)]="formData.maritalStatus"  placeholder="Select marital status" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
 
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Phone number</label>
-    <input type="text" name="phoneNumber" placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="phoneNumber" [(ngModel)]="formData.phoneNumber"  placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Enter email address</label>
-    <input type="text" name="email"  placeholder="Enter valid email address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="email" [(ngModel)]="formData.email"  placeholder="Enter valid email address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
 
 
    <!-- Row 4 -->
   <div class="">
     <label class="block w-40 text-sm font-medium text-gray-700">ID Type</label>
-    <input type="text" name="idType" placeholder="Select ID type (e.g Nation ID, Passport)" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="idType" [(ngModel)]="formData.idType"  placeholder="Select ID type (e.g Nation ID, Passport)" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
   <div >
     <label class="block w-40 text-sm font-medium text-gray-700">ID Number</label>
-    <input type="text" name="idNumber" placeholder="Enter valid ID number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="idNumber" [(ngModel)]="formData.idNumber"  placeholder="Enter valid ID number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
   <div >
     <label class="block w-40 text-sm font-medium text-gray-700">Email address</label>
-    <input type="text" name="email" placeholder="Enter valid email address"  class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="email" [(ngModel)]="formData.email"  placeholder="Enter valid email address"  class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
 
 </form>

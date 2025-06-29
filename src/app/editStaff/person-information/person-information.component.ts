@@ -6,7 +6,7 @@ import { PagesService } from '../../service/pages.service';
 import { Location } from '@angular/common';
 import { StaffDataService } from '../../StaffDataService/staff-data.service';
 import { CheckboxService } from '../../checkboxService/checkbox.service';
-import { allStaffModel, editStaffModel, getStaffModel } from '../../model/pagesModel';
+import { addNewStaffModel, allStaffModel, editStaffModel, getStaffModel } from '../../model/pagesModel';
 import imageCompression from 'browser-image-compression';
 import { _fixedSizeVirtualScrollStrategyFactory } from '@angular/cdk/scrolling';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
@@ -42,10 +42,10 @@ export class PersonInformationComponent implements OnInit{
 
   editMode: boolean = false;
 originalStaffData: any;
- formData: any = {};         // Bound to the form via [(ngModel)]
+ formData: any = {};    
   originalData: any = {};
   
-  // selectedFile!: File;
+ 
 imagePreview: string | ArrayBuffer | null = null;
  isCheckedMap: { [key: string]: boolean } = {};
 
@@ -62,13 +62,13 @@ imagePreview: string | ArrayBuffer | null = null;
 
   }
 
-
+//  allStaffModel
 
    ngOnInit(): void {
-  //  const item = this.route.snapshot.queryParamMap.get('staffId');
-  // this.staffId = item; 
+   const item = this.route.snapshot.queryParamMap.get('staffId');
+  this.staffId = item; 
 
-  // //  const  item = this.route.snapshot.queryParamMap.get('staffId')
+   //const  item = this.route.snapshot.queryParamMap.get('staffId')
   
   //   console.log("my id:", JSON.parse(JSON.stringify(item)))
   // //  this.fetchMaritalStatus() 
@@ -136,7 +136,7 @@ async onFileSelected(event: any) {
     // Compress the image
     const compressedFile = await imageCompression(file, options);
 
-    // Convert compressed file to base64 string for preview and submission
+    // Convert compressed file to base64 
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = reader.result as string;
@@ -192,23 +192,6 @@ set formattedDOB(value: string) {
   );
   this.checkboxService.setTypingStatus('person-information', isTyping);
 }
-
-// onInputChange(field: string, value: string) {
-//   this.staffData[field] = value;
-
-//   this.staffDataService.setData(this.staffData);
-
-//   // Check if ANY field has a value
-//   const isTyping = Object.values(this.staffData).some(
-//     val => val && val.toString().trim().length > 0
-//   );
-
-//   // ✅ Update checkbox
-//   this.checkboxService.setTypingStatus('person-information', isTyping);
-// }
-
-
-
 
 
 

@@ -1,9 +1,5 @@
 
-<div class="[17rem] lg:mt-0 mt-20 ">
-
-
-  <!-- Edit button -->
-<div class="flex justify-end col-span-3 relative lg:left-52 top- [-6rem] md:top- [rem]">
+<div class="flex justify-end col-span-3 relative lg:left- 52 top- [-6rem] md:top-[-5.7rem] mx-20">
   <button
     type="button"
     *ngIf="!editMode"
@@ -43,6 +39,15 @@
 
 
 
+
+<div class="[17rem] lg:mt-0 mt-20 ">
+
+
+  <!-- Edit button -->
+
+
+
+
     <div class="">
         <p class="font-bold font-outfit w-60">Employment Details</p>
         <p class="text-[#727A90] text-[12px] w-60">Official job Information</p>
@@ -56,12 +61,31 @@
    
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Job Title</label>
-    <input  type="text" name="jobTitle"  [(ngModel)]="employeeData.jobTitle" (ngModelChange)="onInputChange($event)"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+    <input  type="text" name="jobTitle" [disabled]="!editMode" [(ngModel)]="employeeData.jobTitle" (ngModelChange)="onInputChange($event)"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
-  <div>
+  <!-- <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Unit</label>
-    <input type="text" name="unit" [disabled]="!editMode" [(ngModel)]="employeeData.unit.name" (ngModelChange)="onInputChange($event)" placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-  </div>
+    <input type="text" name="unit" [disabled]="!editMode" [value]="employeeData.unit.name"  (ngModelChange)="onInputChange($event)" placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+  </div> -->
+  <!-- [(ngModel)]="employeeData.unit.name" -->
+   
+<div>
+  <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Unit</label>
+  <select
+    name="unitId"
+    [(ngModel)]="form.units"
+    [disabled]="!editMode"
+    required
+    class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
+  >
+    <option [ngValue]="null" disabled selected>Select a unit</option>
+    <option *ngFor="let item of units" [ngValue]="item._id">
+      {{ item.name }}
+    </option>
+  </select>
+</div>
+
+
 
 
   <!-- Row 2 -->
@@ -73,6 +97,7 @@
     <label class="block w-40 text-sm font-medium text-gray-700">Hire Date</label>
     <input type="date" name="gender" [disabled]="!editMode" [(ngModel)]="formattedDOB" placeholder="Hired Date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
+  <!-- formattedDOB -->
   
 
   <!-- Row 3 -->
@@ -81,16 +106,36 @@
     <input type="text" name="maritalStatus" [disabled]="!editMode" [(ngModel)]="employeeData.workLocation" placeholder="Select marital status" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/> 
   </div>
 
-  <div>
+  <!-- <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Supervisor</label>
-    <input type="text" name="supervisor" [disabled]="!editMode" [value]="employeeData?.firstName + ' ' + employeeData?.lastName" placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-  </div>
+    <input type="text" name="supervisor" [disabled]="!editMode" [value]="employeeData?.supervisor.firstName + ' ' + employeeData?.lastName" placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+  </div> -->
+  <div>
+  <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Supervisor</label>
+  <select
+  name="supervisorId"
+  [(ngModel)]="form.supervisor"
+  [disabled]="!editMode"
+  required
+  class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
+>
+  <option [ngValue]="null" disabled selected>Select a supervisor</option>
+  <option *ngFor="let item of supervisor" [ngValue]="item._id">
+    {{ item.firstName }} {{ item.lastName }}
+  </option>
+</select>
+</div>
 
 
 
 
 
-   <div class="mb-4 space-y-6">
+
+
+
+
+
+   <!-- <div class="mb-4 space-y-6">
     
      <div>
 
@@ -138,9 +183,9 @@
     *ngFor="let file of selectedFiles; let i = index"
     class="flex items-center gap-4 border p-2 rounded-md justify-between lg:w-[1150px] lg:right-[26rem] relativ lg:top-[12rem]"
   >
-    <!-- File Icon and Info -->
+    File Icon and Info
     <div class="flex items-center gap-4 ">
-      <!-- Icon -->
+      Icon
       <div>
         <ng-container [ngSwitch]="getFileType(file)">
           <i *ngSwitchCase="'image'" class="text-blue-500">🖼️</i>
@@ -152,14 +197,14 @@
         </ng-container>
       </div>
 
-      <!-- File Info -->
+      File Info
       <div>
         <p class="text-sm font-medium">{{ file.name }}</p>
         <p class="text-xs text-gray-500">{{ formatSize(file.size) }}</p>
       </div>
     </div>
 
-    <!-- Cancel Button -->
+    Cancel Button
     <button
       (click)="removeFile(i)"
       class="border-2 border-[#858585] text-[#858585] hover:text-gray-700 text-[10px] bg-gray-300 rounded-full w-[20px] h-[20px] "
@@ -168,10 +213,10 @@
       ✖
     </button>
   </div>
-</div>
-</div>
-</div>
-</div>
+</div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
 
 
 </form>

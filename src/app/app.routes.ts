@@ -70,11 +70,9 @@ export const routes: Routes = [
                 {path: 'edit-personal-info', component: EditPersonalInfoComponent}   
               ]
             },
-           ]
-           },
 
 
-           { path: 'editsettings', component: EditsettingsComponent,
+             { path: 'editsettings', component: EditsettingsComponent,
             children:[
               {path: '', redirectTo: 'personal-information', pathMatch: 'full'},
               {path: 'personal-information', component: PersonalInformationComponent2},
@@ -86,6 +84,10 @@ export const routes: Routes = [
                 
             ]
            }
+           
+           ]
+          }
+   
 
         ]
   

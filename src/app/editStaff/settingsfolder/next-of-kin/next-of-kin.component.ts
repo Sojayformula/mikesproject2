@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CheckboxService } from '../../../checkboxService/checkbox.service';
-import { allStaffModel } from '../../../model/pagesModel';
+import { addNewStaffModel, allStaffModel } from '../../../model/pagesModel';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PagesService } from '../../../service/pages.service';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Location } from '@angular/common';
+import { AddstaffService } from '../../../addstaffservice/addstaff.service';
+import { FormsServiceService } from '../formService/forms-service.service';
 
 @Component({
   selector: 'app-next-of-kin',
@@ -20,56 +22,42 @@ export class NextOfKinComponent2 {
 
    nextOfKinsData: any
   staffId: any
-   getAllStaff: allStaffModel;
+  //  getAllStaff: allStaffModel;
    isLoading = false
 
    originalData: any
    editMode = false;
 
-  constructor( private typingStatusService: CheckboxService, private router:Router, private location:Location, private pagesService:PagesService, private route:ActivatedRoute){
-    this.getAllStaff = new allStaffModel
-  }
-
-
-  ngOnInit(): void {
-  //     const item = this.route.snapshot.queryParamMap.get('staffId');
-  // this.staffId = item; 
-
-  // //  const  item = this.route.snapshot.queryParamMap.get('staffId')
-  
-  //   console.log("my id:", JSON.parse(JSON.stringify(item)))
-
-   this.route.queryParamMap.subscribe((params) => {
-    const item = params.get('staffId');
-    this.staffId = item;
-
-    console.log("my id:", this.staffId);
-
-  });
-
-   // this.etchNextOfKinData()
-    
+  constructor( private typingStatusService: CheckboxService, private router:Router, private location:Location, 
+    private pagesService:PagesService, private route:ActivatedRoute, public formService:AddstaffService,
+    public formsServiceService:FormsServiceService
+  ){
+    // this.getAllStaff = new allStaffModel
   }
 
 
 
-    //  etchNextOfKinData() {
-    // this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
-    //   next: (res ) => {
-    //     this.nextOfKinsData = res; 
-    //     console.log('Fetched staff data:', this.nextOfKinsData);
-    //      this.isLoading = false;
+   formData: Partial<addNewStaffModel> = {};
+//    ngOnInit() {
+//    const state = history.state as { formData: Partial<addNewStaffModel> };
 
-    //   },
-    //   error: (err) => {
-    //     console.error('Error fetching staff:', err);
-    //   },
+//   console.log('History state:', state);
 
-    //      complete: () => {
+//   if (state?.formData) {
+//     this.formData = state.formData;
+//     console.log('Loaded form data:', this.formData);
+//   } else {
+//     console.warn('No formData found in history state');
+//   }
+// }
+ngOnInit() {
+  this.formData = this.formsServiceService.formData ;
+  console.log('Loaded form data in ngOnInit:', this.formData);
+}
 
-    //      }
-    // });
-    // }
+
+
+
 
     onSubmit(form:NgForm){}
  
@@ -103,5 +91,73 @@ onCancel(): void {
 }
 
   Submit(form: NgForm){}
+
+
+
+
+   get isLastStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getNextStep(currentUrl) === null;
+  }
+
+  get isFirstStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getPrevStep(currentUrl) === null;
+  }
+
+  // goNext() {
+  //   const currentUrl = this.router.url;
+  //   const next = this.formService.getNextStep(currentUrl);
+  //   if (next) {
+  //     this.router.navigate([next], { relativeTo: this.route.parent });
+  //   }
+  // }
+  //  goNext() {
+  //     console.log('Going to next step with form data:', this.formData); 
+  //   const currentUrl = this.router.url;
+  //   const next = this.formService.getNextStep(currentUrl);
+  //   if (next) {
+  //     this.router.navigate([next], { relativeTo: this.route.parent });
+  //   }
+  // }
+//     goNext() {
+//   console.log('Going to next step with form data:', this.formData); 
+
+//   const currentUrl = this.router.url;
+//   const next = this.formService.getNextStep(currentUrl);
+
+//   if (next) {
+//     this.router.navigate([next], {
+//       relativeTo: this.route.parent,
+//       state: { formData: this.formData }  // ✅ Send data here
+//     });
+//   }
+// }
+
+//   goPrev() {
+//     const currentUrl = this.router.url;
+//     const prev = this.formService.getPrevStep(currentUrl);
+//     if (prev) {
+//       this.router.navigate([prev], { relativeTo: this.route.parent });
+//     }
+//   }
+
+
+goNext() {
+  this.formsServiceService.updateData(this.formData);
+  const next = this.formsServiceService.getNextStep(this.router.url);
+  if (next) {
+    this.router.navigate([next]);
+  }
+}
+
+  goPrev() {
+    const currentUrl = this.router.url;
+    const prev = this.formsServiceService.getPreviousStep(currentUrl);
+    if (prev) {
+      this.router.navigate([prev], { relativeTo: this.route.parent });
+    }
+  }
+
 
 }

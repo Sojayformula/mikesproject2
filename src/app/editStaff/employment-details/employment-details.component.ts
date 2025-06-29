@@ -4,7 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CheckboxService } from '../../checkboxService/checkbox.service';
 import { PagesService } from '../../service/pages.service';
-import { allStaffModel } from '../../model/pagesModel';
+import { allStaffModel, EditEmploymentModel, editStaffModel } from '../../model/pagesModel';
 import { StaffDataService } from '../../StaffDataService/staff-data.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { EditService } from '../../editservice/edit.service';
@@ -19,7 +19,10 @@ import { EditService } from '../../editservice/edit.service';
 export class EmploymentDetailsComponent implements OnInit{
   @ViewChild('formRef') formRef!: NgForm;
 
-    
+    units: any
+    supervisor: any
+
+    editStaffData: editStaffModel
     employeeData: any = {}
     currentStep = 0;
     getAllStaff: allStaffModel;
@@ -34,8 +37,21 @@ export class EmploymentDetailsComponent implements OnInit{
      editMode: boolean = false;
      originalStaffData: any;
      isLoading = false
+     form: any={}
 
-    
+  
+
+    // employment-details.component.ts
+// form = {
+//   unit: '',
+//   supervisor: '',
+//   employmentType: '',
+//   jobTitle: '',
+//   hireDate: '',
+//   workLocation: '',
+//   educationDetails: []
+// };
+
 
  
 
@@ -43,6 +59,7 @@ export class EmploymentDetailsComponent implements OnInit{
     private typingStatusService: CheckboxService, private pagesService: PagesService){
 
       this.getAllStaff = new allStaffModel()
+       this.editStaffData = new editStaffModel()
 
    }
 
@@ -59,35 +76,20 @@ export class EmploymentDetailsComponent implements OnInit{
 
    if (this.staffId) {
       this.fetchEmployees(); 
-    } 
+    }
+    
+     this.fetchUnits();
+     this.fetchSupervisors();
 
   // this.steps.forEach(step => this.isCheckedMap[step] = false);
 
    }
 
-  // fetchEmployees() {
-  //   this.pagesService.getEmploymentId(this.staffId, this.getAllStaff).subscribe({
-  //     next: (res) => {
-  //       const employee = res.find((staff: any) => staff._id === this.staffId);
-  //       if (employee) {
-  //         this.staffDataService.setData(employee); 
-  //         this.employeeData = employee;            
-  //         console.log('Matched Employee:', this.employeeData);
-  //       } else {
-        
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.error('Failed to fetch data', err);
-  //     }
-  //   });
-  // }
-
 
    fetchEmployees() {
     this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
       next: (res ) => {
-        this.employeeData = res; 
+        this.employeeData = res.data; 
         console.log('Fetched staff data:', this.employeeData);
          this.isLoading = false;
 
@@ -107,11 +109,50 @@ export class EmploymentDetailsComponent implements OnInit{
     }
 
 
+
+fetchUnits() {
+  this.pagesService.getUnits().subscribe({
+    next: (res) => {
+      const unitMap = new Map<string, { _id: string; name: string }>();
+      
+      for (const staff of res.data) {
+        const unit = staff.unit;
+        if (unit && typeof unit === 'object' && unit._id && unit.name) {
+          unitMap.set(unit._id, { _id: unit._id, name: unit.name });
+        }
+      }
+
+      this.units = Array.from(unitMap.values());
+      console.log('Extracted units from staff:', this.units);
+    },
+    error: (err) => {
+      console.error('Failed to fetch staff list:', err);
+    }
+  });
+}
+
+
+
+fetchSupervisors() {
+  this.pagesService.getStaff().subscribe({
+    next: (res) => {
+      this.supervisor = res.data;
+      console.log('dropdown supervisor', res)
+    },
+    error: (err) => {
+      console.error('Failed to fetch supervisors:', err);
+    }
+  });
+}
+
+
+
+
     goBack(){
     this.location.back()
   }
 
-  onSubmit(form:NgForm){}
+ 
 
   
 
@@ -130,13 +171,20 @@ export class EmploymentDetailsComponent implements OnInit{
 // }
 
 
- get formattedDOB(){
-  const date = this.employeeData?.supervisor.hireDate;
+get formattedDOB(): string {
+  const date = this.employeeData?.supervisor?.hireDate;
   return date ? formatDate(date, 'yyyy-MM-dd', 'en-US') : '';
 }
+
 set formattedDOB(value: string) {
-  this.employeeData.supervisor.hireDate = value;
-} 
+  if (this.employeeData?.supervisor) {
+    this.employeeData.supervisor.hireDate = value;
+  }
+}
+
+
+
+
 
 
 
@@ -239,6 +287,43 @@ onCancel(): void {
     if (type.startsWith('text/')) return 'text';
     return 'other';
   }
+
+
+
+
+onSubmit(form: NgForm) {
+  this.isLoading = true;
+
+const payload: Partial<EditEmploymentModel> = {
+  _id: this.staffId,
+  employmentType: form.value.employmentType,
+  jobTitle: form.value.jobTitle,
+  unit: [form.value.unitId], 
+  hireDate: form.value.hireDate,
+  workLocation: form.value.workLocation,
+  supervisor: [form.value.supervisorId], 
+  educationDetails: []
+
+  };
+
+  console.log('PATCH payload:', payload);
+  console.log('Unit being sent:', form.value.unitId);
+console.log('Supervisor being sent:', form.value.supervisorId);
+
+
+  this.pagesService.patchEmployment(this.staffId, payload).subscribe({
+    next: (res) => {
+      console.log('Success:', res);
+      this.isLoading = false;
+    },
+    error: (err) => {
+      console.error('Error:', err);
+      alert('Update failed');
+      this.isLoading = false;
+    }
+  });
+}
+
 
 
 
