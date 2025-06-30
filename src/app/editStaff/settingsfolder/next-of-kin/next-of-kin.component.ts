@@ -20,7 +20,7 @@ export class NextOfKinComponent2 {
 
 
 
-   nextOfKinsData: any
+   nextOfKinData: any
   staffId: any
   //  getAllStaff: allStaffModel;
    isLoading = false
@@ -37,11 +37,11 @@ export class NextOfKinComponent2 {
 
 
 
-   formData: Partial<addNewStaffModel> = {};
+    formsData: Partial<addNewStaffModel> = {};
 
 ngOnInit() {
-  this.formData = this.formsServiceService.formData ;
-  console.log('Loaded form data in ngOnInit:', this.formData);
+  this.formsData = this.formsServiceService.formData ;
+  console.log('Loaded form data in ngOnInit:', this.formsData);
 }
 
      goBack(){
@@ -54,7 +54,7 @@ ngOnInit() {
     const value = input.value;
 
     // This line sets the typing status for this step
-   this.typingStatusService.setTypingStatus('next-of-kins', value.trim().length > 0);
+   this.typingStatusService.setTypingStatus('next-of-kin', value.trim().length > 0);
 
   }
 
@@ -62,13 +62,13 @@ ngOnInit() {
 //  Edit  function
 onEditToggle(): void {
   this.editMode = true;
-  this.originalData = JSON.parse(JSON.stringify(this.nextOfKinsData)); // deep copy
+  this.originalData = JSON.parse(JSON.stringify(this.nextOfKinData)); // deep copy
 }
 
 // Cancel function
 onCancel(): void {
   this.editMode = false;
-  this.nextOfKinsData = JSON.parse(JSON.stringify(this.originalData)); // restore
+  this.nextOfKinData = JSON.parse(JSON.stringify(this.originalData)); // restore
 }
 
   Submit(form: NgForm){}
@@ -89,7 +89,7 @@ onCancel(): void {
 
 
 goNext() {
-  this.formsServiceService.updateData(this.formData);
+  this.formsServiceService.updateData(this.formsData);
   const next = this.formsServiceService.getNextStep(this.router.url);
   if (next) {
     this.router.navigate([next]);

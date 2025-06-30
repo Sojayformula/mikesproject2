@@ -17,12 +17,12 @@
     </div>
 
 
-                              <!-- FORM    (ngModelChange)="onInputChange($event)" -->
+                              <!-- FORM -->
 
     <form #staffForm="ngForm" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2  gap-10 p-6 bg-white rounded gap-y-6 lg:gap-x-20 mt-10">
-  <!-- Row 1 -->
-   
-  <div>
+ n               
+                           <!-- Row 1 -->
+    <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Job Title</label>
     <input 
      type="text" 
@@ -31,14 +31,7 @@
      placeholder="Enter legal first name" 
      class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
-  <!-- <div> -->
-    <!-- <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Unit</label> -->
-    <!-- <input 
-    type="text" 
-    name="unit" [(ngModel)]="formData.unit"  
-    placeholder="Enter legal last name" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
-    /> -->
+ 
   <div>
   <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Unit</label>
   <select
@@ -59,7 +52,7 @@
 
 
 
-  <!-- Row 2 -->
+                             <!-- Row 2 -->
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Employment Type</label>
     <input type="text" name="employmentType" [(ngModel)]="formData.employmentType" placeholder="Select birth date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
@@ -75,7 +68,7 @@
   </div>
   
 
-  <!-- Row 3 -->
+                                <!-- Row 3 -->
   <div>
      <label class="block w-40 text-sm font-medium text-gray-700">Work Location</label>
     <input 
@@ -86,10 +79,7 @@
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/> 
   </div>
 
-  <!-- <div>
-    <label class="block w-40 text-sm font-medium text-gray-700">Supervisor</label>
-    <input type="text" name="supervisor" [(ngModel)]="formData.supervisor" placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-  </div> -->
+ 
   <div>
   <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Supervisor</label>
   <select
@@ -106,26 +96,6 @@
   </option>
   </select>
   </div>
-<!--   
-</select>
-</div>
-  <div>
-  <label>Supervisor</label>
-  <select
-    [(ngModel)]="employeeData.supervisor"
-    name="supervisor"
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-    required
-  >
-    <option *ngFor="let emp of employeeData" [value]="emp.supervisor">
-      {{ emp.supervisor.firstName }} {{ emp.supervisor.lastName }}
-    </option>
-  </select> 
-</div> -->
-
-
-
-
 
 
    <div class="mb-4 space-y-6">

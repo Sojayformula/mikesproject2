@@ -111,8 +111,8 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
 
     getUserById(id: string, item: allStaffModel):Observable<any>{
     return this.http.get(`${environment.baseurl}/staff/${id}`);
-   
   }
+  
 
     getfamilyId(id: string, item: allStaffModel):Observable<any>{
     return this.http.get(`${environment.baseurl}/staff/${id}`);
@@ -130,6 +130,7 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
   getUEduById(id: string, itme:allStaffModel):Observable<any>{
     return this.http.get(`${environment.baseurl}/staff/${id}`); 
   }
+ 
   
 
 // editStaffModel

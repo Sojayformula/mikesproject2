@@ -14,7 +14,7 @@ import { CheckboxService } from '../../checkboxService/checkbox.service';
 })
 export class NextOfKinsComponent implements OnInit {
 
-  nextOfKinsData: any
+  nextOfKinsData: any = {}
   staffId: any
    getAllStaff: allStaffModel;
    isLoading = false
@@ -103,10 +103,10 @@ onCancel(): void {
     _id: this.staffId,
     employmentType: form.value.employmentType,
     jobTitle: form.value.jobTitle,
-    unit: [form.value.unitId], 
+    unit: form.value.unitId, 
     hireDate: form.value.hireDate,
     workLocation: form.value.workLocation,
-    supervisor: [form.value.supervisorId], 
+    supervisor: form.value.supervisorId, 
     educationDetails: []
   
     };
