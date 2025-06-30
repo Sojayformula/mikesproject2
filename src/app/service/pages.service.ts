@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
 import { Observable } from 'rxjs/internal/Observable';
-import { addNewStaffModel, addUnitModel, allStaffModel, EditEmploymentModel, editFamilyModel, editStaffModel, educationModel, getStaffModel, getStaffResponseModel, PatchEducationPayload, responseDaumModel, UnitHead, unitModel, updateUnitModel } from '../model/pagesModel';
+import { addNewStaffModel, addUnitModel, allStaffModel, EditEmmergencyModel, EditEmploymentModel, editFamilyModel, editStaffModel, educationModel, getStaffModel, getStaffResponseModel, PatchEducationPayload, responseDaumModel, UnitHead, unitModel, updateUnitModel } from '../model/pagesModel';
 import { Root } from '../model/login-model';
 
 @Injectable({
@@ -127,7 +127,7 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
 
 
 
-  getUEduById(id: string):Observable<any>{
+  getUEduById(id: string, itme:allStaffModel):Observable<any>{
     return this.http.get(`${environment.baseurl}/staff/${id}`); 
   }
   
@@ -154,7 +154,11 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
     patchEmployment(id: string, payload: Partial<EditEmploymentModel>):Observable<any>{
     return this.http.patch(`${environment.baseurl}/staff/${id}`, payload); 
   }
-  //  payload: Partial<editStaffResponseModel>  payload:editStaffResponseModel
+
+    patchEmergency(id: string, payload: Partial<EditEmmergencyModel>):Observable<any>{
+    return this.http.patch(`${environment.baseurl}/staff/${id}`, payload); 
+  }
+  
 
 
   getUnits(): Observable<any> {

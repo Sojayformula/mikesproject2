@@ -123,7 +123,7 @@ export class FamilyDetailsComponent implements OnInit {
 Submit(form: NgForm): void {
   if (form.invalid) return;
   const supervisorPayload: editFamilyModel = {
-  supervisor: [this.data.supervisor._id], // Send as an array of MongoDB IDs
+  supervisor: [this.data.supervisor._id], 
   spouseName: this.data.supervisor.spouseName,
   spousePhone: this.data.supervisor.spousePhone,
   spouseEmail: this.data.supervisor.spouseEmail,

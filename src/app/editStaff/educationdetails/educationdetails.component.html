@@ -1,10 +1,9 @@
 
 <div class="mx-8 md:mx-0">
-
    
 
     <!-- Edit button -->
-<div class="mt- flex gap-4 justify-end col-span-3 relative left-10 md:left-40 md:top-[-0.2rem]">
+<div class="mt- flex gap-4 justify-end col-span-3 relativ left-10 md:left-40 md:top- [-0.2rem]">
   <button
     type="button"
     *ngIf="!editMode"
@@ -15,7 +14,6 @@
   </button>
 
   <!-- Save and cancel -->
-
        <ng-container *ngIf="isLoading">
   <div class="mt-6 flex justify-center relative top-[-15px]">
     <mat-spinner [diameter]="30"></mat-spinner>
@@ -60,6 +58,7 @@
             name="institutionName0"
             placeholder="Enter name of institution"
             [(ngModel)]="educationData.educationDetails[0].institutionName"
+            
             [disabled]="!editMode"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -73,6 +72,7 @@
             name="courseOfStudy"
             placeholder="Enter major or course"
              [(ngModel)]="educationData.educationDetails[0].courseOfStudy"
+             (ngModelChange)="onInputChange($event, 'courseOfStudy')" 
              [disabled]="!editMode"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -86,6 +86,7 @@
             name="StartDate0"
             placeholder="Select program start date"
             [(ngModel)]="educationData.educationDetails[0].startDate"
+            (ngModelChange)="onInputChange($event, 'StartDate0')" 
             [disabled]="!editMode"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -99,6 +100,7 @@
             name="institutionName1"
             placeholder="Enter name of institution"
              [(ngModel)]="educationData.educationDetails[1].institutionName"
+             (ngModelChange)="onInputChange($event, 'institutionName1')" 
              [disabled]="!editMode"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -111,6 +113,7 @@
             name="endDate"
             placeholder="Select program end date"
             [(ngModel)]="educationData.educationDetails[0].endDate"
+            (ngModelChange)="onInputChange($event, 'endDate')" 
             [disabled]="!editMode"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -123,13 +126,14 @@
             name="Startdate1"
             placeholder="select program start date"
             [(ngModel)]="educationData.educationDetails[1].startDate"
+            (ngModelChange)="onInputChange($event, 'Startdate1')" 
             [disabled]="!editMode"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
          </div>
 
 
-
+<!-- 
   <div>
 
     <div class="">
@@ -175,9 +179,9 @@
     *ngFor="let file of selectedFiles; let i = index"
     class="flex items-center gap-4 border p-2 rounded-md justify-between lg:w-[1150px] lg:right-[26rem] relativ lg:top-[12rem]"
   >
-    <!-- File Icon and Info -->
+    File Icon and Info
     <div class="flex items-center gap-4 ">
-      <!-- Icon -->
+      Icon
       <div>
         <ng-container [ngSwitch]="getFileType(file)">
           <i *ngSwitchCase="'image'" class="text-blue-500">🖼️</i>
@@ -189,14 +193,14 @@
         </ng-container>
       </div>
 
-      <!-- File Info -->
+      File Info
       <div>
         <p class="text-sm font-medium">{{ file.name }}</p>
         <p class="text-xs text-gray-500">{{ formatSize(file.size) }}</p>
       </div>
     </div>
 
-    <!-- Cancel Button -->
+    Cancel Button
     <button
       (click)="removeFile(i)"
       class="border-2 border-[#858585] text-[#858585] hover:text-gray-700 text-sm bg-gray-300 rounded-full w-[20px] h-[20px] "
@@ -208,8 +212,7 @@
 </div>
 
 </div>
- </div>
+ </div> -->
        
     </form>
-
 </div>

@@ -27,7 +27,7 @@ export class NextOfKinsComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
+  ngOnInit() {
   //     const item = this.route.snapshot.queryParamMap.get('staffId');
   // this.staffId = item; 
 

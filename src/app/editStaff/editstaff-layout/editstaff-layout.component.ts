@@ -25,12 +25,7 @@ import { EmengencycontactComponent } from '../emengencycontact/emengencycontact.
 })
 export class EditstaffLayoutComponent {
 
-  //  @ViewChild(EducationdetailsComponent) educationdetailsComponent!: EducationdetailsComponent;
-  // @ViewChild(EmploymentDetailsComponent) employmentDetailsComponent!: EmploymentDetailsComponent;
-  // @ViewChild(FamilyDetailsComponent) familyDetailsComponent!: FamilyDetailsComponent;
-  //  @ViewChild(PersonInformationComponent) PersonInformationComponent!: PersonInformationComponent;
-  // @ViewChild(EmengencycontactComponent) EmergencyContactComponent!: EmengencycontactComponent;
-
+ 
   steps = ['person-information', 'employment-details', 'family-details', 'next-of-kins', 'emengency-contact', 'education-details' ];
   currentStepIndex = 0;
   employeeData: any
@@ -103,13 +98,6 @@ toggleMobileMenu() {
   
 }
 
-// originalData: any;
-// formData: any;
-
-//  save() {
-//     console.log('Save called:', this.employeeData);
-//     this.originalData = structuredClone(this.employeeData); // update backup
-//   }
 
 }
 

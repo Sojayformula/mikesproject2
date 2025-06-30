@@ -38,30 +38,11 @@ export class NextOfKinComponent2 {
 
 
    formData: Partial<addNewStaffModel> = {};
-//    ngOnInit() {
-//    const state = history.state as { formData: Partial<addNewStaffModel> };
 
-//   console.log('History state:', state);
-
-//   if (state?.formData) {
-//     this.formData = state.formData;
-//     console.log('Loaded form data:', this.formData);
-//   } else {
-//     console.warn('No formData found in history state');
-//   }
-// }
 ngOnInit() {
   this.formData = this.formsServiceService.formData ;
   console.log('Loaded form data in ngOnInit:', this.formData);
 }
-
-
-
-
-
-    onSubmit(form:NgForm){}
- 
-  
 
      goBack(){
     this.location.back()
@@ -72,7 +53,7 @@ ngOnInit() {
     const input = event.target as HTMLInputElement;
     const value = input.value;
 
-    // ✅ This line sets the typing status for this step
+    // This line sets the typing status for this step
    this.typingStatusService.setTypingStatus('next-of-kins', value.trim().length > 0);
 
   }
@@ -105,42 +86,6 @@ onCancel(): void {
     return this.formService.getPrevStep(currentUrl) === null;
   }
 
-  // goNext() {
-  //   const currentUrl = this.router.url;
-  //   const next = this.formService.getNextStep(currentUrl);
-  //   if (next) {
-  //     this.router.navigate([next], { relativeTo: this.route.parent });
-  //   }
-  // }
-  //  goNext() {
-  //     console.log('Going to next step with form data:', this.formData); 
-  //   const currentUrl = this.router.url;
-  //   const next = this.formService.getNextStep(currentUrl);
-  //   if (next) {
-  //     this.router.navigate([next], { relativeTo: this.route.parent });
-  //   }
-  // }
-//     goNext() {
-//   console.log('Going to next step with form data:', this.formData); 
-
-//   const currentUrl = this.router.url;
-//   const next = this.formService.getNextStep(currentUrl);
-
-//   if (next) {
-//     this.router.navigate([next], {
-//       relativeTo: this.route.parent,
-//       state: { formData: this.formData }  // ✅ Send data here
-//     });
-//   }
-// }
-
-//   goPrev() {
-//     const currentUrl = this.router.url;
-//     const prev = this.formService.getPrevStep(currentUrl);
-//     if (prev) {
-//       this.router.navigate([prev], { relativeTo: this.route.parent });
-//     }
-//   }
 
 
 goNext() {

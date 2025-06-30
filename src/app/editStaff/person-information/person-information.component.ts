@@ -173,14 +173,15 @@ set formattedDOB(value: string) {
 
 
 
- goBackToPersonalInfo(){
-    this.location.back()
-  }
+//  goBackToPersonalInfo(){
+//     this.location.back()
+//   }
 
-  next(){
-    this.router.navigate(['edit-personal-info'])
-  }
+//   next(){
+//     this.router.navigate(['edit-personal-info'])
+//   }
 
+      // CHECK BOX LOGIC
   onInputChange(field: string, value: string) {
   this.staffData.supervisor[field] = value;
 
@@ -196,7 +197,7 @@ set formattedDOB(value: string) {
 
 
 //  Edit  function
-onEditToggle(): void {
+onEditToggle() {
   this.editMode = true;
   this.originalData = JSON.parse(JSON.stringify(this.staffData)); // deep copy
 }

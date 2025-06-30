@@ -55,19 +55,21 @@
 
 
                               <!-- FORM -->
-
     <form #staffForm="ngForm" (ngSubmit)="onSubmit(staffForm)" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2  gap-10 p-6 bg-white rounded gap-y-6 mt-10">
   <!-- Row 1 -->
    
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Job Title</label>
-    <input  type="text" name="jobTitle" [disabled]="!editMode" [(ngModel)]="employeeData.jobTitle" (ngModelChange)="onInputChange($event)"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+    <input  
+    type="text" 
+    name="jobTitle" 
+    [disabled]="!editMode" 
+    [(ngModel)]="employeeData.jobTitle" 
+    (ngModelChange)="onInputChange($event, 'jobTitle')"  
+    placeholder="Enter legal first name" 
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
-  <!-- <div>
-    <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Unit</label>
-    <input type="text" name="unit" [disabled]="!editMode" [value]="employeeData.unit.name"  (ngModelChange)="onInputChange($event)" placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-  </div> -->
-  <!-- [(ngModel)]="employeeData.unit.name" -->
+
    
 <div>
   <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Unit</label>
@@ -75,6 +77,8 @@
     name="unitId"
     [(ngModel)]="form.units"
     [disabled]="!editMode"
+    [(ngModel)]="employeeData.jobTitle" 
+    (ngModelChange)="onInputChange($event, 'unitId')"
     required
     class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
   >
@@ -91,19 +95,43 @@
   <!-- Row 2 -->
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Employment Type</label>
-    <input type="text" name="employmentType" [disabled]="!editMode" [(ngModel)]="employeeData.employmentType" placeholder="Select birth date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    <input 
+    type="text" 
+    name="employmentType" 
+    [disabled]="!editMode" 
+    [(ngModel)]="employeeData.employmentType" 
+   
+    (ngModelChange)="onInputChange($event, 'employmentType')" 
+    placeholder="Select birth date" 
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
+
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Hire Date</label>
-    <input type="date" name="gender" [disabled]="!editMode" [(ngModel)]="formattedDOB" placeholder="Hired Date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    <input 
+    type="date" 
+    name="gender" 
+    [disabled]="!editMode" 
+    [(ngModel)]="formattedDOB" 
+    (ngModelChange)="onInputChange($event, 'gender')" 
+    placeholder="Hired Date" 
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
-  <!-- formattedDOB -->
+ 
   
 
   <!-- Row 3 -->
   <div>
      <label class="block w-40 text-sm font-medium text-gray-700">Work Location</label>
-    <input type="text" name="maritalStatus" [disabled]="!editMode" [(ngModel)]="employeeData.workLocation" placeholder="Select marital status" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/> 
+    <input 
+    type="text" 
+    name="workLocation" 
+    [disabled]="!editMode" 
+    (ngModelChange)="onInputChange($event, 'workLocation')" 
+    [(ngModel)]="employeeData.workLocation" 
+    
+    placeholder="Select marital status" 
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/> 
   </div>
 
   <!-- <div>
@@ -116,6 +144,8 @@
   name="supervisorId"
   [(ngModel)]="form.supervisor"
   [disabled]="!editMode"
+  [(ngModel)]="employeeData.jobTitle"
+  (ngModelChange)="onInputChange($event, 'supervisorId')"
   required
   class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
 >
@@ -126,6 +156,8 @@
 </select>
 </div>
 
+</form>
+</div>
 
 
 
@@ -219,8 +251,8 @@
 <!-- </div> -->
 
 
-</form>
-</div> 
+
+
 
 
 

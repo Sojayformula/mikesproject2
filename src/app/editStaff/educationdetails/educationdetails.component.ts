@@ -6,6 +6,7 @@ import { PagesService } from '../../service/pages.service';
 import { allStaffModel, editStaffModel, PatchEducationPayload } from '../../model/pagesModel';
 import { StaffDataService } from '../../StaffDataService/staff-data.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { CheckboxService } from '../../checkboxService/checkbox.service';
 
 @Component({
   selector: 'app-education-details',
@@ -49,7 +50,8 @@ originalStaffData: any;
 
 
 
-  constructor(private route:ActivatedRoute, private pagesService:PagesService, private staffDataService:StaffDataService){
+  constructor(private route:ActivatedRoute, private pagesService:PagesService, 
+    private staffDataService:StaffDataService, public checkboxService: CheckboxService ){
     this.getAllStaff = new allStaffModel()
     this.editEduData = new editStaffModel()
 
@@ -85,37 +87,10 @@ originalStaffData: any;
   }
 
 
-//    fetchEduDetails() {
-//     this.pagesService.getUEduById(this.staffId).subscribe({
-//       next: (res) => {
-//          const employee = res.data?.find((staff: any) => staff._id === this.staffId);
-
-//         if (employee) {
-//           this.staffDataService.setData(employee); 
-//           this.educationData = employee; 
-//           console.log('Education Data Assigned:', this.educationData.educationDetails);
-// console.log('Length of educationDetails:', this.educationData.educationDetails.length);
-
-//            console.log('Response:', res);
-//           console.log('Matched Employee:', this.educationData);
-      
-//         } else {
-//          console.warn('No matching employee found for staffId:', this.staffId);
-//         }
-//       },
-//       error: (err) => {
-//         console.error('Failed to fetch data', err);
-//       }
-//     });
-//   }
-
-
-
-
 
 
    fetchEduDetails() {
-    this.pagesService.getUEduById(this.staffId).subscribe({
+    this.pagesService.getUEduById(this.staffId, this.getAllStaff).subscribe({
       next: (res) => {
       this.educationData = res;
       console.log('educationDetails:', this.educationData.educationDetails);
@@ -130,65 +105,37 @@ originalStaffData: any;
 
 
 
+      // CHECK BOX LOGIC
+    onInputChange(value: any, field: string) {
+    if (field && this.educationData) {
+      (this.educationData as any)[field] = value;
 
+      this.staffDataService.setData(this.educationData);
 
+      const isTyping = Object.values(this.educationData).some(
+        val => val && val.toString().trim().length > 0
+      );
 
+      this.checkboxService.setTypingStatus('education-details', isTyping);
+    }
+  }
+//   onInputChange(value: any, field: string) {
+//   if (field && this.educationData?.educationDetails?.length) {
+//     (this.educationData.educationDetails[0] as any)[field] = value;
 
-  
-  // fetchEduDetails() {
-  //   this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
-  //     next: (res ) => {
-  //       this.educationData = res; 
-  //       console.log('Fetched staff data:', this.educationData);
-  //        this.isLoading = false;
+//     this.staffDataService.setData(this.educationData);
 
-  //     },
-  //     error: (err) => {
-  //       console.error('Error fetching staff:', err);
-  //     },
+//     const isTyping = Object.values(this.educationData.educationDetails[0]).some(
+//       val => val && val.toString().trim().length > 0
+//     );
 
-  //        complete: () => {
-
-  //        }
-  //   });
-  //   }
-
-
- 
-
-
-
-
-
-
-// onSubmit(eduform: NgForm): void {
-//   this.isLoading = true;
-
-//   const payload = {
-//     _id: this.staffId,
-//     educationDetails: this.educationData.educationDetails
-//   };
-
-//   // this.pagesService.patchEducation(this.staffId, payload).subscribe({
-//     this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
-//     next: (res) => {
-//       console.log('PATCH response:', res);
-
-//       // 🔥 Update local form data with latest from backend
-//       if (res?.educationDetails) {
-//         this.educationData.educationDetails = res.educationDetails;
-//       }
-
-//       this.editMode = false; // Exit edit mode
-//       this.isLoading = false;
-//     },
-//     error: (err) => {
-//       console.log('error', err);
-//       alert('Form update failed');
-//       this.isLoading = false;
-//     }
-//   });
+//     this.checkboxService.setTypingStatus('education-details', isTyping);
+//   }
 // }
+
+
+
+
 
 
 
@@ -265,44 +212,44 @@ onCancel(): void {
 
 
 
-  removeFile(index: number) {
-  this.selectedFiles.splice(index, 1);
-}
+//   removeFile(index: number) {
+//   this.selectedFiles.splice(index, 1);
+// }
 
- onDragOver(event: DragEvent) {
-    event.preventDefault();
-    this.isDragging = true;
-  }
+//  onDragOver(event: DragEvent) {
+//     event.preventDefault();
+//     this.isDragging = true;
+//   }
 
-  onDragLeave(event: DragEvent) {
-    event.preventDefault();
-    this.isDragging = false;
-  }
-
-
-  onDrop(event: DragEvent) {
-  event.preventDefault();
-  this.isDragging = false;
-  const files = event.dataTransfer?.files;
-  if (files && files.length > 0) {
-    this.addFiles(files);
-  }
-}
-
-  onFileSelected(event: Event) {
-  const input = event.target as HTMLInputElement;
-  if (input.files) {
-    this.addFiles(input.files);
-  }
-}
+//   onDragLeave(event: DragEvent) {
+//     event.preventDefault();
+//     this.isDragging = false;
+//   }
 
 
+//   onDrop(event: DragEvent) {
+//   event.preventDefault();
+//   this.isDragging = false;
+//   const files = event.dataTransfer?.files;
+//   if (files && files.length > 0) {
+//     this.addFiles(files);
+//   }
+// }
 
-  addFiles(fileList: FileList) {
-  for (let i = 0; i < fileList.length; i++) {
-    this.selectedFiles.push(fileList[i]);
-  }
-}
+//   onFileSelected(event: Event) {
+//   const input = event.target as HTMLInputElement;
+//   if (input.files) {
+//     this.addFiles(input.files);
+//   }
+// }
+
+
+
+//   addFiles(fileList: FileList) {
+//   for (let i = 0; i < fileList.length; i++) {
+//     this.selectedFiles.push(fileList[i]);
+//   }
+// }
 
 
 

@@ -485,25 +485,7 @@ export interface EducationDetail {
   certificateUrl: string
 }
 
-// export class editStaffResponseModel{
-//   _id!: string
-//    nationality!: string
-//   gender!: string
-//   idType!: string
-//   phoneNumber!: string
-//   idNumber!: string
-//   maritalStatus!: string
-//   jobTitle!: string
-//   unit!: string[]
-//   employmentType!: string
-//   hireDate!: string
-//   workLocation!: string
-//   staffId!: string
-//   supervisor!: string[]
-//   educationDetails!: EducationDetail[]
-//   startDate!: string
-//   endDate!: string
-// }
+
 
 export interface EditEmploymentModel {
   _id: string;
@@ -523,6 +505,17 @@ export interface EducationDetail {
   endDate: string;
   _id: string;
   // certificateUrl: string;
+}
+
+
+export interface EditEmmergencyModel {
+  _id: string;
+   emergencyContactFullName: string
+  emergencyContactRelationship: string
+  emergencyContactPhoneNumber: string
+  emergencyContactEmail: string
+  emergencyContactCurrentAddress: string
+ 
 }
 
 
@@ -808,7 +801,7 @@ export interface Child {
 }
 
 export interface editFamilyModel {
-  supervisor: string[]; // ✅ now an array of MongoDB ObjectIds
+  supervisor: string[]; 
   spouseName: string;
   spousePhone: string;
   spouseEmail: string;

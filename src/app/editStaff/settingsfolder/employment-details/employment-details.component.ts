@@ -14,7 +14,7 @@ import { FormsServiceService } from '../formService/forms-service.service';
 import { UnitHead } from '../../../model/pagesModel';
 
 @Component({
-  selector: 'app-employment-details',
+  selector: 'app-employment-detail',
   imports: [FormsModule, CommonModule],
   templateUrl: './employment-details.component.html',
   styleUrl: './employment-details.component.scss'
@@ -22,8 +22,8 @@ import { UnitHead } from '../../../model/pagesModel';
 export class EmploymentDetailsComponent2 implements OnInit{
 
 
-  unitList: any[] = [];            
-  supervisorList: any[] = [];  
+  // unitList: any[] = [];            
+  // supervisorList: any[] = [];  
    employeeData: any
    unitData: any
     allStaff: allStaffModel
@@ -40,7 +40,12 @@ export class EmploymentDetailsComponent2 implements OnInit{
      editMode: boolean = false;
      originalStaffData: any;
      isLoading = false
-      formData: Partial<addNewStaffModel> = {};
+      formData: any = {};
+
+      units: any;
+      supervisor: any;
+
+      // Partial<addNewStaffModel>
 
     
 
@@ -57,11 +62,16 @@ export class EmploymentDetailsComponent2 implements OnInit{
 
    
 ngOnInit() {
+
+  const item = this.route.snapshot.queryParamMap.get('staffId');
+  this.staffId = item; 
+
   this.formData = this.formsServiceService.formData || {};
   console.log('Loaded form data in ngOnInit:', this.formData);
 
   this.fetchAllStaff()
-  this.fetchUnit()
+  this.fetchUnits()
+  this.fetchSupervisors()
 }
 
 
@@ -88,24 +98,60 @@ ngOnInit() {
   }
 
 
-   fetchUnit(){
-    this.pageService.fetchStaff(this.allStaff).subscribe({
-      next: (res)=>{
-        this.unitData = res.data || [];
-         console.log('response data', res)
-          console.log('APIData response', this.employeeData)
+  //  fetchUnit(){
+  //   this.pageService.fetchStaff(this.allStaff).subscribe({
+  //     next: (res)=>{
+  //       this.unitData = res.data || [];
+  //        console.log('response data', res)
+  //         console.log('APIData response', this.employeeData)
        
-      },
+  //     },
 
-      error: (err)=>{
-        console.log('Failed to fetch staff', err)
-      },
+  //     error: (err)=>{
+  //       console.log('Failed to fetch staff', err)
+  //     },
 
-      complete:()=>{
-        console.log('complete')
+  //     complete:()=>{
+  //       console.log('complete')
+  //     }
+  //   })
+  // }
+
+
+  fetchUnits() {
+  this.pagesService.getUnits().subscribe({
+    next: (res) => {
+      const unitMap = new Map<string, { _id: string; name: string }>();
+      
+      for (const staff of res.data) {
+        const unit = staff.unit;
+        if (unit && typeof unit === 'object' && unit._id && unit.name) {
+          unitMap.set(unit._id, { _id: unit._id, name: unit.name });
+        }
       }
-    })
-  }
+
+      this.units = Array.from(unitMap.values());
+      console.log('Extracted units from staff:', this.units);
+    },
+    error: (err) => {
+      console.error('Failed to fetch staff list:', err);
+    }
+  });
+}
+
+
+
+fetchSupervisors() {
+  this.pagesService.getStaff().subscribe({
+    next: (res) => {
+      this.supervisor = res.data;
+      console.log('dropdown supervisor', res)
+    },
+    error: (err) => {
+      console.error('Failed to fetch supervisors:', err);
+    }
+  });
+}
 
 
 

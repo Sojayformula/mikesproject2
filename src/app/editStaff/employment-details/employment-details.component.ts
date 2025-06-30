@@ -56,7 +56,7 @@ export class EmploymentDetailsComponent implements OnInit{
  
 
    constructor(public editService:EditService, private staffDataService: StaffDataService, private router: Router, private location:Location, private route:ActivatedRoute, 
-    private typingStatusService: CheckboxService, private pagesService: PagesService){
+    private typingStatusService: CheckboxService, private pagesService: PagesService, public checkboxService:CheckboxService){
 
       this.getAllStaff = new allStaffModel()
        this.editStaffData = new editStaffModel()
@@ -89,7 +89,7 @@ export class EmploymentDetailsComponent implements OnInit{
    fetchEmployees() {
     this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
       next: (res ) => {
-        this.employeeData = res.data; 
+        this.employeeData = res; 
         console.log('Fetched staff data:', this.employeeData);
          this.isLoading = false;
 
@@ -148,29 +148,48 @@ fetchSupervisors() {
 
 
 
-    goBack(){
-    this.location.back()
-  }
+  //   goBack(){
+  //   this.location.back()
+  // }
 
  
 
   
 
-  onInputChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const value = input.value;
+  // onInputChange(event: Event) {
+  //   const input = event.target as HTMLInputElement;
+  //   const value = input.value;
 
-    // ✅ This line sets the typing status for this step
-    this.typingStatusService.setTypingStatus('employment-details', value.trim().length > 0);
+  //   // This line sets the typing status for this step
+  //   this.typingStatusService.setTypingStatus('employment-details', value.trim().length > 0);
+  // }
+
+// // onInputChange(event: Event) {
+// //   const input = event.target as HTMLInputElement;
+// //   const value = input.value;
+// //   this.typingStatusService.setTypingStatus('employment-details', value.trim().length > 0);
+// // }
+
+     // CHECK BOX LOGIC
+    onInputChange(value: any, field: string) {
+    if (field && this.employeeData) {
+      this.employeeData[field] = value;
+
+      this.staffDataService.setData(this.employeeData);
+
+      const isTyping = Object.values(this.employeeData).some(
+        val => val && val.toString().trim().length > 0
+      );
+
+      this.checkboxService.setTypingStatus('employment-details', isTyping);
+    }
   }
 
-// onInputChange(event: Event) {
-//   const input = event.target as HTMLInputElement;
-//   const value = input.value;
-//   this.typingStatusService.setTypingStatus('employment-details', value.trim().length > 0);
-// }
 
 
+
+
+  //  CONVERTED DATE LOGIC
 get formattedDOB(): string {
   const date = this.employeeData?.supervisor?.hireDate;
   return date ? formatDate(date, 'yyyy-MM-dd', 'en-US') : '';

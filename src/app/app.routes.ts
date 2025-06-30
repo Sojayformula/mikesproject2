@@ -64,7 +64,7 @@ export const routes: Routes = [
                 {path: 'person-information', component: PersonInformationComponent},
                 {path: 'employment-details', component: EmploymentDetailsComponent},
                 {path: 'family-details', component: FamilyDetailsComponent},
-                {path: 'next-of-kins', component: NextOfKinComponent2},
+                {path: 'next-of-kins', component: NextOfKinsComponent},
                 {path: 'emengency-contact', component: EmengencycontactComponent},
                 {path: 'education-details', component: EducationdetailsComponent},
                 {path: 'edit-personal-info', component: EditPersonalInfoComponent}   
@@ -76,7 +76,7 @@ export const routes: Routes = [
             children:[
               {path: '', redirectTo: 'personal-information', pathMatch: 'full'},
               {path: 'personal-information', component: PersonalInformationComponent2},
-              {path: 'employment-details', component: EmploymentDetailsComponent2},
+              {path: 'employment-detail', component: EmploymentDetailsComponent2},
                {path: 'family-details', component: FamilyDetailsComponent2},
                {path: 'next-of-kin', component: NextOfKinComponent2},
                {path: 'emergency-contact', component: EmergencyContactComponent2},
