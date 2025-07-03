@@ -1,10 +1,9 @@
 <div>
-<div class="navigation-buttons relative top-[-3rem] lg:top-0 flex justify-end gap-4 mx-[4.2rem]">
+<div class="navigation-buttons relative top-[-3rem] lg:top-0 flex justify-end gap-4 mx-10 [4.2rem]">
   <button type="button" *ngIf="!isFirstStep" (click)="goPrev()"  class=" border-2 border-[#727A90] w-[88px] h-[40px] rounded-[10px] text-[14px]">Previous</button>
 
-  <button type="button" *ngIf="!isLastStep" (click)="goNext()" (click)="goNext()" class=" bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] text-white w-[88px] h-[40px] rounded-[10px] text-[14px]">Next</button>
+  <button type="button" *ngIf="!isLastStep" (click)="goNext()"  class=" bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] text-white w-[88px] h-[40px] rounded-[10px] text-[14px]">Next</button>
 
-  <!-- <button type="button" *ngIf="isLastStep" (click)="submit()">Submit</button> -->
 </div>
 
 
@@ -18,36 +17,101 @@
 
 
                               <!-- FORM -->
-
     <form #staffForm="ngForm" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2  gap-10 p-6 bg-white rounded gap-y-6 lg:gap-x-20 mt-10">
- n               
+               
                            <!-- Row 1 -->
     <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Job Title</label>
-    <input 
+    <input
      type="text" 
      name="jobTitle" 
-     [(ngModel)]="formData. jobTitle"  
-     placeholder="Enter legal first name" 
+     [(ngModel)]="localPageData.jobTitle"  
+     placeholder="Enter job title" 
      class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
  
-  <div>
-  <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Unit</label>
+
+<!-- <div>
+  <label class="block mb-1 text-sm font-medium text-gray-700">Unit</label>
   <select
     name="unitId"
-    [(ngModel)]="formData.units"
-    [(ngModel)]="employeeData.jobTitle" 
-    (ngModelChange)="onInputChange($event)"
+    [(ngModel)]="formsData.unitId"
     required
-    class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
+    class="border border-gray-300 w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
   >
-    <option [ngValue]="null" disabled selected>Select a unit</option>
-    <option *ngFor="let item of units" [ngValue]="item._id">
-      {{ item.name }}
+    <option value="" disabled selected>Select a unit</option>
+    <option *ngFor="let unit of units " [value]="unit._id">
+      {{ unit.name }}
     </option>
   </select>
+</div> -->
+  <!-- <nz-form-item>
+      <label for="supervisor" class="block text-[#000000] text-[10px] md:text-[12px] lg:text-[13px] font-[500]"
+        >Unit
+    </label>
+      <ng-select [multiple]="true"  placeholder="Selected Supervisor" [(ngModel)]="selectedUnit.unit" name="supervisor"
+      style="color: #888888; border-radius: 10px; width: 100%;" class=" focus:outline-none focus:outline-sky-600 focus:border-sky-600"
+      class="custom-ng-select">
+        @for (staff of unitData; track staff) {
+          <ng-option [value]="staff._id">
+          {{ staff?.name }} 
+          </ng-option>
+        }
+      </ng-select> 
+   </nz-form-item> -->
+
+  <div>
+  <nz-form-item>
+  <label
+    for="unit"
+    class="block text-[#000000] text-[10px] md:text-[12px] lg:text-[13px] font-[500] mb-1"
+  >
+    Unit
+  </label>
+
+  <ng-select
+    [items]="unitData"
+    bindLabel="name"
+    bindValue="_id"
+    [multiple]="true"
+    [(ngModel)]="localPageData.unit"
+    name="unit"
+    placeholder="Select unit(s)"
+    class="w-full unit-select-box "
+  >
+    <ng-template ng-label-tmp let-item="item">
+      {{ item.name }}
+    </ng-template>
+
+    <ng-template ng-option-tmp let-item="item">
+      {{ item.name }}
+    </ng-template>
+  </ng-select>
+</nz-form-item>
 </div>
+
+
+
+
+<div>
+  <nz-form-item>
+      <label for="supervisor" class="block text-[#000000] text-[10px] md:text-[12px] lg:text-[13px] font-[500]"
+        >Supervisor
+    </label>
+      <ng-select [multiple]="true"  placeholder="Selected Supervisor" [(ngModel)]="localPageData.supervisor" name="supervisor"
+      style="color: #888888; border-radius: 10px; width: 100%;" class=" focus:outline-none focus:outline-sky-600 focus:border-sky-600"
+      class="custom-ng-select">
+        @for (staff of staffs; track staff._id) {
+          <ng-option [value]="staff._id">
+          {{ staff?.firstName }} {{ staff?.lastName }}
+          </ng-option>
+        }
+      </ng-select> 
+   </nz-form-item>
+  </div>
+ 
+
+   
 
 
 
@@ -55,15 +119,20 @@
                              <!-- Row 2 -->
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Employment Type</label>
-    <input type="text" name="employmentType" [(ngModel)]="formData.employmentType" placeholder="Select birth date" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    <input 
+    type="text" 
+    name="employmentType" 
+    [(ngModel)]="localPageData.employmentType" 
+    placeholder="Full-time, Part-time, Contract" 
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Hire Date</label>
     <input 
     type="date" 
     name="gender" 
-    [(ngModel)]="formData.hireDate" 
-    placeholder="Hired Date" 
+    [(ngModel)]="localPageData.hireDate" 
+    placeholder="Select date" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
   
@@ -74,31 +143,40 @@
     <input 
     type="text" 
     name="maritalStatus" 
-    [(ngModel)]="formData.workLocation" 
-    placeholder="Select marital status" 
+    [(ngModel)]="localPageData.workLocation" 
+    placeholder="Remote, Onsite, Hybrid" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/> 
   </div>
 
  
-  <div>
-  <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Supervisor</label>
+ 
+   <div>
+  <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Select role</label>
   <select
-  name="supervisorId"
-  [(ngModel)]="formData.supervisor"
-  [(ngModel)]="employeeData.jobTitle"
-  (ngModelChange)="onInputChange($event)"
-  required
-  class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
->
-  <option [ngValue]="null" disabled selected>Select a supervisor</option>
-  <option *ngFor="let item of supervisor" [ngValue]="item._id">
-    {{ item.firstName }} {{ item.lastName }}
-  </option>
+    name="role"
+    bindValue="_id"
+    [(ngModel)]="localPageData.role"
+    required
+    class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
+  >
+    <option [ngValue]="''" disabled selected>Select role</option>
+    <option *ngFor="let role of roles" [value]="role._id">
+      {{ role.name }}
+    </option>
   </select>
-  </div>
+</div>
+
+ <div></div>
+ <div></div>
+ <div></div>
+ 
+ 
 
 
-   <div class="mb-4 space-y-6">
+
+  
+
+   <div class="mb-4 space-y-6 relative lg:right-[24rem]">
     
      <div>
 
@@ -182,6 +260,60 @@
 </div>
 
 
+
 </form>
 </div> 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+<!-- <div>
+     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Unit</label>
+  <select
+    [(ngModel)]="formsData.unitId"
+    name="supervisor"
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+    required
+  >
+    <option [ngValue]="null" disabled selected>Select job title</option>
+    <option *ngFor="let unit of units" [value]="unit">
+      {{ unit.unit.name }}
+      </option>
+   
+  </select>
+</div> -->
+
+
+
+<!-- worked code -->
+   <!-- <div>
+  <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Job title</label>
+  <select
+    name="jobTitle"
+    [(ngModel)]="formData.jobTitle"
+    required
+    class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
+  >
+    <option [ngValue]="null" disabled selected>Select job title</option>
+    <option *ngFor="let title of jobTitles" [value]="title">
+      {{ title }}
+    </option>
+  </select>
+</div>
+-->

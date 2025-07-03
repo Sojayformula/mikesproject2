@@ -3,6 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
+ @import "@ng-select/ng-select/themes/default.theme.css";
+
 
 // @font-face {
 //   font-family: 'Outfit';
@@ -10,4 +12,5 @@
 //   font-weight: 400;
 //   font-style: normal;
 // }
+
 

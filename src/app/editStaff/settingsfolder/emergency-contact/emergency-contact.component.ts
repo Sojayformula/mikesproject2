@@ -16,8 +16,6 @@ import { FormsServiceService } from '../formService/forms-service.service';
 
 export class EmergencyContactComponent2 {
 
-
-
    emergencyData: any
   staffId: any
    getAllStaff: allStaffModel;
@@ -25,7 +23,17 @@ export class EmergencyContactComponent2 {
 
    editMode =false
    originalData: any
-   formData: Partial<addNewStaffModel> = {};
+
+
+
+   localPageData = {
+   emergencyContactFullName: '',
+    emergencyContactRelationship: '',
+    emergencyContactPhoneNumber: '',
+    emergencyContactEmail: '',
+    emergencyContactCurrentAddress: '',
+};
+
 
   constructor(private router:Router, private pagesService:PagesService, private route:ActivatedRoute,
    public formService:AddstaffService, public formsServiceService: FormsServiceService
@@ -35,39 +43,22 @@ export class EmergencyContactComponent2 {
 
 
 ngOnInit() {
-  this.formData = this.formsServiceService.formData || {};
-  console.log('Loaded form data in ngOnInit:', this.formData);
+  // this.formData = this.formsServiceService.formData || {};
+  // console.log('Loaded form data in ngOnInit:', this.formData);
 }
 
 
 
-    //  etchEmergencyData() {
-    // this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
-    //   next: (res ) => {
-    //     this.emergencyData = res; 
-    //     console.log('Fetched emergency data:', this.emergencyData);
-    //      this.isLoading = false;
-
-    //   },
-    //   error: (err) => {
-    //     console.error('Error fetching staff:', err);
-    //   },
-
-    //      complete: () => {
-
-    //      }
-    // });
-    // }
 
 
   //  Edit  function
-onEditToggle(): void {
+onEditToggle() {
   this.editMode = true;
   this.originalData = JSON.parse(JSON.stringify(this.emergencyData));
 }
 
 // Cancel function
-onCancel(): void {
+onCancel() {
   this.editMode = false;
   this.emergencyData = JSON.parse(JSON.stringify(this.originalData)); 
 }
@@ -91,7 +82,7 @@ onCancel(): void {
   }
 
  goNext() {
-  this.formsServiceService.updateData(this.formData);
+  this.formsServiceService.updateData(this.localPageData);
   const next = this.formsServiceService.getNextStep(this.router.url);
   if (next) {
     this.router.navigate([next]);

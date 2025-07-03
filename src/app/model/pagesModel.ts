@@ -357,52 +357,105 @@ export interface PatchEducationPayload {
 
 
   //  ADD NEW StAFF MODEL //
-export class addNewStaffModel{
- _id?: string;
- profilePicture!: string;
-  firstName!: string;
-  lastName!: string;
-  otherName!: string;
-  email!: string;
-  dateOfBirth!: string;
-  nationality!: string;
-  gender!: string;
-  idType!: string;
-  phoneNumber!: string;
-  idNumber!: string;
-  maritalStatus!: string;
-  jobTitle!: string;
-  unit!: string[]; 
-  employmentType!: string;
-  hireDate!: string;
-  workLocation!: string;
-  staffId!: string;
-  supervisor!: string[]; 
-  role!: string; 
-  emergencyContactFullName!: string;
-  emergencyContactRelationship!: string;
-  emergencyContactPhoneNumber!: string;
-  emergencyContactEmail!: string;
-  emergencyContactCurrentAddress!: string;
-  spouseName!: string;
-  spousePhone!: string;
-  spouseEmail!: string;
-  marriageCertificateUrl!: string;
-  numberOfChildren!: number;
-  children!: Child[];
-  educationDetails!: EducationDetail[];
-  nextOfKinFullName!: string;
-  nextOfKinRelationship!: string;
-  nextOfKinPhoneNumber!: string;
-  nextOfKinEmail!: string;
-  nextOfKinCurrentAddress!: string;
+// export class addNewStaffModel{
+//  _id?: string;
+//  profilePicture!: string;
+//   firstName!: string;
+//   lastName!: string;
+//   otherName!: string;
+//   email!: string;
+//   dateOfBirth!: string;
+//   nationality!: string;
+//   gender!: string;
+//   idType!: string;
+//   phoneNumber!: string;
+//   idNumber!: string;
+//   maritalStatus!: string;
+//   jobTitle!: string;
+//   unit!: string[]; 
+//   employmentType!: string;
+//   hireDate!: string;
+//   workLocation!: string;
+//   staffId!: string;
+//   supervisor!: string[]; 
+//   role!: string; 
+//   emergencyContactFullName!: string;
+//   emergencyContactRelationship!: string;
+//   emergencyContactPhoneNumber!: string;
+//   emergencyContactEmail!: string;
+//   emergencyContactCurrentAddress!: string;
+//   spouseName!: string;
+//   spousePhone!: string;
+//   spouseEmail!: string;
+//   marriageCertificateUrl!: string;
+//   numberOfChildren!: number;
+//   children!: Child[];
+//   //educationDetails!: EducationDetail[];
+//   nextOfKinFullName!: string;
+//   nextOfKinRelationship!: string;
+//   nextOfKinPhoneNumber!: string;
+//   nextOfKinEmail!: string;
+//   nextOfKinCurrentAddress!: string;
 
-   institutionName!: string
-  courseOfStudy!: string
-  startDate!: string
-  endDate!: string
-  
+//   // institutionName!: string
+//   // courseOfStudy!: string
+//   // startDate!: string
+//   // endDate!: string
+//     educationDetails!: [
+//     { institutionName: '', courseOfStudy: '', startDate: '', endDate: '' },
+//     { institutionName: '', courseOfStudy: '', startDate: '', endDate: '' },
+//   ]
+//   // children!: [
+//   //   { fullName: '', dob: '' },
+//   //   { fullName: '', dob: '' }
+//   // ]
+// }
+export class addNewStaffModel {
+  _id?: string;
+  profilePicture?: string;
+  firstName?: string;
+  lastName?: string;
+  otherName?: string;
+  email?: string;
+  dateOfBirth?: string;
+  nationality?: string;
+  gender?: string;
+  idType?: string;
+  phoneNumber?: string;
+  idNumber?: string;
+  maritalStatus?: string;
+  jobTitle?: string;
+  unit?: string[]; 
+  employmentType?: string;
+  hireDate?: string;
+  workLocation?: string;
+  staffId?: string;
+  supervisor?: string[]; 
+  role?: string; 
+
+  emergencyContactFullName?: string;
+  emergencyContactRelationship?: string;
+  emergencyContactPhoneNumber?: string;
+  emergencyContactEmail?: string;
+  emergencyContactCurrentAddress?: string;
+
+  spouseName?: string;
+  spousePhone?: string;
+  spouseEmail?: string;
+  marriageCertificateUrl?: string;
+
+  numberOfChildren?: number;
+  children?: Child[];
+
+  educationDetails?: EducationDetail[];
+
+  nextOfKinFullName?: string;
+  nextOfKinRelationship?: string;
+  nextOfKinPhoneNumber?: string;
+  nextOfKinEmail?: string;
+  nextOfKinCurrentAddress?: string;
 }
+
 
 
 
@@ -518,6 +571,15 @@ export interface EditEmmergencyModel {
  
 }
 
+// education.model.ts
+export interface EducationDetailModel {
+  institutionName: string;
+  courseOfStudy: string;
+  startDate: string;
+  endDate: string;
+}
+
+
 
 
 
@@ -622,6 +684,7 @@ export interface EducationDetail {
 
 // AllStaffModel//
 export class allStaffModel {
+  _id!: string
   unit!: string;
   search!: string;
   page!: number;

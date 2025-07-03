@@ -33,7 +33,41 @@ export class FamilyDetailsComponent2 implements OnInit{
      selectedStep: string = '';
   selectedFiles: File[] = [];
   isDragging = false;
-  formData: Partial<addNewStaffModel> = {};
+
+
+  // localPageData  = {
+  //   spouseName: '',
+  // spousePhone: '',
+  // spouseEmail: '',
+  // marriageCertificateUrl: '',
+  // numberOfChildren: 2,
+  // children: [
+  //   { fullName: '', dob: '' },
+  //   { fullName: '', dob: '' }
+  // ]
+  // };
+  
+   localPageData = {
+    spouseName: '',
+  spousePhone: '',
+  spouseEmail: '',
+  marriageCertificateUrl: '',
+  numberOfChildren: 2,
+  children: [
+    { fullName: '', dob: '' },
+    { fullName: '', dob: '' }
+  ]
+  };
+  
+
+
+
+
+// nextStep() {
+//   this.formsService.updateData(this.localPageData);
+//   this.router.navigate(['/editsettings/next-of-kin']);
+// }
+
  
 
   constructor(public editService:EditService, private router:Router, private location:Location, private pagesService:PagesService,
@@ -41,20 +75,12 @@ export class FamilyDetailsComponent2 implements OnInit{
     private route:ActivatedRoute, public formService: AddstaffService, public formsServiceService: FormsServiceService ){
 
       this.getAllStaff = new allStaffModel()
-      // this.familyModel = new editFamilyModel()
+     
     }
 
   ngOnInit() {
-  this.formData = this.formsServiceService.formData || {};
-  console.log('Loaded form data in ngOnInit:', this.formData);
-
-
-   if (!this.formData.children || this.formData.children.length < 2) {
-    this.formData.children = [
-      { fullName: '', dob: '' },
-      { fullName: '', dob: '' }
-    ];
-  }
+  //  this.formData = this.formsServiceService.formData || {};
+  //  console.log('Loaded form data in ngOnInit:', this.formData);
 
 }
 
@@ -153,7 +179,7 @@ onCancel(): void {
 
   
    goNext() {
-  this.formsServiceService.updateData(this.formData);
+  this.formsServiceService.updateData(this.localPageData);
   const next = this.formsServiceService.getNextStep(this.router.url);
   if (next) {
     this.router.navigate([next]);

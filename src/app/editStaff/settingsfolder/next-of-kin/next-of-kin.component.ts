@@ -18,8 +18,6 @@ import { FormsServiceService } from '../formService/forms-service.service';
 })
 export class NextOfKinComponent2 {
 
-
-
    nextOfKinData: any
   staffId: any
   //  getAllStaff: allStaffModel;
@@ -27,6 +25,16 @@ export class NextOfKinComponent2 {
 
    originalData: any
    editMode = false;
+
+
+
+      localPageData = {
+      nextOfKinFullName: '',
+      nextOfKinRelationship: '',
+      nextOfKinPhoneNumber: '',
+      nextOfKinEmail: '',
+      nextOfKinCurrentAddress: ''
+    };
 
   constructor( private typingStatusService: CheckboxService, private router:Router, private location:Location, 
     private pagesService:PagesService, private route:ActivatedRoute, public formService:AddstaffService,
@@ -89,7 +97,7 @@ onCancel(): void {
 
 
 goNext() {
-  this.formsServiceService.updateData(this.formsData);
+  this.formsServiceService.updateData(this.localPageData);
   const next = this.formsServiceService.getNextStep(this.router.url);
   if (next) {
     this.router.navigate([next]);

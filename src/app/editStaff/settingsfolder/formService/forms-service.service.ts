@@ -17,13 +17,27 @@ export class FormsServiceService {
   '/editsettings/education-details'
 ];
 
-  // formData: any = {};
-  formData: Partial<addNewStaffModel> = {
-     children: [
-      { fullName: '', dob: '' },
-      { fullName: '', dob: '' }
-    ]
-  };
+   formData: any = {
+     spouseName: '',
+  spousePhone: '',
+  spouseEmail: '',
+  numberOfChildren: 2,
+  children: [
+    { fullName: '', dob: '' },
+    { fullName: '', dob: '' }
+  ]
+   };
+//   formData: Partial<addNewStaffModel> = {
+  // spouseName: '',
+  // spousePhone: '',
+  // spouseEmail: '',
+  // numberOfChildren: 2,
+  // children: [
+  //   { fullName: '', dob: '' },
+  //   { fullName: '', dob: '' }
+  // ]
+// };
+
 
   updateData(data: any) {
     console.log('Updating formData with:', data);

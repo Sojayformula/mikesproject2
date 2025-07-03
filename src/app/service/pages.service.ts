@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
 import { Observable } from 'rxjs/internal/Observable';
-import { addNewStaffModel, addUnitModel, allStaffModel, EditEmmergencyModel, EditEmploymentModel, editFamilyModel, editStaffModel, educationModel, getStaffModel, getStaffResponseModel, PatchEducationPayload, responseDaumModel, UnitHead, unitModel, updateUnitModel } from '../model/pagesModel';
+import { addNewStaffModel, addUnitModel, allStaffModel, EditEmmergencyModel, EditEmploymentModel, editFamilyModel, editStaffModel, EducationDetailModel, educationModel, getStaffModel, getStaffResponseModel, PatchEducationPayload, responseDaumModel, UnitHead, unitModel, updateUnitModel } from '../model/pagesModel';
 import { Root } from '../model/login-model';
 
 @Injectable({
@@ -143,10 +143,13 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
   }
 
 
-                   formData: addNewStaffModel = new addNewStaffModel();
-      getAddNewStaff(payload:addNewStaffModel): Observable<any> {
+                    formData: addNewStaffModel = new addNewStaffModel();
+      postAddNewStaff(payload:addNewStaffModel): Observable<any> {
     return this.http.post(`${environment.baseurl}/staff/create-staff`, payload); 
   }
+
+
+
 
     patchEducation(id: string, formData: FormData): Observable<any> {
   return this.http.patch(`${environment.baseurl}/staff/${id}`, formData);
@@ -159,6 +162,10 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
     patchEmergency(id: string, payload: Partial<EditEmmergencyModel>):Observable<any>{
     return this.http.patch(`${environment.baseurl}/staff/${id}`, payload); 
   }
+
+    postEducation(id: string, payload: Partial<EducationDetailModel>):Observable<any>{
+    return this.http.patch(`${environment.baseurl}/staff/${id}`, payload); 
+  }
   
 
 
@@ -168,6 +175,10 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
 
 getStaff(): Observable<any> {
    return this.http.get(`${environment.baseurl}/staff/all-staffs?page=1&pageSize=10`); 
+}
+
+getRole(): Observable<any> {
+   return this.http.get(`${environment.baseurl}/roles/list-roles`); 
 }
 
 

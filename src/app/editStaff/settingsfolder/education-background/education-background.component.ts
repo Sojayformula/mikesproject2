@@ -24,13 +24,31 @@ export class EducationBackgroundComponent2 implements OnInit {
   selectedFiles: File[] = [];
   isDragging = false;
   isLoading = false
-  formData: Partial<addNewStaffModel> = {};
+  // formData: Partial<addNewStaffModel> = {};
 
    editMode: boolean = false;
 originalStaffData: any;
 
 // In your component.ts
 showAllField: boolean = false;
+
+
+    localPageData = {
+      staffId: '',
+      educationDetails: [
+        {
+          institutionName: '',
+          courseOfStudy: '',
+          startDate: '',
+          endDate: ''
+        },
+        {
+          institutionName: '',
+          startDate: '',
+          
+        }
+      ]
+    };
 
 
   constructor(private route:ActivatedRoute, private pagesService:PagesService, private staffDataService:StaffDataService,
@@ -43,13 +61,14 @@ showAllField: boolean = false;
 
 
   ngOnInit() {
-  this.formData = this.formsServiceService.formData || {};
-  console.log('Loaded form data in ngOnInit:', this.formData);
+  // this.formData = this.formsServiceService.formData || {};
+  // console.log('Loaded form data in ngOnInit:', this.formData);
 }
 
 
 showField() {
-  this.showAllField = true;
+  // this.showAllField = true;
+  this.showAllField = !this.showAllField;
 }
 
 cancelShowField() {
@@ -141,7 +160,7 @@ onCancel(): void {
   }
 
    goNext() {
-  this.formsServiceService.updateData(this.formData);
+  this.formsServiceService.updateData(this.localPageData);
   const next = this.formsServiceService.getNextStep(this.router.url);
   if (next) {
     this.router.navigate([next]);
@@ -159,23 +178,103 @@ onCancel(): void {
 
 
 
-  submit() {
-  const finalData = this.formsServiceService.formData as addNewStaffModel;
-
-  this.pagesService.getAddNewStaff(finalData).subscribe({
-    next: (res) => {
-      console.log('Final form submitted!', finalData);
-      alert('Form submitted!');
-    },
-    error: (err) => {
-      console.log('Failed to submit form', err);
-    }
-  });
-}
 
 
 
-  
+
+
+
+// formData: addNewStaffModel = {
+//     _id: '',
+//     profilePicture: '',
+//     firstName: '',
+//     lastName: '',
+//     otherName: '',
+//     email: '',
+//     dateOfBirth: '',
+//     nationality: '',
+//     gender: '',
+//     idType: '',
+//     phoneNumber: '',
+//     idNumber: '',
+//     maritalStatus: '',
+//     jobTitle: '',
+//     unit: [],
+//     employmentType: '',
+//     hireDate: '',
+//     workLocation: '',
+//     staffId: '',
+//     supervisor: [],
+//     role: '',
+    // emergencyContactFullName: '',
+    // emergencyContactRelationship: '',
+    // emergencyContactPhoneNumber: '',
+    // emergencyContactEmail: '',
+    // emergencyContactCurrentAddress: '',
+//     spouseName: '',
+//     spousePhone: '',
+//     spouseEmail: '',
+//     marriageCertificateUrl: '',
+//     numberOfChildren: 0,
+//     children: [],
+//     //educationDetails: [],
+//     nextOfKinFullName: '',
+//     nextOfKinRelationship: '',
+//     nextOfKinPhoneNumber: '',
+//     nextOfKinEmail: '',
+//     nextOfKinCurrentAddress: '',
+//    // institutionName: '',
+//     // courseOfStudy: '',
+//     // startDate: '',
+//     // endDate: '',
+//       educationDetails: [
+//     { institutionName: '', courseOfStudy: '', startDate: '', endDate: '' },
+//     { institutionName: '', courseOfStudy: '', startDate: '', endDate: '' }
+//   ],
+//   // children: [
+//   //   { fullName: '', dob: '' },
+//   //   { fullName: '', dob: '' }
+//   // ],
+//   };
+
+
+
+
+//   submit() {
+
+//   this.formsServiceService.updateData(this.formData);
+
+//   const fullPayload: addNewStaffModel = {
+//     ...this.formsServiceService.formData,
+//   } as addNewStaffModel;
+
+//   console.log('Final Payload:', fullPayload);
+
+
+//   this.pagesService.postAddNewStaff(fullPayload).subscribe({
+//     next: (res) => console.log('Submitted successfully', res),
+//     error: (err) => console.error('Submission failed', err)
+//   });
+// }
+submit() {
+  this.formsServiceService.updateData(this.localPageData); // Final page's own data
+
+  const fullPayload = this.formsServiceService.formData;
+  console.log('Submitting this payload:', fullPayload);
+
+ this.pagesService.postAddNewStaff(fullPayload).subscribe({
+  next: (res) => {
+    console.log('Submitted!', res);
+  },
+  error: (err) => {
+    console.error('Error:', err);
+  },
+  complete: () => {
+    console.log('Request complete');
+  }
+});
+
+}  
 
 }
 

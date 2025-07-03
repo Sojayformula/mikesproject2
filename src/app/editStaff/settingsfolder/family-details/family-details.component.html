@@ -1,9 +1,6 @@
-<div class="navigation-buttons mt-4 flex justify-end gap-4 relative right-[1rem]">
+<div class="navigation-buttons mx-10 mt-4 flex justify-end gap-4 relative right-[1rem]">
   <button type="button" *ngIf="!isFirstStep" (click)="goPrev()"  class=" border-2 border-[#727A90] w-[88px] h-[40px] rounded-[10px] text-[14px]">Previous</button>
-
   <button type="button" *ngIf="!isLastStep" (click)="goNext()" (click)="goNext()" class=" bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] text-white w-[88px] h-[40px] rounded-[10px] text-[14px]">Next</button>
-
-  <!-- <button type="button" *ngIf="isLastStep" (click)="submit()">Submit</button> -->
 </div>
 
 
@@ -37,7 +34,7 @@
   <div class="grid md:grid-cols-3 grid-cols-1 gap- [10rem]">
     <div class="w-[6rem] ">
     <label class="font-semibold text-[13px] font-outfit ">Spouse's Name</label>
-    <input type="text" name="spouseName" [(ngModel)]="formData.spouseName"  placeholder="Enter full name of spouse" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="spouseName" [(ngModel)]="localPageData.spouseName"  placeholder="Enter full name of spouse" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
    
        <div class="mt-10">
         <p class="font-semibold font-outfit text-[16px] w-[10rem]">Children Information</p>
@@ -48,12 +45,12 @@
 
     <div class="w-[9rem]">
     <label class="font-semibold text-[13px] font-outfit">Spouse's Phone Number</label>
-    <input type="text" name="spousePhone" [(ngModel)]="formData.spousePhone" placeholder="Phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="spousePhone" [(ngModel)]="localPageData.spousePhone" placeholder="Phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
     <div class="mt-10 md:mt-0">
     <label class="flex font-semibold text-[13px] font-outfit">Spouse's Email</label>
-    <input type="text" name="spouseEmail" [(ngModel)]="formData.spouseEmail" placeholder="Enter address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="spouseEmail" [(ngModel)]="localPageData.spouseEmail" placeholder="Enter address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
   </div>
@@ -62,7 +59,7 @@
   <div class="grid md:grid-cols-3 grid-cols-1 md:gap-6">
     <div>
      <label class="flex font-semibold text-[13px] font-outfit">Number of Children</label>
-    <input type="text" name="numberOfChild" [(ngModel)]="formData.numberOfChildren"  placeholder="Enter nu30-;l mbers(eg. 2)" 
+    <input type="text" name="numberOfChild" [(ngModel)]="localPageData.numberOfChildren"  placeholder="Enter nu30-;l mbers(eg. 2)" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
     <div></div>
@@ -70,36 +67,49 @@
   </div>
 
   <!-- Row 3: Input 5 -->
-  <div *ngIf="formData.children && formData.children.length > 0" class="grid  md:grid-cols-3 lg:gap- [10rem]"> 
+  <div  class="grid  md:grid-cols-3 lg:gap- [10rem]"> 
     <div class="flex flex-col">
      <label class="font-semibold text-[13px] font-outfit">Child </label>
-    <input type="text" name="child1" [(ngModel)]="formData.children[0].fullName"  placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input 
+    type="text" 
+    name="child0" 
+    [(ngModel)]="localPageData.children[0].fullName"  
+    placeholder="Enter full name" 
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
     <div class="flex flex-col">
      <label class="font-semibold text-[13px] font-outfit">Age</label>
-    <input type="text" name="date" [(ngModel)]="formData.dateOfBirth" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input 
+     type="text" name="date" [(ngModel)]="localPageData.children[0].dob" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
     </div>
 
-    <!-- [(ngModel)]="formData.children?.[0]?.fullName" -->
+    <!-- [(ngModel)]="formData.children?.[0]?.fullName"     *ngIf="localPageData.children && formData.children.length > 0"-->
 
     <div></div>
   </div>
 
   <!-- Row 4: Input 7  -->
-  <div *ngIf="formData.children && formData.children.length > 1" class="grid md:grid-cols-3 md:gap -[10rem]">
+  <div  class="grid md:grid-cols-3 md:gap -[10rem]">
     <div class="flex flex-col"> 
         <label class="font-semibold text-[13px] font-outfit">Child </label>
-    <input type="text" name="child2" [(ngModel)]="formData.children[1].fullName"  placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input 
+    type="text" 
+    name="child1" 
+    [(ngModel)]="localPageData.children[1].fullName"  
+    placeholder="Enter full name" 
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
     </div>
 
  
     <div class="flex flex-col">
     <label class="font-semibold text-[13px] font-outfit">Age</label>
-    <input type="text" name="date" [(ngModel)]="formData.dateOfBirth" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input 
+     type="text" name="date" [(ngModel)]="localPageData.children[1].dob" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
     </div>
 
     <div></div>
+  
   </div>
 
 
@@ -107,7 +117,8 @@
 
 
 
-   <div class="mb-4 space-y-6">
+
+   <div class="mb-4 space-y-6 ">
     
      <div>
 

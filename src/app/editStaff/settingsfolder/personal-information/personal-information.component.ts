@@ -42,7 +42,20 @@ originalStaffData: any;
   
   // selectedFile!: File;
 imagePreview: string | ArrayBuffer | null = null;
-formData: Partial<addNewStaffModel> = {};
+
+ localPageData = {
+    firstName: '',
+  lastName: '',
+  otherName: '',
+  gender: '',
+  dateOfBirth: '',
+  nationality: '',
+  maritalStatus: '',
+  idType: '',
+  idNumber: '',
+  phoneNumber: '',
+  email: ''
+ };
 
 
   constructor(private cd: ChangeDetectorRef, private router: Router, private pagesService: PagesService,
@@ -64,8 +77,8 @@ formData: Partial<addNewStaffModel> = {};
 // }
 
 ngOnInit() {
-  this.formData = this.formsServiceService.formData || {};
-  console.log('Loaded form data in ngOnInit:', this.formData);
+  // this.formData = this.formsServiceService.formData || {};
+  // console.log('Loaded form data in ngOnInit:', this.formData);
 }
 
 
@@ -153,10 +166,10 @@ onCancel(): void {
 
 
 
-  get isLastStep(): boolean {
-    const currentUrl = this.router.url;
-    return this.formService.getNextStep(currentUrl) === null;
-  }
+  // get isLastStep(): boolean {
+  //   const currentUrl = this.router.url;
+  //   return this.formService.getNextStep(currentUrl) === null;
+  // }
 
   // get isFirstStep(): boolean {
   //   const currentUrl = this.router.url;
@@ -179,41 +192,50 @@ onCancel(): void {
   // }
 
 
- // goNext() {
-//   console.log('Going to next step with form data:', this.formData); 
-
-//   const currentUrl = this.router.url;
-//   const next = this.formService.getNextStep(currentUrl);
-
-//   if (next) {
-//     this.router.navigate([next], {
-//       relativeTo: this.route.parent,
-//       state: { formData: this.formData }  // ✅ Send data here
-//     });
-//   }
-// }
 
 
-goNext() {
-  // 🔐 Save the data entered on this page   formService      
-  this.formsServiceService.updateData(this.formData);
+   // NEXT AND PREVIOUS FUNCTIONS //
+   get isLastStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getNextStep(currentUrl) === null;
+  }
 
-  // 🔁 Continue to next step
-  const currentUrl = this.router.url;
-  const next = this.formsServiceService.getNextStep(currentUrl);
+  get isFirstStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getPrevStep(currentUrl) === null;
+  }
+
+  
+   goNext() {
+  this.formsServiceService.updateData(this.localPageData);
+  const next = this.formsServiceService.getNextStep(this.router.url);
   if (next) {
-    this.router.navigate([next], { relativeTo: this.route.parent });
+    this.router.navigate([next]);
   }
 }
-// goNext() {
-//   this.formsServiceService.updateData(this.formData);
 
-//   const next = this.formService.getNextStep(this.router.url);
-//   console.log('Next step:', next);
-//   if (next) {
-//     this.router.navigate([next]);
-//   }
-// }
+  goPrev() {
+    const currentUrl = this.router.url;
+    const prev = this.formsServiceService.getPreviousStep(currentUrl);
+    if (prev) {
+      this.router.navigate([prev], { relativeTo: this.route.parent });
+    }
+  }
+
+
+//   formData = {
+//   firstName: '',
+//   lastName: '',
+//   otherName: '',
+//   gender: '',
+//   dateOfBirth: '',
+//   nationality: '',
+//   maritalStatus: '',
+//   idType: '',
+//   idNumber: '',
+//   phoneNumber: '',
+//   email: ''
+// };
 
   
 

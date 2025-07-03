@@ -120,7 +120,7 @@ export class FamilyDetailsComponent implements OnInit {
 
 
 
-Submit(form: NgForm): void {
+Submit(form: NgForm) {
   if (form.invalid) return;
   const supervisorPayload: editFamilyModel = {
   supervisor: [this.data.supervisor._id], 

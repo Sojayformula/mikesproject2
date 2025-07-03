@@ -22,7 +22,7 @@ import { EmploymentDetailsComponent2 } from '../employment-details/employment-de
 export class EditsettingsComponent {
    
 
-    steps = ['personal-information', 'employment-detail', 'family-details', 'next-of-kin', 'emergency-contact', 'education-details' ];
+    steps = ['personal-information', 'employment-details', 'family-details', 'next-of-kin', 'emergency-contact', 'education-details' ];
    currentStepIndex = 0;
   employeeData: any
   isChecked = false;

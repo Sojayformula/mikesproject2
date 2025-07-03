@@ -54,7 +54,7 @@ export const routes: Routes = [
             {path: "tools", component: ToolsComponent},
             {path: "unit", component: UnitComponent},
              {path: "support", component: SupportComponent},
-            {path: "settings", component: SettingsComponent},
+             {path: "settings", component: SettingsComponent},
             {path: "staff", component: StaffComponent},
            
                {path: 'editstaff-layout', 
@@ -76,7 +76,7 @@ export const routes: Routes = [
             children:[
               {path: '', redirectTo: 'personal-information', pathMatch: 'full'},
               {path: 'personal-information', component: PersonalInformationComponent2},
-              {path: 'employment-detail', component: EmploymentDetailsComponent2},
+              {path: 'employment-details', component: EmploymentDetailsComponent2},
                {path: 'family-details', component: FamilyDetailsComponent2},
                {path: 'next-of-kin', component: NextOfKinComponent2},
                {path: 'emergency-contact', component: EmergencyContactComponent2},

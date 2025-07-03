@@ -12,20 +12,31 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { AddstaffService } from '../../../addstaffservice/addstaff.service';
 import { FormsServiceService } from '../formService/forms-service.service';
 import { UnitHead } from '../../../model/pagesModel';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+
+import { NzFormModule } from 'ng-zorro-antd/form';
+
 
 @Component({
-  selector: 'app-employment-detail',
-  imports: [FormsModule, CommonModule],
+  selector: 'app-employment-details',
+  imports: [FormsModule, NzFormModule, CommonModule, NgSelectModule, NzSelectModule],
   templateUrl: './employment-details.component.html',
   styleUrl: './employment-details.component.scss'
 })
 export class EmploymentDetailsComponent2 implements OnInit{
 
 
-  // unitList: any[] = [];            
+  unitList: any;            
   // supervisorList: any[] = [];  
    employeeData: any
-   unitData: any
+  //  unitData: any
+   formsData = {
+  jobTitle: '',
+  unitId: '' 
+};
+
+
     allStaff: allStaffModel
     currentStep = 0;
     //getAllStaff: allStaffModel;
@@ -40,9 +51,29 @@ export class EmploymentDetailsComponent2 implements OnInit{
      editMode: boolean = false;
      originalStaffData: any;
      isLoading = false
-      formData: any = {};
 
-      units: any;
+     
+
+      localPageData = {
+        jobTitle: '',
+        unit: [],
+        employmentType: '',
+        hireDate: '',
+        workLocation: '',
+        staffId: '',
+        supervisor: [],
+        role: ''
+      };
+
+// nextStep() {
+//   this.formsService.updateData(this.localPageData); // Save this page
+//   this.router.navigate(['/editsettings/family-details']);
+// }
+
+
+
+
+      
       supervisor: any;
 
       // Partial<addNewStaffModel>
@@ -66,11 +97,13 @@ ngOnInit() {
   const item = this.route.snapshot.queryParamMap.get('staffId');
   this.staffId = item; 
 
-  this.formData = this.formsServiceService.formData || {};
-  console.log('Loaded form data in ngOnInit:', this.formData);
+  // this.formData = this.formsServiceService.formData || {};
+  // console.log('Loaded form data in ngOnInit:', this.formData);
 
   this.fetchAllStaff()
+  this.fetchSupervisors()
   this.fetchUnits()
+  this.fetchRoles()
   this.fetchSupervisors()
 }
 
@@ -98,61 +131,76 @@ ngOnInit() {
   }
 
 
-  //  fetchUnit(){
-  //   this.pageService.fetchStaff(this.allStaff).subscribe({
-  //     next: (res)=>{
-  //       this.unitData = res.data || [];
-  //        console.log('response data', res)
-  //         console.log('APIData response', this.employeeData)
-       
-  //     },
-
-  //     error: (err)=>{
-  //       console.log('Failed to fetch staff', err)
-  //     },
-
-  //     complete:()=>{
-  //       console.log('complete')
-  //     }
-  //   })
-  // }
 
 
-  fetchUnits() {
-  this.pagesService.getUnits().subscribe({
+selectedUnit = {
+  unit: [] as string[]
+};
+
+
+unitData: { _id: string; name: string }[] = [];
+
+fetchUnits() {
+  this.pageService.fetchStaff(this.allStaff).subscribe({
     next: (res) => {
-      const unitMap = new Map<string, { _id: string; name: string }>();
-      
+      const uniqueUnitsMap = new Map<string, { _id: string; name: string }>();
+
       for (const staff of res.data) {
         const unit = staff.unit;
         if (unit && typeof unit === 'object' && unit._id && unit.name) {
-          unitMap.set(unit._id, { _id: unit._id, name: unit.name });
+          uniqueUnitsMap.set(unit._id, { _id: unit._id, name: unit.name });
         }
       }
 
-      this.units = Array.from(unitMap.values());
-      console.log('Extracted units from staff:', this.units);
+      this.unitData = Array.from(uniqueUnitsMap.values());
+      console.log('Unique units:', this.unitData);
     },
     error: (err) => {
-      console.error('Failed to fetch staff list:', err);
+      console.error('Failed to fetch staff', err);
+    },
+    complete: () => {
+      console.log('Unit fetch complete');
     }
   });
 }
 
+  
 
 
-fetchSupervisors() {
-  this.pagesService.getStaff().subscribe({
-    next: (res) => {
-      this.supervisor = res.data;
-      console.log('dropdown supervisor', res)
-    },
-    error: (err) => {
-      console.error('Failed to fetch supervisors:', err);
-    }
-  });
-}
 
+
+
+
+
+
+ employmentDetailsForm = { supervisor: [] as string[] };
+ staffs: any
+  fetchSupervisors() {
+    this.pagesService.getStaff().subscribe({
+      next: (res) => {
+        this.staffs = res.data || [];
+      },
+      error: (err) => {
+        console.error('Failed to fetch supervisors:', err);
+      }
+    });
+  }
+
+
+
+   employmentRolesForm : string | null = null
+ roles: any 
+  fetchRoles() {
+    this.pagesService.getRole().subscribe({
+      next: (res) => {
+        this.roles = res?.data?.roles || [];
+        console.log('roles fetch successfully', res)
+      },
+      error: (err) => {
+        console.error('Failed to fetch roles:', err);
+      }
+    });
+  }
 
 
 
@@ -170,7 +218,8 @@ fetchSupervisors() {
    
 
   goNext() {
-  this.formsServiceService.updateData(this.formData);
+    console.log("data:", this.localPageData)
+  this.formsServiceService.updateData(this.localPageData);
   const next = this.formsServiceService.getNextStep(this.router.url);
   if (next) {
     this.router.navigate([next]);
@@ -198,7 +247,7 @@ fetchSupervisors() {
     const input = event.target as HTMLInputElement;
     const value = input.value;
 
-    // ✅ This line sets the typing status for this step
+    //  This line sets the typing status for this step
     this.typingStatusService.setTypingStatus('employment-details', value.trim().length > 0);
   }
   
@@ -218,28 +267,6 @@ set formattedDOB(value: string) {
 currentStepIndex = 0;
 steps = ['personal-details', 'education', 'employment-details', 'review']; // Example steps
 isCheckedMap: { [key: string]: boolean } = {};
-
-
-
-// goToNext() {
-//   if (this.currentStepIndex < this.steps.length - 1) {
-//     const currentStep = this.steps[this.currentStepIndex];
-//     this.isCheckedMap[currentStep] = true; // Mark current step as complete
-//     this.currentStepIndex++;
-
-//     const nextStep = this.steps[this.currentStepIndex];
-//     this.router.navigate([nextStep], { queryParamsHandling: 'preserve' });
-//   }
-// }
-
-// goToPrev() {
-//   if (this.currentStepIndex > 0) {
-//     this.currentStepIndex--;
-//     const prevStep = this.steps[this.currentStepIndex];
-//     this.router.navigate([prevStep], { queryParamsHandling: 'preserve' });
-//   }
-// }
-
 
 
 
@@ -310,6 +337,33 @@ onCancel(): void {
 
 
 
+}
+
+
+
+
+
+// "@ng-select/ng-select": "^15.0.0",
+
+// goToNext() {
+//   if (this.currentStepIndex < this.steps.length - 1) {
+//     const currentStep = this.steps[this.currentStepIndex];
+//     this.isCheckedMap[currentStep] = true; // Mark current step as complete
+//     this.currentStepIndex++;
+
+//     const nextStep = this.steps[this.currentStepIndex];
+//     this.router.navigate([nextStep], { queryParamsHandling: 'preserve' });
+//   }
+// }
+
+// goToPrev() {
+//   if (this.currentStepIndex > 0) {
+//     this.currentStepIndex--;
+//     const prevStep = this.steps[this.currentStepIndex];
+//     this.router.navigate([prevStep], { queryParamsHandling: 'preserve' });
+//   }
+// }
+
 
 
 //  goNext() {
@@ -330,5 +384,57 @@ onCancel(): void {
 
 
 
+  // jobTitles: any;
 
-}
+// fetchStaffData() {
+//   this.pageService.fetchStaff(this.allStaff).subscribe({
+//     next: (res) => {
+//       const staffList = res.data || [];
+
+//       // Extract and store unique job titles
+//       this.jobTitles = [...new Set(staffList.map((staff: any) => staff.jobTitle))];
+//       console.log('Available job titles:', this.jobTitles);
+//     },
+//     error: (err) => {
+//       console.error('Failed to fetch staff', err);
+//     }
+//   });
+// }
+
+
+
+
+//   fetchUnits() {
+//   this.pagesService.getUnits().subscribe({
+//     next: (res) => {
+//       const unitMap = new Map<string, { _id: string; name: string }>();
+      
+//       for (const staff of res.data) {
+//         const unit = staff.unit;
+//         if (unit && typeof unit === 'object' && unit._id && unit.name) {
+//           unitMap.set(unit._id, { _id: unit._id, name: unit.name });
+//         }
+//       }
+
+//       this.units = Array.from(unitMap.values());
+//       console.log('Extracted units from staff:', this.units);
+//     },
+//     error: (err) => {
+//       console.error('Failed to fetch staff list:', err);
+//     }
+//   });
+// }
+
+
+
+// fetchSupervisors() {
+//   this.pagesService.getStaff().subscribe({
+//     next: (res) => {
+//       this.supervisor = res.data;
+//       console.log('dropdown supervisor', res)
+//     },
+//     error: (err) => {
+//       console.error('Failed to fetch supervisors:', err);
+//     }
+//   });
+// }

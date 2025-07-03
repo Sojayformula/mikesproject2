@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PagesService } from '../../service/pages.service';
-import { allStaffModel, editStaffModel, PatchEducationPayload } from '../../model/pagesModel';
+import { allStaffModel, editStaffModel, EducationDetailModel, PatchEducationPayload } from '../../model/pagesModel';
 import { StaffDataService } from '../../StaffDataService/staff-data.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CheckboxService } from '../../checkboxService/checkbox.service';
@@ -15,37 +15,37 @@ import { CheckboxService } from '../../checkboxService/checkbox.service';
   styleUrl: './educationdetails.component.scss'
 })
 export class EducationdetailsComponent implements OnInit {
-  // @ViewChild('formRef') formRef!: NgForm;
 
 
-  // educationData: any = {};
+  educationData: any = {};
    getAllStaff: allStaffModel
+  //  editEduData: EducationDetailModel;
   staffId: any;
   selectedStep: string = '';
   selectedFiles: File[] = [];
   isDragging = false;
   isLoading = false
-   editEduData: editStaffModel;
+   
 
    editMode: boolean = false;
 originalStaffData: any;
 
-   educationData = {
-  educationDetails: [
-    {
-      institutionName: '',
-      courseOfStudy: '',
-      startDate: '',
-      endDate: ''
-    },
-    {
-      institutionName: '',
-      courseOfStudy: '',
-      startDate: '',
-      endDate: ''
-    }
-  ]
-};
+   // educationData = {
+//   educationDetails: [
+//     {
+//       institutionName: '',
+//       courseOfStudy: '',
+//       startDate: '',
+//       endDate: ''
+//     },
+//     {
+//       institutionName: '',
+//       courseOfStudy: '',
+//       startDate: '',
+//       endDate: ''
+//     }
+//   ]
+// };
 
 
 
@@ -53,24 +53,24 @@ originalStaffData: any;
   constructor(private route:ActivatedRoute, private pagesService:PagesService, 
     private staffDataService:StaffDataService, public checkboxService: CheckboxService ){
     this.getAllStaff = new allStaffModel()
-    this.editEduData = new editStaffModel()
+    //this.editEduData = new EducationDetailsModel()
 
-      this.educationData = {
-  educationDetails: [
-    {
-      institutionName: '',
-      courseOfStudy: '',
-      startDate: '',
-      endDate: ''
-    },
-    {
-      institutionName: '',
-      courseOfStudy: '',
-      startDate: '',
-      endDate: ''
-    }
-  ]
-};
+//       this.educationData = {
+//   educationDetails: [
+//     {
+//       institutionName: '',
+//       courseOfStudy: '',
+//       startDate: '',
+//       endDate: ''
+//     },
+//     {
+//       institutionName: '',
+//       courseOfStudy: '',
+//       startDate: '',
+//       endDate: ''
+//     }
+//   ]
+// };
   }
 
 
@@ -89,19 +89,37 @@ originalStaffData: any;
 
 
 
-   fetchEduDetails() {
-    this.pagesService.getUEduById(this.staffId, this.getAllStaff).subscribe({
-      next: (res) => {
-      this.educationData = res;
-      console.log('educationDetails:', this.educationData.educationDetails);
-      console.log('Length:', this.educationData.educationDetails?.length);
+  //  fetchEduDetails() {
+  //   this.pagesService.getUEduById(this.staffId, this.getAllStaff).subscribe({
+  //     next: (res) => {
+  //     this.educationData = res;
+  //     console.log('educationDetails:', res);
+  //     console.log('Length:', this.educationData.educationDetails?.length);
 
-      },
-      error: (err) => {
-        console.error('Failed to fetch data', err);
-      }
-    });
-  }
+  //     },
+  //     error: (err) => {
+  //       console.error('Failed to fetch data', err);
+  //     }
+  //   });
+  // }
+  fetchEduDetails() {
+  this.pagesService.getUEduById(this.staffId, this.getAllStaff).subscribe({
+    next: (res) => {
+      const staff = res.data || res;
+
+      this.educationData = {
+        educationDetails: staff?.supervisor?.educationDetails || []
+      };
+
+      console.log('educationDetails:', this.educationData.educationDetails);
+      console.log('Length:', this.educationData.educationDetails.length);
+    },
+    error: (err) => {
+      console.error('Failed to fetch data', err);
+    }
+  });
+}
+
 
 
 
@@ -143,18 +161,6 @@ onSubmit(eduform: NgForm): void {
   if (!eduform.valid) return;
 
   this.isLoading = true;
-
-  //   const formData = new FormData();
-  // // Append the form data manually or stringify and send JSON if backend accepts it that way
-  // formData.append('educationDetails', JSON.stringify(this.educationData.educationDetails));
-  // // Append files
-  // for (let i = 0; i < this.selectedFiles.length; i++) {
-  //    formData.append('files', this.selectedFiles[i]);
-  // //   for (const [key, value] of formData.entries()) {
-  // // console.log(`${key}:`, value);
-  //  // }
-  // }
-
  
    const formData = new FormData();
 formData.append('_id', this.staffId);
@@ -162,12 +168,6 @@ formData.append('educationDetails', JSON.stringify(this.educationData.educationD
 for (let i = 0; i < this.selectedFiles.length; i++) {
   formData.append('files', this.selectedFiles[i]);
 }
-
-
-//   const payload: PatchEducationPayload = {
-//   _id: this.staffId,
-//   educationDetails: this.educationData.educationDetails
-// };
 
 
   this.pagesService.patchEducation(this.staffId, formData).subscribe({
@@ -188,17 +188,6 @@ for (let i = 0; i < this.selectedFiles.length; i++) {
     }
   });
 }
-
-
-
-
-
-
-
-
-
-// this.educationData = JSON.parse(JSON.stringify(employee));
-
 
 onEditToggle(): void {
   this.editMode = true;
@@ -269,5 +258,31 @@ onCancel(): void {
     if (type.startsWith('text/')) return 'text';
     return 'other';
   }
+
+
+//   onSubmitEducation(form: NgForm) {
+//   const payload = {
+//     staffId: this.staffId,
+//      institutionName: form.value.institutionName,
+//   courseOfStudy: form.value.courseOfStudy,
+//   startDate: form.value.startDate,
+//   endDate: form.value.endDate,
+//     // educationDetailsModel: this.educationData.educationDetails
+//   };
+
+//   console.log('Submitting education data:', payload);
+
+//   this.pagesService.postEducation(this.staffId, this.payload).subscribe({
+//     next: (res) => {
+//       console.log('Successfully submitted education data:', res);
+//       alert('Education details saved successfully!');
+//     },
+//     error: (err) => {
+//       console.error('Error submitting education data:', err);
+//       alert('Failed to save education details.');
+//     }
+//   });
+// }
+
 
 }
