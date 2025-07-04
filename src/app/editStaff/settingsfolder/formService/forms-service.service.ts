@@ -17,26 +17,7 @@ export class FormsServiceService {
   '/editsettings/education-details'
 ];
 
-   formData: any = {
-     spouseName: '',
-  spousePhone: '',
-  spouseEmail: '',
-  numberOfChildren: 2,
-  children: [
-    { fullName: '', dob: '' },
-    { fullName: '', dob: '' }
-  ]
-   };
-//   formData: Partial<addNewStaffModel> = {
-  // spouseName: '',
-  // spousePhone: '',
-  // spouseEmail: '',
-  // numberOfChildren: 2,
-  // children: [
-  //   { fullName: '', dob: '' },
-  //   { fullName: '', dob: '' }
-  // ]
-// };
+   formData: any = {};
 
 
   updateData(data: any) {

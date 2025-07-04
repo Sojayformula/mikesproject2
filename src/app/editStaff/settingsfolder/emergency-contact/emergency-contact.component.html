@@ -1,13 +1,25 @@
-<div class="navigation-buttons mt-4 flex justify-end gap-4 mx-10">
-  <button type="button" *ngIf="!isFirstStep" (click)="goPrev()"  class=" border-2 border-[#727A90] w-[88px] h-[40px] rounded-[10px] text-[14px]">Previous</button>
+<div class="relative left-[6rem] mt-[-3rem] mx-24 md:mx-0 md:mt-6 flex justify-end gap-4">
+  <button 
+  *ngIf="!isFirstStep"
+  type="button" 
+  (click)="goPrev()"  
+  class=" border-2 border-[#727A90] w-[88px] h-[40px] rounded-[10px] text-[14px] hover:bg-gray-300">
+  Previous
+</button>
 
-  <button type="button" *ngIf="!isLastStep" (click)="goNext()" class=" bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] text-white w-[88px] h-[40px] rounded-[10px] text-[14px]">Next</button>
+  <button 
+  *ngIf="!isLastStep"
+  type="button"  
+  (click)="goNext()" 
+  class=" bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] text-white w-[88px] h-[40px] rounded-[10px] text-[14px]">
+  Next
+</button>
 
   <!-- <button type="button" *ngIf="isLastStep" (click)="submit()">Submit</button> -->
 </div>
 
 
-<div class="mt-24">
+<div class="mt-24 mx-10 md:mx-0">
 
   <div>
     <div>
@@ -16,7 +28,7 @@
     </div>
 
 
-    <form #emergencyForm="ngForm" class="grid grid-rows-2 grid-cols-3 gap-y-8 gap-x-[5rem] font-outfit mt-12">
+    <form #emergencyForm="ngForm" class="grid  grid-rows-2 grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-10 font-outfit mt-12">
         <!-- Row ---1 -->
          <div>
             <label class="block w-20">Full Name</label>

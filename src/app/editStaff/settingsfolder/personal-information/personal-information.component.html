@@ -1,7 +1,11 @@
 
 
 <div class="navigation-buttons mt-[-3rem] mx-10 md:mx-0 md:mt-6 flex justify-end gap-4 ">
-  <button type="button" *ngIf="!isLastStep"  (click)="goNext()" class=" bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] text-white w-[88px] h-[40px] rounded-[10px] text-[14px]">Next</button>
+  <button 
+  type="button" 
+  *ngIf="!isLastStep"  
+  (click)="goNext()" 
+  class=" bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] text-white w-[88px] h-[40px] rounded-[10px] text-[14px]">Next</button>
 </div>
 
 
@@ -16,64 +20,60 @@
         <p class="text-[#727A90] text-sm">The image will be displayed on their Profile</p>
     </div>
 
-      <!-- Image Preview -->
-     <div class="lg:col-span-2 flex flex-col items-cente mt-10">
-      <div class="relative w-[90px] [167px] h-[90px] [167px] mb-2">
-        <div class="border-[#4393FF] bg-[#4393FF1A] border rounded-full w-full h-full overflow-hidden fle items-center justify-center">
-          <ng-container *ngIf="!imagePreview">
-            <span class="text-gray-600 text-sm text-center ">No Image</span>
-          </ng-container>
-          <!-- <img
-            *ngIf="staffData?.profilePicture"
-            [src]="getSafeProfilePicture(staffData.profilePicture)"
-            alt="Image Preview"
-            class="object-cover w-full h-full rounded-full relative right-[19px]"
-          /> -->
-        <div class="-32 h-24 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center mt-[-25px]">
-          <img
-            *ngIf="imagePreview; else savedImage"
-            [src]="imagePreview"
-            alt="Preview Image"
-            class="h-full w-auto object-cover"
-          />
-          
-          <ng-template #savedImage>
-            <img
-              *ngIf="staffData?.profilePicture"
-              [src]="getSafeProfilePicture(staffData.profilePicture)"
-              alt="Saved Image"
-              class="h-full w-auto object-cover "
-            />
-          </ng-template>
-        </div>
+    <div class="flex items-start relative mt-10">
+  <!-- Profile Image Container -->
+  <div
+    class="h-20 w-20 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center cursor-pointer"
+    (click)="fileInput.click()"
+  >
+    <img
+      *ngIf="imagePreview; else fallbackImage"
+      [src]="imagePreview"
+      alt="Preview"
+      class="h-full w-full object-cover"
+    />
+
+    <ng-template #fallbackImage>
+      <img
+        *ngIf="staffData?.profilePicture; else defaultImage"
+        [src]="getSafeProfilePicture(staffData.profilePicture)"
+        alt="Saved Image"
+        class="h-full w-full object-cover"
+      />
+    </ng-template>
+
+    <ng-template #defaultImage>
+      <img
+        src="/ProfilePic.png"
+        alt="Default"
+        class="h-full w-full object-cover"
+      />
+    </ng-template>
+
+    <!-- Hidden file input -->
+    <input
+      type="file"
+      accept="image/*"
+      (change)="onFileSelected($event)"
+      #fileInput
+      hidden
+    />
+  </div>
+
+  <!-- Checkmark -->
+  <div
+    *ngIf="imagePreview"
+    class="relative h-[21px] w-[21px] right-[18px] bottom-[-50px]"
+  >
+    <img
+      src="/check.png"
+      alt="Selected"
+      class="h-full w-full object-cover"
+    />
+  </div>
+</div>
 
 
-          </div>
-        </div>
-
-      <!-- Upload image -->
-      <div>
-        <input 
-          type="file"
-          id="fileInput"
-          (change)="onFileSelected($event)"
-          [disabled]="!editMode"
-          class="hidden"
-        />
-        <!-- <label
-          for="fileInput"
-          class="text-sm bg-[#4393FF1A] text-[#4393FF] px-3 py-1 rounded cursor-pointer"
-        >
-          Upload Image
-        </label> -->
-      </div>
-
-      <div class="mt-6">
-       <p class="font-bold">Personal Information</p> 
-        <p class="text-[#727A90] text-sm">Basic personaldetails of the staff</p>
-      </div>
-    </div>
-  </div> 
 
 
 

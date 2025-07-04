@@ -20,9 +20,9 @@
  
 }
 
-::ng-deep .unit-select-box {
-  @apply w-full;
-}
+// ::ng-deep .unit-select-box {
+//   @apply w-full;
+// }
 
 ::ng-deep .unit-select-box .ng-select-container {
   @apply h-[45px] text-sm px-3 rounded-lg border border-[#8888];

@@ -1,16 +1,24 @@
-<div class="navigation-buttons mt-4 flex gap-4 justify-end mx-10">
-  <button type="button" *ngIf="!isFirstStep" (click)="goPrev()" class=" border-2 border-[#727A90] w-[88px] h-[40px] rounded-[10px] text-[14px]">Previous</button>
+<div class="mt-[-3rem] mx-10 md:mx-3 md:mt-6 flex gap-4 justify-end ">
+  <button
+  *ngIf="!isFirstStep" 
+  type="button"  
+  (click)="goPrev()" 
+  class=" border-2 border-[#727A90] w-[88px] h-[40px] rounded-[10px] text-[14px] hover:bg-gray-300">
+  Previous
+  </button>
 
    <button 
    *ngIf="isLastStep" 
    type="button"
     (click)="submit()"
      (click)="cancelShowField()"
-     class=" bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] text-white w-[88px] h-[40px] rounded-[10px] text-[14px]">Submit</button> 
+     class=" bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] text-white w-[88px] h-[40px] rounded-[10px] text-[14px] ">
+     Submit
+    </button> 
 </div>
 
 
-<div class="mt-24">
+<div class="mt-36 md:mt-24 mx-10 ">
 
   <div class="flex justify-between">
     <div>
@@ -30,7 +38,7 @@
 
             <!-- FORM -->
 
-  <form #eduform="ngForm" class="grid grid-cols-3 gap-y-8 mt-12 font-outfit">
+  <form #eduform="ngForm" class="grid grid-cols-2 lg:grid-cols-3 sm:grid gap-y-8 mt-12 font-outfit">
   <!-- Row 1 -->
   <div>
     <label class="block w-40">Institution Name</label>
@@ -159,7 +167,7 @@
             
 
 
-  <div>
+  <div class="relative right-[24rem] md:right-6 mt-10 mx-6">
    
      <div class="">
     <p class="font-bold font-outfit text-[16px]">Docs</p>
@@ -169,7 +177,7 @@
    <div class="mb-10 mt-10">
 
     <div
-  class="border-2 border-dashed border-blue-400 w-[1150px] h-[172px] p-6 rounded-md text-center cursor-pointer bg-[#F8FAFF]"
+  class="border-2 border-dashed border-blue-400 w-[45rem] md:w-[1000px] h-[172px] p-6 rounded-md text-center cursor-pointer bg-[#F8FAFF]"
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
   (drop)="onDrop($event)"

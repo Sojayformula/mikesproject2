@@ -62,7 +62,6 @@ imagePreview: string | ArrayBuffer | null = null;
 
   }
 
-//  allStaffModel
 
    ngOnInit(): void {
    const item = this.route.snapshot.queryParamMap.get('staffId');

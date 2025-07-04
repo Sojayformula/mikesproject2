@@ -1,7 +1,19 @@
-<div class="mt-4 flex justify-end gap-4 relative left-[7.6rem]">
-  <button type="button" *ngIf="!isFirstStep" (click)="goPrev()"  class=" border-2 border-[#727A90] w-[88px] h-[40px] rounded-[10px] text-[14px]">Previous</button>
+ <div class="mt-[-3rem] mx-3 md:mx-0 md:mt-6 flex justify-end gap-4 relative left-[5.8rem]"> 
+  <button 
+  *ngIf="!isFirstStep"
+  type="button"  
+  (click)="goPrev()"  
+  class=" border-2 border-[#727A90] w-[88px] h-[40px] rounded-[10px] text-[14px]">
+  Previous
+</button>
 
-  <button type="button" *ngIf="!isLastStep" (click)="goNext()" (click)="goNext()" class=" bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] text-white w-[88px] h-[40px] rounded-[10px] text-[14px]">Next</button>
+  <button
+  *ngIf="!isLastStep" 
+  type="button"  
+  (click)="goNext()" 
+  class=" bg-gradient-to-b from-[#4393FF] to-[#5FA3FF] text-white w-[88px] h-[40px] rounded-[10px] text-[14px]">
+  Next
+</button>
 
 </div> 
 

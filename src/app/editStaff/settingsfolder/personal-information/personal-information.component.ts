@@ -12,6 +12,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { AddstaffService } from '../../../addstaffservice/addstaff.service'; 
 import { FormsServiceService } from '../formService/forms-service.service';
 
+
 @Component({
   selector: 'app-personal-information',
   imports: [FormsModule, CommonModule],
@@ -66,9 +67,12 @@ imagePreview: string | ArrayBuffer | null = null;
 
     this.getStaffModel = new getStaffModel()
     this.editStaffData = new editStaffModel()
+    this.getAllStaff = new allStaffModel()
 
-      this.getAllStaff = new allStaffModel()
+     createNotification(position: 'top', type: 'success'| 'info'| 'warning'| 'error', title: string, message: string ){
+   this.notification.create(type, title, message, {nzPlacement: position, nzDuration: 3000});
   }
+}
 
 
 //   ngOnInit() {
@@ -92,8 +96,6 @@ ngOnInit() {
   return pic.replace(/^"|"$/g, '');
 }
 
-
-
 async onFileSelected(event: any) {
   const file = event.target.files[0];
   if (!file) return;
@@ -108,7 +110,7 @@ async onFileSelected(event: any) {
     // Compress the image
     const compressedFile = await imageCompression(file, options);
 
-    // Convert compressed file to base64 string for preview and submission
+    // Convert compressed file to base64 
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = reader.result as string;
@@ -152,17 +154,17 @@ set formattedDOB(value: string) {
   this.checkboxService.setTypingStatus('person-information', isTyping);
 }
 
-//  Edit  function
-onEditToggle(): void {
-  this.editMode = true;
-  this.originalData = JSON.parse(JSON.stringify(this.staffData)); // deep copy
-}
+// //  Edit  function
+// onEditToggle(): void {
+//   this.editMode = true;
+//   this.originalData = JSON.parse(JSON.stringify(this.staffData)); // deep copy
+// }
 
-// Cancel function
-onCancel(): void {
-  this.editMode = false;
-  this.staffData = JSON.parse(JSON.stringify(this.originalData)); // restore
-}
+// // Cancel function
+// onCancel(): void {
+//   this.editMode = false;
+//   this.staffData = JSON.parse(JSON.stringify(this.originalData)); // restore
+// }
 
 
 
