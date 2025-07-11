@@ -1,0 +1,106 @@
+
+
+::ng-deep .custom-confirm-modal .ant-modal-content {
+  border: 1px solid red !important;
+  border-radius: 10px;
+  background-color: #fef2f2 !important;
+  margin-left: 36rem;
+  width: 20rem;
+}
+
+@media (max-width: 768px) {
+  ::ng-deep .custom-confirm-modal .ant-modal-content {
+    margin: 20px auto !important;          
+    width: 90% !important;              
+    max-width: 95vw !important;
+    position: relative;
+    left: 13rem;
+  }
+
+}
+
+
+::ng-deep .custom-confirm-modal .ant-modal-header {
+  background-color: #fef2f2 !important;
+  color: #fef2f2 !important;
+  font-weight: bold !important;
+  
+}
+
+::ng-deep .custom-confirm-modal .ant-modal-body {
+  font-size: 15px !important;
+  color: #4b5563 !important;
+  text-align: center !important;
+  
+}
+
+::ng-deep .custom-confirm-modal .ant-btn-dangerous {
+  background-color: #dc2626 !important;
+  border-color: black !important;
+  border-radius: 4px;
+  margin-left: 15px;
+  color: white;
+  width: 60px;
+  margin-bottom: 15px;
+}
+
+::ng-deep .custom-confirm-modal .ant-btn-dangerous:hover {
+  background-color: rgb(240, 100, 100) !important;
+  border-color: black !important;
+  
+}
+
+::ng-deep .ant-modal-mask {
+  background-color: rgba(0, 0, 0, 0.6) !important; 
+}
+
+
+::ng-deep .custom-confirm-modal  button:first-child  {
+  background-color: rgb(164, 163, 163) !important;
+  border-color: black !important;
+  border-radius: 4px !important;
+  margin-left: 15px !important;
+  color: #ffff !important;
+  width: 60px !important;
+ 
+}
+
+::ng-deep .custom-confirm-modal .ant-modal-close {
+  font-size: 15px !important;
+  margin-top: 5px;
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: center;
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ::ng-deep .custom-confirm-modal .ant-modal-default {
+//   background-color: #9ca3af !important;
+//   color: white !important;
+//   border: 1px solid black !important;
+//   border-radius: 6px !important;
+//   //width: 80px !important;
+  
+// }
+
+
+
+
+
+

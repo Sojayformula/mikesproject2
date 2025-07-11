@@ -11,6 +11,8 @@ import imageCompression from 'browser-image-compression';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { AddstaffService } from '../../../addstaffservice/addstaff.service'; 
 import { FormsServiceService } from '../formService/forms-service.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+
 
 
 @Component({
@@ -24,7 +26,9 @@ export class PersonalInformationComponent2 implements OnInit {
 
 
   
-
+  
+  successMessage = '';
+  errorMessage = '';
 
   currentStepIndex = 0;
    staffData: any;  
@@ -44,7 +48,8 @@ originalStaffData: any;
   // selectedFile!: File;
 imagePreview: string | ArrayBuffer | null = null;
 
- localPageData = {
+//  localPageData
+  formData= {
     firstName: '',
   lastName: '',
   otherName: '',
@@ -56,33 +61,51 @@ imagePreview: string | ArrayBuffer | null = null;
   idNumber: '',
   phoneNumber: '',
   email: ''
- };
+ }; 
+  
+resetForm() {
+ this.formData= {
+    firstName: '',
+  lastName: '',
+  otherName: '',
+  gender: '',
+  dateOfBirth: '',
+  nationality: '',
+  maritalStatus: '',
+  idType: '',
+  idNumber: '',
+  phoneNumber: '',
+  email: ''
+ };   }
+
 
 
   constructor(private cd: ChangeDetectorRef, private router: Router, private pagesService: PagesService,
     private route:ActivatedRoute, private location:Location, public editService:EditService, 
     private staffDataService: StaffDataService,private checkboxService:CheckboxService,  public formService: AddstaffService,
-    public formsServiceService: FormsServiceService, public AddstaffService: AddstaffService
+    public formsServiceService: FormsServiceService, public AddstaffService: AddstaffService, private notification: NzNotificationService
   ){
 
     this.getStaffModel = new getStaffModel()
     this.editStaffData = new editStaffModel()
     this.getAllStaff = new allStaffModel()
+   
+}
 
      createNotification(position: 'top', type: 'success'| 'info'| 'warning'| 'error', title: string, message: string ){
    this.notification.create(type, title, message, {nzPlacement: position, nzDuration: 3000});
   }
-}
 
-
-//   ngOnInit() {
-//   this.formData = this.formService.formData;
-//   console.log('Restored formData:', this.formData);
-// }
 
 ngOnInit() {
-  // this.formData = this.formsServiceService.formData || {};
-  // console.log('Loaded form data in ngOnInit:', this.formData);
+  this.formData = this.formsServiceService.formData || {};
+  console.log('Loaded form data in ngOnInit:', this.formData);
+
+ 
+  // const savedData = this.formsServiceService.getData();
+  // this.formData = { ...this.formData, ...savedData }; // only overrides existing fields
+
+
 }
 
 
@@ -154,6 +177,65 @@ set formattedDOB(value: string) {
   this.checkboxService.setTypingStatus('person-information', isTyping);
 }
 
+
+   // NEXT AND PREVIOUS FUNCTIONS //
+   get isLastStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getNextStep(currentUrl) === null;
+  }
+
+  get isFirstStep(): boolean {
+    const currentUrl = this.router.url;
+    return this.formService.getPrevStep(currentUrl) === null;
+  }
+
+  
+//    goNext() {
+//     console.log('Personal info', this.formData)
+//   this.formsServiceService.updateData(this.formData);
+//   const next = this.formsServiceService.getNextStep(this.router.url);
+//   if (next) {
+//     this.router.navigate([next]);
+//   }
+// }
+goNext() {
+  console.log('Personal info', this.formData);
+  this.formsServiceService.updateData(this.formData); // ✅ Save to shared service
+  const next = this.formsServiceService.getNextStep(this.router.url);
+  if (next) {
+    this.router.navigate([next]);
+  }
+}
+
+
+  goPrev() {
+    const currentUrl = this.router.url;
+    const prev = this.formsServiceService.getPreviousStep(currentUrl);
+    if (prev) {
+      this.router.navigate([prev], { relativeTo: this.route.parent });
+    }
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // //  Edit  function
 // onEditToggle(): void {
 //   this.editMode = true;
@@ -192,53 +274,3 @@ set formattedDOB(value: string) {
   //   console.warn('No formData found in history state');
   // }
   // }
-
-
-
-
-   // NEXT AND PREVIOUS FUNCTIONS //
-   get isLastStep(): boolean {
-    const currentUrl = this.router.url;
-    return this.formService.getNextStep(currentUrl) === null;
-  }
-
-  get isFirstStep(): boolean {
-    const currentUrl = this.router.url;
-    return this.formService.getPrevStep(currentUrl) === null;
-  }
-
-  
-   goNext() {
-  this.formsServiceService.updateData(this.localPageData);
-  const next = this.formsServiceService.getNextStep(this.router.url);
-  if (next) {
-    this.router.navigate([next]);
-  }
-}
-
-  goPrev() {
-    const currentUrl = this.router.url;
-    const prev = this.formsServiceService.getPreviousStep(currentUrl);
-    if (prev) {
-      this.router.navigate([prev], { relativeTo: this.route.parent });
-    }
-  }
-
-
-//   formData = {
-//   firstName: '',
-//   lastName: '',
-//   otherName: '',
-//   gender: '',
-//   dateOfBirth: '',
-//   nationality: '',
-//   maritalStatus: '',
-//   idType: '',
-//   idNumber: '',
-//   phoneNumber: '',
-//   email: ''
-// };
-
-  
-
-}

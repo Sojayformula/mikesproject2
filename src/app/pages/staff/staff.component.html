@@ -19,12 +19,12 @@
                 <span>Staff id</span>
               </div>
             </th>
-            <th class="px- py-2">Full name</th>
-            <th class="px- py-">Employment type</th>
-            <th class="px- py-2">Gender</th>
-            <th class="px- py-2">Unit</th>
-            <th class="px- py-2">BirthDay</th>
-            <th class="px- py-2">Status</th>
+            <th class="px-4 py-2">Full name</th>
+            <th class="px-4 py-">Employment type</th>
+            <th class="px-4 py-2">Gender</th>
+            <th class="px-4 py-2">Unit</th>
+            <th class="px-4 py-2">BirthDay</th>
+            <th class="px-4 py-2">Status</th>
             <th class="px- py-2">Action</th>
           </tr>
         </thead>
@@ -36,25 +36,25 @@
                 <span>{{ item.staffId }}</span>
               </div>
             </td>
-            <td class="flex gap-2 px- py-2">
-              <div>
+            <td class="flex lg:gap-2 px-4 py-2">
+              <!-- <div> -->
                <img 
             [src]="APIData.profilePicture || '/Preview.png'" 
             alt="Profile Preview"
-            class="w-[42px] h-[42px] rounded-full object-cover border"
+            class="mt-4 md:mt-0 w-[30px] h-[30px] lg:w-[42px] lg:h-[42px] rounded-full object-cover border"
           />
-          </div>
+          <!-- </div> -->
            <div class="flex items-center">
               {{ item.firstName }} {{ item.lastName }}
            </div>
             </td>
 
-            <td class="px- py-2">{{ item.employmentType }}</td>
-            <td class="px- py-2">{{ item.gender }}</td>
+            <td class="px-6 py-2">{{ item.employmentType }}</td>
+            <td class="px-4 py-2">{{ item.gender }}</td>
             <td class="px- py-2">{{ item.unit?.name }}</td>
-            <td class="px- py-2">{{ item.dateOfBirth | date: 'yyyy-MM-dd'  }}</td>
+            <td class="px-4 py-2">{{ item.dateOfBirth | date: 'yyyy-MM-dd'  }}</td>
             
-            <td class="px- py-2">
+            <td class="px-4 py-2">
                <div 
                 class="rounded px-3 py-1 text-xs w-fi text-center"
                 [ngClass]="{
@@ -73,7 +73,7 @@
           </button>
 
          <button nz-button nzType="default" class="text-red-600">
-          <span   class="material-symbols-outlined">delete</span>
+          <span (click)="getdeleteStaff(item._id)"  class="material-symbols-outlined">delete</span>
          </button>
 
         </td> 

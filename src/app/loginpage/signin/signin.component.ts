@@ -3,9 +3,10 @@
 import { FormsModule, NgForm } from '@angular/forms';
     import { Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
-import { environment } from '../../environment/environment';
+//import { environment } from '../../environment/environment';
 import { loginModel } from '../../model/login-model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 
     @Component({
@@ -25,7 +26,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
       password: string = '';
 
 
-    constructor(private router:Router, private authService:AuthService){
+    constructor(private router:Router, private authService:AuthService, private notification: NzNotificationService){
 
       this.loginData = new loginModel()
     }
@@ -33,6 +34,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     forgotPassword(){
       this.router.navigate(['/forgotpassword']);
     }
+
+   createNotification(position: 'topRight', type: 'success'| 'info'| 'warning'| 'error', title: string, message: string ){
+   this.notification.create(type, title, message, {nzPlacement: position, nzDuration: 3000,   }); 
+  }
+
+
+  
+ 
 
     onSubmit(item:NgForm){
        this.isLoading = true;
@@ -46,7 +55,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
             localStorage.setItem('token', res.token);
             const token = localStorage.getItem('token')
             console.log('toke', token)
-            this.router.navigate(['/dashboard'])
+             this.router.navigate(['/dashboard'])
+            this.createNotification('topRight', "success", "Login Successful!!", "Welcome Back!")
+           
 
             // if(res.isFirstLogin == true ){
             //   this.router.navigate(['resetpassword'])
@@ -58,7 +69,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
           },
           error: (err) => {
             console.error('Login failed:', err);
-            alert('Invalid login credentials');
+            this.createNotification("topRight", "error", "Login Failed!!", "Invalid Credentials!")
+            this.isLoading = false
           }
         });
     }

@@ -26,13 +26,24 @@ export class EmergencyContactComponent2 {
 
 
 
-   localPageData = {
+   formData = {
    emergencyContactFullName: '',
     emergencyContactRelationship: '',
     emergencyContactPhoneNumber: '',
     emergencyContactEmail: '',
     emergencyContactCurrentAddress: '',
 };
+
+
+  resetForm() {
+    this.  formData = {
+   emergencyContactFullName: '',
+    emergencyContactRelationship: '',
+    emergencyContactPhoneNumber: '',
+    emergencyContactEmail: '',
+    emergencyContactCurrentAddress: '',
+};
+  }
 
 
   constructor(private router:Router, private pagesService:PagesService, private route:ActivatedRoute,
@@ -43,8 +54,8 @@ export class EmergencyContactComponent2 {
 
 
 ngOnInit() {
-  // this.formData = this.formsServiceService.formData || {};
-  // console.log('Loaded form data in ngOnInit:', this.formData);
+  this.formData = this.formsServiceService.formData || {};
+  console.log('Loaded form data in ngOnInit:', this.formData);
 }
 
 
@@ -82,7 +93,7 @@ onCancel() {
   }
 
  goNext() {
-  this.formsServiceService.updateData(this.localPageData);
+  this.formsServiceService.updateData(this.formData);
   const next = this.formsServiceService.getNextStep(this.router.url);
   if (next) {
     this.router.navigate([next]);

@@ -28,7 +28,7 @@ export class EditstaffLayoutComponent {
  
   steps = ['person-information', 'employment-details', 'family-details', 'next-of-kins', 'emengency-contact', 'education-details' ];
   currentStepIndex = 0;
-  employeeData: any
+  // employeeData: any
   isChecked = false;
   inputValue = '';
   isSidebarOpen = false;
@@ -39,7 +39,7 @@ export class EditstaffLayoutComponent {
 
    constructor( private staffDataService:StaffDataService, private cd: ChangeDetectorRef, public editService:EditService, 
       private editControlService:EditService, private location:Location, private router: Router, private route:ActivatedRoute, 
-      private typingStatusService: CheckboxService){
+      private typingStatusService: CheckboxService, private checkboxService: CheckboxService){
 
       // this.steps.forEach(step => this.isCheckedMap[step] = false);
   }
@@ -64,7 +64,6 @@ ngOnInit() {
   });
 
 }
-
 
 
   goBack() {

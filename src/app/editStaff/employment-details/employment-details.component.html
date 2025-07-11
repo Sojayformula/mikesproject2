@@ -1,5 +1,5 @@
 
-<div class="flex justify-end col-span-3 relative lg:left- 52 top- [-6rem] md:top-[-5.7rem] mx-20">
+<div class="flex justify-end gap-4 col-span-3 relative md:left-[4.5rem] left-[5.2rem] top-[-6rem] md:top-[-5.5rem] mx-20">
   <button
     type="button"
     *ngIf="!editMode"
@@ -55,7 +55,7 @@
 
 
                               <!-- FORM -->
-    <form #staffForm="ngForm" (ngSubmit)="onSubmit(staffForm)" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2  gap-10 p-6 bg-white rounded gap-y-6 mt-10">
+    <form #staffForm="ngForm"  (ngModelChange)="onInputChange()" (ngSubmit)="onSubmit(staffForm)" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2  gap-10 p-6 bg-white rounded gap-y-6 mt-10">
   <!-- Row 1 -->
    
   <div>
@@ -65,11 +65,11 @@
     name="jobTitle" 
     [disabled]="!editMode" 
     [(ngModel)]="employeeData.supervisor.jobTitle" 
-    (ngModelChange)="onInputChange($event, 'jobTitle')"  
+     
     placeholder="Enter legal first name" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
-
+<!-- (ngModelChange)="onInputChange($event, 'jobTitle')"  -->
    
 <div>
   <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Unit</label>
@@ -78,7 +78,7 @@
     [(ngModel)]="form.units"
     [disabled]="!editMode"
     [(ngModel)]="employeeData.jobTitle" 
-    (ngModelChange)="onInputChange($event, 'unitId')"
+    
     required
     class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
   >
@@ -88,6 +88,7 @@
     </option>
   </select>
 </div>
+<!-- (ngModelChange)="onInputChange($event, 'unitId')" -->
 
 
 
@@ -101,10 +102,11 @@
     [disabled]="!editMode" 
     [(ngModel)]="employeeData.employmentType" 
    
-    (ngModelChange)="onInputChange($event, 'employmentType')" 
+    
     placeholder="Select birth date" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
+  <!-- (ngModelChange)="onInputChange($event, 'employmentType')"  -->
 
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Hire Date</label>
@@ -113,11 +115,11 @@
     name="gender" 
     [disabled]="!editMode" 
     [(ngModel)]="formattedDOB" 
-    (ngModelChange)="onInputChange($event, 'gender')" 
+    
     placeholder="Hired Date" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
- 
+ <!-- (ngModelChange)="onInputChange($event, 'gender')"  -->
   
 
   <!-- Row 3 -->
@@ -127,12 +129,14 @@
     type="text" 
     name="workLocation" 
     [disabled]="!editMode" 
-    (ngModelChange)="onInputChange($event, 'workLocation')" 
+    
     [(ngModel)]="employeeData.workLocation" 
     
     placeholder="Select marital status" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/> 
   </div>
+  <!-- (ngModelChange)="onInputChange($event, 'workLocation')"  -->
+
 
   <!-- <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Supervisor</label>
@@ -145,7 +149,7 @@
   [(ngModel)]="form.supervisor"
   [disabled]="!editMode"
   [(ngModel)]="employeeData.jobTitle"
-  (ngModelChange)="onInputChange($event, 'supervisorId')"
+  
   required
   class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
 >
@@ -155,6 +159,7 @@
   </option>
 </select>
 </div>
+<!-- (ngModelChange)="onInputChange($event, 'supervisorId')" -->
 
 </form>
 </div>

@@ -20,12 +20,27 @@ export class FormsServiceService {
    formData: any = {};
 
 
-  updateData(data: any) {
-    console.log('Updating formData with:', data);
-    this.formData = { ...this.formData, ...data };
-    console.log('Updated formData:', this.formData);
-  }
-   
+updateData(data: any) {
+  console.log('Updating formData with:', data);
+
+  this.formData = {...this.formData, ...data,
+    children: data.children ?? this.formData.children,
+    educationDetails: data.educationDetails ?? this.formData.educationDetails
+  };
+
+  localStorage.setItem('formData', JSON.stringify(this.formData));
+  console.log('Updated formData:', this.formData);
+}
+
+
+
+getData(): any {
+  return this.formData;
+}
+
+
+
+  
 
   getNextStep(currentUrl: string): string | null {
     const index = this.FORM_STEPS.indexOf(currentUrl);
@@ -37,6 +52,47 @@ export class FormsServiceService {
     const index = this.FORM_STEPS.indexOf(currentUrl);
     return this.FORM_STEPS[index - 1] || null;
   }
+
+
+
+
+resetFormData() {
+  this.formData = {};
+  localStorage.removeItem('formData');
+}
+
+
+//   // forms-service.service.ts
+// resetFormData() {
+//    this.formData = {
+//     staffId: '',
+//     spouseName: '',
+//     spousePhone: '',
+//     spouseEmail: '',
+//     marriageCertificateUrl: '',
+//     numberOfChildren: '',
+//     children: [],
+//     educationDetails: [
+//       {
+//         institutionName: '',
+//         courseOfStudy: '',
+//         startDate: '',
+//         endDate: ''
+//       },
+//       {
+//         institutionName: '',
+//         startDate: ''
+//       }
+//     ],
+//     // Add any other sections (e.g., nextOfKin, emergencyContact)
+//   };
+
+//   localStorage.removeItem('formData');
+// }
+
+
+
+
   
 }
 
@@ -45,6 +101,67 @@ export class FormsServiceService {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // updateData(data: any) {
+  //   console.log('Updating formData with:', data);
+  //   this.formData = { ...this.formData, ...data };
+  //   console.log('Updated formData:', this.formData);
+  // }
+//   updateData(data: any) {
+//   console.log('Updating formData with:', data);
+
+//   // Deep merge manually for nested objects like children
+//   this.formData = {
+//     ...this.formData,
+//     ...data,
+//     children: data.children ?? this.formData.children // preserve children
+//   };
+
+//   console.log('Updated formData:', this.formData);
+// }
+
+
+
+
+
+
+// updateData(data: any) {
+//   console.log('Updating formData with:', data);
+
+//   this.formData = {...this.formData, ...data,
+//     children: data.children ?? this.formData.children,
+//     educationDetails: data.educationDetails ?? this.formData.educationDetails
+//   };
+
+//   console.log('Updated formData:', this.formData);
+// }
 
 
 

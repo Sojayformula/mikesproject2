@@ -14,7 +14,7 @@
 
 
 
-<div class="mt-24 mx-10 md:mx-0">
+<div class="mt-24 mx-16 md:mx-0">
 
     <div class="">
         <p class="font-bold font-outfit w-60">Employment Details</p>
@@ -31,7 +31,7 @@
     <input
      type="text" 
      name="jobTitle" 
-     [(ngModel)]="localPageData.jobTitle"  
+     [(ngModel)]="formData.jobTitle"  
      placeholder="Enter job title" 
      class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
@@ -80,7 +80,7 @@
     bindLabel="name"
     bindValue="_id"
     [multiple]="true"
-    [(ngModel)]="localPageData.unit"
+    [(ngModel)]="formData.unit"
     name="unit"
     placeholder="Select unit(s)"
     style="width: 311px;"
@@ -104,7 +104,7 @@
       <label for="supervisor" class="block text-[#000000] text-[10px] md:text-[12px] lg:text-[13px] font-[500]"
         >Supervisor
     </label>
-      <ng-select [multiple]="true"  placeholder="Selected Supervisor" [(ngModel)]="localPageData.supervisor" name="supervisor"
+      <ng-select [multiple]="true"  placeholder="Selected Supervisor" [(ngModel)]="formData.supervisor" name="supervisor"
       style="color: #888888; border-radius: 10px; width: 311px;" class=" focus:outline-none focus:outline-sky-600 focus:border-sky-600"
       class="custom-ng-select">
         @for (staff of staffs; track staff._id) {
@@ -128,7 +128,7 @@
     <input 
     type="text" 
     name="employmentType" 
-    [(ngModel)]="localPageData.employmentType" 
+    [(ngModel)]="formData.employmentType" 
     placeholder="Full-time, Part-time, Contract" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
@@ -138,7 +138,7 @@
     <input 
     type="date" 
     name="hireDate" 
-    [(ngModel)]="localPageData.hireDate" 
+    [(ngModel)]="formData.hireDate" 
     placeholder="Select date" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
@@ -150,7 +150,7 @@
     <input 
     type="text" 
     name="maritalStatus" 
-    [(ngModel)]="localPageData.workLocation" 
+    [(ngModel)]="formData.workLocation" 
     placeholder="Remote, Onsite, Hybrid" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/> 
   </div>
@@ -162,7 +162,7 @@
   <select
     name="role"
     bindValue="_id"
-    [(ngModel)]="localPageData.role"
+    [(ngModel)]="formData.role"
     required
     class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
   >
@@ -192,7 +192,7 @@
     <p class="text-[#727A90] text-[12px] font-outfit w-80">Upload a scanned copy of the spouse's marriagecertificate.</p>
     </div>
 
-   <div class="mb-10 mt-10">
+   <div class="mb-10 mt-10 ">
 
          <div
   class="border-2 border-dashed border-blue-400 w-[45rem] lg:w-[1080px] h-[172px] p-6 rounded-md text-center cursor-pointer bg-[#F8FAFF]"

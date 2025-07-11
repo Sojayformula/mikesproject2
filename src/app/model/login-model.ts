@@ -3,7 +3,13 @@ export class loginModel{
     password!:string
 }
 
-export interface Root {
+export class resetPasswordModel {
+  newPassword!: string
+  confirmPassword!: string
+}
+
+
+ export interface Root {
   _id: string
   firstName: string
   lastName: string

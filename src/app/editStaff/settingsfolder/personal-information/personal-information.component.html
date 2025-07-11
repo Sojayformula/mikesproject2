@@ -1,4 +1,11 @@
 
+   <!-- <ng-container *ngIf="isLoading">
+  <div class="mt-6 flex justify-center relative top-">
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
+</ng-container> -->
+
+
 
 <div class="navigation-buttons mt-[-3rem] mx-10 md:mx-0 md:mt-6 flex justify-end gap-4 ">
   <button 
@@ -84,7 +91,7 @@
     <input 
     type="text" 
     name="firstName" 
-    [(ngModel)]="localPageData.firstName" 
+    [(ngModel)]="formData.firstName" 
     placeholder="Enter legal first name" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
@@ -94,7 +101,7 @@
     <input 
     type="text" 
     name="lastName" 
-    [(ngModel)]="localPageData.lastName" 
+    [(ngModel)]="formData.lastName" 
     placeholder="Enter legal last name" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
@@ -104,7 +111,7 @@
     <input 
     type="text" 
     name="otherName" 
-    [(ngModel)]="localPageData.otherName"  
+    [(ngModel)]="formData.otherName"  
     placeholder="Enter if any" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
@@ -117,7 +124,7 @@
     <input 
     type="text" 
     name="dateOfBirth" 
-    [(ngModel)]="localPageData.dateOfBirth"  
+    [(ngModel)]="formData.dateOfBirth"  
     placeholder="Select birth date" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
@@ -127,7 +134,7 @@
     <input 
     type="text" 
     name="gender" 
-    [(ngModel)]="localPageData.gender"  
+    [(ngModel)]="formData.gender"  
     placeholder="Chose gender" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
@@ -137,7 +144,7 @@
     <input 
     type="text" 
     name="nationality" 
-    [(ngModel)]="localPageData.nationality"  
+    [(ngModel)]="formData.nationality"  
     placeholder="Enter country of origin" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
@@ -149,7 +156,7 @@
     <input 
     type="text" 
     name="maritalStatus" 
-    [(ngModel)]="localPageData.maritalStatus"  
+    [(ngModel)]="formData.maritalStatus"  
     placeholder="Select marital status" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
@@ -159,7 +166,7 @@
     <input 
     type="text" 
     name="phoneNumber" 
-    [(ngModel)]="localPageData.phoneNumber"  
+    [(ngModel)]="formData.phoneNumber"  
     placeholder="Enter active phone number" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
@@ -169,7 +176,7 @@
     <input 
     type="text" 
     name="email" 
-    [(ngModel)]="localPageData.email"  
+    [(ngModel)]="formData.email"  
     placeholder="Enter valid email address" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
@@ -181,7 +188,7 @@
     <input 
     type="text" 
     name="idType" 
-    [(ngModel)]="localPageData.idType"  
+    [(ngModel)]="formData.idType"  
     placeholder="Select ID type (e.g Nation ID, Passport)" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
@@ -191,7 +198,7 @@
     <input 
     type="text" 
     name="idNumber" 
-    [(ngModel)]="localPageData.idNumber"  
+    [(ngModel)]="formData.idNumber"  
     placeholder="Enter valid ID number" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
@@ -201,13 +208,29 @@
     <input 
     type="text" 
     name="email" 
-    [(ngModel)]="localPageData.email"  
+    [(ngModel)]="formData.email"  
     placeholder="Enter valid email address"  
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
 
 </form>
 </div>
+
+
+
+
+
+<!-- <div *ngFor="let staff of staffList" class="mb-6 border p-4 rounded shadow-sm">
+  <p class="text-lg font-semibold">{{ staff.firstName }} {{ staff.lastName }}</p>
+
+  QR Code
+  <img
+    *ngIf="staff.qrCode"
+    [src]="staff.qrCode"
+    alt="QR Code"
+    class="w-40 h-40 mt-2 border rounded object-contain"
+  />
+</div> -->
 
 
 <!-- </div>(ngModelChange)="onInputChange('nationality', $event)" -->

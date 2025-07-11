@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PagesService } from '../../../service/pages.service';
 import { StaffDataService } from '../../../StaffDataService/staff-data.service';
@@ -16,6 +16,7 @@ import { FormsServiceService } from '../formService/forms-service.service';
   styleUrl: './education-background.component.scss'
 })
 export class EducationBackgroundComponent2 implements OnInit {
+  
 
   addNewStaff: addNewStaffModel
   //  getAllStaff: allStaffModel
@@ -33,12 +34,14 @@ originalStaffData: any;
 showAllField: boolean = false;
 
 
-    localPageData = {
+    // localPageData 
+ 
+    formData = {
       staffId: '',
       educationDetails: [
         {
           institutionName: '',
-          courseOfStudy: '',
+           courseOfStudy: '',
           startDate: '',
           endDate: ''
         },
@@ -49,6 +52,35 @@ showAllField: boolean = false;
         }
       ]
     };
+   
+  
+
+
+//       resetForm() {
+//       this.formData = {
+//       staffId: '',
+//       educationDetails: [
+//         {
+//           institutionName: '',
+//           courseOfStudy: '',
+//           startDate: '',
+//           endDate: ''
+//         },
+//         {
+//           institutionName: '',
+//           startDate: '',
+          
+//         }
+//       ]
+//     }; 
+// }
+
+
+
+
+
+
+
 
 
   constructor(private route:ActivatedRoute, private pagesService:PagesService, private staffDataService:StaffDataService,
@@ -60,14 +92,27 @@ showAllField: boolean = false;
 
 
 
-  ngOnInit() {
-  // this.formData = this.formsServiceService.formData || {};
-  // console.log('Loaded form data in ngOnInit:', this.formData);
+// ngOnInit() {
+//   this.formData = this.formsServiceService.formData || {};
+//   console.log('Loaded form data in ngOnInit:', this.formData);
+// }
+ngOnInit() {
+  const savedData = this.formsServiceService.formData || {};
+  this.formData = {
+    ...this.formData, // keeps default structure
+    ...savedData,     // overrides with saved values
+    educationDetails: savedData.educationDetails?.length
+      ? savedData.educationDetails
+      : this.formData.educationDetails
+  };
+  console.log('Loaded form data in ngOnInit:', this.formData);
+
 }
 
 
+
+
 showField() {
-  // this.showAllField = true;
   this.showAllField = !this.showAllField;
 }
 
@@ -160,104 +205,36 @@ onCancel(): void {
   }
 
    goNext() {
-  this.formsServiceService.updateData(this.localPageData);
+  this.formsServiceService.updateData(this.formData);
   const next = this.formsServiceService.getNextStep(this.router.url);
   if (next) {
     this.router.navigate([next]);
   }
 }
 
+  // goPrev() {
+  //   const currentUrl = this.router.url;
+  //   const prev = this.formsServiceService.getPreviousStep(currentUrl);
+  //   if (prev) {
+  //     this.router.navigate([prev], { relativeTo: this.route.parent });
+  //   }
+  // }
+
   goPrev() {
-    const currentUrl = this.router.url;
-    const prev = this.formsServiceService.getPreviousStep(currentUrl);
-    if (prev) {
-      this.router.navigate([prev], { relativeTo: this.route.parent });
-    }
+  this.formsServiceService.updateData(this.formData); 
+  const currentUrl = this.router.url;
+  const prev = this.formsServiceService.getPreviousStep(currentUrl);
+  if (prev) {
+    this.router.navigate([prev], { relativeTo: this.route.parent });
   }
+}
 
 
 
 
 
-
-
-
-
-
-// formData: addNewStaffModel = {
-//     _id: '',
-//     profilePicture: '',
-//     firstName: '',
-//     lastName: '',
-//     otherName: '',
-//     email: '',
-//     dateOfBirth: '',
-//     nationality: '',
-//     gender: '',
-//     idType: '',
-//     phoneNumber: '',
-//     idNumber: '',
-//     maritalStatus: '',
-//     jobTitle: '',
-//     unit: [],
-//     employmentType: '',
-//     hireDate: '',
-//     workLocation: '',
-//     staffId: '',
-//     supervisor: [],
-//     role: '',
-    // emergencyContactFullName: '',
-    // emergencyContactRelationship: '',
-    // emergencyContactPhoneNumber: '',
-    // emergencyContactEmail: '',
-    // emergencyContactCurrentAddress: '',
-//     spouseName: '',
-//     spousePhone: '',
-//     spouseEmail: '',
-//     marriageCertificateUrl: '',
-//     numberOfChildren: 0,
-//     children: [],
-//     //educationDetails: [],
-//     nextOfKinFullName: '',
-//     nextOfKinRelationship: '',
-//     nextOfKinPhoneNumber: '',
-//     nextOfKinEmail: '',
-//     nextOfKinCurrentAddress: '',
-//    // institutionName: '',
-//     // courseOfStudy: '',
-//     // startDate: '',
-//     // endDate: '',
-//       educationDetails: [
-//     { institutionName: '', courseOfStudy: '', startDate: '', endDate: '' },
-//     { institutionName: '', courseOfStudy: '', startDate: '', endDate: '' }
-//   ],
-//   // children: [
-//   //   { fullName: '', dob: '' },
-//   //   { fullName: '', dob: '' }
-//   // ],
-//   };
-
-
-
-
-//   submit() {
-
-//   this.formsServiceService.updateData(this.formData);
-
-//   const fullPayload: addNewStaffModel = {
-//     ...this.formsServiceService.formData,
-//   } as addNewStaffModel;
-
-//   console.log('Final Payload:', fullPayload);
-
-
-//   this.pagesService.postAddNewStaff(fullPayload).subscribe({
-//     next: (res) => console.log('Submitted successfully', res),
-//     error: (err) => console.error('Submission failed', err)
-//   });
-// }
 submit() {
-  this.formsServiceService.updateData(this.localPageData); // Final page's own data
+  this.formsServiceService.updateData(this.formData); 
 
   const fullPayload = this.formsServiceService.formData;
   console.log('Submitting this payload:', fullPayload);
@@ -265,12 +242,21 @@ submit() {
  this.pagesService.postAddNewStaff(fullPayload).subscribe({
   next: (res) => {
     console.log('Submitted!', res);
+    // this.formsServiceService.resetFormData();
+    //   this.router.navigate(['/editsettings/personal-information']);
+   
   },
   error: (err) => {
-    console.error('Error:', err);
+    console.error('Error mike:', err);
+
+    this.formsServiceService.resetFormData();
+      this.router.navigate(['/editsettings/personal-information']);
+
   },
   complete: () => {
     console.log('Request complete');
+    
+
   }
 });
 
@@ -282,6 +268,21 @@ submit() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+ //  this.resetForm();                         
+    //   this.formsServiceService.formData = {};   
+    //   localStorage.removeItem('formData'); 
+
+  
 
 
 
@@ -334,4 +335,3 @@ submit() {
 //     }
 //   });
 // }
-

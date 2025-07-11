@@ -18,7 +18,7 @@
 </div> 
 
 
-<div class="mt-24">
+<div class="mt-24 relative left-16 md:left-0">
     <div>
         <p class="font-bold font-outfit">Next of Kin</p>
         <p class="text-[#727A90] text-sm font-outfit">Contact in case of emergency</p>
@@ -32,7 +32,7 @@
             <input
             type="text"
             name="fullName"
-            [(ngModel)]="localPageData.nextOfKinFullName"
+            [(ngModel)]="formData.nextOfKinFullName"
             
             placeholder="Enter next of kin's full name"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -44,7 +44,7 @@
             <input
             type="text"
             name="Relationship"
-            [(ngModel)]="localPageData.nextOfKinRelationship"
+            [(ngModel)]="formData.nextOfKinRelationship"
             placeholder="E.g Mother, Brother, Friend"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -55,7 +55,7 @@
             <input
             type="text"
             name="phoneNumber"
-             [(ngModel)]="localPageData.nextOfKinPhoneNumber"
+             [(ngModel)]="formData.nextOfKinPhoneNumber"
             placeholder="Enter active contact number"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -67,7 +67,7 @@
             <input
             type="text"
             name="email"
-             [(ngModel)]="localPageData.nextOfKinEmail"
+             [(ngModel)]="formData.nextOfKinEmail"
             placeholder="Enter email address (if availabe)"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -78,7 +78,7 @@
             <input
             type="text"
             name="address"
-             [(ngModel)]="localPageData.nextOfKinCurrentAddress"
+             [(ngModel)]="formData.nextOfKinCurrentAddress"
             placeholder="current address"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />

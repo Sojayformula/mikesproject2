@@ -4,7 +4,6 @@ export class unitModel{
     search!: string;
     page!: string;
     pageSize!: string;
-    maritalStatus!: string
 }
 
 export interface unitModelResponseModel {

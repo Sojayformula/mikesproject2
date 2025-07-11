@@ -1,9 +1,9 @@
 
-<div class="mx-8 md:mx-0">
+<div class="mx-6 md:mx-0 mt-32 md:mt-0">
    
 
     <!-- Edit button -->
-<div class="mt- flex gap-4 justify-end col-span-3 relativ left-10 md:left-40 md:top- [-0.2rem]">
+<div class="flex gap-4 justify-end col-span-3 relative md:right-[0.6rem] top-[-11.5rem] md:top-[-5.4rem]">
   <button
     type="button"
     *ngIf="!editMode"
@@ -49,7 +49,7 @@
 
 
             <!-- FORM -->
-    <form  #eduform = "ngForm" class="grid grid-rows-2 grid-cols-3 gap-y-8 mt-12 font-outfit ">
+    <form  #eduform = "ngForm" class="grid grid-rows-2 grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-16 mt-12 font-outfit ">
         <!-- Row ---1 -->
 
          <div >
@@ -96,7 +96,7 @@
                   <!-- Row ---2       -->
           <div >
             <label class="block w-40">Intitution Name</label>
-            <input     *ngIf="educationData?.educationDetails?.[0]" 
+            <input 
             type="text"
             name="institutionName1"
             placeholder="Enter name of institution"

@@ -28,13 +28,24 @@ export class NextOfKinComponent2 {
 
 
 
-      localPageData = {
+      // localPageData 
+      formData= {
       nextOfKinFullName: '',
       nextOfKinRelationship: '',
       nextOfKinPhoneNumber: '',
       nextOfKinEmail: '',
       nextOfKinCurrentAddress: ''
     };
+
+     resetForm() {
+      this.  formData= {
+      nextOfKinFullName: '',
+      nextOfKinRelationship: '',
+      nextOfKinPhoneNumber: '',
+      nextOfKinEmail: '',
+      nextOfKinCurrentAddress: ''
+    };
+     }
 
   constructor( private typingStatusService: CheckboxService, private router:Router, private location:Location, 
     private pagesService:PagesService, private route:ActivatedRoute, public formService:AddstaffService,
@@ -45,11 +56,11 @@ export class NextOfKinComponent2 {
 
 
 
-    formsData: Partial<addNewStaffModel> = {};
+    // formsData: Partial<addNewStaffModel> = {};
 
 ngOnInit() {
-  this.formsData = this.formsServiceService.formData ;
-  console.log('Loaded form data in ngOnInit:', this.formsData);
+  this.formData = this.formsServiceService.formData ;
+  console.log('Loaded form data in ngOnInit:', this.formData);
 }
 
      goBack(){
@@ -97,7 +108,7 @@ onCancel(): void {
 
 
 goNext() {
-  this.formsServiceService.updateData(this.localPageData);
+  this.formsServiceService.updateData(this.formData);
   const next = this.formsServiceService.getNextStep(this.router.url);
   if (next) {
     this.router.navigate([next]);

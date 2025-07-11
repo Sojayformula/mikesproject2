@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PagesService } from '../../service/pages.service';
+import { AuthService } from '../../service/auth.service';
 
 
 @Component({
@@ -17,7 +19,7 @@ export class OTPComponent {
 
   @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef>;
 
-  constructor(private router:Router){}
+  constructor(private router:Router, private authService: AuthService){}
   reset(){
     this.router.navigate(['/resetpassword'])
   }
@@ -27,7 +29,7 @@ export class OTPComponent {
     const value = input.value;
 
     if (/^\d$/.test(value)) {
-      this.otp[index] = value;
+       this.otp[index] = value;
       if (index < 5) {
         this.otpInputs.toArray()[index + 1].nativeElement.focus();
       }
@@ -42,9 +44,31 @@ export class OTPComponent {
     }
   }
 
+
+   email: string = '';
+
   submitOtp() {
-    const otpValue = this.otp.join('');
-    console.log('Entered OTP:', otpValue);
+     const otpValue = this.otp.join(''); 
+ 
+
+     const payload = {
+    otp: otpValue,
+  };
+    // const otpValue = this.otp.join('');
+    // console.log('Entered OTP:', otpValue);
+
+    console.log('otp Payload', payload)
+
+    this.authService.otp(payload).subscribe({
+      next:(res)=>{
+        console.log( res)
+         this.router.navigate(['/resetpassword']);
+      },
+
+      error:(err)=>{
+        console.log('Failed to submit', err)
+      }
+    })
    
   }
 

@@ -14,9 +14,9 @@ export class PagesService {
 
   getUnit(item: unitModel):Observable<any>{
   //     return this.http.get(environment.baseurl + '/unit/get-units?page=1&pageSize=10')
-  // }
+  //  /unit/get-units?page=1&pageSize=10   unit/get-units?search=you&page=1&pageSize=10}
        console.log("give me unit",item)
-    let url = `${environment.baseurl}/unit/get-units?page=1&pageSize=10`     
+    let url = `${environment.baseurl}/unit/get-units`     
 
     let isFirstParam = true;
 
@@ -29,7 +29,12 @@ export class PagesService {
       isFirstParam = false;
     }
 
-    return this.http.get(url)
+    if (item.search) {
+      url += `${isFirstParam ? '?' : '&'}search=${item.search}`;
+      isFirstParam = false;
+    }
+
+    return this.http.get(url)  
   
   }
 
@@ -37,9 +42,9 @@ export class PagesService {
   return this.http.post(`${environment.baseurl}/unit/create-unit`, payload);
 }
 
-   fetchMaritalStatus(item: unitModel): Observable<any> {
-  return this.http.get(`${environment.baseurl}/unit/get-units?page=1&pageSize=10`);
-}
+//    fetchMaritalStatus(item: unitModel): Observable<any> {
+//   return this.http.get(`${environment.baseurl}/unit/get-units?page=1&pageSize=10`);
+// }
 
   updateUnit(id: string, payload: updateUnitModel): Observable<any> {
   return this.http.patch(`${environment.baseurl}/unit/update-unit/${id}`, payload);
@@ -54,11 +59,16 @@ export class PagesService {
   return this.http.delete(`${environment.baseurl}/unit/delete-unit/${id}`);
 }
 
-getAllStaff(id: string, item: allStaffModel):Observable<any> {
+  deleteStaff(id: string): Observable<any> {
+  return this.http.delete(`${environment.baseurl}/staff/${id}`);
+}
+
+getAllStaff(item: allStaffModel):Observable<any> {
   // return this.http.get(`${environment.baseurl}/staff/all-staffs`);
+  // id: string, 
 
      console.log("give me unit",item)
-    let url = `${environment.baseurl}/staff/all-staffs/${id}`     
+    let url = `${environment.baseurl}/staff/all-staffs/`     
 
     let isFirstParam = true;
 
@@ -143,7 +153,7 @@ getAllStaff(id: string, item: allStaffModel):Observable<any> {
   }
 
 
-                    formData: addNewStaffModel = new addNewStaffModel();
+                    // formData: addNewStaffModel = new addNewStaffModel();
       postAddNewStaff(payload:addNewStaffModel): Observable<any> {
     return this.http.post(`${environment.baseurl}/staff/create-staff`, payload); 
   }

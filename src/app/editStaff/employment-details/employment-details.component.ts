@@ -8,6 +8,8 @@ import { allStaffModel, EditEmploymentModel, editStaffModel } from '../../model/
 import { StaffDataService } from '../../StaffDataService/staff-data.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { EditService } from '../../editservice/edit.service';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 
 @Component({
@@ -39,24 +41,15 @@ export class EmploymentDetailsComponent implements OnInit{
      isLoading = false
      form: any={}
 
-  
-
-    // employment-details.component.ts
-// form = {
-//   unit: '',
-//   supervisor: '',
-//   employmentType: '',
-//   jobTitle: '',
-//   hireDate: '',
-//   workLocation: '',
-//   educationDetails: []
-// };
+     isFormComplete: boolean = false;
 
 
  
 
+
    constructor(public editService:EditService, private staffDataService: StaffDataService, private router: Router, private location:Location, private route:ActivatedRoute, 
-    private typingStatusService: CheckboxService, private pagesService: PagesService, public checkboxService:CheckboxService){
+    private typingStatusService: CheckboxService, private pagesService: PagesService, public checkboxService:CheckboxService,
+    private cd: ChangeDetectorRef ){
 
       this.getAllStaff = new allStaffModel()
        this.editStaffData = new editStaffModel()
@@ -82,6 +75,20 @@ export class EmploymentDetailsComponent implements OnInit{
      this.fetchSupervisors();
 
   // this.steps.forEach(step => this.isCheckedMap[step] = false);
+
+    // this.checkboxService.formComplete$.subscribe(status => {
+    //   this.isFormComplete = status;
+    // });
+      this.steps.forEach(step => this.isCheckedMap[step] = false);
+
+  this.typingStatusService.typingStatus$.subscribe((statusMap) => {
+    this.steps.forEach((step) => {
+      this.isCheckedMap[step] = !!statusMap[step];
+    });
+
+    this.cd.detectChanges(); 
+  });
+
 
    }
 
@@ -145,46 +152,51 @@ fetchSupervisors() {
   });
 }
 
-
-
-
-  //   goBack(){
-  //   this.location.back()
-  // }
-
- 
-
-  
-
-  // onInputChange(event: Event) {
-  //   const input = event.target as HTMLInputElement;
-  //   const value = input.value;
-
-  //   // This line sets the typing status for this step
-  //   this.typingStatusService.setTypingStatus('employment-details', value.trim().length > 0);
-  // }
-
-// // onInputChange(event: Event) {
-// //   const input = event.target as HTMLInputElement;
-// //   const value = input.value;
-// //   this.typingStatusService.setTypingStatus('employment-details', value.trim().length > 0);
-// // }
-
      // CHECK BOX LOGIC
-    onInputChange(value: any, field: string) {
-    if (field && this.employeeData) {
-      this.employeeData[field] = value;
+  //   onInputChange(value: any, field: string) {
+  //   if (field && this.employeeData) {
+  //     this.employeeData[field] = value;
 
-      this.staffDataService.setData(this.employeeData);
+  //     this.staffDataService.setData(this.employeeData);
 
-      const isTyping = Object.values(this.employeeData).some(
-        val => val && val.toString().trim().length > 0
-      );
+  //     const isTyping = Object.values(this.employeeData).some(
+  //       val => val && val.toString().trim().length > 0
+  //     );
 
-      this.checkboxService.setTypingStatus('employment-details', isTyping);
-    }
+  //     this.checkboxService.setTypingStatus('employment-details', isTyping);
+  //   }
+  // }
+
+  getFieldValue(field: string): any {
+  switch (field) {
+    case 'jobTitle': return this.employeeData?.supervisor?.jobTitle;
+    case 'employmentType': return this.employeeData?.employmentType;
+    case 'workLocation': return this.employeeData?.workLocation;
+    case 'hireDate': return this.formattedDOB;
+    case 'unit': return this.form?.units;
+    case 'supervisor': return this.form?.supervisor;
+    default: return '';
   }
+}
 
+
+onInputChange() {
+  const requiredFields = [
+    'jobTitle',
+    'employmentType',
+    'workLocation',
+    'hireDate',
+    'unit',
+    'supervisor'
+  ];
+
+  const isComplete = requiredFields.every(fieldName => {
+    const val = this.getFieldValue(fieldName);
+    return val !== null && val !== undefined && val.toString().trim().length > 0;
+  });
+
+  this.checkboxService.setTypingStatus('employment-details', isComplete);
+}
 
 
 
@@ -202,46 +214,15 @@ set formattedDOB(value: string) {
 }
 
 
-
-
-
-
-
-
-
 currentStepIndex = 0;
-steps = ['personal-details', 'education', 'employment-details', 'review']; // Example steps
+ steps = ['personal-details', 'education', 'employment-details', 'review']; 
 isCheckedMap: { [key: string]: boolean } = {};
-
-
-
-// goToNext() {
-//   if (this.currentStepIndex < this.steps.length - 1) {
-//     const currentStep = this.steps[this.currentStepIndex];
-//     this.isCheckedMap[currentStep] = true; // Mark current step as complete
-//     this.currentStepIndex++;
-
-//     const nextStep = this.steps[this.currentStepIndex];
-//     this.router.navigate([nextStep], { queryParamsHandling: 'preserve' });
-//   }
-// }
-
-// goToPrev() {
-//   if (this.currentStepIndex > 0) {
-//     this.currentStepIndex--;
-//     const prevStep = this.steps[this.currentStepIndex];
-//     this.router.navigate([prevStep], { queryParamsHandling: 'preserve' });
-//   }
-// }
-
-
-
 
 
 //  Edit  function
 onEditToggle(): void {
   this.editMode = true;
-  this.originalData = JSON.parse(JSON.stringify(this.employeeData)); // deep copy
+  this.originalData = JSON.parse(JSON.stringify(this.employeeData)); // deep copy takes you back to original data after clicking cancel
 }
 
 // Cancel function
@@ -275,12 +256,7 @@ onCancel(): void {
     }
   }
 
-  // onFileSelected(event: Event) {
-  //   const input = event.target as HTMLInputElement;
-  //   if (input.files) {
-  //     this.selectedFiles = Array.from(input.files);
-  //   }
-  // }
+ 
   onFileSelected(event: Event) {
   const input = event.target as HTMLInputElement;
   if (input.files?.length) {
@@ -343,12 +319,25 @@ console.log('Supervisor being sent:', form.value.supervisorId);
   });
 }
 
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -388,3 +377,44 @@ console.log('Supervisor being sent:', form.value.supervisorId);
 //   this.employeeData = structuredClone(this.originalData); // Restore original
 // }
 
+// goToNext() {
+//   if (this.currentStepIndex < this.steps.length - 1) {
+//     const currentStep = this.steps[this.currentStepIndex];
+//     this.isCheckedMap[currentStep] = true; // Mark current step as complete
+//     this.currentStepIndex++;
+
+//     const nextStep = this.steps[this.currentStepIndex];
+//     this.router.navigate([nextStep], { queryParamsHandling: 'preserve' });
+//   }
+// }
+
+// goToPrev() {
+//   if (this.currentStepIndex > 0) {
+//     this.currentStepIndex--;
+//     const prevStep = this.steps[this.currentStepIndex];
+//     this.router.navigate([prevStep], { queryParamsHandling: 'preserve' });
+//   }
+// }
+
+
+  //   goBack(){
+  //   this.location.back()
+  // }
+
+ 
+
+  
+
+  // onInputChange(event: Event) {
+  //   const input = event.target as HTMLInputElement;
+  //   const value = input.value;
+
+  //   // This line sets the typing status for this step
+  //   this.typingStatusService.setTypingStatus('employment-details', value.trim().length > 0);
+  // }
+
+// // onInputChange(event: Event) {
+// //   const input = event.target as HTMLInputElement;
+// //   const value = input.value;
+// //   this.typingStatusService.setTypingStatus('employment-details', value.trim().length > 0);
+// // }

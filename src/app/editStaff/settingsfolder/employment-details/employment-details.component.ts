@@ -54,7 +54,8 @@ export class EmploymentDetailsComponent2 implements OnInit{
 
      
 
-      localPageData = {
+      // localPageData 
+      formData= {
         jobTitle: '',
         unit: [],
         employmentType: '',
@@ -97,8 +98,8 @@ ngOnInit() {
   const item = this.route.snapshot.queryParamMap.get('staffId');
   this.staffId = item; 
 
-  // this.formData = this.formsServiceService.formData || {};
-  // console.log('Loaded form data in ngOnInit:', this.formData);
+  this.formData = this.formsServiceService.formData || {};
+  console.log('Loaded form data in ngOnInit:', this.formData);
 
   this.fetchAllStaff()
   this.fetchSupervisors()
@@ -218,8 +219,8 @@ fetchUnits() {
    
 
   goNext() {
-    console.log("data:", this.localPageData)
-  this.formsServiceService.updateData(this.localPageData);
+    console.log("data:", this.formData)
+  this.formsServiceService.updateData(this.formData);
   const next = this.formsServiceService.getNextStep(this.router.url);
   if (next) {
     this.router.navigate([next]);

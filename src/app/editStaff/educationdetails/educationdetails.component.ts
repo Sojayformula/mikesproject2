@@ -136,6 +136,8 @@ originalStaffData: any;
 
       this.checkboxService.setTypingStatus('education-details', isTyping);
     }
+
+     
   }
 //   onInputChange(value: any, field: string) {
 //   if (field && this.educationData?.educationDetails?.length) {

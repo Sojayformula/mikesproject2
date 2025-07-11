@@ -12,6 +12,7 @@ import { AddstaffService } from '../../../addstaffservice/addstaff.service';
 import { FormsServiceService } from '../formService/forms-service.service';
 
 
+
 @Component({
   selector: 'app-family-details',
   imports: [FormsModule, CommonModule],
@@ -33,32 +34,51 @@ export class FamilyDetailsComponent2 implements OnInit{
      selectedStep: string = '';
   selectedFiles: File[] = [];
   isDragging = false;
-
-
-  // localPageData  = {
-  //   spouseName: '',
-  // spousePhone: '',
-  // spouseEmail: '',
-  // marriageCertificateUrl: '',
-  // numberOfChildren: 2,
-  // children: [
-  //   { fullName: '', dob: '' },
-  //   { fullName: '', dob: '' }
-  // ]
-  // };
   
-   localPageData = {
+ 
+   formData = {
     spouseName: '',
   spousePhone: '',
   spouseEmail: '',
   marriageCertificateUrl: '',
-  numberOfChildren: 2,
+  numberOfChildren: '',
   children: [
     { fullName: '', dob: '' },
     { fullName: '', dob: '' }
   ]
   };
-  
+
+// formData = {
+//   spouseName: '',
+//   spousePhone: '',
+//   spouseEmail: '',
+//   marriageCertificateUrl: '',
+//   numberOfChildren: '',
+//   children: [] as { fullName: string; dob: string }[]
+// };
+
+children ={
+  fullName: '', 
+  dob: '' 
+}
+
+
+
+ 
+
+   resetForm() {
+     this. formData = {
+    spouseName: '',
+  spousePhone: '',
+  spouseEmail: '',
+  marriageCertificateUrl: '',
+  numberOfChildren: '',
+  children: [
+    { fullName: '', dob: '' },
+    { fullName: '', dob: '' }
+  ]
+  };
+   }
 
 
 
@@ -78,11 +98,119 @@ export class FamilyDetailsComponent2 implements OnInit{
      
     }
 
-  ngOnInit() {
-  //  this.formData = this.formsServiceService.formData || {};
-  //  console.log('Loaded form data in ngOnInit:', this.formData);
+//   ngOnInit() {
+//    this.formData = this.formsServiceService.formData || {};
+//    console.log('Loaded form data in ngOnInit:', this.formData);
+
+// }
+// ngOnInit() {
+//     const saved = this.formsServiceService.formData || {};
+
+//   // Step 1: Merge defaults and saved data (excluding children)
+//   this.formData = {
+//     spouseName: '',
+//     spousePhone: '',
+//     spouseEmail: '',
+//     marriageCertificateUrl: '',
+//     numberOfChildren: '',
+//     ...saved
+//   };
+
+//   // Step 2: Ensure `children` exists and has 2 entries
+//   this.formData.children = saved.children ?? [
+//     { fullName: '', dob: '' },
+//     { fullName: '', dob: '' }
+//   ];
+
+//   console.log('Loaded form data in ngOnInit:', this.formData);
+// }
+ngOnInit() {
+  const saved = this.formsServiceService.getData() || {};
+
+  this.formData = {
+    spouseName: '',
+    spousePhone: '',
+    spouseEmail: '',
+    marriageCertificateUrl: '',
+    numberOfChildren: '',
+    ...saved,
+    children: Array.isArray(saved.children) ? saved.children : []
+  };
+
+  console.log('Loaded form data in ngOnInit:', this.formData);
+
+   if (!this.formData.children || this.formData.children.length === 0) {
+    this.formData.children = [{ fullName: '', dob: '' }]; 
+}
+}
+
+
+
+
+gOnInit() {
+  const saved = this.formsServiceService.getData();
+
+  // Force children to be empty unless intentionally saved
+  this.formData = {
+    ...this.formData,
+    ...saved,
+    children: saved?.children?.length ? saved.children : []
+  };
 
 }
+
+
+
+  allowOnlyDigits(event: KeyboardEvent) {
+  const char = event.key;
+  if (!/^\d$/.test(char)) {
+    event.preventDefault(); // Block if not 0-9
+  }
+}
+
+
+
+      // ADD MORE LOGIC //
+addMore() {
+   this.formData.children.push({ fullName: '', dob: ''});
+
+   this.formData.numberOfChildren = this.formData.children.length.toString(); 
+}
+
+
+
+removeChild(index: number) {
+  this.formData.children.splice(index, 1);
+}
+
+
+
+
+
+
+
+
+
+
+// formData = {
+//   spouseName: '',
+//   spousePhone: '',
+//   spouseEmail: '',
+//   marriageCertificateUrl: '',
+//   numberOfChildren: '',
+//   children: [] as { fullName: string; dob: string }[]
+// };
+
+// addChild() {
+//   this.formData.children.push({
+//      fullName: '',
+//       dob: ''
+//    });
+// }
+
+
+
+
 
 
      goBack(){
@@ -177,23 +305,23 @@ onCancel(): void {
     return this.formService.getPrevStep(currentUrl) === null;
   }
 
-  
-   goNext() {
-  this.formsServiceService.updateData(this.localPageData);
+
+goNext() {
+  console.log('Personal info', this.formData);
+  this.formsServiceService.updateData(this.formData); // Save to shared service
   const next = this.formsServiceService.getNextStep(this.router.url);
   if (next) {
     this.router.navigate([next]);
   }
 }
 
-  goPrev() {
+
+   goPrev() {
     const currentUrl = this.router.url;
     const prev = this.formsServiceService.getPreviousStep(currentUrl);
     if (prev) {
       this.router.navigate([prev], { relativeTo: this.route.parent });
     }
   }
-
-  
 
 }

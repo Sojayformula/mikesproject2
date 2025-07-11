@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
 import { PagesService } from '../../service/pages.service';
-import { addUnitModel, unitModel, updateUnitModel } from '../../model/pagesModel';
+import { addUnitModel, allStaffModel, unitModel, updateUnitModel } from '../../model/pagesModel';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { debounceTime, Subject } from 'rxjs';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 
 
@@ -19,42 +21,64 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   templateUrl: './unit.component.html',
   styleUrl: './unit.component.scss'
 })
-export class UnitComponent implements OnInit{
+export class UnitComponent implements OnInit, OnDestroy{
 
   unitHead:string = ''; 
 
 
    APIData: any;
    selectedTab:string = 'Active';
-  // showModal = false;
-   searchquery: string = "";
+
+   searchQuery: string = "";
+   page = 1;
+   pageSize = 10;
    filterModel: string ='';
 
   unitModel!: unitModel
   editModel!: updateUnitModel
   addUnitData!: addUnitModel
+  searchQuery$ = new Subject<string>();
+ 
 
 
   showEditModal = false;
-userList: any[] = [];
-parentUnitList: any[] = [];
+  userList: any[] = [];
+  parentUnitList: any[] = [];
 
 
 
-   constructor (private pagesService: PagesService){
+   constructor (private pagesService: PagesService, private notification: NzNotificationService, private modal: NzModalService,){
     this.unitModel = new unitModel()
      this.editModel = new updateUnitModel()
      this.addUnitData = new addUnitModel()
+
+     this.searchQuery$.pipe(debounceTime(500)).subscribe((searchTerm: string)=>{
+      this.searchQuery = searchTerm
+      this.searchFunction()
+   })
+   
+    
   }
 
 
-  ngOnInit(): void {
+  ngOnInit(){
    this.fetchunit() 
-  //  this.editUnit()
-  
+
   }
 
+
+     createNotification(position: 'topRight', type: 'success'| 'info'| 'warning'| 'error', title: string, message: string ){
+   this.notification.create(type, title, message, {nzPlacement: position, nzDuration: 3000,   }); 
+  }
+
+
+  // unitModel
   fetchunit(){
+  this.unitModel.search = this.searchQuery?.trim() || '';
+  this.unitModel.page = this.unitModel.page || '1';
+  this.unitModel.pageSize = this.unitModel.pageSize || '10';
+
+
     console.log('unit mode Data', this.unitModel)
     this.pagesService.getUnit(this.unitModel).subscribe({
       next: (res)=>{
@@ -74,13 +98,30 @@ parentUnitList: any[] = [];
   }
 
 
+      // SEARCH FUNCTION //
+  giveTobehaviour(){
+    this.searchQuery$.next(this.searchQuery)
+  }
+
+  searchFunction(){
+    console.log('search query',this.searchQuery)
+    this.unitModel.search = this.searchQuery.trim();
+    this.page = 1
+    this.fetchunit()
+  }
+
+   ngOnDestroy(): void {
+    this.searchQuery$.complete();
+  }
+
+
 
     addUnit(){
     console.log('Payload being sent:', this.addUnitData);
   
    this.pagesService.addUnit(this.addUnitData).subscribe({
     next: (res) => {
-      alert(res.message || 'Unit updated successfully');
+       this.createNotification('topRight','success', 'New unit added successfully.','Updated!');
       this.fetchunit();  
       this.addUnitData = new addUnitModel(); 
       this.showEditModal  = false;
@@ -88,24 +129,10 @@ parentUnitList: any[] = [];
     },
     error: (err) => {
       console.error(err);
-      alert('Update failed');
+       this.createNotification('topRight','success', 'Add new unit failed.','Failed!');
     }
   });
 }
-
-
-
-  // getId(id: string){
-  //  this.pagesService.getId(id).subscribe({
-  //   next: (res)=>{
-  //     console.log('get me id', res)
-  //   },
-
-  //   error: (err)=>{
-  //     console.log('get id failed', err)
-  //   }
-  //  })
-  // }
 
 
 selectedUnitId: string | null = null;
@@ -126,54 +153,17 @@ editUnit(form: NgForm) {
 
   this.pagesService.updateUnit(this.selectedUnitId, this.selectedUnitPayload).subscribe({
     next: () => {
-      alert('Table edited successfully')
+        this.createNotification('topRight','success', 'Unit details updated successfully.','Updated!');
       this.fetchunit();
       this.resetForm(form);
     },
     error: (err) => {
       console.log('Update failed', err)
+        this.createNotification('topRight','success', 'Edit unit failed','Failed!');
     }
   });
 
 }
-
-
-
-
-
-//   selectedId(item: any) {
-//   this.selectedUnitId = item._id;  
-//   this.selectedUnitPayload = { ...item };
-//   console.log('Selected Unit ID:', this.selectedUnitId);
-// }
-
-// editUnit(form: NgForm) {
-//   if (!this.selectedUnitId) {
-//     console.log('No unit selected');
-//     return;
-//   }
-
-
-//     const payloadToSend = {
-//     ...this.selectedUnitPayload,
-//     unitHead: this.selectedUnitPayload?.unitHead?._id || null,
-//     parentUnit: this.selectedUnitPayload?.parentUnit?._id || this.selectedUnitPayload?.parentUnit || null,
-//     organization: this.selectedUnitPayload?.organization?._id || null, // optional: depends on your backend
-//   };
-
-
-// // this.selectedUnitPayload
-//   this.pagesService.updateUnit(this.selectedUnitId, payloadToSend ).subscribe({
-//     next: (res) => {
-//       console.log('api data', res);
-//       this.fetchunit()
-//          this.resetForm(form);
-//     },
-//     error: (err) => {
-//       console.log('update failed', err);
-//     }
-//   });
-// }
 
 
 resetForm(form: NgForm) {
@@ -183,22 +173,9 @@ resetForm(form: NgForm) {
 }
 
 
-  // resetForm(form: any) {
-  //   form.resetForm();
-  //   this.selectedUnitId = null;
-  //   this.selectedUnitPayload = {
-  //     name: '',
-  //     description: '',
-  //     isSubUnit: false
-  //   };
-  // }
-
-
- 
-
 
               // Delete function //
-deleteUnit(id: string) {
+eleteUnit(id: string) {
   if (confirm('Are you sure you want to delete this unit?')) {
     this.pagesService.deleteUnit(id).subscribe({
       next: (res) => {
@@ -215,18 +192,42 @@ deleteUnit(id: string) {
 
 
 
+  deleteUnit(id: string){
+  this.modal.confirm({
+    nzTitle: 'Are you sure you want to delete this staff?',
+    nzContent: 'This action cannot be undone.',
+    nzOkText: 'Delete',
+     nzCancelText: 'Cancel',
+    nzOkDanger: true,
+    nzWrapClassName: 'custom-confirm-modal',
+    nzOnOk: () => {
+
+      this.pagesService.deleteStaff(id).subscribe({
+        next: (res) => {
+          this.createNotification('topRight','success', res.message || 'Staff deleted successfully','Deleted!');
+          this.fetchunit();
+        },
+        error: (err) => {
+          this.createNotification('topRight', 'error', 'Failed to delete staff', 'Error');
+        }
+      });
+    },
+   
+    nzOnCancel: () => {
+      this.createNotification('topRight', 'info', 'Staff deletion was cancelled', 'Cancelled');
+    }
+  });
+}
+
+
+
+
   toggleTab(item: string){
     this.selectedTab = item;
     this.fetchunit();
    
     console.log("toggle some",item);
   }
-
-  searchFunction(){
-    this.unitModel.search = this.searchquery
-    this.fetchunit();
-  }
-
 
 
    isFilterModalVisible = false;
@@ -491,6 +492,17 @@ openEditModal() {
 //     }
 //   });
 // }
+
+
+  // resetForm(form: any) {
+  //   form.resetForm();
+  //   this.selectedUnitId = null;
+  //   this.selectedUnitPayload = {
+  //     name: '',
+  //     description: '',
+  //     isSubUnit: false
+  //   };
+  // }
 
 
 

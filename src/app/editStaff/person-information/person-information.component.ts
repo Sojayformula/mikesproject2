@@ -14,6 +14,7 @@ import { EditService } from '../../editservice/edit.service';
 
 import { ChangeDetectorRef } from '@angular/core';
 import { Subscription, take } from 'rxjs';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 
 
@@ -53,7 +54,7 @@ imagePreview: string | ArrayBuffer | null = null;
   constructor(private cd: ChangeDetectorRef, private router: Router, private pagesService: PagesService,
     private route:ActivatedRoute, private location:Location, public editService:EditService, 
     private staffDataService: StaffDataService,private checkboxService:CheckboxService,
-  ){
+    ){
 
     this.getStaffModel = new getStaffModel()
     this.editStaffData = new editStaffModel()
@@ -86,7 +87,18 @@ imagePreview: string | ArrayBuffer | null = null;
       this.fetchStaffData();
      }
 
-      this.staffData = this.staffDataService.getData();
+
+  this.staffData = this.staffDataService.getData();
+
+  this.steps.forEach(step => this.isCheckedMap[step] = false);
+
+  this.checkboxService.typingStatus$.subscribe((statusMap) => {
+    this.steps.forEach((step) => {
+      this.isCheckedMap[step] = !!statusMap[step];
+    });
+
+    this.cd.detectChanges(); 
+  });
      
   }
 
@@ -171,27 +183,18 @@ set formattedDOB(value: string) {
 }
 
 
-
-//  goBackToPersonalInfo(){
-//     this.location.back()
-//   }
-
-//   next(){
-//     this.router.navigate(['edit-personal-info'])
-//   }
-
       // CHECK BOX LOGIC
-  onInputChange(field: string, value: string) {
-  this.staffData.supervisor[field] = value;
+//   onInputChange(field: string, value: string) {
+//   this.staffData.supervisor[field] = value;
 
-  this.staffDataService.setData({ supervisor: this.staffData.supervisor });
+//   this.staffDataService.setData({ supervisor: this.staffData.supervisor });
 
-  // Detect typing 
-  const isTyping = Object.values(this.staffData.supervisor).some(
-    val => val && val.toString().trim().length > 0
-  );
-  this.checkboxService.setTypingStatus('person-information', isTyping);
-}
+//   // Detect typing 
+//   const isTyping = Object.values(this.staffData.supervisor).some(
+//     val => val && val.toString().trim().length > 0
+//   );
+//   this.checkboxService.setTypingStatus('person-information', isTyping);
+// }
 
 
 
@@ -250,6 +253,38 @@ Submit(form: NgForm) {
 
 
 
+steps: string[] = [];
+ 
+  getFieldValue(field: string): any {
+  switch (field) {
+    case 'firstName': return this.staffData?.firstName;
+    case 'lastName': return this.staffData?.lastName;
+    case 'otherName': return this.staffData?.otherName;
+    case 'gender': return this.staffData?.gender;
+    case 'nationality': return this.staffData?.nationality;
+    case 'dateOfBirth': return this.staffData?.dateOfBirth;
+    default: return '';
+  }
+}
+
+
+onInputChange() {
+  const requiredFields = [
+    'firstName',
+    'lastName',
+    'otherName',
+    'gender',
+    'nationality',
+    'dateOfBirth',
+  ];
+
+  const isComplete = requiredFields.every(fieldName => {
+    const val = this.getFieldValue(fieldName);
+    return val !== null && val !== undefined && val.toString().trim().length > 0;
+  });
+
+  this.checkboxService.setTypingStatus('person-information', isComplete);
+}
 
 
 }

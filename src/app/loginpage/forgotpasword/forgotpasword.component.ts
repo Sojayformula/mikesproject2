@@ -39,6 +39,11 @@ onSubmit(form: NgForm): void {
         console.warn('Unexpected response:', res);
         alert('Unexpected server response');
       }
+
+      this.router.navigate(['/otp']);
+      // , { queryParams: { email: this.email } }
+
+
     },
     error: (error) => {
       console.error('Failed to send OTP:', error);

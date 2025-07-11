@@ -147,6 +147,120 @@ Submit(form: NgForm) {
   });
 }
 
+
+          // CHECKBOX //
+    onInputChange(field: string, value: string) {
+    this.data[field] = value;
+    this.staffDataService.setData({ [field]: value });
+
+    // mark checkbox
+    const isTyping = Object.values(this.data).some(val => val && val.toString().trim().length > 0);
+    this.checkboxService.setTypingStatus('person-information', isTyping);
+  }
+
+
+   removeFile(index: number) {
+  this.selectedFiles.splice(index, 1);
+}
+
+ onDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      this.selectedFiles = Array.from(files);
+    }
+  }
+
+
+  onFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement;
+  if (input.files?.length) {
+    const files = Array.from(input.files);
+    this.selectedFiles.push(...files);
+    input.value = ''; 
+  }
+}
+
+
+  formatSize(bytes: number): string {
+    if (bytes < 1024) return bytes + ' B';
+    else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    else return (bytes / 1048576).toFixed(1) + ' MB';
+  }
+
+  getFileType(file: File): string {
+    const type = file.type;
+    if (type.startsWith('image/')) return 'image';
+    if (type === 'application/pdf') return 'pdf';
+    if (type === 'application/msword' || type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') return 'word';
+    if (type === 'application/vnd.ms-excel' || type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') return 'excel';
+    if (type.startsWith('text/')) return 'text';
+    return 'other';
+  }
+
+
+//  Edit  function
+onEditToggle(): void {
+  this.editMode = true;
+  this.originalData = JSON.parse(JSON.stringify(this.data)); // deep copy
+}
+
+// Cancel function
+onCancel(): void {
+  this.editMode = false;
+  this.data = JSON.parse(JSON.stringify(this.originalData)); 
+}
+
+
+getFileIcon(url: string): string {
+  if (!url) return '📁';
+
+  const ext = url.split('.').pop()?.toLowerCase();
+  switch (ext) {
+    case 'pdf': return '📄';
+    case 'jpg':
+    case 'jpeg':
+    case 'png': return '🖼️';
+    case 'doc':
+    case 'docx': return '📘';
+    case 'xls':
+    case 'xlsx': return '📗';
+    default: return '📁';
+  }
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+  // onFileSelected(event: Event) {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files) {
+  //     this.selectedFiles = Array.from(input.files);
+  //   }
+  // }
+
+
 // onSubmit(eduform: NgForm): void {
 //   if (!eduform.valid) return;
 
@@ -181,119 +295,3 @@ Submit(form: NgForm) {
 //     }
 //   });
 // }
-
-
-
-
-
-
-
-
-
-    onInputChange(field: string, value: string) {
-    this.data[field] = value;
-    this.staffDataService.setData({ [field]: value });
-
-    // mark checkbox
-    const isTyping = Object.values(this.data).some(val => val && val.toString().trim().length > 0);
-    this.checkboxService.setTypingStatus('person-information', isTyping);
-  }
-
-
-
-
-   removeFile(index: number) {
-  this.selectedFiles.splice(index, 1);
-}
-
- onDragOver(event: DragEvent) {
-    event.preventDefault();
-    this.isDragging = true;
-  }
-
-  onDragLeave(event: DragEvent) {
-    event.preventDefault();
-    this.isDragging = false;
-  }
-
-  onDrop(event: DragEvent) {
-    event.preventDefault();
-    this.isDragging = false;
-    const files = event.dataTransfer?.files;
-    if (files && files.length > 0) {
-      this.selectedFiles = Array.from(files);
-    }
-  }
-
-  // onFileSelected(event: Event) {
-  //   const input = event.target as HTMLInputElement;
-  //   if (input.files) {
-  //     this.selectedFiles = Array.from(input.files);
-  //   }
-  // }
-  onFileSelected(event: Event) {
-  const input = event.target as HTMLInputElement;
-  if (input.files?.length) {
-    const files = Array.from(input.files);
-    this.selectedFiles.push(...files);
-    input.value = ''; 
-  }
-}
-
-
-  formatSize(bytes: number): string {
-    if (bytes < 1024) return bytes + ' B';
-    else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-    else return (bytes / 1048576).toFixed(1) + ' MB';
-  }
-
-  getFileType(file: File): string {
-    const type = file.type;
-    if (type.startsWith('image/')) return 'image';
-    if (type === 'application/pdf') return 'pdf';
-    if (type === 'application/msword' || type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') return 'word';
-    if (type === 'application/vnd.ms-excel' || type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') return 'excel';
-    if (type.startsWith('text/')) return 'text';
-    return 'other';
-  }
-
-
-
-
-
-
-//  Edit  function
-onEditToggle(): void {
-  this.editMode = true;
-  this.originalData = JSON.parse(JSON.stringify(this.data)); // deep copy
-}
-
-// Cancel function
-onCancel(): void {
-  this.editMode = false;
-  this.data = JSON.parse(JSON.stringify(this.originalData)); 
-}
-
-
-
-
-getFileIcon(url: string): string {
-  if (!url) return '📁';
-
-  const ext = url.split('.').pop()?.toLowerCase();
-  switch (ext) {
-    case 'pdf': return '📄';
-    case 'jpg':
-    case 'jpeg':
-    case 'png': return '🖼️';
-    case 'doc':
-    case 'docx': return '📘';
-    case 'xls':
-    case 'xlsx': return '📗';
-    default: return '📁';
-  }
-}
-
-
-
-}
