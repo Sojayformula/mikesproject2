@@ -148,15 +148,15 @@ Submit(form: NgForm) {
 }
 
 
-          // CHECKBOX //
-    onInputChange(field: string, value: string) {
-    this.data[field] = value;
-    this.staffDataService.setData({ [field]: value });
+  //         // CHECKBOX //
+  //   onInputChange(field: string, value: string) {
+  //   this.data[field] = value;
+  //   this.staffDataService.setData({ [field]: value });
 
-    // mark checkbox
-    const isTyping = Object.values(this.data).some(val => val && val.toString().trim().length > 0);
-    this.checkboxService.setTypingStatus('person-information', isTyping);
-  }
+  //   // mark checkbox
+  //   const isTyping = Object.values(this.data).some(val => val && val.toString().trim().length > 0);
+  //   this.checkboxService.setTypingStatus('person-information', isTyping);
+  // }
 
 
    removeFile(index: number) {
@@ -239,6 +239,46 @@ getFileIcon(url: string): string {
     default: return '📁';
   }
 }
+
+
+
+ 
+ 
+steps: string[] = [];
+ 
+  getFieldValue(field: string): any {
+  switch (field) {
+    case 'spouseName': return this.data?.spouseName;
+    case 'lastName': return this.data?.lastName;
+    case 'otherName': return this.data?.otherName;
+    case 'gender': return this.data?.gender;
+    case 'nationality': return this.data?.nationality;
+    case 'dateOfBirth': return this.data?.dateOfBirth;
+    default: return '';
+  }
+}
+
+
+onInputChange() {
+  const requiredFields = [
+    'spouseName',
+    'lastName',
+    'otherName',
+    'gender',
+    'nationality',
+    'dateOfBirth',
+  ];
+
+  const isComplete = requiredFields.every(fieldName => {
+    const val = this.getFieldValue(fieldName);
+    return val !== null && val !== undefined && val.toString().trim().length > 0;
+  });
+
+  this.checkboxService.setTypingStatus('family-details', isComplete);
+}
+
+
+
 
 }
 

@@ -25,13 +25,12 @@ export class PersonalInformationComponent2 implements OnInit {
 
 
 
-  
-  
+ 
   successMessage = '';
   errorMessage = '';
 
   currentStepIndex = 0;
-   staffData: any;  
+   personalData: any;  
    editStaffData: editStaffModel;
   getStaffModel: getStaffModel;
   getAllStaff: allStaffModel;
@@ -47,22 +46,50 @@ originalStaffData: any;
   
   // selectedFile!: File;
 imagePreview: string | ArrayBuffer | null = null;
+ isCheckedMap: { [key: string]: boolean } = {};
 
 //  localPageData
-  formData= {
-    firstName: '',
-  lastName: '',
-  otherName: '',
-  gender: '',
-  dateOfBirth: '',
-  nationality: '',
-  maritalStatus: '',
-  idType: '',
-  idNumber: '',
-  phoneNumber: '',
-  email: ''
- }; 
-  
+//   formData = {
+//     firstName: '',
+//   lastName: '',
+//   otherName: '',
+//   gender: '',
+//   dateOfBirth: '',
+//   nationality: '',
+//   maritalStatus: '',
+//   idType: '',
+//   idNumber: '',
+//   phoneNumber: '',
+//   email: ''
+// }; 
+// formData: { [key: string]: string } = {
+//   firstName: '',
+//   lastName: '',
+//   otherName: '',
+//   gender: '',
+//   dateOfBirth: '',
+//   nationality: '',
+//   maritalStatus: '',
+//   idType: '',
+//   idNumber: '',
+//   phoneNumber: '',
+//   email: ''
+// };
+formData: {
+  [key: string]: any;
+} = {
+  jobTitle: '',
+  unit: [],
+  employmentType: '',
+  hireDate: '',
+  workLocation: '',
+  staffId: '',
+  supervisor: [],
+  role: '',
+};
+
+
+
 resetForm() {
  this.formData= {
     firstName: '',
@@ -98,15 +125,115 @@ resetForm() {
 
 
 ngOnInit() {
-  this.formData = this.formsServiceService.formData || {};
+   this.formData = this.formsServiceService.formData || {};
   console.log('Loaded form data in ngOnInit:', this.formData);
 
+  
  
   // const savedData = this.formsServiceService.getData();
   // this.formData = { ...this.formData, ...savedData }; // only overrides existing fields
 
+    this.personalData = this.staffDataService.getPersonalInfoData();
+
+  // this.steps.forEach(step => this.isCheckedMap[step] = false);
+
+  // this.checkboxService.typingStatus$.subscribe((statusMap) => {
+  //   this.steps.forEach((step) => {
+  //     this.isCheckedMap[step] = !!statusMap[step];
+  //   });
+
+  //   this.cd.detectChanges(); 
+  // });
+
 
 }
+
+
+
+  // fetchStaffData() {
+  //   this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
+  //     next: (res ) => {
+  //       this.personalData = res; 
+  //       console.log('Fetched staff data:', this.personalData);
+  //        this.isLoading = false;
+
+  //         this.personalData = structuredClone(res);     
+  //         this.originalStaffData = structuredClone(res);
+  //         console.log('Fetched staff data:', this.personalData);
+
+  //     },
+  //     error: (err) => {
+  //       console.error('Error fetching staff:', err);
+  //     },
+
+  //        complete: () => {
+
+  //        }
+  //   });
+  //   }
+
+
+
+steps: string[] = [];
+
+
+// private hasEdited: boolean = false;
+private previousStatus: boolean = false;
+private debounceTimeout: any = null;
+
+onInputChange(): void {
+  // this.hasEdited = true;
+  console.log('onInputChange triggered');
+
+   clearTimeout(this.debounceTimeout);
+
+   this.debounceTimeout = setTimeout(() => {
+    const requiredFields: string[] = [
+      'firstName',
+      'lastName',
+      'otherName',
+      'gender',
+      'dateOfBirth',
+      'nationality',
+      'maritalStatus',
+      'phoneNumber',
+      'email',
+      'idType',
+      'idNumber',
+    ];
+
+    const isComplete = requiredFields.every(field => {
+      const val = this.formData?.[field];
+      console.log(`🔍 ${field}:`, val);
+      return val !== null && val !== undefined && val.toString().trim().length > 0;
+    });
+
+    console.log('✅ Form complete:', isComplete);
+
+    if (isComplete !== this.previousStatus) {
+      this.checkboxService.setTypingStatus('personal-information', isComplete);
+      this.previousStatus = isComplete;
+      console.log(isComplete ? '☑️ Checkbox ticked' : '⬜ Checkbox unticked');
+    }
+   }, 50);
+}
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
 
 
 
@@ -137,7 +264,7 @@ async onFileSelected(event: any) {
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = reader.result as string;
-      this.staffData.profilePicture = this.imagePreview;
+      this.personalData.profilePicture = this.imagePreview;
     };
     reader.readAsDataURL(compressedFile);
   } catch (error) {
@@ -149,12 +276,12 @@ async onFileSelected(event: any) {
 
             //  CONVERTED DATE //
 get formattedDOB(): string {
-  const date = this.staffData?.dateOfBirth;
+  const date = this.personalData?.dateOfBirth;
   return date ? formatDate(date, 'yyyy-MM-dd', 'en-US') : '';
 }
 
 set formattedDOB(value: string) {
-  this.staffData.supervisor.dateOfBirth = value;
+  this.personalData.supervisor.dateOfBirth = value;
 }
 
 
@@ -165,17 +292,17 @@ set formattedDOB(value: string) {
 
 
 
-  onInputChange(field: string, value: string) {
-  this.staffData.supervisor[field] = value;
+//   onInputChange(field: string, value: string) {
+//   this.staffData.supervisor[field] = value;
 
-  this.staffDataService.setData({ supervisor: this.staffData.supervisor });
+//   this.staffDataService.setData({ supervisor: this.staffData.supervisor });
 
-  // Detect typing (check if any field has value)
-  const isTyping = Object.values(this.staffData.supervisor).some(
-    val => val && val.toString().trim().length > 0
-  );
-  this.checkboxService.setTypingStatus('person-information', isTyping);
-}
+//   // Detect typing (check if any field has value)
+//   const isTyping = Object.values(this.staffData.supervisor).some(
+//     val => val && val.toString().trim().length > 0
+//   );
+//   this.checkboxService.setTypingStatus('personal-information', isTyping);
+// }
 
 
    // NEXT AND PREVIOUS FUNCTIONS //
@@ -200,7 +327,7 @@ set formattedDOB(value: string) {
 // }
 goNext() {
   console.log('Personal info', this.formData);
-  this.formsServiceService.updateData(this.formData); // ✅ Save to shared service
+  this.formsServiceService.updateData(this.formData); // Save to shared service
   const next = this.formsServiceService.getNextStep(this.router.url);
   if (next) {
     this.router.navigate([next]);

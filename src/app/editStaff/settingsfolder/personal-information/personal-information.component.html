@@ -42,8 +42,8 @@
 
     <ng-template #fallbackImage>
       <img
-        *ngIf="staffData?.profilePicture; else defaultImage"
-        [src]="getSafeProfilePicture(staffData.profilePicture)"
+        *ngIf="personalData?.profilePicture; else defaultImage"
+        [src]="getSafeProfilePicture(personalData.profilePicture)"
         alt="Saved Image"
         class="h-full w-full object-cover"
       />
@@ -91,7 +91,8 @@
     <input 
     type="text" 
     name="firstName" 
-    [(ngModel)]="formData.firstName" 
+    [(ngModel)]="formData['firstName']" 
+    (ngModelChange)="onInputChange()"
     placeholder="Enter legal first name" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
@@ -101,17 +102,19 @@
     <input 
     type="text" 
     name="lastName" 
-    [(ngModel)]="formData.lastName" 
+    (ngModelChange)="onInputChange()"
+    [(ngModel)]="formData['lastName']" 
     placeholder="Enter legal last name" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
-
-  <div>
+ 
+    <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Other Name</label>
     <input 
     type="text" 
     name="otherName" 
-    [(ngModel)]="formData.otherName"  
+    (ngModelChange)="onInputChange()"
+    [(ngModel)]="formData['otherName']"  
     placeholder="Enter if any" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
@@ -123,8 +126,9 @@
     <label class="block w-40 text-sm font-medium text-gray-700">Date of birth</label>
     <input 
     type="text" 
-    name="dateOfBirth" 
-    [(ngModel)]="formData.dateOfBirth"  
+    name="dateOfBirth"
+    (ngModelChange)="onInputChange()" 
+    [(ngModel)]="formData['dateOfBirth']"  
     placeholder="Select birth date" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
@@ -134,7 +138,8 @@
     <input 
     type="text" 
     name="gender" 
-    [(ngModel)]="formData.gender"  
+    (ngModelChange)="onInputChange()"
+    [(ngModel)]="formData['gender']"  
     placeholder="Chose gender" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
@@ -144,7 +149,8 @@
     <input 
     type="text" 
     name="nationality" 
-    [(ngModel)]="formData.nationality"  
+    (ngModelChange)="onInputChange()"
+    [(ngModel)]="formData['nationality']"  
     placeholder="Enter country of origin" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
@@ -156,7 +162,8 @@
     <input 
     type="text" 
     name="maritalStatus" 
-    [(ngModel)]="formData.maritalStatus"  
+    (ngModelChange)="onInputChange()"
+    [(ngModel)]="formData['maritalStatus']"  
     placeholder="Select marital status" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
@@ -166,7 +173,8 @@
     <input 
     type="text" 
     name="phoneNumber" 
-    [(ngModel)]="formData.phoneNumber"  
+    (ngModelChange)="onInputChange()"
+    [(ngModel)]="formData['phoneNumber']"  
     placeholder="Enter active phone number" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
@@ -176,7 +184,8 @@
     <input 
     type="text" 
     name="email" 
-    [(ngModel)]="formData.email"  
+    (ngModelChange)="onInputChange()"
+    [(ngModel)]="formData['email']"  
     placeholder="Enter valid email address" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
@@ -188,7 +197,8 @@
     <input 
     type="text" 
     name="idType" 
-    [(ngModel)]="formData.idType"  
+    (ngModelChange)="onInputChange()"
+    [(ngModel)]="formData['idType']"  
     placeholder="Select ID type (e.g Nation ID, Passport)" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
   </div>
@@ -198,7 +208,8 @@
     <input 
     type="text" 
     name="idNumber" 
-    [(ngModel)]="formData.idNumber"  
+    (ngModelChange)="onInputChange()"
+    [(ngModel)]="formData['idNumber']"  
     placeholder="Enter valid ID number" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
@@ -208,10 +219,11 @@
     <input 
     type="text" 
     name="email" 
-    [(ngModel)]="formData.email"  
+    (ngModelChange)="onInputChange()"
+    [(ngModel)]="formData['email']"  
     placeholder="Enter valid email address"  
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-  </div>
+  </div>   
 
 </form>
 </div>

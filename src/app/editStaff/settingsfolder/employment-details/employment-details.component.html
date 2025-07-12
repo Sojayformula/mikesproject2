@@ -31,7 +31,8 @@
     <input
      type="text" 
      name="jobTitle" 
-     [(ngModel)]="formData.jobTitle"  
+     (ngModelChange)="onInputChange()"
+     [(ngModel)]="formData['jobTitle']"  
      placeholder="Enter job title" 
      class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
@@ -80,8 +81,9 @@
     bindLabel="name"
     bindValue="_id"
     [multiple]="true"
-    [(ngModel)]="formData.unit"
+    [(ngModel)]="formData['unit']"
     name="unit"
+    (ngModelChange)="onInputChange()"
     placeholder="Select unit(s)"
     style="width: 311px;"
   >
@@ -104,7 +106,10 @@
       <label for="supervisor" class="block text-[#000000] text-[10px] md:text-[12px] lg:text-[13px] font-[500]"
         >Supervisor
     </label>
-      <ng-select [multiple]="true"  placeholder="Selected Supervisor" [(ngModel)]="formData.supervisor" name="supervisor"
+      <ng-select [multiple]="true"  placeholder="Selected Supervisor" 
+      [(ngModel)]="formData['supervisor']"
+      (ngModelChange)="onInputChange()" 
+      name="supervisor"
       style="color: #888888; border-radius: 10px; width: 311px;" class=" focus:outline-none focus:outline-sky-600 focus:border-sky-600"
       class="custom-ng-select">
         @for (staff of staffs; track staff._id) {
@@ -128,7 +133,8 @@
     <input 
     type="text" 
     name="employmentType" 
-    [(ngModel)]="formData.employmentType" 
+    (ngModelChange)="onInputChange()"
+    [(ngModel)]="formData['employmentType']" 
     placeholder="Full-time, Part-time, Contract" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
@@ -138,7 +144,8 @@
     <input 
     type="date" 
     name="hireDate" 
-    [(ngModel)]="formData.hireDate" 
+    (ngModelChange)="onInputChange()"
+    [(ngModel)]="formData['hireDate']" 
     placeholder="Select date" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
@@ -150,7 +157,8 @@
     <input 
     type="text" 
     name="maritalStatus" 
-    [(ngModel)]="formData.workLocation" 
+    (ngModelChange)="onInputChange()"
+    [(ngModel)]="formData['workLocation']" 
     placeholder="Remote, Onsite, Hybrid" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/> 
   </div>
@@ -160,13 +168,13 @@
    <div>
   <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Select role</label>
   <select
-    name="role"
-    bindValue="_id"
-    [(ngModel)]="formData.role"
+    name="staffId"
+    (ngModelChange)="onInputChange()"
+    [(ngModel)]="formData['staffId']"
     required
     class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
   >
-    <option [ngValue]="''" disabled selected>Select role</option>
+     <option value="" disabled selected>Select role</option>
     <option *ngFor="let role of roles" [value]="role._id">
       {{ role.name }}
     </option>
@@ -177,7 +185,7 @@
  <div></div>
  <div></div>
  
- 
+ <!-- bindValue="_id" -->
 
 
 

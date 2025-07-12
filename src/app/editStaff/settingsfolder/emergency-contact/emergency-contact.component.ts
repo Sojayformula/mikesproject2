@@ -6,6 +6,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AddstaffService } from '../../../addstaffservice/addstaff.service';
 import { FormsServiceService } from '../formService/forms-service.service';
+import { CheckboxService } from '../../../checkboxService/checkbox.service';
 
 @Component({
   selector: 'app-emergency-contact',
@@ -47,7 +48,7 @@ export class EmergencyContactComponent2 {
 
 
   constructor(private router:Router, private pagesService:PagesService, private route:ActivatedRoute,
-   public formService:AddstaffService, public formsServiceService: FormsServiceService
+   public formService:AddstaffService, public formsServiceService: FormsServiceService, private checkboxService: CheckboxService
   ){
     this.getAllStaff = new allStaffModel
   }
@@ -107,6 +108,46 @@ onCancel() {
       this.router.navigate([prev], { relativeTo: this.route.parent });
     }
   }
+
+
+  
+steps: string[] = [];
+
+
+ 
+//   getFieldValue(field: string): any {
+//   switch (field) {
+//     case 'firstName': return this.staffData?.firstName;
+//     case 'lastName': return this.staffData?.lastName;
+//     case 'otherName': return this.staffData?.otherName;
+//     case 'gender': return this.staffData?.gender;
+//     case 'nationality': return this.staffData?.nationality;
+//     case 'dateOfBirth': return this.staffData?.dateOfBirth;
+//     default: return '';
+//   }
+// }
+
+
+
+
+
+// onInputChange() {
+//   const requiredFields = [
+//     'firstName',
+//     'lastName',
+//     'otherName',
+//     'gender',
+//     'nationality',
+//     'dateOfBirth',
+//   ];
+
+//   const isComplete = requiredFields.every(fieldName => {
+//     const val = this.getFieldValue(fieldName);
+//     return val !== null && val !== undefined && val.toString().trim().length > 0;
+//   });
+
+//   this.checkboxService.setTypingStatus('personal-information', isComplete);
+// }
  
 
 }

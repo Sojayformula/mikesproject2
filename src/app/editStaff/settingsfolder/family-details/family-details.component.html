@@ -68,6 +68,7 @@
     <label class="font-semibold text-[13px] font-outfit ">Spouse's Name</label>
     <input type="text" 
     name="spouseName" 
+    (ngModelChange)="onInputChange()"
     [(ngModel)]="formData.spouseName"  
     placeholder="Enter full name of spouse" 
     class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
@@ -84,6 +85,7 @@
     <input 
     type="tel"
     name="spousePhone" 
+    (ngModelChange)="onInputChange()"
     (keypress)="allowOnlyDigits($event)"
     [(ngModel)]="formData.spousePhone" 
     placeholder="Phone number" 
@@ -96,6 +98,7 @@
     <input 
     type="text" 
     name="spouseEmail" 
+    (ngModelChange)="onInputChange()"
     [(ngModel)]="formData.spouseEmail" 
     placeholder="Enter address" 
     class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
@@ -112,7 +115,8 @@
      <label class="flex font-semibold text-[13px] lg:w-[20rem] font-outfit">Number of Children</label>
     <input 
     type="text" 
-    name="numberOfChild" 
+    name="numberOfChildren" 
+    (ngModelChange)="onInputChange()"
     [(ngModel)]="formData.numberOfChildren"  
     placeholder="Enter numbers(eg. 2)" 
     class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
@@ -135,53 +139,21 @@
 
 
   <!-- Hidden row  -->
-  <div *ngFor="let child of formData.children; let i = index" class="grid md:grid-cols-3 lg:gap-0 gap-10 md:mt-6">
+  <div  *ngFor="let child of formData.children; let i = index" class="grid md:grid-cols-3 lg:gap-0 gap-10 md:mt-6">
 
     <div class="flex flex-col"> 
         <label class="font-semibold text-[13px] font-outfit">Child </label>
     <input 
     type="text" 
-    name="fullNam{{i}}" 
+    name="fullName{{i}}" 
+    (ngModelChange)="onInputChange()"
     [(ngModel)]="child.fullName"  
     placeholder="Enter full name" 
     class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
 
-    <button
-    type="button"
-    (click)="removeChild(i)"
-    class="border border-red-500 bg-red-100 text-red-600 text-sm rounded-[4px] hover:text-red-800 mr-[20rem] mt-3 w-20">
-    Remove
-  </button>
-    </div>
 
 
-    <div  class="flex flex-col md:mt-0">
-    <label class="font-semibold text-[13px] font-outfit">Age</label>
-    <input 
-     type="text" 
-     name="dob{{i}}" 
-    [(ngModel)]="child.dob"
-     placeholder="Enter age in years" 
-     class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
-    </div>
-
-    <div></div>
-  
-  </div>
-  <!-- </div> -->
-
-  
-
-   
-
-
-
-  
-
-
-
-
-
+    
 
 
    <div class="mb-4 space-y-6 md:mt-8">
@@ -193,26 +165,8 @@
     <p class="text-[#727A90] text-[12px] font-outfit w-80">Upload a scanned copy of the spouse's marriagecertificate.</p>
     </div>
 
-   <div class="mb-10 mt-10">
 
-         <div
-  class="border-2 border-dashed border-blue-400 w-[43rem] md:w-[1000px] h-[172px] p-6 rounded-md text-center cursor-pointer bg-[#F8FAFF]"
-  (dragover)="onDragOver($event)"
-  (dragleave)="onDragLeave($event)"
-  (drop)="onDrop($event)"
-  [ngClass]="{ 'bg-blue-50': isDragging }"
->
-  <div class="flex justify-center">
-  <img src="/upload.png" class="w-[42px] h-[42px] ">
-  </div>
-  <p class="text-gray-500 text-sm mt-2">Drag your file(s) and start uploading</p>
-
-    <div class="flex items-center justify-center my-1">
-  <div class="flex-gro w-20 h-px bg-gray-300"></div>
-  <span class="px-4 text-gray-500 text-sm">OR</span>
-  <div class="flex-gro w-20 h-px bg-gray-300"></div>
-</div>
-
+   <div class="mb- 10 mt- 10">
   <button 
   (click)="fileInput.click()" 
   class="text-sm border-2 rounded-lg w-[95px] h-[30px] my-1">
@@ -227,13 +181,15 @@
     #fileInput
     class="hidden"
   />
-</div>
+<!-- </div> -->
 
 
 
 
 
-  <div *ngIf="selectedFiles.length > 0" class="mt-4 space-y-2">
+<!-- *ngIf="selectedFiles.length > 0" -->
+
+  <div *ngIf="selectedFiles.length > 0"  class="mt-4 space-y-2">
   <div
     *ngFor="let file of selectedFiles; let i = index"
     class="flex items-center gap-4 border p-2 rounded-md justify-between lg:w-[1150px] "
@@ -272,7 +228,39 @@
 
 </div>
  </div>
+
+
+    <button
+    type="button"
+    (click)="removeChild(i)"
+    class="border border-red-500 bg-red-100 text-red-600 text-sm rounded-[4px] hover:text-red-800 mr-[20rem] mt-3 w-20">
+    Remove
+  </button>
+    </div>
+
+    </div>
+
+
+
+
+    <div  class="flex flex-col md:mt-0">
+    <label class="font-semibold text-[13px] font-outfit">Age</label>
+    <input 
+     type="text" 
+     name="dob{{i}}" 
+     (ngModelChange)="onInputChange()"
+    [(ngModel)]="child.dob"
+     placeholder="Enter age in years" 
+     class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    </div>
+
+    <div></div>
+  
   </div>
+  <!-- </div> -->
+
+
+  <!-- </div> -->
 
 </form>
 </div>  

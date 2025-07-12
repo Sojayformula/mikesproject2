@@ -43,10 +43,23 @@ export class FamilyDetailsComponent2 implements OnInit{
   marriageCertificateUrl: '',
   numberOfChildren: '',
   children: [
-    { fullName: '', dob: '' },
-    { fullName: '', dob: '' }
+    { fullName: '', dob: '',  },
+    { fullName: '', dob: ''  }
   ]
   };
+
+  
+  //  formData: {[key: string]: any} = {
+  //   spouseName: '',
+  // spousePhone: '',
+  // spouseEmail: '',
+  // marriageCertificateUrl: '',
+  // numberOfChildren: '',
+  // children: [
+  //   { fullName: '', dob: '',  },
+  //   { fullName: '', dob: ''  }
+  // ]
+  // };
 
 // formData = {
 //   spouseName: '',
@@ -59,7 +72,8 @@ export class FamilyDetailsComponent2 implements OnInit{
 
 children ={
   fullName: '', 
-  dob: '' 
+  dob: '' ,
+ 
 }
 
 
@@ -74,7 +88,7 @@ children ={
   marriageCertificateUrl: '',
   numberOfChildren: '',
   children: [
-    { fullName: '', dob: '' },
+    { fullName: '', dob: '',  },
     { fullName: '', dob: '' }
   ]
   };
@@ -83,10 +97,6 @@ children ={
 
 
 
-// nextStep() {
-//   this.formsService.updateData(this.localPageData);
-//   this.router.navigate(['/editsettings/next-of-kin']);
-// }
 
  
 
@@ -98,32 +108,7 @@ children ={
      
     }
 
-//   ngOnInit() {
-//    this.formData = this.formsServiceService.formData || {};
-//    console.log('Loaded form data in ngOnInit:', this.formData);
 
-// }
-// ngOnInit() {
-//     const saved = this.formsServiceService.formData || {};
-
-//   // Step 1: Merge defaults and saved data (excluding children)
-//   this.formData = {
-//     spouseName: '',
-//     spousePhone: '',
-//     spouseEmail: '',
-//     marriageCertificateUrl: '',
-//     numberOfChildren: '',
-//     ...saved
-//   };
-
-//   // Step 2: Ensure `children` exists and has 2 entries
-//   this.formData.children = saved.children ?? [
-//     { fullName: '', dob: '' },
-//     { fullName: '', dob: '' }
-//   ];
-
-//   console.log('Loaded form data in ngOnInit:', this.formData);
-// }
 ngOnInit() {
   const saved = this.formsServiceService.getData() || {};
 
@@ -140,24 +125,24 @@ ngOnInit() {
   console.log('Loaded form data in ngOnInit:', this.formData);
 
    if (!this.formData.children || this.formData.children.length === 0) {
-    this.formData.children = [{ fullName: '', dob: '' }]; 
+    this.formData.children = [{ fullName: '', dob: ''  }]; 
 }
 }
 
 
 
 
-gOnInit() {
-  const saved = this.formsServiceService.getData();
+// gOnInit() {
+//   const saved = this.formsServiceService.getData();
 
-  // Force children to be empty unless intentionally saved
-  this.formData = {
-    ...this.formData,
-    ...saved,
-    children: saved?.children?.length ? saved.children : []
-  };
+//   // Force children to be empty unless intentionally saved
+//   this.formData = {
+//     ...this.formData,
+//     ...saved,
+//     children: saved?.children?.length ? saved.children : []
+//   };
 
-}
+// }
 
 
 
@@ -172,7 +157,7 @@ gOnInit() {
 
       // ADD MORE LOGIC //
 addMore() {
-   this.formData.children.push({ fullName: '', dob: ''});
+   this.formData.children.push({ fullName: '', dob: '' });
 
    this.formData.numberOfChildren = this.formData.children.length.toString(); 
 }
@@ -218,14 +203,14 @@ removeChild(index: number) {
   }
 
 
-    onInputChange(field: string, value: string) {
-    this.data[field] = value;
-    this.staffDataService.setData({ [field]: value });
+  //   onInputChange(field: string, value: string) {
+  //   this.data[field] = value;
+  //   this.staffDataService.setData({ [field]: value });
 
-    // mark checkbox
-    const isTyping = Object.values(this.data).some(val => val && val.toString().trim().length > 0);
-    this.checkboxService.setTypingStatus('person-information', isTyping);
-  }
+  //   // mark checkbox
+  //   const isTyping = Object.values(this.data).some(val => val && val.toString().trim().length > 0);
+  //   this.checkboxService.setTypingStatus('person-information', isTyping);
+  // }
 
 
 
@@ -323,5 +308,47 @@ goNext() {
       this.router.navigate([prev], { relativeTo: this.route.parent });
     }
   }
+
+
+  
+steps: string[] = [];
+
+private previousStatus: boolean = false;
+private debounceTimeout: any = null;
+
+onInputChange(){
+  clearTimeout(this.debounceTimeout);
+
+  this.debounceTimeout = setTimeout(() => {
+    // Check top-level fields
+    const topFieldsFilled = [
+      'spouseName',
+      'spousePhone',
+      'spouseEmail',
+      'numberOfChildren'
+    ].every(field => {
+      const val = (this.formData as any)[field];
+      console.log(`${field}:`, val);
+      return val?.toString().trim().length > 0;
+    });
+
+    // Check all children have fullName and dob filled
+    const childrenFilled = this.formData.children.every((child, i) => {
+      const valid = child.fullName?.trim() && child.dob?.trim();
+      console.log(`Child ${i}:`, child.fullName, child.dob, '', !!valid);
+      return !!valid;
+    });
+
+    const isComplete = topFieldsFilled && childrenFilled;
+    console.log('Form complete:', isComplete);
+
+    if (isComplete !== this.previousStatus) {
+      this.checkboxService.setTypingStatus('family-details', isComplete);
+      this.previousStatus = isComplete;
+    }
+  }, 50);
+}
+
+
 
 }

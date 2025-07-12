@@ -48,7 +48,7 @@ export class NextOfKinComponent2 {
      }
 
   constructor( private typingStatusService: CheckboxService, private router:Router, private location:Location, 
-    private pagesService:PagesService, private route:ActivatedRoute, public formService:AddstaffService,
+    private pagesService:PagesService, private route:ActivatedRoute, public formService:AddstaffService, private checkboxService: CheckboxService,
     public formsServiceService:FormsServiceService
   ){
     // this.getAllStaff = new allStaffModel
@@ -68,14 +68,14 @@ ngOnInit() {
   }
 
 
-    onInputChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const value = input.value;
+  //   onInputChange(event: Event) {
+  //   const input = event.target as HTMLInputElement;
+  //   const value = input.value;
 
-    // This line sets the typing status for this step
-   this.typingStatusService.setTypingStatus('next-of-kin', value.trim().length > 0);
+  //   // This line sets the typing status for this step
+  //  this.typingStatusService.setTypingStatus('next-of-kin', value.trim().length > 0);
 
-  }
+  // }
 
   
 //  Edit  function
@@ -124,4 +124,46 @@ goNext() {
   }
 
 
+
+
+  
+steps: string[] = [];
+
+
+// private hasEdited: boolean = false;
+private previousStatus: boolean = false;
+private debounceTimeout: any = null;
+
+onInputChange() {
+  // this.hasEdited = true;
+  console.log('onInputChange triggered');
+
+   clearTimeout(this.debounceTimeout);
+
+   this.debounceTimeout = setTimeout(() => {
+    const requiredFields: string[] = [
+     'nextOfKinFullName',
+      'nextOfKinRelationship',
+      'nextOfKinPhoneNumber',
+      'nextOfKinEmail',
+      'nextOfKinCurrentAddress'
+    ];
+
+    const isComplete = requiredFields.every(field => {
+      const val = (this.formData as any)[field];
+      console.log(`🔍 ${field}:`, val);
+      return val !== null && val !== undefined && val.toString().trim().length > 0;
+    });
+
+    console.log('✅ Form complete:', isComplete);
+
+    if (isComplete !== this.previousStatus) {
+      this.checkboxService.setTypingStatus('next-of-kin', isComplete);
+      this.previousStatus = isComplete;
+      console.log(isComplete ? '☑️ Checkbox ticked' : '⬜ Checkbox unticked');
+    }
+   }, 50);
+  }
+
 }
+

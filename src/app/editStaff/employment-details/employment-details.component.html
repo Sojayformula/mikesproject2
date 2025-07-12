@@ -55,7 +55,7 @@
 
 
                               <!-- FORM -->
-    <form #staffForm="ngForm"  (ngModelChange)="onInputChange()" (ngSubmit)="onSubmit(staffForm)" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2  gap-10 p-6 bg-white rounded gap-y-6 mt-10">
+    <form #staffForm="ngForm"   (ngSubmit)="onSubmit(staffForm)" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2  gap-10 p-6 bg-white rounded gap-y-6 mt-10">
   <!-- Row 1 -->
    
   <div>
@@ -63,18 +63,20 @@
     <input  
     type="text" 
     name="jobTitle" 
+   (ngModelChange)="onInputChange()"
     [disabled]="!editMode" 
     [(ngModel)]="employeeData.supervisor.jobTitle" 
      
     placeholder="Enter legal first name" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
-<!-- (ngModelChange)="onInputChange($event, 'jobTitle')"  -->
+<!-- (ngModelChange)="onInputChange($event, 'jobTitle')"        (ngModelChange)="onInputChange()" -->
    
 <div>
   <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Unit</label>
   <select
     name="unitId"
+    (ngModelChange)="onInputChange()"
     [(ngModel)]="form.units"
     [disabled]="!editMode"
     [(ngModel)]="employeeData.jobTitle" 

@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { AddstaffService } from '../../../addstaffservice/addstaff.service';
 import { FormsServiceService } from '../formService/forms-service.service';
+import { CheckboxService } from '../../../checkboxService/checkbox.service';
 
 @Component({
   selector: 'app-education-details',
@@ -84,7 +85,9 @@ showAllField: boolean = false;
 
 
   constructor(private route:ActivatedRoute, private pagesService:PagesService, private staffDataService:StaffDataService,
-     public formService: AddstaffService, private router:Router, public formsServiceService: FormsServiceService){
+     public formService: AddstaffService, private router:Router, public formsServiceService: FormsServiceService,
+     private checkboxService: CheckboxService
+    ){
 
     this.addNewStaff = new addNewStaffModel()
 
@@ -242,15 +245,15 @@ submit() {
  this.pagesService.postAddNewStaff(fullPayload).subscribe({
   next: (res) => {
     console.log('Submitted!', res);
-    // this.formsServiceService.resetFormData();
-    //   this.router.navigate(['/editsettings/personal-information']);
+    this.formsServiceService.resetFormData();
+      this.router.navigate(['/editsettings/personal-information']);
    
   },
   error: (err) => {
     console.error('Error mike:', err);
 
-    this.formsServiceService.resetFormData();
-      this.router.navigate(['/editsettings/personal-information']);
+    // this.formsServiceService.resetFormData();
+    //   this.router.navigate(['/editsettings/personal-information']);
 
   },
   complete: () => {
@@ -260,7 +263,54 @@ submit() {
   }
 });
 
-}  
+} 
+
+
+
+
+
+// steps: string[] = [];
+
+
+// // private hasEdited: boolean = false;
+// private previousStatus: boolean = false;
+// private debounceTimeout: any = null;
+
+// onInputChange(): void {
+//   // this.hasEdited = true;
+//   console.log('onInputChange triggered');
+
+//    clearTimeout(this.debounceTimeout);
+
+//    this.debounceTimeout = setTimeout(() => {
+//     const requiredFields: string[] = [
+//       'firstName',
+//       'lastName',
+//       'otherName',
+//       'gender',
+//       'dateOfBirth',
+//       'nationality',
+//       'maritalStatus',
+//       'phoneNumber',
+//       'email',
+//       'idType',
+//       'idNumber',
+//     ];
+
+//     const isComplete = requiredFields.every(field => {
+//       const val = this.formData?.[field];
+//       console.log(`🔍 ${field}:`, val);
+//       return val !== null && val !== undefined && val.toString().trim().length > 0;
+//     });
+
+//     console.log('✅ Form complete:', isComplete);
+
+//     if (isComplete !== this.previousStatus) {
+//       this.checkboxService.setTypingStatus('personal-information', isComplete);
+//       this.previousStatus = isComplete;
+//       console.log(isComplete ? '☑️ Checkbox ticked' : '⬜ Checkbox unticked');
+//     }
+//    }, 50);
 
 }
 

@@ -54,17 +54,30 @@ export class EmploymentDetailsComponent2 implements OnInit{
 
      
 
-      // localPageData 
-      formData= {
-        jobTitle: '',
-        unit: [],
-        employmentType: '',
-        hireDate: '',
-        workLocation: '',
-        staffId: '',
-        supervisor: [],
-        role: ''
-      };
+    
+      // formData = {
+      //   jobTitle: '',
+      //   unit: [],
+      //   employmentType: '',
+      //   hireDate: '',
+      //   workLocation: '',
+      //   staffId: '',
+      //   supervisor: [],
+      //   role: ''
+      // };
+
+      formData: {
+  [key: string]: any;
+} = {
+  jobTitle: '',
+  unit: [],
+  employmentType: '',
+  hireDate: '',
+  workLocation: '',
+  staffId: '',
+  supervisor: [],
+};
+
 
 // nextStep() {
 //   this.formsService.updateData(this.localPageData); // Save this page
@@ -85,7 +98,7 @@ export class EmploymentDetailsComponent2 implements OnInit{
 
    constructor(public editService:EditService, private staffDataService: StaffDataService, private router: Router, private location:Location, private route:ActivatedRoute, 
     private typingStatusService: CheckboxService, private pagesService: PagesService, private pageService: PagesService, 
-    public formService: AddstaffService, public formsServiceService: FormsServiceService){
+    public formService: AddstaffService, public formsServiceService: FormsServiceService, private checkboxService: CheckboxService){
 
       this.allStaff = new allStaffModel()
 
@@ -100,6 +113,8 @@ ngOnInit() {
 
   this.formData = this.formsServiceService.formData || {};
   console.log('Loaded form data in ngOnInit:', this.formData);
+
+  this.employeeData = this.staffDataService.getEmploymentData();
 
   this.fetchAllStaff()
   this.fetchSupervisors()
@@ -240,19 +255,18 @@ fetchUnits() {
     this.location.back()
   }
 
-  onSubmit(form:NgForm){}
 
   
 
-  onInputChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const value = input.value;
+  // onInputChange(event: Event) {
+  //   const input = event.target as HTMLInputElement;
+  //   const value = input.value;
 
-    //  This line sets the typing status for this step
-    this.typingStatusService.setTypingStatus('employment-details', value.trim().length > 0);
-  }
+  //   //  This line sets the typing status for this step
+  //   this.typingStatusService.setTypingStatus('employment-details', value.trim().length > 0);
+  // }
   
-
+        // CONVERTED DATE //
  get formattedDOB(){
   const date = this.employeeData?.supervisor.hireDate;
   return date ? formatDate(date, 'yyyy-MM-dd', 'en-US') : '';
@@ -265,9 +279,9 @@ set formattedDOB(value: string) {
 
 
 
-currentStepIndex = 0;
-steps = ['personal-details', 'education', 'employment-details', 'review']; // Example steps
-isCheckedMap: { [key: string]: boolean } = {};
+// currentStepIndex = 0;
+// steps = ['personal-details', 'education', 'employment-details', 'review']; // Example steps
+// isCheckedMap: { [key: string]: boolean } = {};
 
 
 
@@ -336,6 +350,53 @@ onCancel(): void {
     return 'other';
   }
 
+
+
+  
+
+steps: string[] = [];
+
+
+// private hasEdited: boolean = false;
+private previousStatus: boolean = false;
+private debounceTimeout: any = null;
+
+onInputChange(){
+  // this.hasEdited = true;
+  console.log('onInputChange triggered');
+
+   clearTimeout(this.debounceTimeout);
+
+   this.debounceTimeout = setTimeout(() => {
+    const requiredFields: string[] = [
+    'jobTitle',
+  'unit',
+  'employmentType',
+  'hireDate',
+  'workLocation',
+  'staffId',
+    ];
+
+    const isComplete = requiredFields.every(field => {
+      const val = (this.formData)[field] ?? '';
+      console.log(`🔍 ${field}:`, val);
+
+          if (Array.isArray(val)) {
+        return val.length > 0;
+      }
+
+       return val !== null && val !== undefined && val.toString().trim().length > 0;
+    });
+
+    console.log('Form complete:', isComplete);
+
+    if (isComplete !== this.previousStatus) {
+      this.checkboxService.setTypingStatus('employment-details', isComplete);
+      this.previousStatus = isComplete;
+      console.log(isComplete ? 'Checkbox ticked' : 'Checkbox unticked');
+    }
+   }, 50);
+  }
 
 
 }

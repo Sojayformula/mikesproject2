@@ -41,12 +41,12 @@ export class EditstaffLayoutComponent {
       private editControlService:EditService, private location:Location, private router: Router, private route:ActivatedRoute, 
       private typingStatusService: CheckboxService, private checkboxService: CheckboxService){
 
-      // this.steps.forEach(step => this.isCheckedMap[step] = false);
+      this.steps.forEach(step => this.isCheckedMap[step] = false);
   }
 
-  //       handleInputChange(step: string, hasValue: boolean) {
-  //      this.isCheckedMap[step] = hasValue;
-  // }
+        handleInputChange(step: string, hasValue: boolean) {
+       this.isCheckedMap[step] = hasValue;
+  }
 
 
 
@@ -71,23 +71,23 @@ ngOnInit() {
   }
 
 
-goToNext() {
-  if (this.currentStepIndex < this.steps.length - 1) {
-    const nextStep = this.steps[this.currentStepIndex + 1];
-    this.router.navigate([`/editstaff-layout/${nextStep}`], {
-      queryParamsHandling: "preserve" 
-    });
-  }
-}
+// goToNext() {
+//   if (this.currentStepIndex < this.steps.length - 1) {
+//     const nextStep = this.steps[this.currentStepIndex + 1];
+//     this.router.navigate([`/editstaff-layout/${nextStep}`], {
+//       queryParamsHandling: "preserve" 
+//     });
+//   }
+// }
 
-goToPrev() {
-  if (this.currentStepIndex > 0) {
-    const prevStep = this.steps[this.currentStepIndex - 1];
-    this.router.navigate([`/editstaff-layout/${prevStep}`], {
-      queryParamsHandling: "preserve"
-    });
-  }
-}
+// goToPrev() {
+//   if (this.currentStepIndex > 0) {
+//     const prevStep = this.steps[this.currentStepIndex - 1];
+//     this.router.navigate([`/editstaff-layout/${prevStep}`], {
+//       queryParamsHandling: "preserve"
+//     });
+//   }
+// }
 
  
 mobileMenuOpen = false;

@@ -1,5 +1,5 @@
 import { CommonModule, formatDate } from '@angular/common';
-import { ChangeDetectorRef, Component, QueryList, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { addNewStaffModel, allStaffModel, editStaffModel, getStaffModel } from '../../../model/pagesModel';
@@ -19,7 +19,7 @@ import { EmploymentDetailsComponent2 } from '../employment-details/employment-de
   templateUrl: './editsettings.component.html',
   styleUrl: './editsettings.component.scss'
 })
-export class EditsettingsComponent {
+export class EditsettingsComponent implements OnInit {
    
 
     steps = ['personal-information', 'employment-details', 'family-details', 'next-of-kin', 'emergency-contact', 'education-details' ];
@@ -41,6 +41,24 @@ export class EditsettingsComponent {
   }
 
 
+
+
+  ngOnInit() {
+  this.steps.forEach(step => this.isCheckedMap[step] = false);
+
+
+   this.steps.forEach(step => this.isCheckedMap[step] = false);
+  this.typingStatusService.typingStatus$.subscribe((statusMap) => {
+    this.steps.forEach((step) => {
+      this.isCheckedMap[step] = !!statusMap[step];
+    });
+
+    this.cd.detectChanges(); 
+  });
+
+}
+
+  
 
 
   goBack() {

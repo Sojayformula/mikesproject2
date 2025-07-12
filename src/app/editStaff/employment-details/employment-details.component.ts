@@ -19,7 +19,7 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrl: './employment-details.component.scss'
 })
 export class EmploymentDetailsComponent implements OnInit{
-  @ViewChild('formRef') formRef!: NgForm;
+  // @ViewChild('formRef') formRef!: NgForm;
 
     units: any
     supervisor: any
@@ -44,6 +44,11 @@ export class EmploymentDetailsComponent implements OnInit{
      isFormComplete: boolean = false;
 
 
+
+    
+  
+
+
  
 
 
@@ -58,7 +63,7 @@ export class EmploymentDetailsComponent implements OnInit{
 
 
    ngOnInit(): void {
-
+  
    this.route.queryParamMap.subscribe((params) => {
     const item = params.get('staffId');
     this.staffId = item;
@@ -79,7 +84,16 @@ export class EmploymentDetailsComponent implements OnInit{
     // this.checkboxService.formComplete$.subscribe(status => {
     //   this.isFormComplete = status;
     // });
-      this.steps.forEach(step => this.isCheckedMap[step] = false);
+
+    // this.employeeData = this.staffDataService.getEmpl();
+
+
+    this.steps.forEach(step => {
+  this.isCheckedMap[step] = this.typingStatusService.getTypingStatus(step); // Load real values
+});
+
+
+ this.steps.forEach(step => this.isCheckedMap[step] = false);
 
   this.typingStatusService.typingStatus$.subscribe((statusMap) => {
     this.steps.forEach((step) => {
@@ -87,9 +101,7 @@ export class EmploymentDetailsComponent implements OnInit{
     });
 
     this.cd.detectChanges(); 
-  });
-
-
+  })
    }
 
 
@@ -152,7 +164,7 @@ fetchSupervisors() {
   });
 }
 
-     // CHECK BOX LOGIC
+    //  CHECK BOX LOGIC
   //   onInputChange(value: any, field: string) {
   //   if (field && this.employeeData) {
   //     this.employeeData[field] = value;
@@ -167,6 +179,41 @@ fetchSupervisors() {
   //   }
   // }
 
+//   getFieldValue(field: string): any {
+//   switch (field) {
+//     case 'jobTitle': return this.employeeData?.supervisor?.jobTitle;
+//     case 'employmentType': return this.employeeData?.employmentType;
+//     case 'workLocation': return this.employeeData?.workLocation;
+//     case 'hireDate': return this.formattedDOB;
+//     case 'unit': return this.form?.units;
+//     case 'supervisor': return this.form?.supervisor;
+//     default: return '';
+//   }
+// }
+
+
+// onInputChange() {
+//   const requiredFields = [
+//     'jobTitle',
+//     'employmentType',
+//     'workLocation',
+//     'hireDate',
+//     'unit',
+//     'supervisor'
+//   ];
+
+//   const isComplete = requiredFields.every(fieldName => {
+//     const val = this.getFieldValue(fieldName);
+//     return val !== null && val !== undefined && val.toString().trim().length > 0;
+//   });
+
+//   this.checkboxService.setTypingStatus('employment-details', isComplete);
+// }
+
+
+
+steps: string[] = [];
+ 
   getFieldValue(field: string): any {
   switch (field) {
     case 'jobTitle': return this.employeeData?.supervisor?.jobTitle;
@@ -187,7 +234,7 @@ onInputChange() {
     'workLocation',
     'hireDate',
     'unit',
-    'supervisor'
+    'supervisor',
   ];
 
   const isComplete = requiredFields.every(fieldName => {
@@ -195,8 +242,14 @@ onInputChange() {
     return val !== null && val !== undefined && val.toString().trim().length > 0;
   });
 
-  this.checkboxService.setTypingStatus('employment-details', isComplete);
+  this.checkboxService.setTypingStatus('employment details', isComplete);
 }
+
+
+currentStepIndex = 0;
+//  step = ['personal-details', 'employment-details', 'education',  'review']; 
+isCheckedMap: { [key: string]: boolean } = {};
+
 
 
 
@@ -214,9 +267,7 @@ set formattedDOB(value: string) {
 }
 
 
-currentStepIndex = 0;
- steps = ['personal-details', 'education', 'employment-details', 'review']; 
-isCheckedMap: { [key: string]: boolean } = {};
+
 
 
 //  Edit  function

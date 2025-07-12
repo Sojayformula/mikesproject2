@@ -49,11 +49,17 @@ export class CheckboxService {
   // isFormComplete(): boolean {
   //   return this.formComplete.value;
   // }
+
+
+
+
+
    private typingStatusMap = new BehaviorSubject<Record<string, boolean>>({});
   typingStatus$ = this.typingStatusMap.asObservable();
 
   // Update typing/completion status for a specific step
   setTypingStatus(step: string, isComplete: boolean) {
+    console.log('📦 Setting typing status for', step, '->', isComplete);
     const currentStatus = this.typingStatusMap.value;
     this.typingStatusMap.next({
       ...currentStatus,
@@ -70,4 +76,6 @@ export class CheckboxService {
   resetAll() {
     this.typingStatusMap.next({});
   }
+
+
 }

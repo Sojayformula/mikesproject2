@@ -26,10 +26,10 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 })
 export class PersonInformationComponent implements OnInit{
 
-  @ViewChild('staffForm') formRef!: NgForm;
+  // @ViewChild('staffForm') formRef!: NgForm;
 
   
-  private sub!: Subscription;
+  // private sub!: Subscription;
 
   currentStepIndex = 0;
    staffData: any;  
@@ -88,7 +88,7 @@ imagePreview: string | ArrayBuffer | null = null;
      }
 
 
-  this.staffData = this.staffDataService.getData();
+    this.staffData = this.staffDataService.getData();
 
   this.steps.forEach(step => this.isCheckedMap[step] = false);
 
@@ -160,16 +160,7 @@ async onFileSelected(event: any) {
   }
 }
 
-// onFileSelected(event: any): void {
-//   const file = event.target.files[0];
-//   if (file) {
-//     const reader = new FileReader();
-//     reader.onload = () => {
-//       this.imagePreview = reader.result;
-//     };
-//     reader.readAsDataURL(file);
-//   }
-// }
+
 
 
             //  CONVERTED DATE //
