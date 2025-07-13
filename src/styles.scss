@@ -6,188 +6,23 @@
  @import "@ng-select/ng-select/themes/default.theme.css";
 
 
-// @font-face {
-//   font-family: 'Outfit';
-//   src: url('/assets/Outfit-Regular.ttf') format('truetype');
-//   font-weight: 400;
-//   font-style: normal;
-// }
-
-
-
-// /* Make sure empty container is truly hidden */
-// .ant-notification-topRight:empty {
-//   display: none !important;
-//   visibility: hidden !important;
-//   pointer-events: none !important;
-//   width: 0 !important;
-//   height: 0 !important;
-//   overflow: hidden !important;
-// }
-
-
-/* Show and center only when there's a notice */
- .ant-notification-topRight .ant-notification-notice {
-  display: block !important;
-  position: fixed !important;
-  top: 24px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  min-width: 300px;
-  background-color: #f0fdf4;
-  border-left: 4px solid #10b981;
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.ant-notification-close-icon {
-  display: block !important;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// /* ✅ Style the Cancel button (it is always the first button in the footer) */
-// .custom-confirm-modal .ant-modal-footer button:first-child  {
-//   background-color: red !important; /* Tailwind gray-600 */
-//   color: #fff !important;
-//   border: 1px solid black !important;
-//   border-radius: 6px !important;
-//   width: 80px !important;
-// }
-
-// /* ✅ Cancel button hover effect */
-// .custom-confirm-modal .ant-modal-footer button:first-child:hover {
-//   background-color: #4b5563 !important; /* Tailwind gray-700 */
-// }
-
-
-
-
-
-
-
-
-// /* Modal content styling */
-// .custom-confirm-modal .ant-modal-content {
-//   border: 2px solid #f87171 !important;
-//   border-radius: 10px !important;
-//   background-color: #fef2f2 !important;
-//   margin-left: 50rem;
-//   width: 20rem;
-// }
-
-// @media (max-width: 600px) {
-//   .custom-confirm-modal .ant-modal-content {
-//     width: 90% !important;
-//     max-width: 95vw !important;
-//      margin: 0 auto !important;
-//     padding: 1rem !important;
-
-//   }
-// }
-
-
-
-// /* Modal header */
-// .custom-confirm-modal .ant-modal-header {
-//   background-color: #fee2e2 !important;
-//   color: #b91c1c !important;
-//   font-weight: bold !important;
-  
-// }
-
-// /* Center modal body text */
-// .custom-confirm-modal .ant-modal-body {
-//   font-size: 15px !important;
-//   color: #4b5563 !important;
-//   text-align: center !important;
-// }
-
-// /* Center modal buttons */
-// .custom-confirm-modal .ant-modal-footer {
-//   justify-content: center !important;
-//   display: flex !important;
-//   gap: 12px;
-//   margin-left: 20rem;
-// }
-
-// /* Style Cancel button (usually the first one) */
-// .custom-confirm-modal .ant-modal-footer button:first-child {
-//   background-color: #6b7280 !important; /* Tailwind gray-600 */
-//   color: white !important;
-//   border: 1px solid black !important;
-//   border-radius: 6px !important;
-//   width: 80px !important;
-// }
-
-// /* Hover effect for Cancel */
-// .custom-confirm-modal .ant-modal-footer button:first-child:hover {
-//   background-color: #4b5563 !important; /* Tailwind gray-700 */
-// }
-
-// /* Style OK (Delete) button */
-// .custom-confirm-modal .ant-modal-footer button.ant-btn-dangerous {
-//   background-color: #dc2626 !important;
-//   color: white !important;
-//   border: 1px solid black !important;
-//   border-radius: 6px !important;
-//   width: 80px !important;
-// }
-
-// /* Hover effect for OK button */
-// .custom-confirm-modal .ant-modal-footer button.ant-btn-dangerous:hover {
-//   background-color: #b91c1c !important;
-// }
-
-
-
-// /* Ensure the modal wrapper class is applied */
-// .custom-confirm-modal .ant-modal-footer button {
-//   padding: 0.5rem 1rem;
+// /* Show and center only when there's a notice */
+//  .ant-notification-topRight .ant-notification-notice {
+//   display: block !important;
+//   position: fixed !important;
+//   top: 24px !important;
+//   left: 50% !important;
+//   transform: translateX(-50%) !important;
+//   min-width: 300px;
+//   background-color: #f0fdf4;
+//   border-left: 4px solid #10b981;
+//   padding: 16px;
 //   border-radius: 8px;
+//   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 // }
 
-// /* ✅ Target the Cancel button (first button in footer) */
-// .custom-confirm-modal .ant-modal-footer button:nth-child(1) {
-//   background-color: #6b7280 !important;
-//   color: white !important;
-//   border: 1px solid black !important;
-//   width: 80px;
-// }
-
-// /* Optional: Target OK button (second button) */
-// .custom-confirm-modal .ant-modal-footer button:nth-child(2) {
-//   background-color: #dc2626 !important;
-//   color: white !important;
-// }
-
-
-
-// /* ✅ Style the Cancel button (first button in modal footer) */
-// .custom-confirm-modal .ant-modal-footer button:first-child {
-//   background-color: #6b7280 !important; /* Tailwind gray-600 */
-//   color: #fff !important;
-//   border: 1px solid #000 !important;
-//   border-radius: 6px !important;
-//   width: 80px !important;
-// }
-
-// /* ✅ Cancel hover effect */
-// .custom-confirm-modal .ant-modal-footer button:first-child:hover {
-//   background-color: #4b5563 !important;
+// .ant-notification-close-icon {
+//   display: block !important;
 // }
 
 
@@ -195,4 +30,69 @@
 
 
 
+.ant-notification-topRight .ant-notification-close-icon {
+  position: relative !important;
+  top: -68px !important;
+  left: 95% !important;
+  right: auto !important;
 
+
+  background-color: #f0f0f0 !important;    
+  border: 1px solid #ccc !important;        
+  border-radius: 50% !important;          
+  padding: 4px !important;                 
+  width: 25px !important;
+  height: 25px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 12px !important;
+  color: #333 !important;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+
+
+
+.ant-notification-topRight .ant-notification-notice {
+    background: white;
+    border-color: black !important;
+    border: 4px;
+  border-radius: 8px !important;
+  padding: 16px;
+  box-shadow: 0 4px 14px rgb(70, 70, 70);
+  position: fixed;
+  left: 40%;
+  width: 20%;
+}
+
+.ant-notification-topRight .ant-notification-notice-success {
+  background-color: #e6fffb !important;
+  border-left: 4px solid #36cfc9;
+}
+
+
+.ant-notification-topRight .ant-notification-notice-error {
+  background-color: #fff1f0 !important;
+  border-left: 4px solid #ff4d4f;
+}
+
+
+.ant-notification-topRight .ant-notification-notice-info {
+  background-color: #e6f7ff;
+  border-left: 4px solid #1890ff;
+}
+
+.ant-notification-topRight .ant-notification-notice-warning {
+  background-color: #fffbe6;
+  border-left: 4px solid #faad14;
+}
+
+.ant-notification-topRight .ant-notification-notice-message {
+  font-weight: bold;
+}
+
+.ant-notification-topRight .ant-notification-notice-description {
+  color: #595959;
+}

@@ -34,8 +34,6 @@ originalStaffData: any;
 // In your component.ts
 showAllField: boolean = false;
 
-
-    // localPageData 
  
     formData = {
       staffId: '',
@@ -54,27 +52,7 @@ showAllField: boolean = false;
       ]
     };
    
-  
 
-
-//       resetForm() {
-//       this.formData = {
-//       staffId: '',
-//       educationDetails: [
-//         {
-//           institutionName: '',
-//           courseOfStudy: '',
-//           startDate: '',
-//           endDate: ''
-//         },
-//         {
-//           institutionName: '',
-//           startDate: '',
-          
-//         }
-//       ]
-//     }; 
-// }
 
 
 
@@ -267,50 +245,39 @@ submit() {
 
 
 
-
-
 // steps: string[] = [];
 
-
-// // private hasEdited: boolean = false;
 // private previousStatus: boolean = false;
 // private debounceTimeout: any = null;
 
 // onInputChange(): void {
-//   // this.hasEdited = true;
-//   console.log('onInputChange triggered');
+//   clearTimeout(this.debounceTimeout);
 
-//    clearTimeout(this.debounceTimeout);
+//   this.debounceTimeout = setTimeout(() => {
+//     const topFieldsFilled = this.formData.staffId?.toString().trim().length > 0;
 
-//    this.debounceTimeout = setTimeout(() => {
-//     const requiredFields: string[] = [
-//       'firstName',
-//       'lastName',
-//       'otherName',
-//       'gender',
-//       'dateOfBirth',
-//       'nationality',
-//       'maritalStatus',
-//       'phoneNumber',
-//       'email',
-//       'idType',
-//       'idNumber',
-//     ];
-
-//     const isComplete = requiredFields.every(field => {
-//       const val = this.formData?.[field];
-//       console.log(`🔍 ${field}:`, val);
-//       return val !== null && val !== undefined && val.toString().trim().length > 0;
+//     const educationFilled = this.formData.educationDetails.every((entry, i) => {
+//       const requiredFields = Object.keys(entry); // dynamically use fields that exist
+//       const isValid = requiredFields.every((key) => {
+//         const value = (entry as any)[key];
+//         return typeof value === 'string' && value.trim().length > 0;
+//       });
+//       console.log(`Education ${i}:`, entry, '', isValid);
+//       return isValid;
 //     });
 
-//     console.log('✅ Form complete:', isComplete);
+//     const isComplete = topFieldsFilled && educationFilled;
+//     console.log('Form complete:', isComplete);
 
 //     if (isComplete !== this.previousStatus) {
-//       this.checkboxService.setTypingStatus('personal-information', isComplete);
+//       this.checkboxService.setTypingStatus('education-details', isComplete);
 //       this.previousStatus = isComplete;
-//       console.log(isComplete ? '☑️ Checkbox ticked' : '⬜ Checkbox unticked');
 //     }
-//    }, 50);
+//   }, 50);
+// }
+
+
+
 
 }
 

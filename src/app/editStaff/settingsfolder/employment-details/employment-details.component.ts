@@ -55,28 +55,28 @@ export class EmploymentDetailsComponent2 implements OnInit{
      
 
     
-      // formData = {
-      //   jobTitle: '',
-      //   unit: [],
-      //   employmentType: '',
-      //   hireDate: '',
-      //   workLocation: '',
-      //   staffId: '',
-      //   supervisor: [],
-      //   role: ''
-      // };
+      formData = {
+        jobTitle: '',
+        unit: [],
+        employmentType: '',
+        hireDate: '',
+        workLocation: '',
+         staffId: '',
+        supervisor: [],
+        role: ''
+      };
 
-      formData: {
-  [key: string]: any;
-} = {
-  jobTitle: '',
-  unit: [],
-  employmentType: '',
-  hireDate: '',
-  workLocation: '',
-  staffId: '',
-  supervisor: [],
-};
+//       formData: {
+//   [key: string]: any;
+// } = {
+//   jobTitle: '',
+//   unit: [],
+//   employmentType: '',
+//   hireDate: '',
+//   workLocation: '',
+//   _id: '',
+//   supervisor: [],
+// };
 
 
 // nextStep() {
@@ -370,15 +370,16 @@ onInputChange(){
    this.debounceTimeout = setTimeout(() => {
     const requiredFields: string[] = [
     'jobTitle',
-  'unit',
-  'employmentType',
-  'hireDate',
-  'workLocation',
-  'staffId',
+    'unit',
+    'employmentType',
+    'hireDate',
+    'workLocation',
+    'role',
+    'supervisor'
     ];
 
     const isComplete = requiredFields.every(field => {
-      const val = (this.formData)[field] ?? '';
+      const val = (this.formData as any)[field] ?? '';
       console.log(`🔍 ${field}:`, val);
 
           if (Array.isArray(val)) {

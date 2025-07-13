@@ -111,44 +111,45 @@ onCancel() {
 
 
   
+
+
 steps: string[] = [];
 
 
- 
-//   getFieldValue(field: string): any {
-//   switch (field) {
-//     case 'firstName': return this.staffData?.firstName;
-//     case 'lastName': return this.staffData?.lastName;
-//     case 'otherName': return this.staffData?.otherName;
-//     case 'gender': return this.staffData?.gender;
-//     case 'nationality': return this.staffData?.nationality;
-//     case 'dateOfBirth': return this.staffData?.dateOfBirth;
-//     default: return '';
-//   }
-// }
+// private hasEdited: boolean = false;
+private previousStatus: boolean = false;
+private debounceTimeout: any = null;
 
+onInputChange(): void {
+  // this.hasEdited = true;
+  console.log('onInputChange triggered');
 
+   clearTimeout(this.debounceTimeout);
 
+   this.debounceTimeout = setTimeout(() => {
+    const requiredFields: string[] = [
+      'emergencyContactFullName',
+    'emergencyContactRelationship',
+    'emergencyContactPhoneNumber',
+    'emergencyContactEmail',
+    'emergencyContactCurrentAddress',
+    ];
 
+    const isComplete = requiredFields.every(field => {
+      const val = (this.formData as any)[field];
+      console.log(`🔍 ${field}:`, val);
+      return val !== null && val !== undefined && val.toString().trim().length > 0;
+    });
 
-// onInputChange() {
-//   const requiredFields = [
-//     'firstName',
-//     'lastName',
-//     'otherName',
-//     'gender',
-//     'nationality',
-//     'dateOfBirth',
-//   ];
+    console.log('✅ Form complete:', isComplete);
 
-//   const isComplete = requiredFields.every(fieldName => {
-//     const val = this.getFieldValue(fieldName);
-//     return val !== null && val !== undefined && val.toString().trim().length > 0;
-//   });
-
-//   this.checkboxService.setTypingStatus('personal-information', isComplete);
-// }
- 
+    if (isComplete !== this.previousStatus) {
+      this.checkboxService.setTypingStatus('emergency-contact', isComplete);
+      this.previousStatus = isComplete;
+      console.log(isComplete ? '☑️ Checkbox ticked' : '⬜ Checkbox unticked');
+    }
+   }, 50);
+  }
 
 }
 

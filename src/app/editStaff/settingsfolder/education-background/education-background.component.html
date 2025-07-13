@@ -45,6 +45,7 @@
     <input
       type="text"
       name="institutionName0"
+      
       placeholder="Enter name of institution"
       [(ngModel)]="formData.educationDetails[0].institutionName"
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -56,6 +57,7 @@
     <input
       type="text"
       name="courseOfStudy0"
+      
       placeholder="Enter major or course"
       [(ngModel)]="formData.educationDetails[0].courseOfStudy"
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -67,6 +69,7 @@
     <input
       type="date"
       name="startDate0"
+      
       [(ngModel)]="formData.educationDetails[0].startDate"
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
@@ -78,6 +81,7 @@
     <input
       type="text"
       name="institutionName1"
+      
       placeholder="Enter name of institution"
       [(ngModel)]="formData.educationDetails[1].institutionName"
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -89,6 +93,7 @@
     <input
       type="date"
       name="endDate1"
+      
       [(ngModel)]="formData.educationDetails[0].endDate"
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
@@ -99,18 +104,20 @@
     <input
       type="date"
       name="startDate1"
-      [(ngModel)]="formData.educationDetails[1].startDate "
+      
+      [(ngModel)]="formData.educationDetails[1].startDate"
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
     <!-- startDate -->
   </div>
-
+ <!-- (ngModelChange)="onInputChange()" -->
 
   <div>
     <label class="block w-40">Staff Id</label>
     <input
       type="text"
       name="staffId"
+     
       [(ngModel)]="formData.staffId"
       placeholder="Enter name of institution"
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500"

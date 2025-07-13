@@ -35,6 +35,7 @@
             <input
             type="text"
             name="fullName"
+            (ngModelChange)="onInputChange()"
               [(ngModel)]="formData .emergencyContactFullName "
             placeholder="Enter next of kin's full name"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -46,6 +47,7 @@
             <input
             type="text"
             name="Relationship"
+            (ngModelChange)="onInputChange()"
              [(ngModel)]="formData .emergencyContactRelationship"
             placeholder="E.g Mother, Brother, Friend"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -57,6 +59,7 @@
             <input
             type="text"
             name="phoneNumber"
+            (ngModelChange)="onInputChange()"
              [(ngModel)]="formData .emergencyContactPhoneNumber"
             placeholder="Enter active contact number"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -69,6 +72,7 @@
             <input
             type="text"
             name="email"
+            (ngModelChange)="onInputChange()"
              [(ngModel)]="formData .emergencyContactEmail"
             placeholder="Enter email address (if available)"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -80,6 +84,7 @@
             <input
             type="text"
             name="address"
+            (ngModelChange)="onInputChange()"
              [(ngModel)]="formData .emergencyContactCurrentAddress"
             placeholder="Enter current address"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"

@@ -168,13 +168,13 @@
    <div>
   <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Select role</label>
   <select
-    name="staffId"
+    name="role"
     (ngModelChange)="onInputChange()"
-    [(ngModel)]="formData['staffId']"
+    [(ngModel)]="formData['role']"
     required
     class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
   >
-     <option value="" disabled selected>Select role</option>
+    <option [ngValue]="''" disabled selected>Select role</option>
     <option *ngFor="let role of roles" [value]="role._id">
       {{ role.name }}
     </option>

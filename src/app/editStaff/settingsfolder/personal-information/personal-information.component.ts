@@ -208,7 +208,7 @@ onInputChange(): void {
       return val !== null && val !== undefined && val.toString().trim().length > 0;
     });
 
-    console.log('✅ Form complete:', isComplete);
+    console.log('Form complete:', isComplete);
 
     if (isComplete !== this.previousStatus) {
       this.checkboxService.setTypingStatus('personal-information', isComplete);

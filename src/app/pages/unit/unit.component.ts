@@ -11,20 +11,21 @@ import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { debounceTime, Subject } from 'rxjs';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 
 
 
 @Component({
   selector: 'app-unit',
-  imports: [CommonModule, FormsModule, NzDropDownModule, NzButtonModule, NzIconModule, NzFormModule, NzModalModule],
+  imports: [CommonModule, FormsModule, NzDropDownModule, NzButtonModule, NzIconModule, NzFormModule, NzModalModule, MatProgressSpinner],
   templateUrl: './unit.component.html',
   styleUrl: './unit.component.scss'
 })
 export class UnitComponent implements OnInit, OnDestroy{
 
   unitHead:string = ''; 
-
+ isLoading = false
 
    APIData: any;
    selectedTab:string = 'Active';
@@ -74,6 +75,7 @@ export class UnitComponent implements OnInit, OnDestroy{
 
   // unitModel
   fetchunit(){
+    this.isLoading = true
   this.unitModel.search = this.searchQuery?.trim() || '';
   this.unitModel.page = this.unitModel.page || '1';
   this.unitModel.pageSize = this.unitModel.pageSize || '10';
@@ -84,11 +86,13 @@ export class UnitComponent implements OnInit, OnDestroy{
       next: (res)=>{
         this.APIData = res.data
         console.log('APIData', res)
+        this.isLoading = false
         
       },
 
        error: (error) => {
         console.error('Error fetching unit:', error);
+        this.isLoading = true
        
       },
       complete:()=>{
@@ -129,7 +133,7 @@ export class UnitComponent implements OnInit, OnDestroy{
     },
     error: (err) => {
       console.error(err);
-       this.createNotification('topRight','success', 'Add new unit failed.','Failed!');
+       this.createNotification('topRight','error', 'Add new unit failed.','Failed!');
     }
   });
 }
@@ -192,29 +196,37 @@ eleteUnit(id: string) {
 
 
 
-  deleteUnit(id: string){
-  this.modal.confirm({
-    nzTitle: 'Are you sure you want to delete this staff?',
-    nzContent: 'This action cannot be undone.',
-    nzOkText: 'Delete',
-     nzCancelText: 'Cancel',
-    nzOkDanger: true,
-    nzWrapClassName: 'custom-confirm-modal',
-    nzOnOk: () => {
+selectedStaffIdToDelete: string | null = null;
+showDeleteModal = false;
 
-      this.pagesService.deleteStaff(id).subscribe({
-        next: (res) => {
-          this.createNotification('topRight','success', res.message || 'Staff deleted successfully','Deleted!');
-          this.fetchunit();
-        },
-        error: (err) => {
-          this.createNotification('topRight', 'error', 'Failed to delete staff', 'Error');
-        }
-      });
+cancelDeleteStaff() {
+  this.resetDeleteModal();
+}
+
+resetDeleteModal() {
+  this.selectedStaffIdToDelete = null;
+  this.showDeleteModal = false;
+}
+
+deleteUnit(id: string) {
+  this.selectedStaffIdToDelete = id;
+  this.showDeleteModal = true;
+}
+
+confirmDeleteStaff() {
+  if (!this.selectedStaffIdToDelete) return;
+
+  this.pagesService.deleteStaff(this.selectedStaffIdToDelete).subscribe({
+    next: (res) => {
+      console.log('Delete unit', res)
+      this.notification.success('Deleted!', res.message || 'Staff deleted successfully');
+      this.fetchunit();
     },
-   
-    nzOnCancel: () => {
-      this.createNotification('topRight', 'info', 'Staff deletion was cancelled', 'Cancelled');
+    error: () => {
+      this.notification.error('Error', 'Failed to delete staff');
+    },
+    complete: () => {
+      this.resetDeleteModal();
     }
   });
 }
@@ -232,7 +244,6 @@ eleteUnit(id: string) {
 
    isFilterModalVisible = false;
    modalFooter = '';
-
 
              /// Modal///
     openFilterModal(): void {
