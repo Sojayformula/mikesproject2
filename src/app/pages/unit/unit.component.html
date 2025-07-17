@@ -1,7 +1,7 @@
   
-   <div class="mx-10 relative top-20">
+    <div class="mx-10 relative top-20">
 
-   <ng-container *ngIf="isLoading">
+      <ng-container *ngIf="isLoading">
     <div class="mt-6 flex justify-center relative ">
       <mat-spinner [diameter]="50"></mat-spinner>
     </div>
@@ -276,7 +276,6 @@
           <tr>
             <th class="px-4 py-2">
               <div class="flex items-center space-x-2">
-                <div class="border-2 border-[#C0C4CE] w-5 h-5 rounded-md"></div>
                 <span>Unit ID</span>
               </div>
             </th>
@@ -289,7 +288,6 @@
           <tr class="border-b border-gray-200" *ngFor="let item of APIData; let i = index">
             <td class="px-4 py-2">
               <div class="flex items-center space-x-2">
-                <div class="border-2 border-[#C0C4CE] w-5 h-5 rounded-md"></div>
                 <span>#{{ item._id }}</span>
               </div>
             </td>

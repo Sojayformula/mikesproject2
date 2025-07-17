@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
 import { Observable } from 'rxjs/internal/Observable';
 import { addNewStaffModel, addUnitModel, allStaffModel, EditEmmergencyModel, EditEmploymentModel, editFamilyModel, editStaffModel, EducationDetailModel, educationModel, getStaffModel, getStaffResponseModel, PatchEducationPayload, responseDaumModel, UnitHead, unitModel, updateUnitModel } from '../model/pagesModel';
 import { Root } from '../model/login-model';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -190,6 +191,36 @@ getStaff(): Observable<any> {
 getRole(): Observable<any> {
    return this.http.get(`${environment.baseurl}/roles/list-roles`); 
 }
+
+
+            // STAFF PROFILE //
+ getLoggedInUserProfile(): Observable<any> {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      return throwError(() => new Error('Missing user ID'));
+    }
+    return this.http.get(`${environment.baseurl}/staff/${userId}`);
+  }
+
+
+    getLoggedInEduProfile(itme:allStaffModel):Observable<any>{
+        const userId = localStorage.getItem('userId');
+    if (!userId) {
+      return throwError(() => new Error('Missing user ID'));
+    }
+    return this.http.get(`${environment.baseurl}/staff/${userId}`); 
+  }
+
+
+     getLoggedInNextProfile(item: allStaffModel):Observable<any>{
+         const userId = localStorage.getItem('userId');
+    if (!userId) {
+      return throwError(() => new Error('Missing user ID'));
+    }
+    return this.http.get(`${environment.baseurl}/staff/${userId}`);
+  }
+
+
 
 
 

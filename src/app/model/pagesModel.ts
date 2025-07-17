@@ -537,9 +537,27 @@ export interface EducationDetail {
   certificateUrl: string
 }
 
+export interface Child {
+  fullName: string;
+  dob: string;
+}
+
+
 
 
 export interface EditEmploymentModel {
+  _id: string;
+  employmentType: string;
+  jobTitle: string;
+  staffId: string
+  unit: string[]; 
+  hireDate: string;
+  workLocation: string;
+  //supervisor: string[]; 
+  //educationDetails: EducationDetail[];
+}
+
+export interface EditProfileNextOfKinModel {
   _id: string;
   employmentType: string;
   jobTitle: string;
@@ -551,6 +569,7 @@ export interface EditEmploymentModel {
 }
 
 export interface EducationDetail {
+  educationDetails: EducationDetail[];
   institutionName: string;
   courseOfStudy: string;
   startDate: string;
@@ -570,12 +589,23 @@ export interface EditEmmergencyModel {
  
 }
 
+export interface EditNextOfKingsModel {
+  _id: string;
+   nextOfKinFullName: string
+  nextOfKinRelationship: string
+  nextOfKinPhoneNumber: string
+  nextOfKinEmail: string
+  nextOfKinCurrentAddress: string
+ 
+}
+
 // education.model.ts
 export interface EducationDetailModel {
   institutionName: string;
   courseOfStudy: string;
   startDate: string;
   endDate: string;
+  _id?: string
 }
 
 
@@ -863,13 +893,24 @@ export interface Child {
 }
 
 export interface editFamilyModel {
-  supervisor: string[]; 
+  // supervisor: string[]; 
+  // spouseName: string;
+  // spousePhone: string;
+  // spouseEmail: string;
+  // numberOfChildren: number;
+  // children: Children[];
+   _id?: string;
   spouseName: string;
   spousePhone: string;
   spouseEmail: string;
   numberOfChildren: number;
-  children: Children[];
+  children: {
+    fullName: string;
+    dob: string;
+    _id?: string;
+  }[];
 }
+
 
 
 

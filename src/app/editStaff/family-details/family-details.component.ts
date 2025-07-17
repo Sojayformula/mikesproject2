@@ -7,9 +7,10 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { PagesService } from '../../service/pages.service';
 import { allStaffModel, editFamilyModel, PatchEducationPayload } from '../../model/pagesModel';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { Child } from '../../model/pagesModel';
+//import { Child } from '../../model/pagesModel';
 import { EditService } from '../../editservice/edit.service';
-//import { Child } from '../../modelchild/modelchild';
+import { Child } from '../../model/pagesModel';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-family-details',
@@ -22,7 +23,24 @@ export class FamilyDetailsComponent implements OnInit {
 
 
   originalData: any = {};
-  data: any 
+  //data: any 
+//   data: any = {
+//   children: [],
+//   supervisor: {}
+// };
+    data: any = {
+      staffId: '',
+      spouseName: '',
+      spousePhone: '',
+      spouseEmail: '',
+      numberOfChildren: 0,
+      children: [],
+      supervisor: {
+        _id: ''
+      }
+    };
+
+
    getAllStaff: allStaffModel;
   //  familyModel: editFamilyModel
    staffId: any
@@ -38,7 +56,9 @@ export class FamilyDetailsComponent implements OnInit {
  
 
   constructor(public editService:EditService, private router:Router, private location:Location, private pagesService:PagesService,
-    private checkboxService:CheckboxService, private staffDataService:StaffDataService, private route:ActivatedRoute ){
+    private checkboxService:CheckboxService, private staffDataService:StaffDataService, private route:ActivatedRoute,
+    private notification: NzNotificationService
+   ){
 
       this.getAllStaff = new allStaffModel()
       // this.familyModel = new editFamilyModel()
@@ -54,15 +74,22 @@ export class FamilyDetailsComponent implements OnInit {
      })
 
     if (this.staffId) {
-      this.fetchStaffData(); 
+       this.fetchFamiltDetails(); 
     }
-    // this.fetchFamiltDetails();
+    //  this.fetchFamiltDetails();
   
     this.data = this.staffDataService.getData();
 
     this.originalData = structuredClone(this.data); 
+
+
+
      }
 
+
+      createNotification(position: 'topRight', type: 'success' | 'info' | 'warning' | 'error', title: string, message: string){
+    this.notification.create(type, title, message, {nzPlacement: position, nzDuration: 3000})
+  }
 
 
 
@@ -72,80 +99,113 @@ export class FamilyDetailsComponent implements OnInit {
   }
 
 
-  //   fetchFamiltDetails() {
-  //   this.pagesService.getfamilyId(this.staffId, this.getAllStaff).subscribe({
-  //     next: (res) => {
-  //       const employee = res.data.find((staff: any) => staff._id === this.staffId);
-  //       if (employee) {
-  //         this.staffDataService.setData(employee); // 🔥 Save globally
-  //         this.data = employee;            // 💾 Local assignment
-  //         console.log('Matched Employee:', this.data);
-  //       } else {
-  //       // console.warn('No matching employee found for staffId:', this.staffId);
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.error('Failed to fetch data', err);
-  //     }
-  //   });
-  // }
+
+  fetchFamiltDetails() {
+  console.log('Fetch family data before API:', this.data);
+
+  this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
+    next: (res) => {
+      const staff = res.data || res;
+      console.log('API response:', staff); 
+
+      this.data.children = staff.children || staff.supervisor?.children || [];
+      this.data.supervisor = staff.supervisor || {};
+      this.data.spouseName = staff.spouseName || '';
+      this.data.spousePhone = staff.spousePhone || '';
+      this.data.spouseEmail = staff.spouseEmail || '';
+      this.data.numberOfChildren = staff.numberOfChildren || 0;
+
+      console.log('Updated family data:', this.data);
+    },
+    error: (err) => console.error('Failed to fetch children data', err)
+  });
+}
 
 
-     fetchStaffData() {
-    this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
-      next: (res ) => {
-        this.data = res;     
 
-        console.log('Fetched staff data:', this.data);
-         this.isLoading = false;
+  addChild() {
+    this.data.children.push({ fullName: '', dob: '' });
+  }
 
-          this.data = structuredClone(res);     
-          this.originalStaffData = structuredClone(res);
-          
 
-      },
-      error: (err) => {
-        console.error('Error fetching staff:', err);
-      },
 
-         complete: () => {
+  removeChild(index: number) {
+  this.data.children.splice(index, 1);
 
-         }
-    });
+  const payload= {
+    _id: this.staffId,
+    educationDetails: this.data.educationDetails
+  };
+
+  this.pagesService.patchEmployment(this.staffId, payload).subscribe({
+    next: (res) => {
+      console.log(' Education entry removed and saved:', res);
+    },
+    error: (err) => {
+      console.error('Failed to remove education entry:', err);
     }
+  });
+}
 
 
-   
-       
+
+// formData = {
+//   spouseName: '',
+//   spousePhone: '',
+//   spouseEmail: '',
+//   numberOfChildren: 0,
+//   children: [
+//     {
+//       fullName: '',
+//       dob: ''
+//     }
+//   ],
+//   supervisor: '',  // backend expects this as array, convert on submit
+//   _id: '',          // optional, if you're updating an existing staff
+// };
+
+
+
+
 
 
 
 Submit(form: NgForm) {
   if (form.invalid) return;
-  const supervisorPayload: editFamilyModel = {
-  supervisor: [this.data.supervisor._id], 
-  spouseName: this.data.supervisor.spouseName,
-  spousePhone: this.data.supervisor.spousePhone,
-  spouseEmail: this.data.supervisor.spouseEmail,
-  numberOfChildren: this.data.supervisor.numberOfChildren,
-  children: this.data.supervisor.children.map((child: Child) => ({
-    fullName: child.fullName,
-    dob: child.dob,
-    _id: child._id
-  }))
-};
 
+  this.isLoading = true;
 
-  this.pagesService.patchFamilyDetails(this.staffId, supervisorPayload).subscribe({
+  const payload  = {
+    _id: this.staffId,
+    spouseName: form.value.spouseName,
+    spousePhone: form.value.spousePhone,
+    spouseEmail: form.value.spouseEmail,
+    numberOfChildren: this.data.children.length,
+    children: this.data.children.map((child: { fullName: string; dob: string }) => ({
+      fullName: child.fullName,
+      dob: child.dob
+    })),
+    supervisor: [this.data.supervisor._id]
+  };
+
+  console.log('PATCH FAMILY PAYLOAD:', payload);
+
+  this.pagesService.patchFamilyDetails(this.staffId, payload).subscribe({
     next: (res) => {
-      console.log('Supervisor updated successfully');
-     
+      console.log('Family details updated:', res);
+       this.createNotification('topRight', "success", "update Successful!!", "Updated!")
+      this.isLoading = false;
     },
     error: (err) => {
-      console.error('Error updating supervisor', err);
+      console.error('Error updating family details:', err);
+      alert('Family details update failed.');
+      this.isLoading = false;
     }
   });
 }
+
+
+
 
 
   //         // CHECKBOX //

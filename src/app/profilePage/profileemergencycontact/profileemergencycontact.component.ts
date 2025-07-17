@@ -1,21 +1,20 @@
+
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { allStaffModel, EditEmmergencyModel, EditEmploymentModel } from '../../model/pagesModel';
 import { PagesService } from '../../service/pages.service';
-import { FormsModule, NgForm, NgModel } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { StaffDataService } from '../../StaffDataService/staff-data.service';
 import { CheckboxService } from '../../checkboxService/checkbox.service';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
-  selector: 'app-emengency-contact',
-  imports: [FormsModule, CommonModule, MatProgressSpinner],
-  templateUrl: './emengencycontact.component.html',
-  styleUrl: './emengencycontact.component.scss'
+  selector: 'app-profileemergencycontact',
+  imports: [FormsModule, CommonModule],
+ templateUrl: './profileemergencycontact.component.html',
+  styleUrl: './profileemergencycontact.component.scss'
 })
-export class EmengencycontactComponent {
+export class ProfileemergencycontactComponent {
   @ViewChild('formRef') formRef!: NgForm;
 
 
@@ -36,7 +35,7 @@ export class EmengencycontactComponent {
   };
 
   constructor(private router:Router, private pagesService:PagesService, private route:ActivatedRoute,
-    public staffDataService: StaffDataService, public checkboxService: CheckboxService, private notification: NzNotificationService
+    public staffDataService: StaffDataService, public checkboxService: CheckboxService
   ){
     this.getAllStaff = new allStaffModel
   }
@@ -49,11 +48,6 @@ export class EmengencycontactComponent {
 
     this.fetchEmergencyData()
     
-  }
-
-
-  createNotification(position: 'topRight', type: 'success' | 'info' | 'warning' | 'error', title: string, message: string){
-    this.notification.create(type, title, message, {nzPlacement: position, nzDuration: 3000})
   }
 
 
@@ -131,7 +125,6 @@ onCancel(): void {
         this.pagesService.patchEmergency(this.staffId, payload).subscribe({
           next: (res) => {
             console.log('Success:', res);
-             this.createNotification('topRight', "success", "update Successful!!", "Updated!")
             this.isLoading = false;
           },
           error: (err) => {

@@ -11,15 +11,18 @@
   >
      <span class="material-symbols-outlined text-[20px]">edit</span>Edit
   </button>
+  
 
-  <!-- Save and cancel -->
 
+                   <!-- Save loader  -->
        <ng-container *ngIf="isLoading">
   <div class="mt-6 flex justify-center relative top-[-15px]">
     <mat-spinner [diameter]="30"></mat-spinner>
   </div>
 </ng-container>
 
+
+             <!-- Save and cancel -->
   <ng-container *ngIf="editMode">
     <button
       type="button"
@@ -40,6 +43,23 @@
   </div>
 
 
+
+   <!-- Add Child Button -->
+ <div class="flex justify-end mx-16 mt-[-45px]">
+  <button
+    type="button"
+    (click)="addChild()"
+    class="border-[1px] border-black text-black px-4 py-2 rounded-lg hover:bg-blue-700"
+  >
+    + Add Child
+  </button>
+</div>
+
+
+
+
+
+
     <div class="">
         <p class="font-outfit font-bold text-[16px]">Family Details</p>
         <p class="font-outfit text-[#727A90] text-[12px]">Information for family-related benefit and records,</p>
@@ -48,84 +68,141 @@
 
 
                    <!-- FAMILY FORM -->
-<form #staffForm="ngForm" (ngSubmit)="Submit(staffForm) "
-  class="grid gap-10 bg-white rounded-lg mt-20 ">
+<form #staffForm="ngForm" (ngSubmit)="Submit(staffForm) "class="grid gap-10 bg-white rounded-lg mt-[-40px] ">
 
-  <!-- Row 1: 3  -->
-  <div class="grid md:grid-cols-3 grid-cols-2 ">
+<!-- <form #staffForm="ngForm" (ngSubmit)="Submit(staffForm)" class="grid gap-6 bg-white rounded-lg mt-20"> -->
+
+  <!-- Row 1: Spouse Info -->
+  <div class="grid md:grid-cols-3 grid-cols-2">
+    
+    <!-- Spouse Name -->
     <div class="w-[6rem]">
-    <label class="font-semibold text-[13px] font-outfit w-40 flex">Spouse's Name</label>
-    <input
-     type="text" name="spouseName" 
-     [disabled]="!editMode" 
-     [(ngModel)]="data.supervisor.spouseName" 
-     (ngModelChange)="onInputChange()"
-      placeholder="Enter full name of spouse" 
-      class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+      <label class="font-semibold text-[13px] font-outfit w-40 flex">Spouse's Name</label>
+      <input
+        type="text"
+        name="spouseName"
+        [(ngModel)]="data.spouseName"
+        [disabled]="!editMode"
+        (ngModelChange)="onInputChange()"
+        placeholder="Enter full name of spouse"
+        class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       />
-   
-       <div class="mt-10 mb-4 md:mb-0">
+
+      <!-- Children Info Header -->
+      <div class="mt-10 mb-4 md:mb-0">
         <p class="font-semibold font-outfit text-[16px] w-[10rem]">Children Information</p>
-        <p class="text-[#727A90] text-[12px] w-[42rem]">Base on the total number of children entered above, the same number of fields will appear below to enter each child's full... </p>
+        <p class="text-[#727A90] text-[12px] w-[42rem]">
+          Based on the total number of children entered above, the same number of fields will appear below to enter each child's full details.
+        </p>
+      </div>
     </div>
 
-    </div>
-
+    <!-- Spouse Phone -->
     <div class="w-[9rem]">
-    <label class="font-semibold text-[13px] font-outfit w-40 flex">Spouse's Phone Number</label>
-    <input type="text" name="spousePhone" [disabled]="!editMode" [(ngModel)]="data.supervisor.spousePhone" (ngModelChange)="onInputChange()" placeholder="Phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+      <label class="font-semibold text-[13px] font-outfit w-40 flex">Spouse's Phone Number</label>
+      <input
+        type="text"
+        name="spousePhone"
+        [(ngModel)]="data.spousePhone"
+        [disabled]="!editMode"
+        (ngModelChange)="onInputChange()"
+        placeholder="Phone number"
+        class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      />
     </div>
 
-    <div class="mt-">
-    <label class="font-semibold text-[13px] font-outfit">Spouse's Email</label>
-    <input type="text" name="spouseEmail" [disabled]="!editMode" [(ngModel)]="data.supervisor.email" placeholder="Enter address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <!-- Spouse Email -->
+    <div>
+      <label class="font-semibold text-[13px] font-outfit">Spouse's Email</label>
+      <input
+        type="email"
+        name="spouseEmail"
+        [(ngModel)]="data.spouseEmail"
+        [disabled]="!editMode"
+        placeholder="Enter email address"
+        class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      />
     </div>
-
   </div>
 
-  <!-- Row 2: Input 4 under Input 1 -->
+  <!-- Row 2: Number of Children -->
   <div class="grid grid-cols-3 gap-6">
     <div>
-     <label class="font-semibold text-[13px] font-outfit">Number of Children</label>
-    <input type="text" name="numberOfChild" [disabled]="!editMode" [(ngModel)]="data.supervisor.numberOfChildren"  placeholder="Enter nu30-;l mbers(eg. 2)" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+      <label class="font-semibold text-[13px] font-outfit">Number of Children</label>
+      <input
+        type="number"
+        name="numberOfChild"
+        [(ngModel)]="data.numberOfChildren"
+        [disabled]="!editMode"
+        placeholder="Enter number (e.g., 2)"
+        class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      />
     </div>
     <div></div>
     <div></div>
   </div>
 
-  <!-- Row 3: Input 5 under column 1, Input 6 under column 2      *ngFor="let child of data.supervisor.children; let i = index"   [name]="'age'+ i "  [value]="child.dob"     -->
-  <div  class="grid grid-cols-3 gap-[24rem] lg:gap- [10rem]"> 
+  <!-- Row 3+: Children Form Fields (Dynamic) -->
+  <div
+    *ngFor="let child of data.children; let i = index"
+    class="grid grid-cols-3 gap-[24rem] mb-6"
+  >
+    <!-- Child Full Name -->
     <div class="flex flex-col">
-     <label class="font-semibold text-[13px] font-outfit">Child </label>
-    <input type="text" name="child1" [disabled]="!editMode" [(ngModel)]="data.children[0].fullName"  placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+      <label class="font-semibold text-[13px] font-outfit">Child </label>
+      <input
+        type="text"
+        [name]="'childFullName' + i"
+        [(ngModel)]="child.fullName"
+        [disabled]="!editMode"
+        placeholder="Enter full name"
+        class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      />
+
+       <!-- Remove Button -->
+    <div class="flex items-end">
+      <button
+        type="button"
+        (click)="removeChild(i)"
+        class="border border-red-500 bg-red-100 text-red-600 text-sm rounded-[4px] hover:text-red-800 mr-[20rem] mt-3 w-20"
+      >
+        Remove
+      </button>
+    </div>
     </div>
 
-    <div  class="flex flex-col">
-     <label class="font-semibold text-[13px] font-outfit">Age</label>
-    <input type="text" name="age1" [disabled]="!editMode" [value]="data.children[0].dob" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <!-- Child Age -->
+    <div class="flex flex-col relative right-[7.5rem]">
+      <label class="font-semibold text-[13px] font-outfit">Age</label>
+      <input
+        type="text"
+        [name]="'childAge' + i"
+        [(ngModel)]="child.dob"
+        [disabled]="!editMode"
+        placeholder="Enter age in years"
+        class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      />
     </div>
-
-
-    <div></div>
   </div>
 
-  <!-- Row 4: Input 7 under column 1, Input 8 under column 2 -->
-  <div  class="grid grid-cols-3 gap-[24rem] md:gap -[10rem]">
-    <div class="flex flex-col"> 
-        <label class="font-semibold text-[13px] font-outfit">Child </label>
-    <input type="text" name="child2" [disabled]="!editMode" [(ngModel)]="data.children[1].fullName" placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-    </div>
 
- 
-    <div  class="flex flex-col">
-    <label class="font-semibold text-[13px] font-outfit">Age</label>
-    <input type="text" name="age2" [disabled]="!editMode"  [(ngModel)]="data.children[1].dob" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
-    </div>
-    <!-- *ngIf="data.children && data.children.length > 1" -->
 
-    <div></div>
-  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -289,3 +366,89 @@
 
   </div>
 </div> -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+  Row 1: 3 
+  <div class="grid md:grid-cols-3 grid-cols-2 ">
+    <div class="w-[6rem]">
+    <label class="font-semibold text-[13px] font-outfit w-40 flex">Spouse's Name</label>
+    <input
+     type="text" name="spouseName" 
+     [disabled]="!editMode" 
+     [(ngModel)]="data.supervisor.spouseName" 
+     (ngModelChange)="onInputChange()"
+      placeholder="Enter full name of spouse" 
+      class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+      />
+   
+       <div class="mt-10 mb-4 md:mb-0">
+        <p class="font-semibold font-outfit text-[16px] w-[10rem]">Children Information</p>
+        <p class="text-[#727A90] text-[12px] w-[42rem]">Base on the total number of children entered above, the same number of fields will appear below to enter each child's full... </p>
+    </div>
+
+    </div>
+
+    <div class="w-[9rem]">
+    <label class="font-semibold text-[13px] font-outfit w-40 flex">Spouse's Phone Number</label>
+    <input type="text" name="spousePhone" [disabled]="!editMode" [(ngModel)]="data.supervisor.spousePhone" (ngModelChange)="onInputChange()" placeholder="Phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    </div>
+
+    <div class="mt-">
+    <label class="font-semibold text-[13px] font-outfit">Spouse's Email</label>
+    <input type="text" name="spouseEmail" [disabled]="!editMode" [(ngModel)]="data.supervisor.email" placeholder="Enter address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    </div>
+
+  </div>
+
+  Row 2: Input 4 under Input 1
+  <div class="grid grid-cols-3 gap-6">
+    <div>
+     <label class="font-semibold text-[13px] font-outfit">Number of Children</label>
+    <input type="text" name="numberOfChild" [disabled]="!editMode" [(ngModel)]="data.supervisor.numberOfChildren"  placeholder="Enter nu30-;l mbers(eg. 2)" 
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    </div>
+    <div></div>
+    <div></div>
+  </div>
+
+  Row 3: Input 5 under column 1, Input 6 under column 2    
+  <div  class="grid grid-cols-3 gap-[24rem] lg:gap- [10rem]"> 
+    <div class="flex flex-col">
+     <label class="font-semibold text-[13px] font-outfit">Child </label>
+    <input type="text" name="child1" [disabled]="!editMode" [(ngModel)]="data.children[0].fullName"  placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    </div>
+
+    <div  class="flex flex-col">
+     <label class="font-semibold text-[13px] font-outfit">Age</label>
+    <input type="text" name="age1" [disabled]="!editMode" [value]="data.children[0].dob" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    </div>
+
+
+    <div></div>
+  </div>
+
+  Row 4: Input 7
+  <div  class="grid grid-cols-3 gap-[24rem] md:gap -[10rem]">
+    <div class="flex flex-col"> 
+        <label class="font-semibold text-[13px] font-outfit">Child </label>
+    <input type="text" name="child2" [disabled]="!editMode" [(ngModel)]="data.children[1].fullName" placeholder="Enter full name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    </div>
+
+ 
+    <div  class="flex flex-col">
+    <label class="font-semibold text-[13px] font-outfit">Age</label>
+    <input type="text" name="age2" [disabled]="!editMode"  [(ngModel)]="data.children[1].dob" placeholder="Enter age in years" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    </div>
+
+    <div></div>
+  </div> -->

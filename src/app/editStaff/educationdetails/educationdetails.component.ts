@@ -3,10 +3,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PagesService } from '../../service/pages.service';
-import { allStaffModel, editStaffModel, EducationDetailModel, PatchEducationPayload } from '../../model/pagesModel';
+import { allStaffModel, EditEmploymentModel, editStaffModel, EducationDetail, EducationDetailModel, PatchEducationPayload } from '../../model/pagesModel';
 import { StaffDataService } from '../../StaffDataService/staff-data.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CheckboxService } from '../../checkboxService/checkbox.service';
+import { NzNotificationContainerComponent, NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-education-details',
@@ -30,47 +31,12 @@ export class EducationdetailsComponent implements OnInit {
    editMode: boolean = false;
 originalStaffData: any;
 
-   // educationData = {
-//   educationDetails: [
-//     {
-//       institutionName: '',
-//       courseOfStudy: '',
-//       startDate: '',
-//       endDate: ''
-//     },
-//     {
-//       institutionName: '',
-//       courseOfStudy: '',
-//       startDate: '',
-//       endDate: ''
-//     }
-//   ]
-// };
-
-
 
 
   constructor(private route:ActivatedRoute, private pagesService:PagesService, 
-    private staffDataService:StaffDataService, public checkboxService: CheckboxService ){
+    private staffDataService:StaffDataService, public checkboxService: CheckboxService, private notification: NzNotificationService ){
     this.getAllStaff = new allStaffModel()
-    //this.editEduData = new EducationDetailsModel()
-
-//       this.educationData = {
-//   educationDetails: [
-//     {
-//       institutionName: '',
-//       courseOfStudy: '',
-//       startDate: '',
-//       endDate: ''
-//     },
-//     {
-//       institutionName: '',
-//       courseOfStudy: '',
-//       startDate: '',
-//       endDate: ''
-//     }
-//   ]
-// };
+  
   }
 
 
@@ -88,27 +54,22 @@ originalStaffData: any;
 
 
 
+    createNotification(position: 'topRight', type: 'success' | 'info' | 'warning' | 'error', title: string, message: string){
+    this.notification.create(type, title, message, {nzPlacement: position, nzDuration: 3000,   })
+    }
 
-  //  fetchEduDetails() {
-  //   this.pagesService.getUEduById(this.staffId, this.getAllStaff).subscribe({
-  //     next: (res) => {
-  //     this.educationData = res;
-  //     console.log('educationDetails:', res);
-  //     console.log('Length:', this.educationData.educationDetails?.length);
 
-  //     },
-  //     error: (err) => {
-  //       console.error('Failed to fetch data', err);
-  //     }
-  //   });
-  // }
-  fetchEduDetails() {
+
+fetchEduDetails() {
   this.pagesService.getUEduById(this.staffId, this.getAllStaff).subscribe({
     next: (res) => {
       const staff = res.data || res;
 
+      // Use staff.educationDetails if present, otherwise try staff.supervisor.educationDetails
       this.educationData = {
-        educationDetails: staff?.supervisor?.educationDetails || []
+        educationDetails: staff.educationDetails?.length
+          ? staff.educationDetails
+          : staff.supervisor?.educationDetails || []
       };
 
       console.log('educationDetails:', this.educationData.educationDetails);
@@ -119,6 +80,47 @@ originalStaffData: any;
     }
   });
 }
+
+
+
+
+
+      // ADD MORE LOGIC //
+addMoreEducation() {
+  this.educationData.educationDetails.push({
+    institutionName: '',
+    courseOfStudy: '',
+    startDate: '',
+    endDate: ''
+  });
+
+  console.log('Updated educationDetails:', this.educationData.educationDetails);
+}
+
+
+// removeEducation(index: number) {
+//   this.educationData.educationDetails.splice(index, 1);
+// }
+
+removeEducation(index: number) {
+  this.educationData.educationDetails.splice(index, 1);
+
+  const payload= {
+    _id: this.staffId,
+    educationDetails: this.educationData.educationDetails
+  };
+
+  this.pagesService.patchEmployment(this.staffId, payload).subscribe({
+    next: (res) => {
+      console.log(' Education entry removed and saved:', res);
+    },
+    error: (err) => {
+      console.error('Failed to remove education entry:', err);
+    }
+  });
+}
+
+
 
 
 
@@ -159,37 +161,55 @@ originalStaffData: any;
 
 
 
-onSubmit(eduform: NgForm): void {
-  if (!eduform.valid) return;
+
+
+
+
+
+onSubmit(form: NgForm) {
+  if (form.invalid) return;
 
   this.isLoading = true;
- 
-   const formData = new FormData();
-formData.append('_id', this.staffId);
-formData.append('educationDetails', JSON.stringify(this.educationData.educationDetails));
-for (let i = 0; i < this.selectedFiles.length; i++) {
-  formData.append('files', this.selectedFiles[i]);
-}
 
+  const payload: Partial<EducationDetail> = {
+    _id: this.staffId,
+    educationDetails: this.educationData.educationDetails.map((edu: EducationDetailModel) => ({
+      _id: edu._id,
+      institutionName: edu.institutionName,
+      courseOfStudy: edu.courseOfStudy,
+      startDate: edu.startDate,
+      endDate: edu.endDate
+    }))
+  };
 
-  this.pagesService.patchEducation(this.staffId, formData).subscribe({
+  this.pagesService.patchEmployment(this.staffId, payload).subscribe({
     next: (res) => {
-      console.log('PATCH response:', res);
-
-      if (res?.educationDetails) {
-        this.educationData.educationDetails = res.educationDetails;
-      }
-
-      this.editMode = false;
+      console.log('Success:', res);
       this.isLoading = false;
+      this.createNotification('topRight', "success", "update Successful!!", "Updated!")
     },
     error: (err) => {
-      console.error('error', err);
-      alert('Form update failed');
+      console.error(' Error:', err);
       this.isLoading = false;
+      alert('Update failed');
     }
   });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 onEditToggle(): void {
   this.editMode = true;
@@ -203,44 +223,7 @@ onCancel(): void {
 
 
 
-//   removeFile(index: number) {
-//   this.selectedFiles.splice(index, 1);
-// }
 
-//  onDragOver(event: DragEvent) {
-//     event.preventDefault();
-//     this.isDragging = true;
-//   }
-
-//   onDragLeave(event: DragEvent) {
-//     event.preventDefault();
-//     this.isDragging = false;
-//   }
-
-
-//   onDrop(event: DragEvent) {
-//   event.preventDefault();
-//   this.isDragging = false;
-//   const files = event.dataTransfer?.files;
-//   if (files && files.length > 0) {
-//     this.addFiles(files);
-//   }
-// }
-
-//   onFileSelected(event: Event) {
-//   const input = event.target as HTMLInputElement;
-//   if (input.files) {
-//     this.addFiles(input.files);
-//   }
-// }
-
-
-
-//   addFiles(fileList: FileList) {
-//   for (let i = 0; i < fileList.length; i++) {
-//     this.selectedFiles.push(fileList[i]);
-//   }
-// }
 
 
 
@@ -288,3 +271,50 @@ onCancel(): void {
 
 
 }
+
+
+
+
+
+
+
+
+
+//   removeFile(index: number) {
+//   this.selectedFiles.splice(index, 1);
+// }
+
+//  onDragOver(event: DragEvent) {
+//     event.preventDefault();
+//     this.isDragging = true;
+//   }
+
+//   onDragLeave(event: DragEvent) {
+//     event.preventDefault();
+//     this.isDragging = false;
+//   }
+
+
+//   onDrop(event: DragEvent) {
+//   event.preventDefault();
+//   this.isDragging = false;
+//   const files = event.dataTransfer?.files;
+//   if (files && files.length > 0) {
+//     this.addFiles(files);
+//   }
+// }
+
+//   onFileSelected(event: Event) {
+//   const input = event.target as HTMLInputElement;
+//   if (input.files) {
+//     this.addFiles(input.files);
+//   }
+// }
+
+
+
+//   addFiles(fileList: FileList) {
+//   for (let i = 0; i < fileList.length; i++) {
+//     this.selectedFiles.push(fileList[i]);
+//   }
+// }

@@ -113,12 +113,12 @@ confirmDeleteStaff() {
 
 
 
- // addNavigate(item:string){
-  //   // this.router.navigate([`/person-information?staffId=${id}`])
-  //   // const data =  JSON.stringify(item)
+//  addNavigate(item:string){
+//     // this.router.navigate([`/person-information?staffId=${id}`])
+//     // const data =  JSON.stringify(item)
     
-  //   this.router.navigateByUrl(`/editsettings?staffId=${item}`)       
-  // }
+//     this.router.navigateByUrl(`/editsettings?staffId=${item}`)       
+//   }
 addNavigate(id: string) {
   this.isLoading = true;
 

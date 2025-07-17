@@ -1,9 +1,24 @@
+<div class=" lg:w-[69rem]">
 
-<div class="mx-6 md:mx-0 mt-32 md:mt-0">
+                       <!-- ADD MORE FIELDS -->
+      <div class="flex justify-end relative">
+      <button
+        type="button"
+        (click)="addMoreEducation()"
+        class="border-[1px] border-black text-black px-4 py-2 rounded-lg hover:bg-blue-700">
+        + Add More
+      </button>
+      </div>
+  
+
+   
+
+
+
    
 
     <!-- Edit button -->
-<div class="flex gap-4 justify-end col-span-3 relative md:right-[0.6rem] top-[-11.5rem] md:top-[-5.4rem]">
+<div class="flex gap-4 justify-end col-span-3 relative md:right-[3.2rem] top-[-11.5rem] md:top-[-8.2rem]">
   <button
     type="button"
     *ngIf="!editMode"
@@ -12,15 +27,17 @@
   >
      <span class="material-symbols-outlined text-[20px]">edit</span>Edit
   </button>
+ 
 
    
-  <!-- Save and cancel -->
+        <!-- Save loader -->
        <ng-container *ngIf="isLoading">
   <div class="mt-6 flex justify-center relative top-[-15px]">
     <mat-spinner [diameter]="30"></mat-spinner>
   </div>
 </ng-container>
 
+           <!-- Save and cancel -->
   <ng-container *ngIf="editMode">
     <button
       type="submit"
@@ -40,6 +57,10 @@
   </ng-container>
   </div>
 
+  <!-- </div> -->
+
+  <div class="mx-6 md:mx-0 mt-32 md:mt-[-40px]">
+
 
     <div>
         <p class="font-bold font-outfit">Education Background</p>
@@ -48,90 +69,82 @@
 
 
 
+
             <!-- FORM -->
-    <form  #eduform = "ngForm" class="grid grid-rows-2 grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-16 mt-12 font-outfit ">
-        <!-- Row ---1 -->
+    <form #eduform = "ngForm" class="mt-10 font-outfit space-y-[-10px] ">     
+   <div *ngFor="let edu of educationData.educationDetails; let i = index" class="grid grid-rows-2 grid-cols-2 md:grid-cols-3 gap-x-10 ">
+    <div>
+    <label class="block w-40">Institution Name</label>
+    <input
+      type="text"
+      [name]="'institutionName' + i"
+      placeholder="Enter name of institution"
+      [(ngModel)]="edu.institutionName"
+      [disabled]="!editMode"
+      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888]"
+    />
+    </div>
 
-         <div >
-            <label class="block w-40">Intitution Name</label>
-            <input
-            type="text"
-            name="institutionName0"
-            placeholder="Enter name of institution"
-            [(ngModel)]="educationData.educationDetails[0].institutionName"
-            
-            [disabled]="!editMode"
-            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-        </div>
-            
-        <div>
-         <div >
-             <label class="block w-40">Course of Study</label>
-            <input
-            type="text"
-            name="courseOfStudy"
-            placeholder="Enter major or course"
-             [(ngModel)]="educationData.educationDetails[0].courseOfStudy"
-             (ngModelChange)="onInputChange($event, 'courseOfStudy')" 
-             [disabled]="!editMode"
-            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-         </div>
-         </div>
+    <div>
+    <label class="block w-40">Course of Study</label>
+    <input
+      type="text"
+      [name]="'courseOfStudy' + i"
+      placeholder="Enter major or course"
+      [(ngModel)]="edu.courseOfStudy"
+      [disabled]="!editMode"
+      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888]"
+    />
+    </div>
+    
+    <div>
+    <label class="block w-40">Start Date</label>
+    <input
+      type="date"
+      [name]="'startDate' + i"
+      [(ngModel)]="edu.startDate"
+      [disabled]="!editMode"
+      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3"
+    />
+    </div>
 
-         <div >
-             <label class="block w-40">Start Date</label>
-            <input
-            type="date"
-            name="StartDate0"
-            placeholder="Select program start date"
-            [(ngModel)]="educationData.educationDetails[0].startDate"
-            (ngModelChange)="onInputChange($event, 'StartDate0')" 
-            [disabled]="!editMode"
-            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-         </div>
+    <div class="mb-8 mt-[-24px]">
+    <label class="block w-40">End Date</label>
+    <input
+      type="date"
+      [name]="'endDate' + i"
+      [(ngModel)]="edu.endDate"
+      [disabled]="!editMode"
+      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3"
+    />
 
-                  <!-- Row ---2       -->
-          <div >
-            <label class="block w-40">Intitution Name</label>
-            <input 
-            type="text"
-            name="institutionName1"
-            placeholder="Enter name of institution"
-             [(ngModel)]="educationData.educationDetails[1].institutionName"
-             (ngModelChange)="onInputChange($event, 'institutionName1')" 
-             [disabled]="!editMode"
-            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-        </div>
+      
+       <!-- REMOVE ADDED FIELD -->
+      <div>
+      <button
+        type="button"
+        (click)="removeEducation(i)"
+        class="border border-red-500 bg-red-100 text-red-600 text-sm rounded-[4px] hover:text-red-800 mr-[20rem] mt-3 w-20">
+        Remove
+      </button>
+      </div>
 
-         <div >
-             <label class="block w-40">End Date</label>
-            <input
-            type="date"
-            name="endDate"
-            placeholder="Select program end date"
-            [(ngModel)]="educationData.educationDetails[0].endDate"
-            (ngModelChange)="onInputChange($event, 'endDate')" 
-            [disabled]="!editMode"
-            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-         </div>
 
-          <div>
-             <label class="block w-40">Start Date</label>
-            <input
-            type="date"
-            name="Startdate1"
-            placeholder="select program start date"
-            [(ngModel)]="educationData.educationDetails[1].startDate"
-            (ngModelChange)="onInputChange($event, 'Startdate1')" 
-            [disabled]="!editMode"
-            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-         </div>
+    </div>  
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <!-- 
@@ -214,6 +227,113 @@
 
 </div>
  </div> -->
+
+
        
     </form>
-</div>
+  </div>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Row ---1 -->
+
+         <!-- <div >
+            <label class="block w-40">Intitution Name</label>
+            <input
+            type="text"
+            name="institutionName0"
+            placeholder="Enter name of institution"
+            [(ngModel)]="educationData.educationDetails[0].institutionName"
+            
+            [disabled]="!editMode"
+            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+        </div>
+            
+        <div>
+         <div >
+             <label class="block w-40">Course of Study</label>
+            <input
+            type="text"
+            name="courseOfStudy"
+            placeholder="Enter major or course"
+             [(ngModel)]="educationData.educationDetails[0].courseOfStudy"
+             (ngModelChange)="onInputChange($event, 'courseOfStudy')" 
+             [disabled]="!editMode"
+            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+         </div>
+         </div>
+
+         <div >
+             <label class="block w-40">Start Date</label>
+            <input
+            type="date"
+            name="StartDate0"
+            placeholder="Select program start date"
+            [(ngModel)]="educationData.educationDetails[0].startDate"
+            (ngModelChange)="onInputChange($event, 'StartDate0')" 
+            [disabled]="!editMode"
+            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+         </div>
+
+                  Row ---2 
+                     
+          <div >
+            <label class="block w-40">Intitution Name</label>
+            <input 
+            type="text"
+            name="institutionName1"
+            placeholder="Enter name of institution"
+             [(ngModel)]="educationData.educationDetails[1].institutionName"
+             (ngModelChange)="onInputChange($event, 'institutionName1')" 
+             [disabled]="!editMode"
+            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+        </div>
+
+         <div >
+             <label class="block w-40">End Date</label>
+            <input
+            type="date"
+            name="endDate"
+            placeholder="Select program end date"
+            [(ngModel)]="educationData.educationDetails[0].endDate"
+            (ngModelChange)="onInputChange($event, 'endDate')" 
+            [disabled]="!editMode"
+            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+         </div>
+
+          <div>
+             <label class="block w-40">Start Date</label>
+            <input
+            type="date"
+            name="Startdate1"
+            placeholder="select program start date"
+            [(ngModel)]="educationData.educationDetails[1].startDate"
+            (ngModelChange)="onInputChange($event, 'Startdate1')" 
+            [disabled]="!editMode"
+            class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+         </div>  -->
+

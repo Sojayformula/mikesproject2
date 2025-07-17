@@ -55,8 +55,8 @@
 
 
                               <!-- FORM -->
-    <form #staffForm="ngForm"   (ngSubmit)="onSubmit(staffForm)" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2  gap-10 p-6 bg-white rounded gap-y-6 mt-10">
-  <!-- Row 1 -->
+    <!-- <form  #staffForm="ngForm"  (ngSubmit)="onSubmit(staffForm)"  class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2  gap-10 p-6 bg-white rounded gap-y-6 mt-10">
+  Row 1
    
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Job Title</label>
@@ -65,12 +65,12 @@
     name="jobTitle" 
    (ngModelChange)="onInputChange()"
     [disabled]="!editMode" 
-    [(ngModel)]="employeeData.supervisor.jobTitle" 
-     
+     [(ngModel)]="employeeData.supervivor.jobTitle " 
+      
     placeholder="Enter legal first name" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
   </div>
-<!-- (ngModelChange)="onInputChange($event, 'jobTitle')"        (ngModelChange)="onInputChange()" -->
+
    
 <div>
   <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Unit</label>
@@ -90,12 +90,12 @@
     </option>
   </select>
 </div>
-<!-- (ngModelChange)="onInputChange($event, 'unitId')" -->
 
 
 
 
-  <!-- Row 2 -->
+
+  Row 2
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Employment Type</label>
     <input 
@@ -108,23 +108,23 @@
     placeholder="Select birth date" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
-  <!-- (ngModelChange)="onInputChange($event, 'employmentType')"  -->
+ 
 
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Hire Date</label>
     <input 
     type="date" 
-    name="gender" 
+    name="hireDate" 
     [disabled]="!editMode" 
     [(ngModel)]="formattedDOB" 
     
     placeholder="Hired Date" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
   </div>
- <!-- (ngModelChange)="onInputChange($event, 'gender')"  -->
+
   
 
-  <!-- Row 3 -->
+  Row 3
   <div>
      <label class="block w-40 text-sm font-medium text-gray-700">Work Location</label>
     <input 
@@ -137,20 +137,17 @@
     placeholder="Select marital status" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/> 
   </div>
-  <!-- (ngModelChange)="onInputChange($event, 'workLocation')"  -->
 
 
-  <!-- <div>
-    <label class="block w-40 text-sm font-medium text-gray-700">Supervisor</label>
-    <input type="text" name="supervisor" [disabled]="!editMode" [value]="employeeData?.supervisor.firstName + ' ' + employeeData?.lastName" placeholder="Enter active phone number" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-  </div> -->
+
+
   <div>
   <label class="block w-40 text-sm font-medium text-gray-700 font-outfit">Supervisor</label>
   <select
-  name="supervisorId"
+  name="supervisor"
   [(ngModel)]="form.supervisor"
   [disabled]="!editMode"
-  [(ngModel)]="employeeData.jobTitle"
+  [(ngModel)]="employeeData.supervisor.jobTitle"
   
   required
   class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
@@ -161,10 +158,140 @@
   </option>
 </select>
 </div>
-<!-- (ngModelChange)="onInputChange($event, 'supervisorId')" -->
+
+
+
+
+<div>
+     <label class="block w-40 text-sm font-medium text-gray-700">Staff Id </label>
+    <input 
+    type="text" 
+    name="staffId" 
+    [disabled]="!editMode" 
+    
+    [(ngModel)]="employeeData.staffId" 
+    
+    placeholder="Select marital status" 
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/> 
+  </div>
 
 </form>
-</div>
+</div> -->
+
+
+
+
+
+
+
+<!-- FORM -->
+<form #staffForm="ngForm" (ngSubmit)="onSubmit(staffForm)" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10 p-6 bg-white rounded gap-y-6 mt-10">
+
+  <!-- Job Title -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 font-outfit">Job Title</label>
+    <input  
+      type="text" 
+      name="jobTitle" 
+      [(ngModel)]="employeeData.jobTitle"
+      [disabled]="!editMode"
+      placeholder="Enter job title" 
+      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+
+  <!-- Unit -->
+  <!-- <div>
+    <label class="block text-sm font-medium text-gray-700 font-outfit">Unit</label>
+    <select
+      name="unitId"
+      [(ngModel)]="employeeData.unitId"
+      [disabled]="!editMode"
+      required
+      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
+    >
+      <option [ngValue]="null" disabled>Select a unit</option>
+      <option *ngFor="let item of units" [ngValue]="item._id">
+        {{ item.name }}
+      </option>
+    </select>
+  </div> -->
+
+  <!-- Employment Type -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 font-outfit">Employment Type</label>
+    <input 
+      type="text" 
+      name="employmentType" 
+      [(ngModel)]="employeeData.employmentType"
+      [disabled]="!editMode" 
+      placeholder="Enter employment type" 
+      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+
+  <!-- Hire Date -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 font-outfit">Hire Date</label>
+    <input 
+      type="date" 
+      name="hireDate" 
+      [(ngModel)]="formattedDOB"
+      [disabled]="!editMode"
+      placeholder="Enter date"
+      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
+    />
+  </div>
+
+  <!-- Work Location -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 font-outfit">Work Location</label>
+    <input 
+      type="text" 
+      name="workLocation" 
+      [(ngModel)]="employeeData.workLocation"
+      [disabled]="!editMode"
+      placeholder="Enter work location"
+      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
+    />
+  </div>
+
+  <!-- Supervisor -->
+  <!-- <div>
+    <label class="block text-sm font-medium text-gray-700 font-outfit">Supervisor</label>
+    <select
+      name="supervisorId"
+      [(ngModel)]="employeeData.supervisorId"
+      [disabled]="!editMode"
+      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
+    >
+      <option [ngValue]="null" disabled>Select a supervisor</option>
+      <option *ngFor="let sup of supervisor" [ngValue]="sup._id">
+        {{ sup.firstName }} {{ sup.lastName }}
+      </option>
+    </select>
+  </div> -->
+
+  <!-- Staff ID -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 font-outfit">Staff ID</label>
+    <input 
+      type="text" 
+      name="staffId" 
+      [(ngModel)]="employeeData.staffId"
+      [disabled]="!editMode"
+      class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
+    />
+  </div>
+</form>
+
+
+
+
+
+
+
+
 
 
 

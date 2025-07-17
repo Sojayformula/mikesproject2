@@ -27,6 +27,13 @@ import { FamilyDetailsComponent2 } from './editStaff/settingsfolder/family-detai
 import { NextOfKinComponent2 } from './editStaff/settingsfolder/next-of-kin/next-of-kin.component';
 import { PersonalInformationComponent2 } from './editStaff/settingsfolder/personal-information/personal-information.component';
 import { EducationBackgroundComponent2 } from './editStaff/settingsfolder/education-background/education-background.component';
+import { ProfilepersonalinfoComponent } from './profilePage/profilepersonalinfo/profilepersonalinfo.component';
+import { ProfileemploymentDetailsComponent } from './profilePage/profile-employment/profile-employment.component';
+import { ProfileFamilyComponent } from './profilePage/profile-family/profile-family.component';
+import { ProfileNextOfKinsComponent } from './profilePage/profile-next-of-kins/profile-next-of-kins.component';
+import { ProfileemergencycontactComponent } from './profilePage/profileemergencycontact/profileemergencycontact.component';
+import { ProfileEducationComponent } from './profilePage/profile-education/profile-education.component';
+import { ProfilePageLayoutComponent } from './profilePage/profile-page-layout/profile-page-layout.component';
 
 
 
@@ -83,11 +90,43 @@ export const routes: Routes = [
               {path: 'education-details', component: EducationBackgroundComponent2 },
                 
             ]
-           }
+           },
            
+
+
+        
+               { path: 'profile-page-layout', component: ProfilePageLayoutComponent,
+                children: [
+                  { path: '', redirectTo: 'profile-personal', pathMatch: 'full' }, 
+                  { path: 'profile-personal', component: ProfilepersonalinfoComponent },
+                  { path: 'profile-employment', component: ProfileemploymentDetailsComponent },
+                  { path: 'profile-family', component: ProfileFamilyComponent },
+                  { path: 'profile-next-of-kins', component: ProfileNextOfKinsComponent },
+                  { path: 'profileemergencycontact', component: ProfileemergencycontactComponent },
+                  { path: 'education-details', component: ProfileEducationComponent }
+                ]
+              }
+
            ]
           }
    
 
         ]
   
+
+
+
+
+           
+          //    { path: 'profile-page-layout/:id', component: ProfilePageLayoutComponent,
+          //   children:[
+          //     {path: '', redirectTo: 'profilepersonalinfo', pathMatch: 'full'},
+          //     { path: 'profilepersonalinfo', component: ProfilepersonalinfoComponent },
+          //     {path: 'profile-employment', component: ProfileemploymentDetailsComponent},
+          //      {path: 'profile-family', component: ProfileFamilyComponent},
+          //      {path: 'profile-next-of-kins', component: ProfileNextOfKinsComponent},
+          //      {path: 'profileemergencycontact', component: ProfileemergencycontactComponent},
+          //     {path: 'education-details', component: ProfileEducationComponent },
+                
+          //   ]
+          //  }

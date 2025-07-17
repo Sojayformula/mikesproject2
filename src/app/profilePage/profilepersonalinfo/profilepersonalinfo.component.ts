@@ -1,3 +1,4 @@
+
 import { CommonModule, formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -19,20 +20,17 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 
 @Component({
-  selector: 'app-person-information',
+  selector: 'app-profilepersonalinfo',
   imports: [CommonModule, FormsModule, MatProgressSpinner],
-  templateUrl: './person-information.component.html',
-  styleUrl: './person-information.component.scss'
+  templateUrl: './profilepersonalinfo.component.html',
+  styleUrl: './profilepersonalinfo.component.scss'
 })
-export class PersonInformationComponent implements OnInit{
-
-  // @ViewChild('staffForm') formRef!: NgForm;
+export class ProfilepersonalinfoComponent implements OnInit{
 
   
-  // private sub!: Subscription;
 
   currentStepIndex = 0;
-   staffData: any;  
+   //staffData: any;  
    editStaffData: editStaffModel;
   getStaffModel: getStaffModel;
   getAllStaff: allStaffModel;
@@ -53,39 +51,38 @@ imagePreview: string | ArrayBuffer | null = null;
 
   constructor(private cd: ChangeDetectorRef, private router: Router, private pagesService: PagesService,
     private route:ActivatedRoute, private location:Location, public editService:EditService, 
-    private staffDataService: StaffDataService,private checkboxService:CheckboxService, private notification: NzNotificationService
+    private staffDataService: StaffDataService,private checkboxService:CheckboxService,
     ){
 
     this.getStaffModel = new getStaffModel()
     this.editStaffData = new editStaffModel()
 
       this.getAllStaff = new allStaffModel()
-
   }
+
+
+
+   staffData: any = {};
+ 
+
+ 
 
 
    ngOnInit(): void {
    const item = this.route.snapshot.queryParamMap.get('staffId');
   this.staffId = item; 
 
-   //const  item = this.route.snapshot.queryParamMap.get('staffId')
-  
-  //   console.log("my id:", JSON.parse(JSON.stringify(item)))
-  // //  this.fetchMaritalStatus() 
-
-
-   this.route.queryParamMap.subscribe((params) => {
-    const item = params.get('staffId');
-    this.staffId = item;
-
-    console.log("my id:", this.staffId);
-
-  });
+    //  this.route.paramMap.subscribe(params => {
+    //   this.staffId = params.get('id') || '';
+    //   console.log('Received Staff ID:', this.staffId);
+    //  })
 
 
      if (this.staffId) {
-      this.fetchStaffData();
+      
      }
+
+     this.fetchStaffData();
 
 
     this.staffData = this.staffDataService.getData();
@@ -99,27 +96,26 @@ imagePreview: string | ArrayBuffer | null = null;
 
     this.cd.detectChanges(); 
   });
+
+
      
-  }
-
-
-       createNotification(position: 'topRight', type: 'success' | 'info' | 'warning' | 'error', title: string, message: string){
-    this.notification.create(type, title, message, {nzPlacement: position, nzDuration: 3000})
   }
 
 
 
      fetchStaffData() {
-      console.log('Personal data', this.staffData)
-    this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
+    this.pagesService.getLoggedInUserProfile().subscribe({
       next: (res ) => {
-        this.staffData = res.data || ''; 
+        this.staffData = res; 
         console.log('Fetched staff data:', this.staffData);
          this.isLoading = false;
 
-          this.staffData = structuredClone(res);     
-          this.originalStaffData = structuredClone(res);
-          console.log('Fetched staff data:', this.staffData);
+         const userId = localStorage.getItem('userId')
+         console.log('Profile user id', userId)
+
+          // this.staffData = structuredClone(res);     
+          // this.originalStaffData = structuredClone(res);
+          // console.log('Fetched staff data:', this.staffData);
 
       },
       error: (err) => {
@@ -131,17 +127,6 @@ imagePreview: string | ArrayBuffer | null = null;
          }
     });
     }
-
-
-
-
-  //     maritalStatusData: any[] = []; // Array of staff entries
-  // maritalStatusOptions: string[] = [];
-  // selectedStatus: string = ''
-
-
-
-
 
  getSafeProfilePicture(pic?: string): string {
   if (!pic) return '/assets/default-profile.png'; // fallback image if missing
@@ -191,21 +176,6 @@ set formattedDOB(value: string) {
 }
 
 
-      // CHECK BOX LOGIC
-//   onInputChange(field: string, value: string) {
-//   this.staffData.supervisor[field] = value;
-
-//   this.staffDataService.setData({ supervisor: this.staffData.supervisor });
-
-//   // Detect typing 
-//   const isTyping = Object.values(this.staffData.supervisor).some(
-//     val => val && val.toString().trim().length > 0
-//   );
-//   this.checkboxService.setTypingStatus('person-information', isTyping);
-// }
-
-
-
 //  Edit  function
 onEditToggle() {
   this.editMode = true;
@@ -245,7 +215,7 @@ Submit(form: NgForm) {
   this.pagesService.getEditStaff(this.staffId, payload ).subscribe({
     next: (res) => {
       console.log('patch', res)
-       this.createNotification('topRight', "success", "update Successful!!", "Updated!")
+      //  alert('Form updated successfull')
        this.isLoading = false;
     
     },
@@ -296,109 +266,3 @@ onInputChange() {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      //   this.sub = this.editService.action$.subscribe(action => {
-    //   if (action === 'edit') this.editMode = true;
-    //   if (action === 'cancel') this.resetForm();
-    //   if (action === 'save') this.submitForm();
-    // });
-
- // resetForm() {
-  //   this.editMode = false;
-
-  //   // Revert changes by restoring the backup copy
-  //   // this.staffData = structuredClone(this.originalData); 
-  // }
-
-  // submitForm() {
-  //   if (this.editMode) {
-  //     console.log('Saving data:', this.staffData);
-  //     this.editMode = false;
-
-  //     // Optionally update originalData if save is successful
-  //     this.originalData = structuredClone(this.staffData);
-  //   }
-  // }
-
-  // ngOnDestroy(): void {
-  //   this.sub.unsubscribe();
-  // }
-   
-  //enterEditMode() {
-//     this.editMode = true;
-//     // Save a new copy before user starts editing
-//     // this.originalData = structuredClone(this.staffData);
-//     this.originalData = JSON.parse(JSON.stringify(this.staffData));
-   
-//   }
-
-//  resetForm() {
-//     console.log('Reset in ChildTwo');
-//     this.editMode = false;
-//   }
-
-//    submitForm() {
-//     if (this.editMode) {
-//       console.log('Submitting:', this.formData);
-//       this.editMode = false;
-//     }
-//   }
-
-//   ngOnDestroy(): void {
-//     this.sub.unsubscribe();
-//   }
-
-
-  // EDIT FORM //
-
-// onEditToggle(): void {
-//   this.editMode = true;
-  
-// }
-
-// onCancel(): void {
-//   this.editMode = false;
- 
-// }
-
-// toggleEdit() {
-//   this.editService.enableEdit();
-// }
-
-// cancelEdit() {
-//   this.editService.disableEdit();
-// }
-
-
-
-//   onToggleEdit() {
-//     const isEditing = this.editService.editModeSubject.getValue();
-//     if (isEditing) {
-//       // TODO: Save changes to server here
-//       console.log('Saving:', this.formData);
-//     } else {
-//       this.editService.enableEdit();
-//     }
-//   }

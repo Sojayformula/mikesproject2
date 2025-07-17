@@ -50,11 +50,19 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 
         this.authService.login(this.loginData).subscribe({
           next: (res) => {
-            console.log('Login success:', res);
+            console.log('Login successfully:', res);
+
+             localStorage.setItem('token', res.token);
             
             localStorage.setItem('token', res.token);
             const token = localStorage.getItem('token')
             console.log('toke', token)
+
+            localStorage.setItem('userId', res._id);
+            const userId = localStorage.getItem('userId');
+            console.log('Logged-in User ID:', userId);
+
+
              this.router.navigate(['/dashboard'])
             this.createNotification('topRight', "success", "Login Successful!!", "Welcome Back!")
            

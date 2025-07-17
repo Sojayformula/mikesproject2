@@ -1,83 +1,77 @@
 
-<div class="mx-8 md:mx-0 mt-6">
+<div class="mx-8 md:mx-0 ">
 
 
-       <!-- Edit button -->
-<div class="flex justify-end col-span-3 relative  top-[-5.5rem] left-[6.7rem] md:left-[-2.6rem] md:top-[rem] ">
+    <!-- Edit button -->
+<div class="top-[-5.5rem] py-[-30rem] flex gap-4 justify-end col-span-3 relative  right-[1.1rem] md:right-[2.6rem] md:mt-6 ">
   <button
     type="button"
     *ngIf="!editMode"
     (click)="onEditToggle()"
-    class="flex justify-center bg-blue- border border-[#727A90] text-[14px] text-[#727A90] w-[69.65px] h-[40px] py-2 rounded-[10px] hover:bg-gray-400 hover:text-white transition relative right-[7.8rem] lg:right-0"
+    class="flex justify-center border border-[#727A90] text-[14px] text-[#727A90] w-[69.65px] h-[40px] py-2 rounded-[10px] hover:bg-gray-400 hover:text-white transition"
   >
      <span class="material-symbols-outlined text-[20px]">edit</span>Edit
   </button> 
 
-  <!-- Save and cancel -->
+   <!-- Save and cancel  -->
 
        <!-- <ng-container *ngIf="isLoading">
   <div class="mt-6 flex justify-center relative top-[-15px]">
     <mat-spinner [diameter]="30"></mat-spinner>
   </div>
 </ng-container> -->
-                
 
-
-        <!-- Save loader  -->
-       <ng-container *ngIf="isLoading">
-  <div class="mt-6 flex justify-center relative top-[-15px]">
-    <mat-spinner [diameter]="30"></mat-spinner>
-  </div>
-</ng-container>
-
-          <!-- save and cancel -->
   <ng-container *ngIf="editMode">
     <button
       type="button"
-      (click)="Submit(nextOfKinForm)"
+       (click)="onSubmit(emergencyForm)"
       class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
     >
       Save
     </button>
   
-    <button
+     <button
       type="button"
       (click)="onCancel()"
       class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
     >
       Cancel
-    </button>
+    </button> 
   </ng-container>
   </div>
 
-    
+
+  <div>
     <div>
-        <p class="font-bold font-outfit">Next of Kin</p>
+        <p class="font-bold font-outfit">Emergency Contact</p>
         <p class="text-[#727A90] text-sm font-outfit">Contact in case of emergency</p>
     </div>
 
-
-    <form #nextOfKinForm="ngForm" class="grid grid-rows-2 grid-cols-2 lg:grid-cols-3 gap-y-8 gap-20 mt-20 font-outfit">
+     
+    <form #emergencyForm="ngForm" class="grid grid-rows-2 md:grid-cols-3 grid-cols-2 gap-y-8 gap-x-20 font-outfit mt-20">
         <!-- Row ---1 -->
          <div>
             <label class="block w-20">Full Name</label>
             <input
             type="text"
-            name="nextOfKinFullName"
-            [disabled]="!editMode" 
-            [(ngModel)]="nextOfKinsData.nextOfKinFullName"
+            name="emergencyContactFullName"
+            (ngModelChange)="onInputChange($event, 'emergencyContactFullName')" 
+             [(ngModel)]="emergencyData.emergencyContactFullName "
+             [disabled]="!editMode"
             placeholder="Enter next of kin's full name"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
         </div>
 
+
          <div>
              <label class="block w-20">Relationship</label>
             <input
             type="text"
-            name="nextOfKinRelationship"
-            [disabled]="!editMode" 
-            [(ngModel)]="nextOfKinsData.nextOfKinRelationship"
+            name="emergencyContactRelationship"
+            (ngModelChange)="onInputChange($event, 'emergencyContactRelationship')" 
+            [(ngModel)]="emergencyData.emergencyContactRelationship"
+            [disabled]="!editMode"
             placeholder="E.g Mother, Brother, Friend"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -87,23 +81,25 @@
              <label class="block w-40">Phone Number</label>
             <input
             type="text"
-            name="nextOfKinPhoneNumber"
-            [disabled]="!editMode" 
-            [(ngModel)]="nextOfKinsData.nextOfKinPhoneNumber"
+            name="emergencyContactPhoneNumber"
+            (ngModelChange)="onInputChange($event, 'emergencyContactPhoneNumber')" 
+            [(ngModel)]="emergencyData.emergencyContactPhoneNumber"
+            [disabled]="!editMode"
             placeholder="Enter active contact number"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
          </div>
 
-                  <!-- Row ---2 -->
+                  <!-- Row ---2 -->        
           <div>
             <label class="block w-40">Email Address</label>
             <input
             type="text"
-            name="nextOfKinEmail"
-            [disabled]="!editMode" 
-            [(ngModel)]="nextOfKinsData.nextOfKinEmail"
-            placeholder="Enter email address (if availabe)"
+            name="emergencyContactEmail"
+            (ngModelChange)="onInputChange($event, 'emergencyContactEmail')" 
+            [(ngModel)]="emergencyData.emergencyContactEmail"
+            [disabled]="!editMode"
+            placeholder="Enter email address (if available)"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
         </div>
@@ -112,10 +108,11 @@
              <label class="block w-40">Enter Current Address</label>
             <input
             type="text"
-            name="nextOfKinCurrentAddress"
-            [disabled]="!editMode" 
-            [(ngModel)]="nextOfKinsData.nextOfKinCurrentAddress"
-            placeholder="current address"
+            name="emergencyContactCurrentAddress"
+            (ngModelChange)="onInputChange($event, 'emergencyContactCurrentAddress')" 
+            [(ngModel)]="emergencyData.emergencyContactCurrentAddress"
+            [disabled]="!editMode"
+            placeholder="Enter current address"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
          </div>
@@ -123,3 +120,4 @@
     </form>
 
 </div>
+

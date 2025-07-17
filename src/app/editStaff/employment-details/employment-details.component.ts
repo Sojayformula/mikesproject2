@@ -9,6 +9,7 @@ import { StaffDataService } from '../../StaffDataService/staff-data.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { EditService } from '../../editservice/edit.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 
 
@@ -45,7 +46,13 @@ export class EmploymentDetailsComponent implements OnInit{
 
 
 
-    
+    formData: any = {
+  jobTitle: '',
+  employmentType: '',
+  hireDate: '',
+  unit: [],
+ supervisor: []
+};
   
 
 
@@ -54,7 +61,7 @@ export class EmploymentDetailsComponent implements OnInit{
 
    constructor(public editService:EditService, private staffDataService: StaffDataService, private router: Router, private location:Location, private route:ActivatedRoute, 
     private typingStatusService: CheckboxService, private pagesService: PagesService, public checkboxService:CheckboxService,
-    private cd: ChangeDetectorRef ){
+    private cd: ChangeDetectorRef, private notification: NzNotificationService ){
 
       this.getAllStaff = new allStaffModel()
        this.editStaffData = new editStaffModel()
@@ -105,10 +112,18 @@ export class EmploymentDetailsComponent implements OnInit{
    }
 
 
+
+         createNotification(position: 'topRight', type: 'success' | 'info' | 'warning' | 'error', title: string, message: string){
+    this.notification.create(type, title, message, {nzPlacement: position, nzDuration: 3000})
+  }
+
+
+
    fetchEmployees() {
+    console.log('EmployeeData', this.employeeData)
     this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
       next: (res ) => {
-        this.employeeData = res; 
+        this.employeeData = res.data; 
         console.log('Fetched staff data:', this.employeeData);
          this.isLoading = false;
 
@@ -337,29 +352,62 @@ onCancel(): void {
 
 
 
+// onSubmit(form: NgForm) {
+//   this.isLoading = true;
+
+// const payload: Partial<EditEmploymentModel> = {
+//   _id: this.staffId,
+//   employmentType: form.value.employmentType,
+//   jobTitle: form.value.jobTitle,
+//   unit: [form.value.unitId], 
+//   hireDate: form.value.hireDate,
+//   workLocation: form.value.workLocation,
+//   supervisor: [form.value.supervisorId], 
+//   educationDetails: []
+
+//   };
+
+//   console.log('PATCH payload:', payload);
+//   console.log('Unit being sent:', form.value.unitId);
+// console.log('Supervisor being sent:', form.value.supervisorId);
+
+
+//   this.pagesService.patchEmployment(this.staffId, payload).subscribe({
+//     next: (res) => {
+//       console.log('Success:', res);
+//       this.isLoading = false;
+//     },
+//     error: (err) => {
+//       console.error('Error:', err);
+//       alert('Update failed');
+//       this.isLoading = false;
+//     }
+//   });
+// }
+
+
 onSubmit(form: NgForm) {
   this.isLoading = true;
 
-const payload: Partial<EditEmploymentModel> = {
-  _id: this.staffId,
-  employmentType: form.value.employmentType,
-  jobTitle: form.value.jobTitle,
-  unit: [form.value.unitId], 
-  hireDate: form.value.hireDate,
-  workLocation: form.value.workLocation,
-  supervisor: [form.value.supervisorId], 
-  educationDetails: []
-
+  const payload: Partial<EditEmploymentModel> = {
+    _id: this.staffId,
+    jobTitle: form.value.jobTitle,
+    staffId: form.value.staffId,
+    employmentType: form.value.employmentType,
+    //unit: [form.value.unitId], 
+    hireDate: form.value.hireDate, 
+    workLocation: form.value.workLocation,
+    //supervisor: [form.value.supervisorId], //  convert to array
+    // role: form.value.roleId, // if you're using role in the form
+    // emergencyContactFullName: form.value.emergencyContactFullName // if this field exists
   };
 
   console.log('PATCH payload:', payload);
-  console.log('Unit being sent:', form.value.unitId);
-console.log('Supervisor being sent:', form.value.supervisorId);
-
 
   this.pagesService.patchEmployment(this.staffId, payload).subscribe({
     next: (res) => {
       console.log('Success:', res);
+       this.createNotification('topRight', "success", "update Successful!!", "Updated!")
       this.isLoading = false;
     },
     error: (err) => {
@@ -369,6 +417,49 @@ console.log('Supervisor being sent:', form.value.supervisorId);
     }
   });
 }
+
+// onSubmit(form: NgForm) {
+//   this.isLoading = true;
+
+//   // const payload = {
+//   //   staffId: form.value.staffId || this.staffId,
+//   //   jobTitle: form.value.jobTitleText,
+//   //   employmentType: form.value.employmentType,
+//   //   unit: [form.value.unitId],
+//   //   hireDate: form.value.hireDate,
+//   //   workLocation: form.value.workLocation,
+//   //   supervisor: form.value.supervisorId ? [form.value.supervisorId] : [],
+//   //   role: form.value.roleId,
+//   //   emergencyContactFullName: form.value.emergencyContactFullName
+//   // };
+//   const payload: any = {
+//   staffId: form.value.staffId || this.staffId,
+//   jobTitle: form.value.jobTitleText,
+//   employmentType: form.value.employmentType,
+//   unit: [form.value.unitId],
+//   hireDate: form.value.hireDate,
+//   workLocation: form.value.workLocation,
+//   role: form.value.roleId,
+//   emergencyContactFullName: form.value.emergencyContactFullName
+// };
+
+//   console.log('✅ PATCH payload:', payload);
+
+//   this.pagesService.patchEmployment(this.staffId, payload).subscribe({
+//     next: (res) => {
+//       console.log('✅ Success:', res);
+//       this.isLoading = false;
+//     },
+//     error: (err) => {
+//       console.error('❌ Error:', err.error);
+//       alert('Update failed: ' + err.error?.message || 'Unknown error');
+//       this.isLoading = false;
+//     }
+//   });
+// }
+
+
+
 
 }
 
