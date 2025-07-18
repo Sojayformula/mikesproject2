@@ -34,10 +34,15 @@
             (ngModelChange)="onInputChange()"
             name="fullName"
             [(ngModel)]="formData.nextOfKinFullName"
-            
+            required
+            #fullName="ngModel"
             placeholder="Enter next of kin's full name"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+            
+             <p *ngIf="fullName.invalid && (fullName.touched || fullName.dirty)" class="text-red-600 text-sm">
+               First name required
+            </p>
         </div>
 
          <div>

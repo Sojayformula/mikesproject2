@@ -45,11 +45,16 @@
     <input
       type="text"
       name="institutionName0"
-      
+      required
+      #institutionName0="ngModel"
       placeholder="Enter name of institution"
       [(ngModel)]="formData.educationDetails[0].institutionName"
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
+
+      <p *ngIf="institutionName0.invalid && (institutionName0.touched || institutionName0.dirty)" class="text-red-600 text-sm">
+        First name required
+    </p>
   </div>
 
   <div>

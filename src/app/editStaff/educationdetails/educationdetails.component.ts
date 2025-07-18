@@ -26,6 +26,7 @@ export class EducationdetailsComponent implements OnInit {
   selectedFiles: File[] = [];
   isDragging = false;
   isLoading = false
+  isAPILoading = false
    
 
    editMode: boolean = false;
@@ -61,17 +62,17 @@ originalStaffData: any;
 
 
 fetchEduDetails() {
+  this.isAPILoading = true
   this.pagesService.getUEduById(this.staffId, this.getAllStaff).subscribe({
     next: (res) => {
       const staff = res.data || res;
 
-      // Use staff.educationDetails if present, otherwise try staff.supervisor.educationDetails
       this.educationData = {
         educationDetails: staff.educationDetails?.length
           ? staff.educationDetails
           : staff.supervisor?.educationDetails || []
       };
-
+        this.isAPILoading = false
       console.log('educationDetails:', this.educationData.educationDetails);
       console.log('Length:', this.educationData.educationDetails.length);
     },

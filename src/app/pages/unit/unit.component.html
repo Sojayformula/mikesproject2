@@ -85,7 +85,7 @@
         />
       </div>
 
-      <div class="mb-4">
+      <!-- <div class="mb-4">
         <label class="inline-flex items-center">
           <input
             type="checkbox"
@@ -95,11 +95,53 @@
           />
           Is Sub Unit
         </label>
-      </div>
+      </div> -->
+
+        <nz-form-item >
+        <label class="block text-sm font-medium text-gray-700">Is this a sub unit?</label>
+        <div class="flex flex-col sm:flex-row gap-4 mt-1">
+          <label class="inline-flex items-center space-x-2">
+            <input
+              type="radio"
+              [(ngModel)]="addUnitData.isSubUnit"
+              [value]="true"
+              name="parentunit"
+              class="form-checkbox"
+            />
+            <span class="text-sm text-gray-700">Yes</span>
+          </label>
+          <label class="inline-flex items-center space-x-2">
+            <input type="radio" 
+            [(ngModel)]="addUnitData.isSubUnit"
+            [value]="false"
+             name="subUnit"
+            class="form-checkbox" />
+            <span class="text-sm text-gray-700">No</span>
+          </label>
+        </div>
+      </nz-form-item>
 
 
 
-      <div class="flex justify-end space-x-3">
+        <nz-form-item  *ngIf="addUnitData.isSubUnit" >
+        <label class="block text-sm font-medium text-gray-700 mt-4">Parent Unit</label>
+        <select
+          [(ngModel)]="addUnitData.parentUnit"
+          name="parentUnit"
+          class="w-full mt-1 p-2 border rounded-md bg-[#F2F2F2] border-[#D7D7D7]"
+        >
+          <option *ngFor="let unit of APIData" [value]="unit._id">
+            {{ unit.parentUnit?.name || 'N/A' }}
+          </option>
+        </select>
+      </nz-form-item>
+    
+
+
+
+
+
+      <div class="flex justify-end space-x-3 mt-10">
         <button
           type="submit"
           [disabled]="editForm.invalid"
@@ -121,18 +163,13 @@
 
 
 
-        <!--  ADD TO TABLE MODAL -->
 
-    <!-- <nz-modal
-  [(nzVisible)]="showEditModal"
-  [nzTitle]="editTitleTpl"
-  (nzOnCancel)="closeEditModal()"
-  [nzFooter]="editFooterTpl"
-  [nzMaskClosable]="true"
-   [nzClosable]="false"
-  [nzStyle]="{ width: '100%', maxWidth: '90vw' }"
-  [nzBodyStyle]="{ maxHeight: '70vh', overflowY: 'auto' }"
-> -->
+
+
+
+
+
+        <!--  ADD TO TABLE MODAL -->
 <nz-modal
   [(nzVisible)]="showEditModal"
   [nzTitle]="editTitleTpl"

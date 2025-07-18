@@ -40,6 +40,7 @@ export class PersonInformationComponent implements OnInit{
   storedMaritalData: string = ''; 
   staffId: any;
   isLoading = false;
+   isSaveLoading = false;
 
   editMode: boolean = false;
 originalStaffData: any;
@@ -108,18 +109,31 @@ imagePreview: string | ArrayBuffer | null = null;
   }
 
 
+    selectedGender: any
+    genderOptions = [
+  { key: 'Male', label: 'Male' },
+  { key: 'Female', label: 'Female' },
+  { key: 'Other', label: 'Other' }
+];
+
+
+
+
 
      fetchStaffData() {
+      this.isLoading=true
       console.log('Personal data', this.staffData)
     this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
       next: (res ) => {
         this.staffData = res.data || ''; 
         console.log('Fetched staff data:', this.staffData);
-         this.isLoading = false;
+       
 
           this.staffData = structuredClone(res);     
           this.originalStaffData = structuredClone(res);
           console.log('Fetched staff data:', this.staffData);
+
+            this.isLoading = false;
 
       },
       error: (err) => {
@@ -131,13 +145,6 @@ imagePreview: string | ArrayBuffer | null = null;
          }
     });
     }
-
-
-
-
-  //     maritalStatusData: any[] = []; // Array of staff entries
-  // maritalStatusOptions: string[] = [];
-  // selectedStatus: string = ''
 
 
 
@@ -221,7 +228,7 @@ onCancel(): void {
 
 
 Submit(form: NgForm) {
-  this.isLoading =true;
+  this.isSaveLoading =true;
  const payload = {
     _id: this.staffId, 
     profilePicture: this.staffData?.profilePicture || '',
@@ -246,7 +253,7 @@ Submit(form: NgForm) {
     next: (res) => {
       console.log('patch', res)
        this.createNotification('topRight', "success", "update Successful!!", "Updated!")
-       this.isLoading = false;
+       this.isSaveLoading = false;
     
     },
 

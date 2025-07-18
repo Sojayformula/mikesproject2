@@ -40,6 +40,13 @@
   </ng-container>
   </div>
 
+      <!-- Save and cancel -->
+ <ng-container *ngIf="isAPILoading">
+    <div class="fle justify-center right-[40rem] absolute top-[25rem] ">
+      <mat-spinner [diameter]="50"></mat-spinner>
+    </div>
+  </ng-container>
+
 
   <div>
     <div>
@@ -48,7 +55,7 @@
     </div>
 
      
-    <form #emergencyForm="ngForm" class="grid grid-rows-2 md:grid-cols-3 grid-cols-2 gap-y-8 gap-x-20 font-outfit mt-20">
+    <form #emergencyForm="ngForm" class="grid grid-rows-2 md:grid-cols-3 grid-cols-2 gap-y-8 gap-x-20 font-outfit mt-10">
         <!-- Row ---1 -->
          <div>
             <label class="block w-20">Full Name</label>

@@ -46,6 +46,7 @@ export class FamilyDetailsComponent implements OnInit {
    staffId: any
    editMode: boolean = false;
    isLoading = false
+   isAPILoader = false
 
      selectedStep: string = '';
   selectedFiles: File[] = [];
@@ -101,21 +102,14 @@ export class FamilyDetailsComponent implements OnInit {
 
 
   fetchFamiltDetails() {
+    this.isAPILoader = true
   console.log('Fetch family data before API:', this.data);
-
   this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
     next: (res) => {
-      const staff = res.data || res;
-      console.log('API response:', staff); 
-
-      this.data.children = staff.children || staff.supervisor?.children || [];
-      this.data.supervisor = staff.supervisor || {};
-      this.data.spouseName = staff.spouseName || '';
-      this.data.spousePhone = staff.spousePhone || '';
-      this.data.spouseEmail = staff.spouseEmail || '';
-      this.data.numberOfChildren = staff.numberOfChildren || 0;
-
-      console.log('Updated family data:', this.data);
+      this.data = res.data || res;
+      console.log('API response:', this.data); 
+     // console.log('Updated family data:', this.data);
+      this.isAPILoader = false
     },
     error: (err) => console.error('Failed to fetch children data', err)
   });
@@ -146,27 +140,6 @@ export class FamilyDetailsComponent implements OnInit {
     }
   });
 }
-
-
-
-// formData = {
-//   spouseName: '',
-//   spousePhone: '',
-//   spouseEmail: '',
-//   numberOfChildren: 0,
-//   children: [
-//     {
-//       fullName: '',
-//       dob: ''
-//     }
-//   ],
-//   supervisor: '',  // backend expects this as array, convert on submit
-//   _id: '',          // optional, if you're updating an existing staff
-// };
-
-
-
-
 
 
 
@@ -203,21 +176,6 @@ Submit(form: NgForm) {
     }
   });
 }
-
-
-
-
-
-  //         // CHECKBOX //
-  //   onInputChange(field: string, value: string) {
-  //   this.data[field] = value;
-  //   this.staffDataService.setData({ [field]: value });
-
-  //   // mark checkbox
-  //   const isTyping = Object.values(this.data).some(val => val && val.toString().trim().length > 0);
-  //   this.checkboxService.setTypingStatus('person-information', isTyping);
-  // }
-
 
    removeFile(index: number) {
   this.selectedFiles.splice(index, 1);
@@ -395,3 +353,12 @@ onInputChange() {
 //     }
 //   });
 // }
+
+
+
+    // this.data.children = staff.children || staff.supervisor?.children || [];
+      // this.data.supervisor = staff.supervisor || {};
+      // this.data.spouseName = staff.spouseName || '';
+      // this.data.spousePhone = staff.spousePhone || '';
+      // this.data.spouseEmail = staff.spouseEmail || '';
+      // this.data.numberOfChildren = staff.numberOfChildren || 0;

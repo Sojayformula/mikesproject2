@@ -71,8 +71,14 @@
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData.spouseName"  
     placeholder="Enter full name of spouse" 
+    required
+    #spouseName="ngModel"
     class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
    
+     <p *ngIf="spouseName.invalid && (spouseName.touched || spouseName.dirty)" class="text-red-600 text-sm">
+      First name required
+    </p>
+
        <div class="mt-8">
         <p class="font-semibold font-outfit text-[16px] w-[10rem]">Children Information</p>
         <p class="text-[#727A90] text-[12px] w-[42rem]">Base on the total number of children entered above, the same number of fields will appear below to enter each child's full... </p>
@@ -125,15 +131,6 @@
     <div></div>
   </div>
   </div> 
-
-
-
-
-
-
-
-
-
 
 
 

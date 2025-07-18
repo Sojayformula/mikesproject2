@@ -23,6 +23,7 @@ export class EmengencycontactComponent {
   staffId: any
    getAllStaff: allStaffModel;
    isLoading = false
+   isAPILoading = false
 
    editMode =false
    originalData: any
@@ -59,11 +60,12 @@ export class EmengencycontactComponent {
 
 
      fetchEmergencyData() {
+      this.isAPILoading =true
     this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
       next: (res ) => {
         this.emergencyData = res; 
         console.log('Fetched emergency data:', this.emergencyData);
-         this.isLoading = false;
+         this.isAPILoading = false;
 
       },
       error: (err) => {

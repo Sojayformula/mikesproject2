@@ -28,7 +28,7 @@ export class PersonalInformationComponent2 implements OnInit {
  
   successMessage = '';
   errorMessage = '';
-
+   staffData: any
   currentStepIndex = 0;
    personalData: any;  
    editStaffData: editStaffModel;
@@ -41,40 +41,14 @@ export class PersonalInformationComponent2 implements OnInit {
 
   editMode: boolean = false;
 originalStaffData: any;
- //formData: any = {};      
+     
   originalData: any = {};
   
-  // selectedFile!: File;
+
 imagePreview: string | ArrayBuffer | null = null;
  isCheckedMap: { [key: string]: boolean } = {};
 
-//  localPageData
-//   formData = {
-//     firstName: '',
-//   lastName: '',
-//   otherName: '',
-//   gender: '',
-//   dateOfBirth: '',
-//   nationality: '',
-//   maritalStatus: '',
-//   idType: '',
-//   idNumber: '',
-//   phoneNumber: '',
-//   email: ''
-// }; 
-// formData: { [key: string]: string } = {
-//   firstName: '',
-//   lastName: '',
-//   otherName: '',
-//   gender: '',
-//   dateOfBirth: '',
-//   nationality: '',
-//   maritalStatus: '',
-//   idType: '',
-//   idNumber: '',
-//   phoneNumber: '',
-//   email: ''
-// };
+
 formData: {
   [key: string]: any;
 } = {
@@ -119,7 +93,7 @@ resetForm() {
    
 }
 
-     createNotification(position: 'top', type: 'success'| 'info'| 'warning'| 'error', title: string, message: string ){
+     createNotification(position: 'topRight', type: 'success'| 'info'| 'warning'| 'error', title: string, message: string ){
    this.notification.create(type, title, message, {nzPlacement: position, nzDuration: 3000});
   }
 
@@ -150,27 +124,28 @@ ngOnInit() {
 
 
 
-  // fetchStaffData() {
-  //   this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
-  //     next: (res ) => {
-  //       this.personalData = res; 
-  //       console.log('Fetched staff data:', this.personalData);
-  //        this.isLoading = false;
+     fetchStaffData() {
+      console.log('Personal data', this.staffData)
+    this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
+      next: (res ) => {
+        this.staffData = res.data || ''; 
+        console.log('Fetched staff data:', this.staffData);
+         this.isLoading = false;
 
-  //         this.personalData = structuredClone(res);     
-  //         this.originalStaffData = structuredClone(res);
-  //         console.log('Fetched staff data:', this.personalData);
+          this.staffData = structuredClone(res);     
+          this.originalStaffData = structuredClone(res);
+          console.log('Fetched staff data:', this.staffData);
 
-  //     },
-  //     error: (err) => {
-  //       console.error('Error fetching staff:', err);
-  //     },
+      },
+      error: (err) => {
+        console.error('Error fetching staff:', err);
+      },
 
-  //        complete: () => {
+         complete: () => {
 
-  //        }
-  //   });
-  //   }
+         }
+    });
+    }
 
 
 
@@ -217,25 +192,6 @@ onInputChange(): void {
     }
    }, 50);
 }
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -342,6 +298,47 @@ goNext() {
       this.router.navigate([prev], { relativeTo: this.route.parent });
     }
   }
+
+
+
+  Submit(form: NgForm) {
+  this.isLoading =true;
+ const payload = {
+    _id: this.staffId, 
+    profilePicture: this.staffData?.profilePicture || '',
+    firstName: form.value.firstName,
+    lastName: form.value.lastName,
+    otherName: form.value.otherName || '',
+    email: form.value.email,
+    dateOfBirth: form.value.dateOfBirth,
+    nationality: form.value.nationality,
+    gender: form.value.gender,
+    idType: form.value.idType,
+    phoneNumber: form.value.phoneNumber,
+    idNumber: form.value.idNumber,
+    maritalStatus: form.value.maritalStatus
+  };
+
+  console.log('Submitting payload:', this.editStaffData);
+  console.log('Submit triggered in child:', form.value); 
+
+
+  this.pagesService.getEditStaff(this.staffId, payload ).subscribe({
+    next: (res) => {
+      console.log('patch', res)
+       this.createNotification('topRight', "success", "update Successful!!", "Updated!")
+       this.isLoading = false;
+    
+    },
+
+    error: (err) => {
+      console.log('error', err)
+      console.log('Failed to submit form')
+      alert('Form update failed')
+    }
+  })
+ }
+
 
 
 }

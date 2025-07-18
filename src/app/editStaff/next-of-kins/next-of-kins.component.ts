@@ -20,6 +20,7 @@ export class NextOfKinsComponent implements OnInit {
   staffId: any
    getAllStaff: allStaffModel;
    isLoading = false
+   isAPILoading = false
 
    originalData: any
    editMode = false;
@@ -59,15 +60,17 @@ export class NextOfKinsComponent implements OnInit {
 
 
      fetchNextOfKinData() {
+      this.isAPILoading =true
     this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
       next: (res ) => {
         this.nextOfKinsData = res; 
         console.log('Fetched staff data:', this.nextOfKinsData);
-         this.isLoading = false;
+         this.isAPILoading = false;
 
       },
       error: (err) => {
         console.error('Error fetching staff:', err);
+        this.isAPILoading =false
       },
 
          complete: () => {

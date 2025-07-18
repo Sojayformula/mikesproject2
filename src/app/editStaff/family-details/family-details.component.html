@@ -1,5 +1,12 @@
 
-<div class="mx-8 md:mx-0 md:mt- [-8rem] ">
+   <ng-container *ngIf="isAPILoader">
+    <div class="fle justify-center right-[40rem] absolute top-[25rem] ">
+      <mat-spinner [diameter]="50"></mat-spinner>
+    </div>
+  </ng-container>
+  
+  
+<div class="mx-8 md:mx-0 md:mt- [-8rem]">
 
     <!-- Edit button -->
 <div class="flex justify-end col-span-3 relative md:left-[-4.3rem] left-[2.3rem]  top-[-6rem] mt-10 lg:mt-10">
@@ -44,20 +51,6 @@
 
 
 
-   <!-- Add Child Button -->
- <div class="flex justify-end mx-16 mt-[-45px]">
-  <button
-    type="button"
-    (click)="addChild()"
-    class="border-[1px] border-black text-black px-4 py-2 rounded-lg hover:bg-blue-700"
-  >
-    + Add Child
-  </button>
-</div>
-
-
-
-
 
 
     <div class="">
@@ -68,11 +61,9 @@
 
 
                    <!-- FAMILY FORM -->
-<form #staffForm="ngForm" (ngSubmit)="Submit(staffForm) "class="grid gap-10 bg-white rounded-lg mt-[-40px] ">
+<form #staffForm="ngForm" (ngSubmit)="Submit(staffForm) "class="grid gap-10 bg-white rounded-lg mt-10">
 
-<!-- <form #staffForm="ngForm" (ngSubmit)="Submit(staffForm)" class="grid gap-6 bg-white rounded-lg mt-20"> -->
-
-  <!-- Row 1: Spouse Info -->
+ 
   <div class="grid md:grid-cols-3 grid-cols-2">
     
     <!-- Spouse Name -->
@@ -89,13 +80,29 @@
       />
 
       <!-- Children Info Header -->
-      <div class="mt-10 mb-4 md:mb-0">
+       <div class="flex ">
+      <div class="mt-4 mb-4 md:mb-0">
         <p class="font-semibold font-outfit text-[16px] w-[10rem]">Children Information</p>
         <p class="text-[#727A90] text-[12px] w-[42rem]">
           Based on the total number of children entered above, the same number of fields will appear below to enter each child's full details.
         </p>
       </div>
+
+   
+                   <!-- Add Child Button -->
+        <div class="flex justify-end mx- 16 relative top-14 ml-48">
+          <button
+            type="button"
+            (click)="addChild()"
+            class=" border-2 border-black text-black w-[8rem] h-[42px] rounded-lg hover:bg-blue-700"
+          >
+            + Add Child
+          </button>
+        </div> 
+    
+      </div>
     </div>
+
 
     <!-- Spouse Phone -->
     <div class="w-[9rem]">
@@ -126,8 +133,8 @@
   </div>
 
   <!-- Row 2: Number of Children -->
-  <div class="grid grid-cols-3 gap-6">
-    <div>
+  <div class="grid grid-cols-3 gap-6 ">
+    <div class="mt-[-30px]">
       <label class="font-semibold text-[13px] font-outfit">Number of Children</label>
       <input
         type="number"
@@ -138,17 +145,15 @@
         class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       />
     </div>
-    <div></div>
-    <div></div>
+    <!-- <div></div> -->
+    <!-- <div></div> -->
   </div>
 
   <!-- Row 3+: Children Form Fields (Dynamic) -->
-  <div
-    *ngFor="let child of data.children; let i = index"
-    class="grid grid-cols-3 gap-[24rem] mb-6"
+  <div *ngFor="let child of data.children; let i = index" class="grid grid-cols-3 gap-[24rem] mb- "
   >
     <!-- Child Full Name -->
-    <div class="flex flex-col">
+    <div class="flex flex-col mt-[-20px]">
       <label class="font-semibold text-[13px] font-outfit">Child </label>
       <input
         type="text"
@@ -172,7 +177,7 @@
     </div>
 
     <!-- Child Age -->
-    <div class="flex flex-col relative right-[7.5rem]">
+    <div class="flex flex-col relative right-[7.5rem] mt-[-18px]">
       <label class="font-semibold text-[13px] font-outfit">Age</label>
       <input
         type="text"
@@ -184,28 +189,6 @@
       />
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -287,11 +270,6 @@
     </button>
   </div>
 </div>
-
-
-
-
-
 
 
 </div>

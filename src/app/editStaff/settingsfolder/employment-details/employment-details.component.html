@@ -34,38 +34,17 @@
      (ngModelChange)="onInputChange()"
      [(ngModel)]="formData['jobTitle']"  
      placeholder="Enter job title" 
+     required
+     #jobTitle="ngModel"
      class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+
+     <p *ngIf="jobTitle.invalid && (jobTitle.touched || jobTitle.dirty)" class="text-red-600 text-sm">
+      First name required
+    </p>
   </div>
  
 
-<!-- <div>
-  <label class="block mb-1 text-sm font-medium text-gray-700">Unit</label>
-  <select
-    name="unitId"
-    [(ngModel)]="formsData.unitId"
-    required
-    class="border border-gray-300 w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
-  >
-    <option value="" disabled selected>Select a unit</option>
-    <option *ngFor="let unit of units " [value]="unit._id">
-      {{ unit.name }}
-    </option>
-  </select>
-</div> -->
-  <!-- <nz-form-item>
-      <label for="supervisor" class="block text-[#000000] text-[10px] md:text-[12px] lg:text-[13px] font-[500]"
-        >Unit
-    </label>
-      <ng-select [multiple]="true"  placeholder="Selected Supervisor" [(ngModel)]="selectedUnit.unit" name="supervisor"
-      style="color: #888888; border-radius: 10px; width: 100%;" class=" focus:outline-none focus:outline-sky-600 focus:border-sky-600"
-      class="custom-ng-select">
-        @for (staff of unitData; track staff) {
-          <ng-option [value]="staff._id">
-          {{ staff?.name }} 
-          </ng-option>
-        }
-      </ng-select> 
-   </nz-form-item> -->
+
 
   <div>
   <nz-form-item>
