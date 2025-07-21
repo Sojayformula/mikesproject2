@@ -45,8 +45,6 @@
     <img src="/QRCode.png" class="w-[83px] h-[86px]"> 
     </div>
 
-
-
     
 
     <div class="flex">
@@ -95,6 +93,15 @@
       </p>
       </div>
     </div>
+
+
+
+                  <!-- API LOADER  --> 
+   <ng-container *ngIf="isAPILoading">
+    <div class="fle justify-center right-[35rem] absolute top-[22rem] z-10">
+      <mat-spinner [diameter]="50"></mat-spinner>
+    </div>
+  </ng-container>
 
 
 

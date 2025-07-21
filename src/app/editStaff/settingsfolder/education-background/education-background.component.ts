@@ -5,7 +5,6 @@ import { StaffDataService } from '../../../StaffDataService/staff-data.service';
 import { addNewStaffModel, allStaffModel, editStaffModel } from '../../../model/pagesModel';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { AddstaffService } from '../../../addstaffservice/addstaff.service';
 import { FormsServiceService } from '../formService/forms-service.service';
 import { CheckboxService } from '../../../checkboxService/checkbox.service';
@@ -26,7 +25,7 @@ export class EducationBackgroundComponent2 implements OnInit {
   selectedFiles: File[] = [];
   isDragging = false;
   isLoading = false
-  // formData: Partial<addNewStaffModel> = {};
+  
 
    editMode: boolean = false;
 originalStaffData: any;

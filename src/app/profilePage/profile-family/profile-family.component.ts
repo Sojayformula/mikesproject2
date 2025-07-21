@@ -13,7 +13,7 @@ import { EditService } from '../../editservice/edit.service';
 
 
 @Component({
-  selector: 'app-profile-family',
+  selector: 'app-family-details',
   imports: [FormsModule, CommonModule, MatProgressSpinner],
  templateUrl: './profile-family.component.html',
   styleUrl: './profile-family.component.scss'

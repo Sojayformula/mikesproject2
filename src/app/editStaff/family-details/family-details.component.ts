@@ -19,15 +19,12 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
   styleUrl: './family-details.component.scss'
 })
 export class FamilyDetailsComponent implements OnInit {
-  @ViewChild('formRef') formRef!: NgForm;
+  //@ViewChild('formRef') formRef!: NgForm;
+  @ViewChild('staffForm') staffForm!: NgForm;
 
 
   originalData: any = {};
-  //data: any 
-//   data: any = {
-//   children: [],
-//   supervisor: {}
-// };
+
     data: any = {
       staffId: '',
       spouseName: '',
@@ -42,15 +39,15 @@ export class FamilyDetailsComponent implements OnInit {
 
 
    getAllStaff: allStaffModel;
-  //  familyModel: editFamilyModel
    staffId: any
    editMode: boolean = false;
    isLoading = false
-   isAPILoader = false
+    isAPILoading = false
 
      selectedStep: string = '';
   selectedFiles: File[] = [];
   isDragging = false;
+ 
 
   originalStaffData: any;
   
@@ -102,16 +99,19 @@ export class FamilyDetailsComponent implements OnInit {
 
 
   fetchFamiltDetails() {
-    this.isAPILoader = true
+    this.isAPILoading = true
   console.log('Fetch family data before API:', this.data);
   this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
     next: (res) => {
       this.data = res.data || res;
       console.log('API response:', this.data); 
      // console.log('Updated family data:', this.data);
-      this.isAPILoader = false
+      this.isAPILoading = false
     },
-    error: (err) => console.error('Failed to fetch children data', err)
+    error: (err) => {
+      console.error('Failed to fetch children data', err)
+      this.isAPILoading = false
+  }
   });
 }
 
@@ -119,6 +119,7 @@ export class FamilyDetailsComponent implements OnInit {
 
   addChild() {
     this.data.children.push({ fullName: '', dob: '' });
+    
   }
 
 
@@ -145,6 +146,7 @@ export class FamilyDetailsComponent implements OnInit {
 
 Submit(form: NgForm) {
   if (form.invalid) return;
+  //if (this.staffForm?.valid) {
 
   this.isLoading = true;
 
@@ -175,6 +177,7 @@ Submit(form: NgForm) {
       this.isLoading = false;
     }
   });
+//}
 }
 
    removeFile(index: number) {

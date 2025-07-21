@@ -1,7 +1,7 @@
 
     
         <!-- Edit button -->
-<div class="flex justify-end gap-4 col-span-3 relative md:left-[4.5rem] left-[5.2rem] top-[-6rem] md:top-[-5.5rem] mx-20">
+<div class="flex justify-end gap-4 col-span-3 relative md:left-[7.4rem] left-[5.2rem] top-[-6rem] md:top-[-5.5rem] mx-20">
   <button
     type="button"
     *ngIf="!editMode"
@@ -13,7 +13,7 @@
 
   <!-- Save and cancel -->
 
-       <ng-container *ngIf="isSaveLoading">
+       <ng-container *ngIf="isLoading">
   <div class="mt-6 flex justify-center relative top-[-15px]">
     <mat-spinner [diameter]="30"></mat-spinner>
   </div>
@@ -47,7 +47,7 @@
   </div>
 </ng-container> -->
 
-  <ng-container *ngIf="isLoading">
+  <ng-container *ngIf="isAPILoading">
     <div class="fle justify-center right-[40rem] absolute top-[25rem] ">
       <mat-spinner [diameter]="50"></mat-spinner>
     </div>

@@ -26,21 +26,36 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 })
 export class PersonInformationComponent implements OnInit{
 
-  // @ViewChild('staffForm') formRef!: NgForm;
+ @ViewChild('staffForm') staffForm!: NgForm;
 
   
   // private sub!: Subscription;
 
   currentStepIndex = 0;
-   staffData: any;  
+   staffData: any = {
+     firstName: '',
+    lastName: '',
+    otherName: '',
+    dateOfBirth: '',
+    email: '',
+      gender: '',
+    nationality: '',
+    idNumber: '',
+    idType: '',
+    maritalStatus: '',
+    phoneNumber: '',
+                     
+   }; 
+   
+   
    editStaffData: editStaffModel;
   getStaffModel: getStaffModel;
   getAllStaff: allStaffModel;
   selectedStaff: any={};
   storedMaritalData: string = ''; 
   staffId: any;
-  isLoading = false;
-   isSaveLoading = false;
+  isAPILoading = false;
+   isLoading = false;
 
   editMode: boolean = false;
 originalStaffData: any;
@@ -61,6 +76,8 @@ imagePreview: string | ArrayBuffer | null = null;
     this.editStaffData = new editStaffModel()
 
       this.getAllStaff = new allStaffModel()
+
+     
 
   }
 
@@ -108,36 +125,46 @@ imagePreview: string | ArrayBuffer | null = null;
     this.notification.create(type, title, message, {nzPlacement: position, nzDuration: 3000})
   }
 
-
+      // GENDER SELECT //
     selectedGender: any
     genderOptions = [
   { key: 'Male', label: 'Male' },
   { key: 'Female', label: 'Female' },
   { key: 'Other', label: 'Other' }
+
 ];
+
+        // mARITAL STATUS SELECT //
+   selectMaritalStatus: any
+   maritalStatusOption = [
+    {key: 'Married', label: 'Married'},
+    {key: 'Single', label: 'Single'}
+    
+   ];
 
 
 
 
 
      fetchStaffData() {
-      this.isLoading=true
+      this.isAPILoading = true
       console.log('Personal data', this.staffData)
+       
     this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
       next: (res ) => {
         this.staffData = res.data || ''; 
         console.log('Fetched staff data:', this.staffData);
-       
-
-          this.staffData = structuredClone(res);     
-          this.originalStaffData = structuredClone(res);
+         this.isAPILoading = false;
+         
+         this.staffData = structuredClone(res);     
+         this.originalStaffData = structuredClone(res);
           console.log('Fetched staff data:', this.staffData);
 
-            this.isLoading = false;
-
+         
       },
       error: (err) => {
         console.error('Error fetching staff:', err);
+        this.isAPILoading = false
       },
 
          complete: () => {
@@ -145,6 +172,8 @@ imagePreview: string | ArrayBuffer | null = null;
          }
     });
     }
+  
+  
 
 
 
@@ -176,6 +205,11 @@ async onFileSelected(event: any) {
     reader.onload = () => {
       this.imagePreview = reader.result as string;
       this.staffData.profilePicture = this.imagePreview;
+
+       if (!this.staffData) {
+        this.staffData = {};
+      }
+
     };
     reader.readAsDataURL(compressedFile);
   } catch (error) {
@@ -228,7 +262,7 @@ onCancel(): void {
 
 
 Submit(form: NgForm) {
-  this.isSaveLoading =true;
+  this.isLoading =true;
  const payload = {
     _id: this.staffId, 
     profilePicture: this.staffData?.profilePicture || '',
@@ -252,8 +286,8 @@ Submit(form: NgForm) {
   this.pagesService.getEditStaff(this.staffId, payload ).subscribe({
     next: (res) => {
       console.log('patch', res)
-       this.createNotification('topRight', "success", "update Successful!!", "Updated!")
-       this.isSaveLoading = false;
+       this.createNotification('topRight', "success", "Update Successful!!", "Updated!")
+       this.isLoading = false;
     
     },
 
@@ -299,6 +333,18 @@ onInputChange() {
   });
 
   this.checkboxService.setTypingStatus('person-information', isComplete);
+}
+
+
+
+       // IMGE PREVIEW //
+isValidUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url);
+    return parsed.hostname !== 'profile.jpg'; 
+  } catch {
+    return false;
+  }
 }
 
 

@@ -82,7 +82,7 @@ export const routes: Routes = [
              { path: 'editsettings', component: EditsettingsComponent,
             children:[
               {path: '', redirectTo: 'personal-information', pathMatch: 'full'},
-              {path: 'personal-information', component: PersonalInformationComponent2},
+              {path: 'personal-inform', component: PersonalInformationComponent2},
               {path: 'employment-details', component: EmploymentDetailsComponent2},
                {path: 'family-details', component: FamilyDetailsComponent2},
                {path: 'next-of-kin', component: NextOfKinComponent2},
@@ -97,12 +97,12 @@ export const routes: Routes = [
         
                { path: 'profile-page-layout', component: ProfilePageLayoutComponent,
                 children: [
-                  { path: '', redirectTo: 'profile-personal', pathMatch: 'full' }, 
-                  { path: 'profile-personal', component: ProfilepersonalinfoComponent },
-                  { path: 'profile-employment', component: ProfileemploymentDetailsComponent },
-                  { path: 'profile-family', component: ProfileFamilyComponent },
-                  { path: 'profile-next-of-kins', component: ProfileNextOfKinsComponent },
-                  { path: 'profileemergencycontact', component: ProfileemergencycontactComponent },
+                  { path: '', redirectTo: 'personal-information', pathMatch: 'full' }, 
+                  { path: 'personal-information', component: ProfilepersonalinfoComponent },
+                  { path: 'employment-details', component: ProfileemploymentDetailsComponent },
+                  { path: 'family-details', component: ProfileFamilyComponent },
+                  { path: 'next-of-kins', component: ProfileNextOfKinsComponent },
+                  { path: 'emergency-contact', component: ProfileemergencycontactComponent },
                   { path: 'education-details', component: ProfileEducationComponent }
                 ]
               }

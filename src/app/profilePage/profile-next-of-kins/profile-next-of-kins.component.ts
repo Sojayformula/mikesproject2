@@ -8,7 +8,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { CheckboxService } from '../../checkboxService/checkbox.service';
 
 @Component({
-  selector: 'app-profile-next-of-kins',
+  selector: 'app-next-of-kins',
   imports: [FormsModule, CommonModule],
   templateUrl: './profile-next-of-kins.component.html',
   styleUrl: './profile-next-of-kins.component.scss'

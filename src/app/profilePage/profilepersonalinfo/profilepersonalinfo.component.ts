@@ -20,7 +20,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 
 @Component({
-  selector: 'app-profilepersonalinfo',
+  selector: 'app-personal-information',
   imports: [CommonModule, FormsModule, MatProgressSpinner],
   templateUrl: './profilepersonalinfo.component.html',
   styleUrl: './profilepersonalinfo.component.scss'
@@ -38,6 +38,7 @@ export class ProfilepersonalinfoComponent implements OnInit{
   storedMaritalData: string = ''; 
   staffId: any;
   isLoading = false;
+  isAPILoading = false
 
   editMode: boolean = false;
 originalStaffData: any;
@@ -104,14 +105,16 @@ imagePreview: string | ArrayBuffer | null = null;
 
 
      fetchStaffData() {
+      this.isAPILoading = true
     this.pagesService.getLoggedInUserProfile().subscribe({
       next: (res ) => {
         this.staffData = res; 
         console.log('Fetched staff data:', this.staffData);
-         this.isLoading = false;
+         
 
          const userId = localStorage.getItem('userId')
          console.log('Profile user id', userId)
+         this.isAPILoading = false;
 
           // this.staffData = structuredClone(res);     
           // this.originalStaffData = structuredClone(res);
@@ -120,6 +123,7 @@ imagePreview: string | ArrayBuffer | null = null;
       },
       error: (err) => {
         console.error('Error fetching staff:', err);
+        this.isAPILoading = false;
       },
 
          complete: () => {
@@ -224,6 +228,7 @@ Submit(form: NgForm) {
       console.log('error', err)
       console.log('Failed to submit form')
       alert('Form update failed')
+      this.isLoading = false
     }
   })
  }

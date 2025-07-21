@@ -36,7 +36,7 @@ type="button"
   'hidden': !isSidebarOpen,
   'block': isSidebarOpen
 }"
-  class="fixed z-10 mx-10 left-0 top-[17rem]  w-60 text-white bg-gray-800 lg:h-screen lg:bg-white lg:text-black shadow p-4
+  class="fixed z-10 mx-10 left-0 top-[17rem]  w-60 lg:h-screen bg-white text-black shadow p-4
          md:block md:static md:h-auto md:top-0 md:z-auto"
 >
   <li
@@ -76,7 +76,7 @@ type="button"
         [queryParamsHandling]="'preserve'"
         class="ml-2 capitalize"
         (click)="isSidebarOpen = false"
-        routerLinkActive="bg-gray-300 shadow-lg shadow-black hover:text-white hover:bg-gray-700"
+        routerLinkActive="hover:text-white hover:bg-gray-700"
       >
         {{ step.replace('-', ' ') }}
       </a>

@@ -624,10 +624,25 @@ export interface EducationDetailModel {
 
       //Get Staff Model //
       export class getStaffModel {
-        nationality!: string;
-        maritalStatus!: string;
+        // nationality!: string;
+        // maritalStatus!: string;
+         firstName!: string
+         lastName!: string
+          email!: string
+           gender!: string
+          nationality!: string
+          otherName!: string
+          idNumber!: string
+          idType!: string
+          maritalStatus!: string
+          phoneNumber!: string
+          dateOfBirth!: string
+         supervisor!: Supervisor
 
       }
+
+
+
 
 export interface getStaffResponseModel {
   success: boolean
@@ -636,7 +651,7 @@ export interface getStaffResponseModel {
   timestamp: string
 }
 
-export interface Daum {
+export interface  Daum   {
   _id: string
   firstName: string
   lastName: string

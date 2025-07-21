@@ -39,8 +39,8 @@ export class EmploymentDetailsComponent implements OnInit{
 
      editMode: boolean = false;
      originalStaffData: any;
+     isAPILoading = false
      isLoading = false
-     isSaveLoading = false
      form: any={}
 
      isFormComplete: boolean = false;
@@ -121,13 +121,13 @@ export class EmploymentDetailsComponent implements OnInit{
 
 
    fetchEmployees() {
-    this.isLoading = true
+    this.isAPILoading = true
     console.log('EmployeeData', this.employeeData)
     this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({
       next: (res ) => {
         this.employeeData = res.data; 
         console.log('Fetched staff data:', this.employeeData);
-         this.isLoading = false;
+         this.isAPILoading = false;
 
           this.employeeData = structuredClone(res);     
           this.originalStaffData = structuredClone(res);
@@ -136,7 +136,7 @@ export class EmploymentDetailsComponent implements OnInit{
       },
       error: (err) => {
         console.error('Error fetching staff:', err);
-        this.isLoading = false;
+        this.isAPILoading = false;
       },
 
          complete: () => {

@@ -1,15 +1,8 @@
-
-   <ng-container *ngIf="isAPILoader">
-    <div class="fle justify-center right-[40rem] absolute top-[25rem] ">
-      <mat-spinner [diameter]="50"></mat-spinner>
-    </div>
-  </ng-container>
-  
-  
+  <div class=" lg:w-[69rem]">
 <div class="mx-8 md:mx-0 md:mt- [-8rem]">
 
     <!-- Edit button -->
-<div class="flex justify-end col-span-3 relative md:left-[-4.3rem] left-[2.3rem]  top-[-6rem] mt-10 lg:mt-10">
+<div class="flex justify-end col-span-3 relative md:left-[-3.3rem] left-[2.3rem]  top-[-6rem] mt-10 lg:mt-10">
   <button
     type="button"
     *ngIf="!editMode"
@@ -34,7 +27,7 @@
     <button
       type="button"
       (click)="Submit(staffForm)"
-      class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+      class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition mx-4"
     >
       Save
     </button>
@@ -50,6 +43,12 @@
   </div>
 
 
+      <!-- API LOADER -->
+ <ng-container *ngIf="isAPILoading">
+    <div class="fle justify-center right-[40rem] absolute top-[25rem] ">
+      <mat-spinner [diameter]="50"></mat-spinner>
+    </div>
+  </ng-container>
 
 
 
@@ -61,7 +60,7 @@
 
 
                    <!-- FAMILY FORM -->
-<form #staffForm="ngForm" (ngSubmit)="Submit(staffForm) "class="grid gap-10 bg-white rounded-lg mt-10">
+<form *ngIf="data" #staffForm="ngForm" (ngSubmit)="Submit(staffForm)" class="grid gap-10 bg-white rounded-lg mt-10">
 
  
   <div class="grid md:grid-cols-3 grid-cols-2">
@@ -277,6 +276,7 @@
   </div>
 
 </form>
+</div>
 </div>
 
 

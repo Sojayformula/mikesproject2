@@ -1,15 +1,17 @@
-
-  <div class="mt- md:mt-[-7.5rem] relative ">
-
- <ng-container *ngIf="isLoading">
-    <div class="fle justify-center right-[35rem] absolute top-[20rem] z-10">
+<div class=" lg:w-[69rem]">
+  
+      <ng-container *ngIf="isAPILoading">
+    <div class="flex justify-center right-[40rem] absolute top-[26rem] z-10">
       <mat-spinner [diameter]="50"></mat-spinner>
     </div>
   </ng-container>
+
+
+
  
 
 <!-- Edit button -->
-<div class="py-[-30rem] flex gap-4 justify-end col-span-3 relative  lg:left-[-2.5rem] left-[0.6rem] top-[-5.5rem] md:top-[2rem] ">
+<div class="py-[-30rem] flex gap-4 justify-end relative  lg:left-[-3.3rem] left-[0.6rem] top-[-5.5rem] md:top-[-5.5rem] ">
   <button
     type="button"
     *ngIf="!editMode"
@@ -21,7 +23,7 @@
 
 
               <!-- Save and cancel  -->
-       <ng-container *ngIf="isSaveLoading">
+       <ng-container *ngIf="isLoading">
       <div class="mt-6 flex justify-center relative top-[-15px]">
         <mat-spinner [diameter]="30"></mat-spinner>
       </div>
@@ -48,20 +50,20 @@
 
 
               <!-- QRcode image -->
-       <div class="flex justify-end relative md:top-20 top-[-3rem] md:mx-8">
+       <div class="flex justify-end relative top-[-3rem] md:mx-20">
     <img src="/QRCode.png" class="w-[83px] h-[86px]"> 
     </div>
 
 
-
+  
+      <div class="mt- md:mt-[-6.5rem] relative">
     
-
     <div class="flex">
 
       <!-- Image Preview -->
      <div class="lg:col-span-2 flex flex-col items-cente mt-10">
       <div class="relative w-[90px] [167px] h-[90px] [167px] mb-2">
-        <div lass="border-[#4393FF] bg-[#4393FF1A] border rounded-full w-full h-full overflow-hidden fle items-center justify-center">
+        <!-- <div lass="border-[#4393FF] bg-[#4393FF1A] border rounded-full w-full h-full overflow-hidden fle items-center justify-center"> -->
           <ng-container *ngIf="!imagePreview">
             <!-- <span class="text-gray-600 text-sm text-center ">No Image</span> -->
           </ng-container>
@@ -69,11 +71,15 @@
         <div class="-32 h-24 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center mt-[-25px]">
          
           <!-- <img src="/Preview.png"> -->
-           <img 
-            [src]="staffData.profilePicture || '/Preview.png'" 
-            alt="Profile Preview"
+       
+          <img
+            *ngIf="staffData"
+            [src]="isValidUrl(staffData.profilePicture) ? staffData.profilePicture : '/Preview.png'"
+            alt="Profile Picture"
             class="w-[120px] h-[120px] rounded-full object-cover border"
           />
+
+
           
           <ng-template #savedImage>
             <img
@@ -86,26 +92,27 @@
         </div>
         </div>
         </div>
-    </div>
+    <!-- </div> -->
  
 
   
       <div class="mt-6 mx-10 space-y-2">
        <p class="font-semibold text-[#686868] font-outfit text-14px">
-        {{staffData.firstName}} {{staffData.lastName}}
+        {{staffData?.firstName}} {{staffData?.lastName}}
       </p>
        <p class="bg-[#00765E17] text-[#00765E] font-bold text-[8.92px]">
-        {{staffData.supervisor.jobTitle}}
+        {{staffData?.supervisor?.jobTitle}}
       </p>
        <p class="flex justify-center items-center bg-[#15C12924] text-[#26AB5B] text-[6.87px] rounded-[4.23px] w-[37.69px] h-[15.46px] border-2 border-[#26AB5B5C]">
-        {{staffData.employmentStatus}}
+        {{staffData?.employmentStatus}}
       </p>
       </div>
     </div>
 
 
 
-      <form #staffForm="ngForm" (ngSubmit)="Submit(staffForm)" class="grid grid-cols-2 grid-row-2 mg:grid-cols-2 mg:grid-rows-6 lg:grid-cols-3 lg:grid-rows-4 mt-10 bg-white rounded gap-y-6 gap-x-20 ">
+
+      <form *ngIf="staffData" #staffForm="ngForm" (ngSubmit)="Submit(staffForm)" class="grid grid-cols-2 grid-row-2 mg:grid-cols-2 mg:grid-rows-6 lg:grid-cols-3 lg:grid-rows-4 mt-10 bg-white rounded gap-y-6 gap-x-28 md:gap-x-0">
   <!-- Row 1 --> 
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">First Name</label>
@@ -150,8 +157,9 @@
   <div>
     <select
   name="gender"
-  [(ngModel)]="staffData.selectedGender"
+
   [(ngModel)]="staffData.gender"
+   [disabled]="!editMode"
    #genderModel="ngModel"
   required
   class="relative top-4 border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -180,7 +188,21 @@
   <!-- Row 3 -->
   <div >
      <label class="block w-40 text-sm font-medium text-gray-700">Marital Status</label>
-    <input type="text" name="maritalStatus" #maritalStatus="ngModel" required [disabled]="!editMode"   [(ngModel)]="staffData.maritalStatus"   placeholder="Select marital status" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <!-- <input type="text" name="maritalStatus" #maritalStatus="ngModel" required [disabled]="!editMode"   [(ngModel)]="staffData.maritalStatus"   placeholder="Select marital status" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/> -->
+
+    <select
+  name="maritalStatus"
+  
+    [(ngModel)]="staffData.maritalStatus"
+  #maritalStatus="ngModel"
+  required
+  class="relative top-4 border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+>
+  <option [ngValue]="null" disabled selected>Select Marital Status</option>
+  <option *ngFor="let item of maritalStatusOption" [ngValue]="item.key">
+    {{ item.label }}
+  </option>
+</select>
 
      <p *ngIf="maritalStatus.invalid && (maritalStatus.touched || maritalStatus.dirty)" class="text-red-600 text-sm">
      Marital status required
@@ -232,6 +254,8 @@
 </form>
 </div>
 
+</div>
+
 
 
 
@@ -265,9 +289,9 @@
 
 
 
+<!-- 
 
-
-          <!-- class="flex">
+           class="flex">
 
      <div class="mt-[-9rem] ">
         <picture class="font-bold">Profile </picture>
@@ -329,4 +353,4 @@
        <p class="font-bold">Personal Information</p> 
         <p class="text-[#727A90] text-sm">Basic personaldetails of the staff</p>
       </div> 
-    </div> -->
+    </div>  -->

@@ -10,7 +10,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CheckboxService } from '../../checkboxService/checkbox.service';
 
 @Component({
-  selector: 'app-profile-education',
+  selector: 'app-education-details',
   imports: [FormsModule, CommonModule, MatProgressSpinner],
    templateUrl: './profile-education.component.html',
   styleUrl: './profile-education.component.scss'

@@ -23,9 +23,8 @@ templateUrl: './profile-page-layout.component.html',
 export class ProfilePageLayoutComponent {
 
  
-  steps = ['profile-personal', 'profile-employment', 'profile-family', 'profile-next-of-kins', 'profileemergencycontact', 'education-details' ];
+  steps = ['personal-information', 'employment-details', 'family-details', 'next-of-kins', 'emergency-contact', 'education-details' ];
   currentStepIndex = 0;
-  // employeeData: any
   isChecked = false;
   inputValue = '';
   isSidebarOpen = false;
