@@ -119,34 +119,60 @@ export class UnitComponent implements OnInit, OnDestroy{
   }
 
 
+
+
+// addUnit(addForm: NgForm) {
+//   // Create a clean version of the payload
+//   const Payload: any = {
+//     name: this.addUnitData.name?.trim(),
+//     description: this.addUnitData.description?.trim() || '',
+//     unitHead: this.addUnitData.unitHead || null,
+//     isSubUnit: this.addUnitData.isSubUnit === true,
+//     parentUnit: this.addUnitData.parentUnit?._id || this.addUnitData.unitHead || null
+//   };
+
+  
+//   console.log('Payload being sent:', Payload);
+
+//   this.pagesService.addUnit(Payload).subscribe({
+//     next: (res) => {
+//       this.createNotification('topRight', 'success', 'New unit added successfully.', 'Updated!');
+//       this.fetchunit();
+//       this.addUnitData = new addUnitModel();
+//       addForm.resetForm();
+//       this.showEditModal = false;
+//     },
+//     error: (err) => {
+//       console.error('Add unit failed:', err);
+//       this.createNotification('topRight', 'error', 'Add new unit failed.', 'Failed!');
+//     }
+//   });
 // }
 
-addUnit(addForm: NgForm) {
-  // Create a clean version of the payload
-  const Payload: any = {
-    name: this.addUnitData.name?.trim(),
-    description: this.addUnitData.description?.trim() || '',
-    unitHead: this.addUnitData.unitHead || null,
-    isSubUnit: this.addUnitData.isSubUnit === true,
-    parentUnit: this.addUnitData.parentUnit?._id || this.addUnitData.unitHead || null
-  };
+addUnit(form: NgForm) {
+  const payload: addUnitModel = {
+  _id: this.addUnitData._id,  
+  name: form.value.name?.trim(),
+  description: form.value.description?.trim() || '',
+  unitHead: form.value.unitHead || null,
+  isSubUnit: form.value.isSubUnit === true,
+  parentUnit: form.value.parentUnit?._id || null
+};
 
-  console.log('Payload being sent:', Payload);
-
-  this.pagesService.addUnit(Payload).subscribe({
+  this.pagesService.addUnit(payload).subscribe({
     next: (res) => {
-      this.createNotification('topRight', 'success', 'New unit added successfully.', 'Updated!');
+      console.log('✅ Unit created successfully', res);
+      form.resetForm();
       this.fetchunit();
       this.addUnitData = new addUnitModel();
-      addForm.resetForm();
       this.showEditModal = false;
     },
     error: (err) => {
-      console.error('Add unit failed:', err);
-      this.createNotification('topRight', 'error', 'Add new unit failed.', 'Failed!');
+      console.error('❌ Failed to create unit:', err);
     }
   });
 }
+
 
 
 
