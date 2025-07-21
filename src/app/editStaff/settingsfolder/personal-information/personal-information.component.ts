@@ -124,6 +124,25 @@ ngOnInit() {
 
 
 
+    // GENDER SELECT //
+    selectedGender: any
+    genderOptions = [
+  { key: 'Male', label: 'Male' },
+  { key: 'Female', label: 'Female' },
+  { key: 'Other', label: 'Other' }
+
+];
+
+        // mARITAL STATUS SELECT //
+   selectMaritalStatus: any
+   maritalStatusOption = [
+    {key: 'Married', label: 'Married'},
+    {key: 'Single', label: 'Single'}
+    
+   ];
+
+
+
      fetchStaffData() {
       console.log('Personal data', this.staffData)
     this.pagesService.getUserById(this.staffId, this.getAllStaff).subscribe({

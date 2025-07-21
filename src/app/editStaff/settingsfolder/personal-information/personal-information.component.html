@@ -141,13 +141,27 @@
 
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Gender</label>
-    <input 
+    <!-- <input 
     type="text" 
     name="gender" 
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData['gender']"  
     placeholder="Chose gender" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  /> -->
+
+       <select
+  name="gender"
+  (ngModelChange)="onInputChange()"
+  [(ngModel)]="formData['gender']"
+   #genderModel="ngModel"
+  required
+ class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+>
+  <option [ngValue]="null" disabled selected>Select Gender</option>
+  <option *ngFor="let item of genderOptions" [ngValue]="item.key">
+    {{ item.label }}
+  </option>
+</select>
   </div>
 
   <div>
@@ -165,13 +179,24 @@
   <!-- Row 3 -->
   <div >
      <label class="block w-40 text-sm font-medium text-gray-700">Marital Status</label>
-    <input 
-    type="text" 
-    name="maritalStatus" 
-    (ngModelChange)="onInputChange()"
-    [(ngModel)]="formData['maritalStatus']"  
-    placeholder="Select marital status" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+      <select
+  name="maritalStatus"
+   (ngModelChange)="onInputChange()"
+  [(ngModel)]="formData['maritalStatus']" 
+  #maritalStatus="ngModel"
+  required
+  placeholder="Select marital status" 
+     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+>
+   <option [ngValue]="null" disabled selected>Select Marital Status</option>
+  <option *ngFor="let item of maritalStatusOption" [ngValue]="item.key">
+    {{ item.label }}
+  </option>
+  </select>
+
+     <p *ngIf="maritalStatus.invalid && (maritalStatus.touched || maritalStatus.dirty)" class="text-red-600 text-sm">
+     Marital status required
+    </p>
   </div>
 
   <div>

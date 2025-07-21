@@ -65,9 +65,15 @@
             (ngModelChange)="onInputChange($event, 'emergencyContactFullName')" 
              [(ngModel)]="emergencyData.emergencyContactFullName "
              [disabled]="!editMode"
+             #emergencyContactFullName="ngModel"
+             required
             placeholder="Enter next of kin's full name"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+
+           <p *ngIf="emergencyContactFullName.invalid && (emergencyContactFullName.touched || emergencyContactFullName.dirty)" class="text-red-600 text-sm w-[15rem]">
+             Full Name required
+           </p>
         </div>
 
 
@@ -79,9 +85,15 @@
             (ngModelChange)="onInputChange($event, 'emergencyContactRelationship')" 
             [(ngModel)]="emergencyData.emergencyContactRelationship"
             [disabled]="!editMode"
+            #emergencyContactRelationship="ngModel"
+            required
             placeholder="E.g Mother, Brother, Friend"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+
+           <p *ngIf="emergencyContactRelationship.invalid && (emergencyContactRelationship.touched || emergencyContactRelationship.dirty)" class="text-red-600 text-sm w-[15rem]">
+             Relationship required
+          </p>
          </div>
 
          <div>
@@ -92,9 +104,15 @@
             (ngModelChange)="onInputChange($event, 'emergencyContactPhoneNumber')" 
             [(ngModel)]="emergencyData.emergencyContactPhoneNumber"
             [disabled]="!editMode"
+            #emergencyContactPhoneNumber="ngModel"
+            required
             placeholder="Enter active contact number"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+
+          <p *ngIf="emergencyContactPhoneNumber.invalid && (emergencyContactPhoneNumber.touched || emergencyContactPhoneNumber.dirty)" class="text-red-600 text-sm w-[15rem]">
+             Phone Number required
+          </p>
          </div>
 
                   <!-- Row ---2 -->        
@@ -105,10 +123,16 @@
             name="emergencyContactEmail"
             (ngModelChange)="onInputChange($event, 'emergencyContactEmail')" 
             [(ngModel)]="emergencyData.emergencyContactEmail"
+            #emergencyContactEmail="ngModel"
+            required
             [disabled]="!editMode"
             placeholder="Enter email address (if available)"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+
+          <p *ngIf="emergencyContactEmail.invalid && (emergencyContactEmail.touched || emergencyContactEmail.dirty)" class="text-red-600 text-sm w-[15rem]">
+             Email Address required
+          </p>
         </div>
 
          <div>
@@ -119,9 +143,14 @@
             (ngModelChange)="onInputChange($event, 'emergencyContactCurrentAddress')" 
             [(ngModel)]="emergencyData.emergencyContactCurrentAddress"
             [disabled]="!editMode"
+            #emergencyContactCurrentAddress="ngModel"
+            required
             placeholder="Enter current address"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+          <p *ngIf="emergencyContactCurrentAddress.invalid && (emergencyContactCurrentAddress.touched || emergencyContactCurrentAddress.dirty)" class="text-red-600 text-sm w-[15rem]">
+             Emergency Contact required
+          </p>
          </div>
          
     </form>

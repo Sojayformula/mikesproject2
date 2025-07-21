@@ -82,7 +82,7 @@ export const routes: Routes = [
              { path: 'editsettings', component: EditsettingsComponent,
             children:[
               {path: '', redirectTo: 'personal-information', pathMatch: 'full'},
-              {path: 'personal-inform', component: PersonalInformationComponent2},
+              {path: 'personal-information', component: PersonalInformationComponent2},
               {path: 'employment-details', component: EmploymentDetailsComponent2},
                {path: 'family-details', component: FamilyDetailsComponent2},
                {path: 'next-of-kin', component: NextOfKinComponent2},

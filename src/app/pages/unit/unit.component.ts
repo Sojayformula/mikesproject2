@@ -119,24 +119,36 @@ export class UnitComponent implements OnInit, OnDestroy{
   }
 
 
+// }
 
-    addUnit(){
-    console.log('Payload being sent:', this.addUnitData);
-  
-   this.pagesService.addUnit(this.addUnitData).subscribe({
+addUnit(addForm: NgForm) {
+  // Create a clean version of the payload
+  const Payload: any = {
+    name: this.addUnitData.name?.trim(),
+    description: this.addUnitData.description?.trim() || '',
+    unitHead: this.addUnitData.unitHead || null,
+    isSubUnit: this.addUnitData.isSubUnit === true,
+    parentUnit: this.addUnitData.parentUnit?._id || this.addUnitData.unitHead || null
+  };
+
+  console.log('Payload being sent:', Payload);
+
+  this.pagesService.addUnit(Payload).subscribe({
     next: (res) => {
-       this.createNotification('topRight','success', 'New unit added successfully.','Updated!');
-      this.fetchunit();  
-      this.addUnitData = new addUnitModel(); 
-      this.showEditModal  = false;
-      
+      this.createNotification('topRight', 'success', 'New unit added successfully.', 'Updated!');
+      this.fetchunit();
+      this.addUnitData = new addUnitModel();
+      addForm.resetForm();
+      this.showEditModal = false;
     },
     error: (err) => {
-      console.error(err);
-       this.createNotification('topRight','error', 'Add new unit failed.','Failed!');
+      console.error('Add unit failed:', err);
+      this.createNotification('topRight', 'error', 'Add new unit failed.', 'Failed!');
     }
   });
 }
+
+
 
 
 selectedUnitId: string | null = null;

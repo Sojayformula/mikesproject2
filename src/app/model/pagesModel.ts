@@ -211,12 +211,19 @@ export interface ParentUnit2 {
 
         // addUnitodel //
 export class addUnitModel{
+  _id!: string;
    name!: string;
   isSubUnit!: boolean;
-  unitHead!: UnitHead;
+  unitHead!: string;
   description!: string;
   parentUnit!: ParentUnit;
 }
+
+export interface ParentUnit {
+  _id: string;
+  name: string; 
+}
+
 
 
 export interface addUnitResponseModel {

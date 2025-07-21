@@ -66,9 +66,15 @@
             name="nextOfKinFullName"
             [disabled]="!editMode" 
             [(ngModel)]="nextOfKinsData.nextOfKinFullName"
+            #nextOfKinFullName="ngModel"
+            required
             placeholder="Enter next of kin's full name"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+
+            <p *ngIf="nextOfKinFullName.invalid && (nextOfKinFullName.touched || nextOfKinFullName.dirty)" class="text-red-600 text-sm w-[10rem]">
+             Full Name required
+            </p>
         </div>
 
          <div>
@@ -78,9 +84,15 @@
             name="nextOfKinRelationship"
             [disabled]="!editMode" 
             [(ngModel)]="nextOfKinsData.nextOfKinRelationship"
+            #nextOfKinRelationship="ngModel"
+            required
             placeholder="E.g Mother, Brother, Friend"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+
+             <p *ngIf="nextOfKinRelationship.invalid && (nextOfKinRelationship.touched || nextOfKinRelationship.dirty)" class="text-red-600 text-sm w-[10rem]">
+               Relationship required
+              </p>
          </div>
 
          <div>
@@ -90,9 +102,15 @@
             name="nextOfKinPhoneNumber"
             [disabled]="!editMode" 
             [(ngModel)]="nextOfKinsData.nextOfKinPhoneNumber"
+            #nextOfKinPhoneNumber="ngModel"
+            required
             placeholder="Enter active contact number"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+
+          <p *ngIf="nextOfKinPhoneNumber.invalid && (nextOfKinPhoneNumber.touched || nextOfKinPhoneNumber.dirty)" class="text-red-600 text-sm w-[10rem]">
+             Phone Number required
+           </p>
          </div>
 
                   <!-- Row ---2 -->
@@ -103,9 +121,15 @@
             name="nextOfKinEmail"
             [disabled]="!editMode" 
             [(ngModel)]="nextOfKinsData.nextOfKinEmail"
+            #nextOfKinEmail="ngModel"
+            required
             placeholder="Enter email address (if availabe)"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+
+            <p *ngIf="nextOfKinEmail.invalid && (nextOfKinEmail.touched || nextOfKinEmail.dirty)" class="text-red-600 text-sm w-[10rem]">
+             Email Address required
+            </p>
         </div>
 
          <div>
@@ -115,9 +139,15 @@
             name="nextOfKinCurrentAddress"
             [disabled]="!editMode" 
             [(ngModel)]="nextOfKinsData.nextOfKinCurrentAddress"
+            #nextOfKinCurrentAddress="ngModel"
+            required
             placeholder="current address"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+
+           <p *ngIf="nextOfKinCurrentAddress.invalid && (nextOfKinCurrentAddress.touched || nextOfKinCurrentAddress.dirty)" class="text-red-600 text-sm w-[15rem]">
+             Enter Current Address required
+          </p>
          </div>
          
     </form>

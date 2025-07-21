@@ -74,9 +74,15 @@
       name="jobTitle" 
       [(ngModel)]="employeeData.jobTitle"
       [disabled]="!editMode"
+      #jobTitle="ngModel"
+      required
       placeholder="Enter job title" 
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
+
+      <p *ngIf="jobTitle.invalid && (jobTitle.touched || jobTitle.dirty)" class="text-red-600 text-sm">
+     Job Title required
+    </p>
   </div>
 
   <!-- Unit -->
@@ -104,9 +110,15 @@
       name="employmentType" 
       [(ngModel)]="employeeData.employmentType"
       [disabled]="!editMode" 
+       #employmentType="ngModel"
+      required
       placeholder="Enter employment type" 
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
+
+      <p *ngIf="employmentType.invalid && (employmentType.touched || employmentType.dirty)" class="text-red-600 text-sm">
+     Employment Type required
+    </p>
   </div>
 
   <!-- Hire Date -->
@@ -117,9 +129,15 @@
       name="hireDate" 
       [(ngModel)]="formattedDOB"
       [disabled]="!editMode"
+       #hireDate="ngModel"
+      required
       placeholder="Enter date"
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
     />
+
+      <p *ngIf="hireDate.invalid && (hireDate.touched || hireDate.dirty)" class="text-red-600 text-sm">
+     Date required
+    </p>
   </div>
 
   <!-- Work Location -->
@@ -130,9 +148,15 @@
       name="workLocation" 
       [(ngModel)]="employeeData.workLocation"
       [disabled]="!editMode"
+       #workLocation="ngModel"
+      required
       placeholder="Enter work location"
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
     />
+
+      <p *ngIf="workLocation.invalid && (workLocation.touched || workLocation.dirty)" class="text-red-600 text-sm">
+    Work Location required
+    </p>
   </div>
 
   <!-- Supervisor -->
@@ -159,8 +183,14 @@
       name="staffId" 
       [(ngModel)]="employeeData.staffId"
       [disabled]="!editMode"
+       #staffId="ngModel"
+      required
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
     />
+
+      <p *ngIf="staffId.invalid && (staffId.touched || staffId.dirty)" class="text-red-600 text-sm">
+    Staff Id required
+    </p>
   </div>
 </form>
 

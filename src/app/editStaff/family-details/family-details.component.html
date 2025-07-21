@@ -74,9 +74,15 @@
         [(ngModel)]="data.spouseName"
         [disabled]="!editMode"
         (ngModelChange)="onInputChange()"
+        #spouseName="ngModel"
+        required
         placeholder="Enter full name of spouse"
         class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       />
+
+       <p *ngIf="spouseName.invalid && (spouseName.touched || spouseName.dirty)" class="text-red-600 text-sm w-[10rem]">
+     Spouse's Name required
+    </p>
 
       <!-- Children Info Header -->
        <div class="flex ">
@@ -112,9 +118,15 @@
         [(ngModel)]="data.spousePhone"
         [disabled]="!editMode"
         (ngModelChange)="onInputChange()"
+        #spousePhone="ngModel"
+        required
         placeholder="Phone number"
         class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       />
+
+       <p *ngIf="spousePhone.invalid && (spousePhone.touched || spousePhone.dirty)" class="text-red-600 text-sm w-[15rem]">
+     Spouse's Phone Number required
+    </p>
     </div>
 
     <!-- Spouse Email -->
@@ -125,9 +137,15 @@
         name="spouseEmail"
         [(ngModel)]="data.spouseEmail"
         [disabled]="!editMode"
+        #spouseEmail="ngModel"
+        required=""
         placeholder="Enter email address"
         class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       />
+
+       <p *ngIf="spouseEmail.invalid && (spouseEmail.touched || spouseEmail.dirty)" class="text-red-600 text-sm">
+     Spouse's Email required
+    </p>
     </div>
   </div>
 
@@ -140,9 +158,15 @@
         name="numberOfChild"
         [(ngModel)]="data.numberOfChildren"
         [disabled]="!editMode"
+        #numberOfChild="ngModel"
+        required
         placeholder="Enter number (e.g., 2)"
         class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       />
+
+       <p *ngIf="numberOfChild.invalid && (numberOfChild.touched || numberOfChild.dirty)" class="text-red-600 text-sm">
+     Number of Children required
+    </p>
     </div>
     <!-- <div></div> -->
     <!-- <div></div> -->
@@ -159,9 +183,15 @@
         [name]="'childFullName' + i"
         [(ngModel)]="child.fullName"
         [disabled]="!editMode"
+        #childFullName="ngModel"
+        required
         placeholder="Enter full name"
         class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       />
+
+       <p *ngIf="childFullName.invalid && (childFullName.touched || childFullName.dirty)" class="text-red-600 text-sm w-[10rem]">
+     Child Name required
+    </p>
 
        <!-- Remove Button -->
     <div class="flex items-end">
@@ -183,11 +213,19 @@
         [name]="'childAge' + i"
         [(ngModel)]="child.dob"
         [disabled]="!editMode"
+        #childAge="ngModel"
+        required
         placeholder="Enter age in years"
         class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       />
+
+       <p *ngIf="childAge.invalid && (childAge.touched || childAge.dirty)" class="text-red-600 text-sm w-[10rem]">
+     Date of Birth required
+    </p>
     </div>
   </div>
+
+
 
 
 
