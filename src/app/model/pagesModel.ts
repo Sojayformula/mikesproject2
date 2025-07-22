@@ -2,8 +2,8 @@
 
 export class unitModel{
     search!: string;
-    page!: string;
-    pageSize!: string;
+    page!: number;
+    pageSize!: number;
 }
 
 export interface unitModelResponseModel {

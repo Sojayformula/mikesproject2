@@ -1,105 +1,109 @@
-::ng-deep .ant-modal-content{
-    background-color: #FFFFFF;
-     margin: 0 auto;
-  top: 50% !important;
-  transform: translateX(50%) !important;
-} 
-
-::ng-deep .ant-modal-mask {
-  background-color: rgba(0, 0, 0, 0.6) !important; 
-}
-
-::ng-deep .ant-modal-content {
-  width: 1440 !important;       
-  height: 520px !important;
-  margin-top: 150px !important;
-  // max-width: none !important; 
-}
-
-
-// ::ng-deep .custom-modal .ant-modal {
-//   margin: 0 auto;
+// ::ng-deep .ant-modal-content{
+//     background-color: #FFFFFF;
+//      margin: 0 auto;
 //   top: 50% !important;
-//   transform: translateY(-50%) !important;
+//   transform: translateX(50%) !important;
+// } 
+
+// ::ng-deep .ant-modal-mask {
+//   background-color: rgba(0, 0, 0, 0.6) !important; 
+// }
+
+// ::ng-deep .ant-modal-content {
+//   width: 1440 !important;       
+//   height: 520px !important;
+//   margin-top: 150px !important;
+//   // max-width: none !important; 
+// }
+
+
+// // ::ng-deep .custom-modal .ant-modal {
+// //   margin: 0 auto;
+// //   top: 50% !important;
+// //   transform: translateY(-50%) !important;
+// // }
+
+
+
+
+//               // DELETE MODAL //
+
+// ::ng-deep .custom-confirm-modal .ant-modal-content {
+//   border: 1px solid red !important;
+//   border-radius: 10px;
+//   background-color: #fef2f2 !important;
+//   margin-left: 27rem;
+//   width: 20rem;
+//   height: 120px !important;
+//   margin-top: 15px !important;
+  
+// }
+
+// @media (max-width: 768px) {
+//   ::ng-deep .custom-confirm-modal .ant-modal-content {
+//     margin: 20px auto !important;          
+//     width: 90% !important;              
+//     max-width: 95vw !important;
+//     position: relative;
+//     left: 13rem;
+//   }
+
+// }
+
+
+// ::ng-deep .custom-confirm-modal .ant-modal-header {
+//   background-color: #fef2f2 !important;
+//   color: #fef2f2 !important;
+//   font-weight: bold !important;
+  
+// }
+
+// ::ng-deep .custom-confirm-modal .ant-modal-body {
+//   font-size: 15px !important;
+//   color: #4b5563 !important;
+//   text-align: center !important;
+  
+// }
+
+// ::ng-deep .custom-confirm-modal .ant-btn-dangerous {
+//   background-color: #dc2626 !important;
+//   border-color: black !important;
+//   border-radius: 4px;
+//   margin-left: 15px;
+//   color: white;
+//   width: 60px;
+//   margin-bottom: 15px;
+// }
+
+// ::ng-deep .custom-confirm-modal .ant-btn-dangerous:hover {
+//   background-color: rgb(240, 100, 100) !important;
+//   border-color: black !important;
+  
+// }
+
+
+// ::ng-deep .custom-confirm-modal  button:first-child  {
+//   background-color: rgb(164, 163, 163) !important;
+//   border-color: black !important;
+//   border-radius: 4px !important;
+//   margin-left: 15px !important;
+//   color: #ffff !important;
+//   width: 60px !important;
+ 
+// }
+
+// ::ng-deep .custom-confirm-modal .ant-modal-close {
+//   font-size: 15px !important;
+//   margin-top: 5px;
+//   margin-bottom: 4px;
+//   display: flex;
+//   justify-content: center;
+  
 // }
 
 
 
 
-              // DELETE MODAL //
-
-::ng-deep .custom-confirm-modal .ant-modal-content {
-  border: 1px solid red !important;
-  border-radius: 10px;
-  background-color: #fef2f2 !important;
-  margin-left: 27rem;
-  width: 20rem;
-  height: 120px !important;
-  margin-top: 15px !important;
-  
-}
-
-@media (max-width: 768px) {
-  ::ng-deep .custom-confirm-modal .ant-modal-content {
-    margin: 20px auto !important;          
-    width: 90% !important;              
-    max-width: 95vw !important;
-    position: relative;
-    left: 13rem;
-  }
-
-}
-
-
-::ng-deep .custom-confirm-modal .ant-modal-header {
-  background-color: #fef2f2 !important;
-  color: #fef2f2 !important;
-  font-weight: bold !important;
-  
-}
-
-::ng-deep .custom-confirm-modal .ant-modal-body {
-  font-size: 15px !important;
-  color: #4b5563 !important;
-  text-align: center !important;
-  
-}
-
-::ng-deep .custom-confirm-modal .ant-btn-dangerous {
-  background-color: #dc2626 !important;
-  border-color: black !important;
-  border-radius: 4px;
-  margin-left: 15px;
-  color: white;
-  width: 60px;
-  margin-bottom: 15px;
-}
-
-::ng-deep .custom-confirm-modal .ant-btn-dangerous:hover {
-  background-color: rgb(240, 100, 100) !important;
-  border-color: black !important;
-  
-}
-
-
-::ng-deep .custom-confirm-modal  button:first-child  {
-  background-color: rgb(164, 163, 163) !important;
-  border-color: black !important;
-  border-radius: 4px !important;
-  margin-left: 15px !important;
-  color: #ffff !important;
-  width: 60px !important;
- 
-}
-
-::ng-deep .custom-confirm-modal .ant-modal-close {
-  font-size: 15px !important;
-  margin-top: 5px;
-  margin-bottom: 4px;
-  display: flex;
-  justify-content: center;
-  
-}
 
 
 

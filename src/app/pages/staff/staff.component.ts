@@ -8,11 +8,12 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 
 @Component({
   selector: 'app-staff',
-  imports: [FormsModule, CommonModule, NzModalModule, MatProgressSpinner, NzSpinModule],
+  imports: [FormsModule, CommonModule, NzModalModule, MatProgressSpinner, NzSpinModule, NzPaginationModule],
   templateUrl: './staff.component.html',
   styleUrl: './staff.component.scss'
 })
@@ -23,6 +24,11 @@ export class StaffComponent implements OnInit {
   allStaff: allStaffModel
   staffId!: string;
   isLoading = false
+
+   page = 1;
+   pageSize = 5;
+   totalItems: number = 10; 
+   currentPage = 1
 
 
  @Input() title = 'Confirm';
@@ -53,7 +59,10 @@ export class StaffComponent implements OnInit {
  
   fetchAllStaff(){
      this.isLoading = true
-    this.pageService.fetchStaff(this.allStaff).subscribe({
+      this.allStaff.page = this.page ;
+      this.allStaff.pageSize = this.pageSize;
+
+    this.pageService.getAllStaff(this.allStaff).subscribe({
       next: (res)=>{
         this.APIData = res.data || [];
          console.log('response data', res)
@@ -72,6 +81,19 @@ export class StaffComponent implements OnInit {
       }
     })
   }
+
+
+    // PAGINATION //
+        onPageChange(page: number){
+        this.page = page
+        this.fetchAllStaff();
+        console.log("leave page changed",this.page)
+        }
+      
+        onPageSizeChange(){
+          this.page = 1;
+          this.fetchAllStaff(); 
+        }
 
 
 

@@ -116,3 +116,16 @@
         </tbody>
       </table>
     </div>
+
+                <!-- PAGINATION -->
+          <div class="flex justify-between items-center px-2 pt-[10px]">
+          <div></div>
+            <div class="w-[90%] md:w-[70%] lg:w-[30%] text-[12px] md:text-[16px]">
+                <nz-pagination
+                [nzPageIndex]="currentPage"
+                [nzTotal]="50"
+                (nzPageIndexChange)="onPageChange($event)">
+                
+                </nz-pagination>
+              </div>
+          </div> 

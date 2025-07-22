@@ -61,7 +61,7 @@ export class PagesService {
 }
 
   deleteStaff(id: string): Observable<any> {
-  return this.http.delete(`${environment.baseurl}/staff/${id}`);
+  return this.http.delete(`${environment.baseurl}/unit/delete-unit/${id}`);
 }
 
 getAllStaff(item: allStaffModel):Observable<any> {
@@ -219,37 +219,6 @@ getRole(): Observable<any> {
     }
     return this.http.get(`${environment.baseurl}/staff/${userId}`);
   }
-
-
-
-
-
-
-
-
-
-
-//   patchEducation(id: string, payload: PatchEducationPayload): Observable<any> {
-//   return this.http.patch(`${environment.baseurl}/staff/staff/${id}`, payload);
-// }
-
-
-
- 
-
-
-
-
-
-
-  // getParentUnits(): Observable<any> {
-  //   return this.http.get<any>(`${environment.baseurl}/units`);    getStaffModel
-  // }
-
-  //   getOrganizations(): Observable<any> {
-  //   return this.http.get<any>(`${environment.baseurl}/organizations`); 
-  // }
-
 
 }
 

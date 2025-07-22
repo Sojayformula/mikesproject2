@@ -6,24 +6,24 @@
  @import "@ng-select/ng-select/themes/default.theme.css";
 
 
-// /* Show and center only when there's a notice */
-//  .ant-notification-topRight .ant-notification-notice {
-//   display: block !important;
-//   position: fixed !important;
-//   top: 24px !important;
-//   left: 50% !important;
-//   transform: translateX(-50%) !important;
-//   min-width: 300px;
-//   background-color: #f0fdf4;
-//   border-left: 4px solid #10b981;
-//   padding: 16px;
-//   border-radius: 8px;
-//   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-// }
+/* Show and center only when there's a notice */
+ .ant-notification-topRight .ant-notification-notice {
+  display: block !important;
+  position: fixed !important;
+  top: 24px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  min-width: 300px;
+  background-color: #f0fdf4;
+  border-left: 4px solid #10b981;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
 
-// .ant-notification-close-icon {
-//   display: block !important;
-// }
+.ant-notification-close-icon {
+  display: block !important;
+}
 
 
 
@@ -55,17 +55,17 @@
 
 
 
-.ant-notification-topRight .ant-notification-notice {
-    background: white;
-    border-color: black !important;
-    border: 4px;
-  border-radius: 8px !important;
-  padding: 16px;
-  box-shadow: 0 4px 14px rgb(70, 70, 70);
-  position: fixed;
-  left: 40%;
-  width: 20%;
-}
+// .ant-notification-topRight .ant-notification-notice {
+//     // background: white;
+//     border-color: black !important;
+//     border: 4px;
+//   border-radius: 8px !important;
+//   padding: 16px;
+//   box-shadow: 0 4px 14px rgb(70, 70, 70);
+//   position: fixed;
+//   left: 40%;
+//   width: 20%;
+// }
 
 .ant-notification-topRight .ant-notification-notice-success {
   background-color: #e6fffb !important;
@@ -96,3 +96,56 @@
 .ant-notification-topRight .ant-notification-notice-description {
   color: #595959;
 }
+
+
+
+
+    //  PAGINATION //
+nz-pagination {
+  display: inline-block !important;
+  white-space: nowrap !important;
+  margin-top: 30px;
+//  margin-bottom: 10px;
+}
+
+
+.ant-pagination-item {
+  display: inline-flex !important;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 0;
+  line-height: 1;
+  text-align: center;
+   cursor: pointer;
+   border: 2px solid black;
+    border-color: black !important;
+    margin-right: 10px;
+}
+
+
+.ant-pagination-item-active {
+  background-color: #3b82f6 !important; 
+  border-color: #3b82f6 !important;
+  color: white !important;
+}
+
+.ant-pagination-prev, .ant-pagination-next {
+  display: inline-block !important;
+  font-size: 16px;
+  color: #1e293b; 
+}
+
+.ant-pagination-prev:hover, .ant-pagination-next:hover {
+  color: #3b82f6; 
+}
+
+.ant-pagination-item:hover{
+  color: #3b82f6; 
+  background-color: #80acf3;
+}
+
+

@@ -12,15 +12,14 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { debounceTime, Subject } from 'rxjs';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-
-
+import { NzPaginationModule } from 'ng-zorro-antd/pagination'
 
 
 @Component({
   selector: 'app-unit',
-  imports: [CommonModule, FormsModule, NzDropDownModule, NzButtonModule, NzIconModule, NzFormModule, NzModalModule, MatProgressSpinner],
+  imports: [CommonModule, FormsModule, NzDropDownModule, NzButtonModule, NzIconModule, NzFormModule, NzModalModule, MatProgressSpinner, NzPaginationModule],
   templateUrl: './unit.component.html',
-  styleUrl: './unit.component.scss'
+  styleUrl: './unit.component.scss',
 })
 export class UnitComponent implements OnInit, OnDestroy{
 
@@ -32,7 +31,9 @@ export class UnitComponent implements OnInit, OnDestroy{
 
    searchQuery: string = "";
    page = 1;
-   pageSize = 10;
+   pageSize = 5;
+   totalItems: number = 10; 
+   currentPage = 1
    filterModel: string ='';
 
   unitModel!: unitModel
@@ -77,8 +78,10 @@ export class UnitComponent implements OnInit, OnDestroy{
   fetchunit(){
     this.isLoading = true
   this.unitModel.search = this.searchQuery?.trim() || '';
-  this.unitModel.page = this.unitModel.page || '1';
-  this.unitModel.pageSize = this.unitModel.pageSize || '10';
+  // this.unitModel.page = this.unitModel.page || '1';
+  // this.unitModel.pageSize = this.unitModel.pageSize || '10';
+   this.unitModel.page = this.page ;
+  this.unitModel.pageSize = this.pageSize;
 
 
     console.log('unit mode Data', this.unitModel)
@@ -119,35 +122,21 @@ export class UnitComponent implements OnInit, OnDestroy{
   }
 
 
+      // PAGINATION //
+        onPageChange(page: number){
+        this.page = page
+        this.fetchunit();
+        console.log("leave page changed",this.page)
+        }
+      
+        onPageSizeChange(){
+          this.page = 1;
+          this.fetchunit(); 
+        }
 
 
-// addUnit(addForm: NgForm) {
-//   // Create a clean version of the payload
-//   const Payload: any = {
-//     name: this.addUnitData.name?.trim(),
-//     description: this.addUnitData.description?.trim() || '',
-//     unitHead: this.addUnitData.unitHead || null,
-//     isSubUnit: this.addUnitData.isSubUnit === true,
-//     parentUnit: this.addUnitData.parentUnit?._id || this.addUnitData.unitHead || null
-//   };
 
-  
-//   console.log('Payload being sent:', Payload);
 
-//   this.pagesService.addUnit(Payload).subscribe({
-//     next: (res) => {
-//       this.createNotification('topRight', 'success', 'New unit added successfully.', 'Updated!');
-//       this.fetchunit();
-//       this.addUnitData = new addUnitModel();
-//       addForm.resetForm();
-//       this.showEditModal = false;
-//     },
-//     error: (err) => {
-//       console.error('Add unit failed:', err);
-//       this.createNotification('topRight', 'error', 'Add new unit failed.', 'Failed!');
-//     }
-//   });
-// }
 
 addUnit(form: NgForm) {
   const payload: addUnitModel = {
@@ -216,21 +205,21 @@ resetForm(form: NgForm) {
 
 
 
-              // Delete function //
-eleteUnit(id: string) {
-  if (confirm('Are you sure you want to delete this unit?')) {
-    this.pagesService.deleteUnit(id).subscribe({
-      next: (res) => {
-        alert(res.message || 'Unit deleted successfully');
-        this.fetchunit(); 
-      },
-      error: (err) => {
-        console.error('Delete failed:', err);
-        alert('Failed to delete unit');
-      }
-    });
-  }
-}
+//               // Delete function //
+// eleteUnit(id: string) {
+//   if (confirm('Are you sure you want to delete this unit?')) {
+//     this.pagesService.deleteUnit(id).subscribe({
+//       next: (res) => {
+//         alert(res.message || 'Unit deleted successfully');
+//         this.fetchunit(); 
+//       },
+//       error: (err) => {
+//         console.error('Delete failed:', err);
+//         alert('Failed to delete unit');
+//       }
+//     });
+//   }
+// }
 
 
 
