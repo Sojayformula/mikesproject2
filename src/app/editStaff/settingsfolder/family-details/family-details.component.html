@@ -68,6 +68,7 @@
     <label class="font-semibold text-[13px] font-outfit ">Spouse's Name</label>
     <input type="text" 
     name="spouseName" 
+    (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData.spouseName"  
     placeholder="Enter full name of spouse" 
@@ -143,6 +144,7 @@
     <input 
     type="text" 
     name="fullName{{i}}" 
+    (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
     [(ngModel)]="child.fullName"  
     placeholder="Enter full name" 

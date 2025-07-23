@@ -91,6 +91,7 @@
     <input 
     type="text" 
     name="firstName" 
+    (keypress)="allowOnlyLetters($event)"
     [(ngModel)]="formData['firstName']" 
     (ngModelChange)="onInputChange()"
     placeholder="Enter legal first name" 
@@ -108,6 +109,7 @@
     <input 
     type="text" 
     name="lastName" 
+    (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData['lastName']" 
     placeholder="Enter legal last name" 
@@ -119,6 +121,7 @@
     <input 
     type="text" 
     name="otherName" 
+    (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData['otherName']"  
     placeholder="Enter if any" 
@@ -169,6 +172,7 @@
     <input 
     type="text" 
     name="nationality" 
+    (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData['nationality']"  
     placeholder="Enter country of origin" 
@@ -181,7 +185,8 @@
      <label class="block w-40 text-sm font-medium text-gray-700">Marital Status</label>
       <select
   name="maritalStatus"
-   (ngModelChange)="onInputChange()"
+  (keypress)="allowOnlyLetters($event)"
+  (ngModelChange)="onInputChange()"
   [(ngModel)]="formData['maritalStatus']" 
   #maritalStatus="ngModel"
   required
@@ -228,6 +233,7 @@
     <input 
     type="text" 
     name="idType" 
+    (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData['idType']"  
     placeholder="Select ID type (e.g Nation ID, Passport)" 
@@ -244,17 +250,6 @@
     placeholder="Enter valid ID number" 
     class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
   </div>
-
-  <div >
-    <label class="block w-40 text-sm font-medium text-gray-700">Email address</label>
-    <input 
-    type="text" 
-    name="email" 
-    (ngModelChange)="onInputChange()"
-    [(ngModel)]="formData['email']"  
-    placeholder="Enter valid email address"  
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-  </div>   
 
 </form>
 </div>

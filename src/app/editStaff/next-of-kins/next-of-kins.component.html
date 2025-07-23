@@ -64,6 +64,7 @@
             <input
             type="text"
             name="nextOfKinFullName"
+            (keypress)="allowOnlyLetters($event)"
             [disabled]="!editMode" 
             [(ngModel)]="nextOfKinsData.nextOfKinFullName"
             #nextOfKinFullName="ngModel"
@@ -82,6 +83,7 @@
             <input
             type="text"
             name="nextOfKinRelationship"
+            (keypress)="allowOnlyLetters($event)"
             [disabled]="!editMode" 
             [(ngModel)]="nextOfKinsData.nextOfKinRelationship"
             #nextOfKinRelationship="ngModel"
@@ -137,6 +139,7 @@
             <input
             type="text"
             name="nextOfKinCurrentAddress"
+            (keypress)="allowOnlyLetters($event)"
             [disabled]="!editMode" 
             [(ngModel)]="nextOfKinsData.nextOfKinCurrentAddress"
             #nextOfKinCurrentAddress="ngModel"

@@ -71,6 +71,7 @@
       <input
         type="text"
         name="spouseName"
+        (keypress)="allowOnlyLetters($event)"
         [(ngModel)]="data.spouseName"
         [disabled]="!editMode"
         (ngModelChange)="onInputChange()"
@@ -181,6 +182,7 @@
       <input
         type="text"
         [name]="'childFullName' + i"
+        (keypress)="allowOnlyLetters($event)"
         [(ngModel)]="child.fullName"
         [disabled]="!editMode"
         #childFullName="ngModel"
@@ -209,7 +211,8 @@
     <div class="flex flex-col relative right-[7.5rem] mt-[-18px]">
       <label class="font-semibold text-[13px] font-outfit">Age</label>
       <input
-        type="text"
+        type="date"
+        pattern="[0-9]*"
         [name]="'childAge' + i"
         [(ngModel)]="child.dob"
         [disabled]="!editMode"

@@ -31,6 +31,7 @@
     <input
      type="text" 
      name="jobTitle" 
+     (keypress)="allowOnlyLetters($event)"
      (ngModelChange)="onInputChange()"
      [(ngModel)]="formData['jobTitle']"  
      placeholder="Enter job title" 
@@ -112,6 +113,7 @@
     <input 
     type="text" 
     name="employmentType" 
+    (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData['employmentType']" 
     placeholder="Full-time, Part-time, Contract" 
@@ -136,6 +138,7 @@
     <input 
     type="text" 
     name="maritalStatus" 
+    (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData['workLocation']" 
     placeholder="Remote, Onsite, Hybrid" 

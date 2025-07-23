@@ -116,7 +116,7 @@
   <!-- Row 1 --> 
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">First Name</label>
-    <input type="text" name="firstName" #firstName="ngModel" required [disabled]="!editMode" [(ngModel)]="staffData.firstName"  (ngModelChange)="onInputChange()"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+    <input type="text" name="firstName"  (keypress)="allowOnlyLetters($event)" #firstName="ngModel" required [disabled]="!editMode" [(ngModel)]="staffData.firstName"  (ngModelChange)="onInputChange()"  placeholder="Enter legal first name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
 
     <p *ngIf="firstName.invalid && (firstName.touched || firstName.dirty)" class="text-red-600 text-sm">
       First name required
@@ -125,7 +125,7 @@
   
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Last Name</label>
-    <input type="text" name="lastName" #lastName="ngModel" required [disabled]="!editMode"  [(ngModel)]="staffData.lastName"  (ngModelChange)="onInputChange()"   placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    <input type="text" name="lastName" (keypress)="allowOnlyLetters($event)" (keypress)="allowOnlyLetters($event)" #lastName="ngModel" required [disabled]="!editMode"  [(ngModel)]="staffData.lastName"  (ngModelChange)="onInputChange()"   placeholder="Enter legal last name" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
 
     <p *ngIf="lastName.invalid && (lastName.touched || lastName.dirty)" class="text-red-600 text-sm">
       Last name required
@@ -134,7 +134,7 @@
   
   <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Other Name</label>
-    <input type="text" name="otherName" #otherName="ngModel" required [disabled]="!editMode"  [(ngModel)]="staffData.otherName" (ngModelChange)="onInputChange()" placeholder="Enter if any" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+    <input type="text" name="otherName" (keypress)="allowOnlyLetters($event)" (keypress)="allowOnlyLetters($event)" #otherName="ngModel" required [disabled]="!editMode"  [(ngModel)]="staffData.otherName" (ngModelChange)="onInputChange()" placeholder="Enter if any" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
 
      <p *ngIf="otherName.invalid && (otherName.touched || otherName.dirty)" class="text-red-600 text-sm">
       Other name required
@@ -157,7 +157,6 @@
   <div>
     <select
   name="gender"
-
   [(ngModel)]="staffData.gender"
    [disabled]="!editMode"
    #genderModel="ngModel"
@@ -178,7 +177,7 @@
 
     <div>
     <label class="block w-40 text-sm font-medium text-gray-700">Nationality</label>
-    <input type="text" name="nationality" #nationality="ngModel" required [disabled]="!editMode"  [(ngModel)]="staffData.nationality"  (ngModelChange)="onInputChange()" placeholder="Enter country of origin" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="nationality" (keypress)="allowOnlyLetters($event)" (keypress)="allowOnlyLetters($event)" #nationality="ngModel" required [disabled]="!editMode"  [(ngModel)]="staffData.nationality"  (ngModelChange)="onInputChange()" placeholder="Enter country of origin" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
      <p *ngIf="nationality.invalid && (nationality.touched || nationality.dirty)" class="text-red-600 text-sm">
      Nationality required
     </p>
@@ -192,7 +191,6 @@
 
     <select
   name="maritalStatus"
-  
     [(ngModel)]="staffData.maritalStatus"
   #maritalStatus="ngModel"
   required
@@ -235,7 +233,7 @@
    <!-- Row 4 -->
   <div class="">
     <label class="block w-40 text-sm font-medium text-gray-700">ID Type</label>
-    <input type="text" name="idType" #idType="ngModel" required [disabled]="!editMode" [(ngModel)]="staffData.idType"   placeholder="Select ID type (e.g Nation ID, Passport)" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    <input type="text" name="idType" (keypress)="allowOnlyLetters($event)" (keypress)="allowOnlyLetters($event)" #idType="ngModel" required [disabled]="!editMode" [(ngModel)]="staffData.idType"   placeholder="Select ID type (e.g Nation ID, Passport)" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
 
      <p *ngIf="idType.invalid && (idType.touched || idType.dirty)" class="text-red-600 text-sm">
       ID type required

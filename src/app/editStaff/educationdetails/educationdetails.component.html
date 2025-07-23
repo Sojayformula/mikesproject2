@@ -85,6 +85,7 @@
     <input
       type="text"
       [name]="'institutionName' + i"
+      (keypress)="allowOnlyLetters($event)"
       placeholder="Enter name of institution"
       [(ngModel)]="edu.institutionName"
       [disabled]="!editMode"
@@ -97,6 +98,7 @@
     <input
       type="text"
       [name]="'courseOfStudy' + i"
+      (keypress)="allowOnlyLetters($event)"
       placeholder="Enter major or course"
       [(ngModel)]="edu.courseOfStudy"
       [disabled]="!editMode"

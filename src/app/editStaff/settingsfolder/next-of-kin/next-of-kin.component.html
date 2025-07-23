@@ -32,6 +32,7 @@
             <input
             type="text"
             (ngModelChange)="onInputChange()"
+            (keypress)="allowOnlyLetters($event)"
             name="fullName"
             [(ngModel)]="formData.nextOfKinFullName"
             required
@@ -50,6 +51,7 @@
             <input
             type="text"
             name="Relationship"
+            (keypress)="allowOnlyLetters($event)"
             (ngModelChange)="onInputChange()"
             [(ngModel)]="formData.nextOfKinRelationship"
             placeholder="E.g Mother, Brother, Friend"
@@ -87,6 +89,7 @@
             <input
             type="text"
             name="address"
+            (keypress)="allowOnlyLetters($event)"
             (ngModelChange)="onInputChange()"
              [(ngModel)]="formData.nextOfKinCurrentAddress"
             placeholder="current address"

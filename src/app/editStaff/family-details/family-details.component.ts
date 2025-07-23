@@ -116,14 +116,23 @@ export class FamilyDetailsComponent implements OnInit {
 }
 
 
+         //  TAKE ONLY LETTERS //
+   allowOnlyLetters(event: KeyboardEvent){
+  const ltters = event.key;
+  const regex = /^[a-zA-Z\s]*$/;
 
+  if (!regex.test(ltters)) {
+    event.preventDefault(); 
+  }
+}
+
+
+                // ADD MORE FIELDS //
   addChild() {
     this.data.children.push({ fullName: '', dob: '' });
-    
   }
 
-
-
+               // REMOVE MORE FIELDS //
   removeChild(index: number) {
   this.data.children.splice(index, 1);
 
@@ -146,7 +155,6 @@ export class FamilyDetailsComponent implements OnInit {
 
 Submit(form: NgForm) {
   if (form.invalid) return;
-  //if (this.staffForm?.valid) {
 
   this.isLoading = true;
 
@@ -177,9 +185,10 @@ Submit(form: NgForm) {
       this.isLoading = false;
     }
   });
-//}
+
 }
 
+          // ADD FILE //
    removeFile(index: number) {
   this.selectedFiles.splice(index, 1);
 }
@@ -262,9 +271,6 @@ getFileIcon(url: string): string {
 }
 
 
-
- 
- 
 steps: string[] = [];
  
   getFieldValue(field: string): any {
@@ -300,6 +306,18 @@ onInputChange() {
 
 
 
+
+
+
+
+// NOT PART YET
+allowOnlyNumbers(event: KeyboardEvent) {
+  const charCode = event.charCode;
+  // Allow only digits (0-9)
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault();
+  }
+}
 
 }
 

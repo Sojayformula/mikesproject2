@@ -86,6 +86,16 @@ export class NextOfKinsComponent implements OnInit {
   }
 
 
+   allowOnlyLetters(event: KeyboardEvent){
+  const ltters = event.key;
+  const regex = /^[a-zA-Z\s]*$/;
+
+  if (!regex.test(ltters)) {
+    event.preventDefault(); 
+  }
+}
+
+
     onInputChange(event: Event) {
     const input = event.target as HTMLInputElement;
     const value = input.value;

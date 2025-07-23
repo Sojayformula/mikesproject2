@@ -123,6 +123,17 @@ ngOnInit() {
 }
 
 
+allowOnlyLetters(event: KeyboardEvent){
+  const charCode = event.key;
+  const regex = /^[a-zA-Z\s]*$/;
+
+  if (!regex.test(charCode)) {
+    event.preventDefault(); 
+  }
+}
+
+
+
 
     // GENDER SELECT //
     selectedGender: any

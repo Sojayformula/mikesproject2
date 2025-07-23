@@ -175,7 +175,14 @@ imagePreview: string | ArrayBuffer | null = null;
   
   
 
+  allowOnlyLetters(event: KeyboardEvent){
+  const ltters = event.key;
+  const regex = /^[a-zA-Z\s]*$/;
 
+  if (!regex.test(ltters)) {
+    event.preventDefault(); 
+  }
+}
 
 
 

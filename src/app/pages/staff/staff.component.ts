@@ -28,7 +28,7 @@ export class StaffComponent implements OnInit {
    page = 1;
    pageSize = 5;
    totalItems: number = 10; 
-   currentPage = 1
+//currentPage = 1
 
 
  @Input() title = 'Confirm';
@@ -90,10 +90,6 @@ export class StaffComponent implements OnInit {
         console.log("leave page changed",this.page)
         }
       
-        onPageSizeChange(){
-          this.page = 1;
-          this.fetchAllStaff(); 
-        }
 
 
 

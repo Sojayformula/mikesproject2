@@ -130,6 +130,14 @@ ngOnInit() {
 }
 
 
+ allowOnlyLetters(event: KeyboardEvent): void {
+  const charCode = event.key;
+  const regex = /^[a-zA-Z\s]*$/;
+
+  if (!regex.test(charCode)) {
+    event.preventDefault(); 
+  }
+}
 
 
 // gOnInit() {
