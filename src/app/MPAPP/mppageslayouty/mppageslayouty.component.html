@@ -1,0 +1,99 @@
+   <div class="bg-[#001223] w-full h-[359px]  bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat ">
+
+    <div class="flex justify-between mx-10 ">
+
+               <!-- ETRANZACT LOGO -->
+    <div class="mt-6">
+        <img src="/Etz.png" class="w-[207px] h-[67.12px]">
+    </div>
+
+      <!-- Hamburger Icon (Mobile) -->
+    <div class="md:hidden">
+      <button (click)="toggleMobileMenu()" class="text-white focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+
+                  <!-- ROUTER LINKS -->
+     <div class=" hidden md:flex items-center text-[#FFFFFF80] mt-6 mr-20 z-50">
+   <a
+        routerLink="MPdashboard"
+        routerLinkActive="text-[#FFFFFF]"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="block text-[#FFFFFF80] py-2 px-4 rounded-md hover:text-white"
+         
+        >Dashboard</a
+      >
+
+      <a
+        routerLink="manage-ticket"
+        routerLinkActive="text-[#FFFFFF]"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="block text-[#FFFFFF80] py-2 px-4 rounded-md hover:text-white"
+         
+        >Manage ticket</a
+      >
+
+      <a
+        routerLink="resource"
+        routerLinkActive="text-[#FFFFFF]"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="block text-[#FFFFFF80] py-2 px-4 rounded-md hover:text-white"
+         
+        >Resource</a
+      >
+
+      <button (click)="toggleDropdown()" class="flex gap-1 hover:text-white"
+       routerLink="tools"
+       routerLinkActive="text-[#FFFFFF]"
+        [routerLinkActiveOptions]="{ exact: false }"
+      >
+        Tools
+        <span class="text-[#FFFFFF80] transform rotate-90 relative top-[2px]">></span>
+    </button>
+       
+      <ul *ngIf="dropdownOpen"
+         class="absolute ml-[16rem] bg-white text-black mt-[12rem] shadow-lg rounded-md w-40 z-10">
+        <li><a routerLink="/web-design" class="block px-4 py-2 hover:bg-blue-100">Web Design</a></li>
+        <li><a routerLink="/seo" class="block px-4 py-2 hover:bg-blue-100">SEO</a></li>
+        <li><a routerLink="/marketing" class="block px-4 py-2 hover:bg-blue-100">Marketing</a></li>
+      </ul>
+
+
+      </div> 
+
+  <!-- Mobile Menu -->
+  <div *ngIf="mobileMenuOpen" class="md:hidden px-4 pb-4 text-white space-y-2">
+    <a routerLink="MPdashboard" routerLinkActive="text-white" class="block hover:text-white">Dashboard</a>
+    <a routerLink="manage-ticket" routerLinkActive="text-white" class="block hover:text-white">Manage Ticket</a>
+    <a routerLink="resource" routerLinkActive="text-white" class="block hover:text-white">Resource</a>
+    <div>
+      <button (click)="toggleDropdown()" class="flex items-center gap-1 hover:text-white">
+        Tools <span class="rotate-90">></span>
+      </button>
+      <ul *ngIf="dropdownOpen" class="bg-white text-black mt-2 shadow-lg rounded-md w-full z-50">
+        <li><a routerLink="/web-design" class="block px-4 py-2 hover:bg-blue-100">Web Design</a></li>
+        <li><a routerLink="/seo" class="block px-4 py-2 hover:bg-blue-100">SEO</a></li>
+        <li><a routerLink="/marketing" class="block px-4 py-2 hover:bg-blue-100">Marketing</a></li>
+      </ul> 
+     </div>
+  </div>
+ </div>
+
+  <button (click)="back()" class="text-black relative top-4 mt-4 ml-[2rem] bg-gray-400 w-[80px]">
+    Back
+  </button>
+                     <!-- LINE -->
+      <hr class="border-t-2 border-[#4E6F8D] mx-10 mt-10" />
+
+      </div>
+
+   
+<!-- <div class="overflow-auto"> -->
+<router-outlet></router-outlet>
+<!-- </div> -->

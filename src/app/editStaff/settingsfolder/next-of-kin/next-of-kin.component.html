@@ -42,7 +42,7 @@
             />
             
              <p *ngIf="fullName.invalid && (fullName.touched || fullName.dirty)" class="text-red-600 text-sm">
-               First name required
+               Full name required
             </p>
         </div>
 
@@ -54,9 +54,15 @@
             (keypress)="allowOnlyLetters($event)"
             (ngModelChange)="onInputChange()"
             [(ngModel)]="formData.nextOfKinRelationship"
+            #Relationship="ngModel"
+            required
             placeholder="E.g Mother, Brother, Friend"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+
+            <p *ngIf="Relationship.invalid && (Relationship.touched || Relationship.dirty)" class="text-red-600 text-sm">
+              Relationship required
+           </p>
          </div>
 
          <div>
@@ -66,9 +72,15 @@
             name="phoneNumber"
             (ngModelChange)="onInputChange()"
              [(ngModel)]="formData.nextOfKinPhoneNumber"
+             #phoneNumber="ngModel"
+             required
             placeholder="Enter active contact number"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+
+            <p *ngIf="phoneNumber.invalid && (phoneNumber.touched || phoneNumber.dirty)" class="text-red-600 text-sm">
+              Phone number required
+            </p>
          </div>
 
                   <!-- Row ---2 -->        
@@ -79,9 +91,15 @@
             name="email"
             (ngModelChange)="onInputChange()"
              [(ngModel)]="formData.nextOfKinEmail"
+             #email="ngModel"
+             required
             placeholder="Enter email address (if availabe)"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+
+            <p *ngIf="email.invalid && (email.touched || email.dirty)" class="text-red-600 text-sm">
+              Email required
+           </p>
         </div>
 
          <div>
@@ -92,9 +110,15 @@
             (keypress)="allowOnlyLetters($event)"
             (ngModelChange)="onInputChange()"
              [(ngModel)]="formData.nextOfKinCurrentAddress"
+             #address="ngModel"
+             required
             placeholder="current address"
             class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+
+            <p *ngIf="address.invalid && (address.touched || address.dirty)" class="text-red-600 text-sm">
+              Current address required
+            </p>
          </div>
          
     </form>

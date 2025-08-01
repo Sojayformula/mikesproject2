@@ -89,8 +89,14 @@
       placeholder="Enter name of institution"
       [(ngModel)]="edu.institutionName"
       [disabled]="!editMode"
+      #institutionName="ngModel"
+      required
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888]"
     />
+
+      <p *ngIf="institutionName.invalid && (institutionName.touched || institutionName.dirty)" class="text-red-600 text-sm mb-8">
+      Institution Name required
+    </p>
     </div>
 
     <div>
@@ -102,8 +108,14 @@
       placeholder="Enter major or course"
       [(ngModel)]="edu.courseOfStudy"
       [disabled]="!editMode"
+      #courseOfStudy="ngModel"
+      required
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888]"
     />
+
+      <p *ngIf="courseOfStudy.invalid && (courseOfStudy.touched || courseOfStudy.dirty)" class="text-red-600 text-sm">
+      Course of Study required
+    </p>
     </div>
     
     <div>
@@ -113,8 +125,14 @@
       [name]="'startDate' + i"
       [(ngModel)]="edu.startDate"
       [disabled]="!editMode"
+      #startDate="ngModel"
+      required
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3"
     />
+
+      <p *ngIf="startDate.invalid && (startDate.touched || startDate.dirty)" class="text-red-600 text-sm">
+      Start Date required
+    </p>
     </div>
 
     <div class="mb-8 mt-[-24px]">
@@ -124,8 +142,14 @@
       [name]="'endDate' + i"
       [(ngModel)]="edu.endDate"
       [disabled]="!editMode"
+      #endDate="ngModel"
+      required
       class="border border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3"
     />
+
+      <p *ngIf="endDate.invalid && (endDate.touched || endDate.dirty)" class="text-red-600 text-sm">
+      End Date required
+    </p>
 
       
        <!-- REMOVE ADDED FIELD -->

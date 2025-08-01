@@ -1,0 +1,76 @@
+
+/* Force tab headers to be in a row */
+::ng-deep .ant-tabs-nav-list {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 2rem;
+  margin-top: 20px;
+}
+
+
+::ng-deep .ant-tabs-nav {
+  position: relative;
+  display: flex !important;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+
+/* Style the individual tabs */
+::ng-deep .ant-tabs-tab {
+  padding: 8px 16px;
+  font-weight: 600;
+  color: #6b7280; /* gray-600 */
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease-in-out;
+  margin-right: 2rem;
+}
+
+/* Active tab styling */
+::ng-deep .ant-tabs-tab-active {
+  color: #2563eb; /* blue-600 */
+}
+
+/* Underline (ink bar) */
+::ng-deep .ant-tabs-ink-bar {
+  background-color: #2563eb;
+  height: 2px;
+  bottom: 0; 
+  position: absolute;
+  transition: all 0.3s ease; 
+}
+
+::ng-deep .ant-tabs-content {
+  margin-top: 1rem; 
+}
+
+
+
+
+
+// ::ng-deep .ant-tabs-nav {
+//   display: flex !important;
+//   border-bottom: 1px solid #e5e7eb; /* Tailwind: border-gray-300 */
+//   gap: 2rem;
+// }
+
+// ::ng-deep .ant-tabs-tab {
+//   color: #6b7280; /* Tailwind: text-gray-600 */
+//   font-weight: 600;
+//   padding: 0.5rem 1rem;
+//   transition: color 0.2s ease-in-out;
+// }
+
+// ::ng-deep .ant-tabs-tab-active {
+//   color: #2563eb; /* Tailwind: text-blue-600 */
+// }
+
+// ::ng-deep .ant-tabs-ink-bar {
+//   background-color: #2563eb;
+//   height: 2px;
+// }
+
+
+
+
+
+

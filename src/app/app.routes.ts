@@ -34,6 +34,10 @@ import { ProfileNextOfKinsComponent } from './profilePage/profile-next-of-kins/p
 import { ProfileemergencycontactComponent } from './profilePage/profileemergencycontact/profileemergencycontact.component';
 import { ProfileEducationComponent } from './profilePage/profile-education/profile-education.component';
 import { ProfilePageLayoutComponent } from './profilePage/profile-page-layout/profile-page-layout.component';
+import { ManageTicketComponent } from './MPAPP/manage-ticket/manage-ticket.component';
+import { MPDashboardComponent } from './MPAPP/dashboard/dashboard.component';
+import { ResourceComponent } from './MPAPP/resource/resource.component';
+import { MPPageslayoutyComponent } from './MPAPP/mppageslayouty/mppageslayouty.component';
 
 
 
@@ -108,9 +112,22 @@ export const routes: Routes = [
               }
 
            ]
-          }
-   
+          },
 
+
+
+               {
+              path: 'MPpageslayout2', component: MPPageslayoutyComponent,
+              children: [
+                { path: '', redirectTo: 'MPdashbaord', pathMatch: 'full' },
+                { path: 'MPdashboard', component: MPDashboardComponent },
+                { path: 'manage-ticket', component: ManageTicketComponent },
+                { path: 'resource', component: ResourceComponent },
+                
+              ]
+            },
+            
+// MPpageslayout2
         ]
   
 

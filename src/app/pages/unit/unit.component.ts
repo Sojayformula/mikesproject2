@@ -74,7 +74,7 @@ export class UnitComponent implements OnInit, OnDestroy{
   }
 
 
-  // unitModel
+  
   fetchunit(){
     this.isLoading = true
   this.unitModel.search = this.searchQuery?.trim() || '';
@@ -150,14 +150,14 @@ addUnit(form: NgForm) {
 
   this.pagesService.addUnit(payload).subscribe({
     next: (res) => {
-      console.log('✅ Unit created successfully', res);
+      console.log(' Unit created successfully', res);
       form.resetForm();
       this.fetchunit();
       this.addUnitData = new addUnitModel();
       this.showEditModal = false;
     },
     error: (err) => {
-      console.error('❌ Failed to create unit:', err);
+      console.error(' Failed to create unit:', err);
     }
   });
 }
@@ -282,7 +282,7 @@ confirmDeleteStaff() {
     this.isFilterModalVisible = false;
   }
 
-  applyFilters(): void {
+  applyFilters(){
     console.log('Filter applied for:',);
     this.closeFilterModal();
      this.fetchunit();

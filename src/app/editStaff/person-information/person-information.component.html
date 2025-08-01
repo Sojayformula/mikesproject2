@@ -225,7 +225,7 @@
     <input type="text" name="email" #email="ngModel" required [disabled]="!editMode"  [(ngModel)]="staffData.email"   placeholder="Enter valid email address" class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
 
      <p *ngIf="email.invalid && (email.touched || email.dirty)" class="text-red-600 text-sm">
-      Enter email required
+      Email required
     </p>
   </div>
 

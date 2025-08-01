@@ -77,7 +77,7 @@
     class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
    
      <p *ngIf="spouseName.invalid && (spouseName.touched || spouseName.dirty)" class="text-red-600 text-sm">
-      First name required
+      Spouse's name required
     </p>
 
        <div class="mt-8">
@@ -95,8 +95,15 @@
     (ngModelChange)="onInputChange()"
     (keypress)="allowOnlyDigits($event)"
     [(ngModel)]="formData.spousePhone" 
+    #spousePhone="ngModel"
+    required=""
     placeholder="Phone number" 
-    class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+    />
+
+     <p *ngIf="spousePhone.invalid && (spousePhone.touched || spousePhone.dirty)" class="text-red-600 text-sm w-[20rem]">
+        Spouse's phone number required
+    </p>
     </div>
 
     <!-- <div> -->
@@ -107,8 +114,15 @@
     name="spouseEmail" 
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData.spouseEmail" 
+    #spouseEmail="ngModel"
+    required
     placeholder="Enter address" 
-    class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+    />
+
+     <p *ngIf="spouseEmail.invalid && (spouseEmail.touched || spouseEmail.dirty)" class="text-red-600 text-sm">
+        Spouse's email required
+     </p>
     </div>
 
   </div>
@@ -124,9 +138,16 @@
     type="text" 
     name="numberOfChildren" 
     (ngModelChange)="onInputChange()"
-    [(ngModel)]="formData.numberOfChildren"  
+    [(ngModel)]="formData.numberOfChildren" 
+    #numberOfChildren="ngModel" 
+    required
     placeholder="Enter numbers(eg. 2)" 
-    class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+    />
+
+     <p *ngIf="numberOfChildren.invalid && (numberOfChildren.touched || numberOfChildren.dirty)" class="text-red-600 text-sm">
+         Number of children required
+     </p>
     </div>
     <div></div>
     <div></div>
@@ -146,9 +167,16 @@
     name="fullName{{i}}" 
     (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
-    [(ngModel)]="child.fullName"  
+    [(ngModel)]="child.fullName" 
+    #fullName="ngModel"
+    required 
     placeholder="Enter full name" 
-    class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+    />
+
+     <p *ngIf="fullName.invalid && (fullName.touched || fullName.dirty)" class="text-red-600 text-sm">
+        Full name required
+     </p>
 
 
 
@@ -246,8 +274,15 @@
      name="dob{{i}}" 
      (ngModelChange)="onInputChange()"
     [(ngModel)]="child.dob"
+    #dob="ngModel"
+    required
      placeholder="Enter age in years" 
-     class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+     class="border-[1px] border-[#D7D7D7] md:w-[311px] w-[40rem] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+     />
+
+      <p *ngIf="dob.invalid && (dob.touched || dob.dirty)" class="text-red-600 text-sm">
+        Age required
+     </p>
     </div>
 
     <div></div>

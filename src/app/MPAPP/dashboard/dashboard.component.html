@@ -1,0 +1,294 @@
+  <div class="bg-gray-200 h-sreen ">
+
+    
+    <div class="flex justify-end relative top-[-19.5rem] mx-14 gap-2">
+    <button (click)="openNotificationModal()">
+   <img src="/notificationbell.png" class="w-[21.51px] h-[21.51px] ">
+   <div></div>
+   </button>
+       <div class="text-white text-[12px] flex justify-center items-center bg-red-500 rounded-full w-4 h-4 relative right-5 top-[-6px]">{{ notificationCount }}</div>
+   </div>
+
+   <!-- <div *ngFor="let n of todayNotifications" [class.unread]="!n.read">
+  <span>{{ n.title }}</span>
+  <button (click)="markAsRead(n._id)">Mark as read</button>
+</div> -->
+
+<!-- <div *ngFor="let n of todayNotifications">
+  <div [ngClass]="{ 'text-gray-500': n.isRead, 'font-bold': !n.isRead }">
+    {{ n.title }} - {{ n.message }}
+  </div>
+    <button
+  (click)="markAsRead(n)"
+  class="text-white bg-red-500 px-4 py-1 rounded hover:bg-red-600"
+>
+  Mark as read
+</button>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+    <div class="flex gap-20 mx-20 relative top-[-5rem]">
+        <div class="border-[1.18px] border-gray-500 bg-white w-[329.07px] h-[164.53px] rounded-[18.82px] shadow-lg">
+            <div class="flex justify-between mx-4 mt-4">
+                <div>Total</div>
+                <div><img src="/card1.png" class="w-[47.05px] h-[47.05px]"></div>
+            </div>
+            <p class="text-[39.12px] font-bold mx-4">10,970</p>
+        </div>
+          <div class="border-[1.18px] border-gray-500 bg-white w-[329.07px] h-[164.53px] rounded-[18.82px] shadow-lg">
+             <div class="flex justify-between mx-4 mt-4">
+                <div>Resolved Tickets</div>
+                <div><img src="/card2.png" class="w-[47.05px] h-[47.05px]"></div>
+            </div>
+             <p class="text-[39.12px] font-bold mx-4">25</p>
+        </div>
+           <div class="border-[1.18px] border-gray-500 bg-white w-[329.07px] h-[164.53px] rounded-[18.82px] shadow-lg">
+             <div class="flex justify-between mx-4 mt-4">
+                <div>Open Tickets</div>
+                <div><img src="/card3.png" class="w-[47.05px] h-[47.05px]"></div>
+            </div>
+             <p class="text-[39.12px] font-bold mx-4">13,331</p>
+        </div>
+         <div class="border-[1.18px] border-gray-500 bg-white w-[329.07px] h-[164.53px] rounded-[18.82px] shadow-lg">
+             <div class="flex justify-between mx-4 mt-4">
+                <div>Escalated Tickets</div>
+                <div><img src="/card4.png" class="w-[47.05px] h-[47.05px]"></div>
+            </div>
+             <p class="text-[39.12px] font-bold mx-4">25</p>
+        </div>
+    </div>
+
+             <!-- CHATS -->
+    <div class="mx-20 ">
+        <div class="bg-white">
+        <img src="/chat1.png">
+        </div>
+
+        <div class="flex justify-between mt-20 h-[488px] bg-gray-200 ">
+                     
+                               <!-- BUTTONS -->
+        <div class="w-[971px] bg-white h-[470.03px]">
+            <div class="flex justify-between mx-10 mt-10 ">
+           <div class="bg-[#F3F3F3] border border-[#E0E0E0] w-[353px] h-[36px] ">
+            <button
+             class="h-[36px] px-3 rounded-[10px] text-[#777777] cursor-pointer"
+            [ngClass]="{'active-button ': selectedChoice === 'Today'}"
+            [ngClass]="{
+            'text-black bg-white gradient-to-b from-[#122C69] to-[#1D0434]': selectedChoice === 'Today',
+            'text-[#838383]': selectedChoice !== 'Today'
+          }"
+            >
+            Today
+          </button>
+             <button
+             class="h-[36px] px-3 rounded-[10px] text-[#777777] cursor-pointer"
+            [ngClass]="{'active-button': selectedChoice === 'Last Week'}"
+            [ngClass]="{
+            'text-white bg-white gradient-to-b from-[#122C69] to-[#1D0434]': selectedChoice === 'Last Week',
+            'text-[#838383]': selectedChoice !== 'Last Week'
+          }"
+             >
+                Last Week
+            </button>
+              <button
+            class="h-[36px] px-3 rounded-[10px] text-[#777777] cursor-pointer"
+            [ngClass]="{'active-button': selectedChoice === 'Last Month'}"
+            [ngClass]="{
+            'text-white bg-white gradient-to-b from-[#122C69] to-[#1D0434]': selectedChoice === 'Last Month',
+            'text-[#838383]': selectedChoice !== 'Last Month'
+          }"
+              >
+                Last Month
+            </button>
+               <button
+            class="h-[36px] px-3 rounded-[10px] text-[#777777] cursor-pointer"
+            [ngClass]="{'active-button': selectedChoice === ' Last Year'}"
+            [ngClass]="{
+            'text-white bg-white gradient-to-b from-[#122C69] to-[#1D0434]': selectedChoice === ' Last Year',
+            'text-[#838383]': selectedChoice !== ' Last Year'
+          }"
+               >
+                Last Year
+            </button>
+           </div>
+
+                                <!-- DROPDOWN -->
+           <div class="w-[148.64px] h-[38.58]  border-[1.05px] border-[#D6D6D6] rounded-[8.39px]">
+            <select
+            class="px-2 mt-1"
+            >
+                <option [value]="null">Select Channel</option>
+                <option *ngFor="let item of"></option>
+            </select>
+           </div>
+
+        </div>
+        </div>
+
+                 <!-- ROUND CHAT -->
+        <div class=" ">
+           <img src="/chat2.png" class="w-[335.33px] h-[482.03px]">
+        </div>
+        </div>
+    </div>
+
+
+    
+                       <!-- NOTIFICATION MODAL 1 -->
+                             
+<div *ngIf="showNotificationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-[17.7px] p-6 shadow-lg w-[30rem] max-w-2xl max-h-[90vh] overflow-y-auto">
+
+     <div class="flex justify-end ">
+         <button
+          type="button"
+          (click)="closeNotificationModal()"
+          class="bg-[#BDBCBC] text-black [#BDBCBC] w-[31.67px] h-[27.51px] rounded hover:bg-gray-400"
+        >
+          &times;
+        </button>
+        </div>
+
+
+
+         <div class="flex justify-between mt-6">
+        <div class="font-bold text-[13.41px] mt-2">
+        Notification
+        </div>
+        <!-- <div >Mark all as read</div> -->
+   
+
+                       <!-- Mark all as read< -->
+    <div *ngFor="let n of  yesterdayNotifications" class="mb-">
+    <button
+        (click)="markAsRead(n)" 
+        class="border border-[#5E6871] text-[#5E6871] text-[10.21px] font-normal px-4 py-1 rounded-full hover:bg-gray-300"
+       *ngIf="!n.isRead"
+    >
+        <span>...</span>
+        Mark as read
+    </button>
+    </div>
+
+     </div>
+
+
+
+
+   
+                      <!-- TABS -->
+  <nz-tabset class="custom-tabs">
+    <nz-tab nzTitle="Tab 1 " class="flex">
+        <div class="w-[744.34] h-[382px]  ">
+          
+
+         <!-- notifications.component.html -->
+    <div class="flex flex-col">
+
+    <h2 class="text-[12px] text-[#7D7D7D] mb- mt-10 ml-3">Today</h2>
+    <div class="flex gap-4 mt-2">
+
+           <!-- NOTIFICATION ICON -->
+    <div class="flex gap-1">
+    <div class="bg-[#0E214C] w-[6.59px] h-[6.59px] rounded-full relative top-[15px]">.</div>
+    <img src="notificationTag2.png" class="w-[32.48px] h-[32.48px]">
+    </div>
+ 
+                  <!-- NOTIFICATION DATA -->
+    <div>
+    <h2 class="text-[12px] text-[#7D7D7D] mb-2">Ticket Tag Notifications</h2>
+    <ul *ngIf="todayNotifications.length > 0; else noToday">
+        <li *ngFor="let notif of todayNotifications">
+        <p>{{ notif.title }}</p>: {{ notif.message }}
+        </li>
+    </ul>
+    </div>
+    <ng-template #noToday><p>No notifications for today.</p></ng-template>
+    </div>
+
+    <h2 class="text-[12px] text-[#7D7D7D] mb- mt-10">Yesterday</h2>
+    <div class="mt-2 flex gap-4">
+
+            <!-- NOTIFICATION ICON -->
+     <div class="flex gap-1">
+    <img src="notificationTag2.png" class="w-[33.48px] h-[32.48px] ml-3">
+    </div>
+
+             <!-- NOTIFICATION DATA -->
+    <div>
+    <h2 class="text-[12px] text-[#7D7D7D] mb-2">Ticket Tag Notifications</h2>
+    <ul *ngIf="yesterdayNotifications.length > 0; else noYesterday">
+        <li *ngFor="let n of yesterdayNotifications">
+             <div [ngClass]="{ 'text-gray-500': n.isRead, 'font-bold': !n.isRead }">
+        <p>{{ n.title }}</p>: {{ n.message }}
+        </div>
+        </li>
+    </ul>
+    </div>
+    <ng-template #noYesterday><p>No notifications for yesterday.</p></ng-template>
+
+    </div>
+    </div>
+
+            <!-- </div> -->
+        </div>
+    </nz-tab>
+
+
+    <nz-tab nzTitle="Tab 2">
+     
+    </nz-tab>
+
+
+    <nz-tab nzTitle="Tab 3">Content of Tab Pane 3 iycfgvbhj</nz-tab>
+  </nz-tabset>
+        
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- NAVIGATION LINKS -->
+            
+ <!-- <div class="mt-10 flex  gap-32 cursor-pointer">
+  <div (click)="setTab('All')" 
+       [ngClass]="{'text-black  relative  after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-black after:w-[20px]': activeTab === 'All', 
+       'text-[#8A8686]': activeTab !== 'All'}"
+       class="font-bold text-[14px] font-nunito ">
+    All
+  </div>
+
+  <div (click)="setTab('Read')" 
+       [ngClass]="{'text-black  relative after:content-[\'\'] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-black after:w-[40px]': activeTab === 'Read', 'text-[#8A8686]': activeTab !== 'Read'}"
+       class="text-[14px] font-bold flex gap-1">
+    Read
+  </div>
+
+  <div (click)="setTab('Unread')" 
+       [ngClass]="{'text-black  relative after:content-[\'\'] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-black after:w-[60px]': activeTab === 'Unread', 'text-[#8A8686]': activeTab !== 'Unread'}"
+       class="text-[14px] font-bold flex gap-1 ">
+    Unread 
+     <span class="flex justify-center items-center bg-[#0E214C] w-[20.98px] h-[10.15px] rounded-[3.43px] text-[5.25px] text-white border-[0.66px] border-[#ABABAB]">99</span>
+  </div>
+</div>  -->

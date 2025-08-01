@@ -1,0 +1,184 @@
+ 
+<div class="bg-gray-300 h-full ">
+
+    <div class="relative top-[-8rem] mx-20 text-[32px]  text-white ">
+        Resources
+    </div>
+
+
+    <div class="bg-white mx-20 h-full relative top-[-6rem] rounded-t-[13px]">
+        <div class="mx-10">
+
+          <div class="text-[#434245]">Place holders</div>
+
+          <div class="flex justify-between font-nunito sans mt-10">
+          <div class="text-[20px] text-[#434245]">
+            Place holders
+          </div>
+
+          <div>
+            <button (click)="openEditModal()" class="bg-[#4CCA7F] border-[#40B97D] w-[155px] h-[40px] border-[1px] rounded-[6.38px] text-[12.76px] text-white">
+              Create Place Holder
+            </button>
+          </div>
+          </div>
+
+
+
+          
+                           <!-- MODAL -->
+<div *ngIf="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg p-6 shadow-lg w-[30rem] max-w-2xl max-h-[90vh] overflow-y-auto">
+   <div class="flex justify-between font-nunito">
+    <h3 class="text-xl font-semibold mb-4">Created placeholder</h3>
+
+     <div class="">
+         <button
+          type="button"
+          (click)="closeEditModal()"
+          class="bg-[#BDBCBC] text-black [#BDBCBC] w-[31.67px] h-[27.51px] rounded hover:bg-gray-400"
+        >
+          &times;
+        </button>
+        </div>
+        </div>
+
+                <!-- FORM -->
+     <!-- <form #form="ngForm" (ngSubmit)="crestePlaceHol(form)" class="space-y-4 font-nunito">
+      <div class="">
+        <label class="block text-sm font-medium text-gray-700">Lable</label>
+        <input
+          type="text"
+          name="label"
+          [(ngModel)]="formData['label']"
+          required
+          placeholder="eg. Institution"
+          class="w-full h-[45px] mt-1 p-4 border rounded-md  border-[#D7D7D7]"
+        />
+      </div>
+
+      <div class="">
+        <label class="block text-sm font-medium text-gray-700">Type</label>
+        <select
+          type="text"
+          name="type"
+          [(ngModel)]="formData['type']"
+          placeholder="Dropdown"
+          class="w-full h-[45px] mt-1 px-4 border rounded-md  border-[#D7D7D7] z-10"
+        >
+        <option value="Text" disabled selected>Select bank</option>
+          <option *ngFor="let DROPDOWN of bankOption" Value="DROPDOWN">
+            {{DROPDOWN.label}}
+          </option>
+        </select>
+      </div>
+     
+
+      Description
+      <div class="">
+        <label class="block text-sm font-medium text-gray-700">Option</label>
+        <textarea
+         type="text"
+          name="options"
+          [(ngModel)]="formData['options']"
+          placeholder="eg. GCB, Ecobank, CBG"
+          class="w-full h-[135px] mt-1 p-4 border rounded-md  border-[#D7D7D7]"
+        ></textarea>
+      </div>
+
+      Buttons
+      <div class="flex justify-end gap-4 mt-6">
+        <button
+          type="submit"
+          
+          class="bg-[#00203D] text-white w-[126.82px] h-[44px] rounded-[4.31px] hover:bg-blue-700"
+        >
+          Create
+        </button>
+      </div>
+    </form>  -->
+
+    <form #form="ngForm" (ngSubmit)="crestePlaceHol(form)">
+
+  <!-- Label input -->
+  <label>Label</label>
+  <input type="text" name="label" [(ngModel)]="formData.label" required />
+
+  <!-- Type selection (TEXT or DROPDOWN) -->
+  <label>Type</label>
+  <select name="type" [(ngModel)]="formData.type">
+    <option value="TEXT">Text</option>
+    <option value="DROPDOWN">Dropdown</option>
+  </select>
+
+  <!-- Only show dropdown selector if 'DROPDOWN' is selected -->
+  <div *ngIf="formData.type === 'DROPDOWN'">
+    <label>Dropdown Options</label>
+    <select name="selectedOption" [(ngModel)]="selectedOption">
+      <option *ngFor="let bank of bankOption" [value]="bank.key">{{ bank.label }}</option>
+    </select>
+
+    <!-- Button to add selected dropdown value to options array -->
+    <button type="button" (click)="addOption()">Add Option</button>
+
+    <!-- Show selected options -->
+    <ul>
+      <li *ngFor="let opt of formData.options">{{ opt }}</li>
+    </ul>
+  </div>
+
+  <!-- If TEXT type, show a free text input -->
+  <div *ngIf="formData.type === 'TEXT'">
+    <label>Text Value</label>
+    <input type="text" name="textValue" [(ngModel)]="formData.textValue" />
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+
+  </div>
+</div>
+
+
+
+
+        <!-- TABLE -->
+<div class="mt-6 overflow-x-auto">
+  <table class="min-w-full w-[1217px] bg-[#00203D] text-white rounded-t-[12px] table-auto">
+    <thead >
+      <tr>
+        <th class="px-4 py-2 ">Label</th>
+        <th class="px-4 py-2 t">Type</th>
+        <th class="px-4 py-2 ">Option BY</th>
+        <th class="px-4 py-2 ">Action</th>
+      </tr>
+    </thead>
+
+    <tbody class="text-black bg-white  ">
+      <tr *ngFor="let item of placeHolderData; let i = index" [ngClass]="i % 2 === 0 ? 'bg-gray-100' : 'bg-white' ">
+
+        <td class="px-4 py-2  text-center">
+            {{item.label}}
+        </td>
+        <td class="px-4 py-2 text-center">{{ item.type }}</td>
+        <td class="px-4 py-2 text-center">{{ item.textValue }}</td>
+        <td class="px-4 py-2 text-center">
+             <button (click)="openEditModal()" nz-button nzType="primary"  class="text-blue-600">
+          <span class="material-symbols-outlined">stylus_note</span>
+          </button>
+
+         <button (click)="openEditModal()" nz-button nzType="default" class="text-red-600">
+           <span class="material-symbols-outlined">delete</span>
+         </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+    </div>
+    </div>
+    
+</div>

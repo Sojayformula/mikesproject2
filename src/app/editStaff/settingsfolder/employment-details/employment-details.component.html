@@ -40,7 +40,7 @@
      class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
 
      <p *ngIf="jobTitle.invalid && (jobTitle.touched || jobTitle.dirty)" class="text-red-600 text-sm">
-      First name required
+      Job title required
     </p>
   </div>
  
@@ -64,6 +64,8 @@
     [(ngModel)]="formData['unit']"
     name="unit"
     (ngModelChange)="onInputChange()"
+    #unit="ngModel"
+    required
     placeholder="Select unit(s)"
     style="width: 311px;"
   >
@@ -75,6 +77,10 @@
       {{ item.name }}
     </ng-template>
   </ng-select>
+
+  <p *ngIf="unit.invalid && (unit.touched || unit.dirty)" class="text-red-600 text-sm">
+      Unit required
+    </p>
 </nz-form-item>
 </div>
 
@@ -89,6 +95,8 @@
       <ng-select [multiple]="true"  placeholder="Selected Supervisor" 
       [(ngModel)]="formData['supervisor']"
       (ngModelChange)="onInputChange()" 
+      #supervisor="ngModel"
+      required
       name="supervisor"
       style="color: #888888; border-radius: 10px; width: 311px;" class=" focus:outline-none focus:outline-sky-600 focus:border-sky-600"
       class="custom-ng-select">
@@ -98,6 +106,10 @@
           </ng-option>
         }
       </ng-select> 
+
+       <p *ngIf="unit.invalid && (unit.touched || unit.dirty)" class="text-red-600 text-sm">
+      Supervisor required
+    </p>
    </nz-form-item>
   </div>
  
@@ -116,8 +128,15 @@
     (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData['employmentType']" 
+    #employmentType="ngModel"
+    required
     placeholder="Full-time, Part-time, Contract" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  
+    />
+
+      <p *ngIf="employmentType.invalid && (employmentType.touched || employmentType.dirty)" class="text-red-600 text-sm">
+      Employement type required
+    </p>
   </div>
 
   <div class="-mt-6 md:mt-0">
@@ -127,8 +146,15 @@
     name="hireDate" 
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData['hireDate']" 
+    #hireDate="ngModel"
+    required
     placeholder="Select date" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  
+    />
+
+        <p *ngIf="hireDate.invalid && (hireDate.touched || hireDate.dirty)" class="text-red-600 text-sm">
+      Hire date required
+    </p>
   </div>
   
 
@@ -141,8 +167,15 @@
     (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData['workLocation']" 
+    #maritalStatus="ngModel"
+    required
     placeholder="Remote, Onsite, Hybrid" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/> 
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    />
+    
+       <p *ngIf="maritalStatus.invalid && (maritalStatus.touched || maritalStatus.dirty)" class="text-red-600 text-sm">
+      Work location required
+    </p>
   </div>
 
  
@@ -153,6 +186,8 @@
     name="role"
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData['role']"
+    #role="ngModel"
+    required
     required
     class="border border-[#D7D7D7] w-[311px] h-[45px] rounded bg-[#F2F2F2] px-3"
   >
@@ -161,6 +196,10 @@
       {{ role.name }}
     </option>
   </select>
+
+    <p *ngIf="role.invalid && (role.touched || role.dirty)" class="text-red-600 text-sm">
+      Role required
+    </p>
 </div>
 
  <div></div>

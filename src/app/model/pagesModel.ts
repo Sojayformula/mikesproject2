@@ -362,60 +362,6 @@ export interface PatchEducationPayload {
 
 
 
-  //  ADD NEW StAFF MODEL //
-// export class addNewStaffModel{
-//  _id?: string;
-//  profilePicture!: string;
-//   firstName!: string;
-//   lastName!: string;
-//   otherName!: string;
-//   email!: string;
-//   dateOfBirth!: string;
-//   nationality!: string;
-//   gender!: string;
-//   idType!: string;
-//   phoneNumber!: string;
-//   idNumber!: string;
-//   maritalStatus!: string;
-//   jobTitle!: string;
-//   unit!: string[]; 
-//   employmentType!: string;
-//   hireDate!: string;
-//   workLocation!: string;
-//   staffId!: string;
-//   supervisor!: string[]; 
-//   role!: string; 
-//   emergencyContactFullName!: string;
-//   emergencyContactRelationship!: string;
-//   emergencyContactPhoneNumber!: string;
-//   emergencyContactEmail!: string;
-//   emergencyContactCurrentAddress!: string;
-//   spouseName!: string;
-//   spousePhone!: string;
-//   spouseEmail!: string;
-//   marriageCertificateUrl!: string;
-//   numberOfChildren!: number;
-//   children!: Child[];
-//   //educationDetails!: EducationDetail[];
-//   nextOfKinFullName!: string;
-//   nextOfKinRelationship!: string;
-//   nextOfKinPhoneNumber!: string;
-//   nextOfKinEmail!: string;
-//   nextOfKinCurrentAddress!: string;
-
-//   // institutionName!: string
-//   // courseOfStudy!: string
-//   // startDate!: string
-//   // endDate!: string
-//     educationDetails!: [
-//     { institutionName: '', courseOfStudy: '', startDate: '', endDate: '' },
-//     { institutionName: '', courseOfStudy: '', startDate: '', endDate: '' },
-//   ]
-//   // children!: [
-//   //   { fullName: '', dob: '' },
-//   //   { fullName: '', dob: '' }
-//   // ]
-// }
 export class addNewStaffModel {
   _id?: string;
   profilePicture?: string;
@@ -614,15 +560,6 @@ export interface EducationDetailModel {
   endDate: string;
   _id?: string
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -936,5 +873,117 @@ export interface editFamilyModel {
 
 
 
+
+
+
+//   MANAGE TICKET TABLE MODEL //
+export class tableDataModel {
+  search!: string
+  status!: string
+  priority!: string
+  startDate!: string
+  endDate!: string
+  page!: number
+  pageSize!: number
+}
+
+export interface Daum {
+  _id: string
+  subject: string
+  description: string
+  priority: string
+  status: string
+  organizationId: string
+  source: string
+  comments: Comment[]
+  unitId: string
+  createdBy: CreatedBy
+  threadMessageIds: any[]
+  taggedUsers: TaggedUser[]
+  unwatchedUserIds: string[]
+  docUrls: any[]
+  placeholders: Placeholders
+  ref: string
+  emailThread: any[]
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+export interface Comment {
+  _id: string
+  ticketId: string
+  comment: string
+  createdBy: string
+  organizationId: string
+  parentCommentId: any
+  replies: string[]
+  createdAt: string
+  updatedAt: string
+  __v: number
+  createdByName?: string
+}
+
+export interface CreatedBy {
+  _id: string
+  firstName: string
+  lastName: string
+  email: string
+  profileUrl: any
+}
+
+export interface TaggedUser {
+  _id: string
+  firstName: string
+  lastName: string
+  email?: string
+  profileUrl: any
+}
+
+export interface Placeholders {}
+
+export interface Pagination {
+  total: number
+  page: number
+  pageSize: number
+  totalPages: number
+}
+
+
+
+// models/notification model
+export interface Notification {
+  _id: string;
+  recipientId: string;
+  title: string;
+  message: string;
+  referenceId: string;
+  referenceType: string;
+  notificationType: string;
+  isRead: boolean;
+  link: string;
+  createdAt: string;
+  updatedAt: string;
+  sender: any;
+  notificationId: string;
+}
+
+    // CREATE PLACEHOLDER //
+  export class createPlaceHolModel {
+  label!: string;
+  type!: string;
+  options!: string[]
+  textValue!: string
+}
+
+// PATCH PLACEHOLDER NOTIFICATION //
+export class markAsReadModel {
+  success!: boolean
+  message!: string
+   notificationId!: string;
+   
+  
+   
+}
 
 

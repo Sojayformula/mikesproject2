@@ -112,8 +112,15 @@
     (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData['lastName']" 
+    #lastName="ngModel"
+    required
     placeholder="Enter legal last name" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+    />
+
+     <p *ngIf="lastName.invalid && (lastName.touched || lastName.dirty)" class="text-red-600 text-sm">
+      Last name required
+    </p>
   </div>
  
     <div>
@@ -124,8 +131,15 @@
     (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData['otherName']"  
+    #otherName="ngModel"
+    required
     placeholder="Enter if any" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  />
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "  
+    />
+
+     <p *ngIf="otherName.invalid && (otherName.touched || otherName.dirty)" class="text-red-600 text-sm">
+      Other name required
+    </p>
   </div>
  
  
@@ -137,9 +151,16 @@
     type="text" 
     name="dateOfBirth"
     (ngModelChange)="onInputChange()" 
-    [(ngModel)]="formData['dateOfBirth']"  
+    [(ngModel)]="formData['dateOfBirth']" 
+    #dateOfBirth="ngModel"
+    required 
     placeholder="Select birth date" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  />
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"  
+    />
+
+     <p *ngIf="dateOfBirth.invalid && (dateOfBirth.touched || dateOfBirth.dirty)" class="text-red-600 text-sm">
+      Date of birth required
+    </p>
   </div>
 
   <div>
@@ -156,7 +177,7 @@
   name="gender"
   (ngModelChange)="onInputChange()"
   [(ngModel)]="formData['gender']"
-   #genderModel="ngModel"
+   #gender="ngModel"
   required
  class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
 >
@@ -165,6 +186,10 @@
     {{ item.label }}
   </option>
 </select>
+
+ <p *ngIf="gender.invalid && (gender.touched || gender.dirty)" class="text-red-600 text-sm">
+      Gender required
+    </p>
   </div>
 
   <div>
@@ -174,9 +199,16 @@
     name="nationality" 
     (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
-    [(ngModel)]="formData['nationality']"  
+    [(ngModel)]="formData['nationality']" 
+     #nationality="ngModel"
+     required
     placeholder="Enter country of origin" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    />
+
+     <p *ngIf="nationality.invalid && (nationality.touched || nationality.dirty)" class="text-red-600 text-sm">
+      Nationality required
+    </p>
   </div>
 
 
@@ -192,7 +224,7 @@
   required
   placeholder="Select marital status" 
      class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
->
+  >
    <option [ngValue]="null" disabled selected>Select Marital Status</option>
   <option *ngFor="let item of maritalStatusOption" [ngValue]="item.key">
     {{ item.label }}
@@ -210,9 +242,16 @@
     type="text" 
     name="phoneNumber" 
     (ngModelChange)="onInputChange()"
-    [(ngModel)]="formData['phoneNumber']"  
+    [(ngModel)]="formData['phoneNumber']" 
+    #phoneNumber="ngModel"
+    required
     placeholder="Enter active phone number" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+    />
+
+     <p *ngIf="phoneNumber.invalid && (phoneNumber.touched || phoneNumber.dirty)" class="text-red-600 text-sm">
+      Phone number required
+    </p>
   </div>
 
   <div>
@@ -221,9 +260,16 @@
     type="text" 
     name="email" 
     (ngModelChange)="onInputChange()"
-    [(ngModel)]="formData['email']"  
+    [(ngModel)]="formData['email']" 
+    #email="ngModel"
+    required 
     placeholder="Enter valid email address" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    />
+
+     <p *ngIf="email.invalid && (email.touched || email.dirty)" class="text-red-600 text-sm">
+      Email address required
+    </p>
   </div>
 
 
@@ -235,9 +281,16 @@
     name="idType" 
     (keypress)="allowOnlyLetters($event)"
     (ngModelChange)="onInputChange()"
-    [(ngModel)]="formData['idType']"  
+    [(ngModel)]="formData['idType']" 
+    #idType="ngModel"
+    required 
     placeholder="Select ID type (e.g Nation ID, Passport)" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"/>
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    />
+
+     <p *ngIf="idType.invalid && (idType.touched || idType.dirty)" class="text-red-600 text-sm">
+      ID Type required
+    </p>
   </div>
 
   <div >
@@ -247,8 +300,15 @@
     name="idNumber" 
     (ngModelChange)="onInputChange()"
     [(ngModel)]="formData['idNumber']"  
+    #idNumber="ngModel"
+    required
     placeholder="Enter valid ID number" 
-    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+    class="border-[1px] border-[#D7D7D7] w-[311px] h-[45px] rounded-[7px] bg-[#F2F2F2] px-3 placeholder:text-[#888888] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+    />
+
+     <p *ngIf="idNumber.invalid && (idNumber.touched || idNumber.dirty)" class="text-red-600 text-sm">
+      ID Number required
+    </p>
   </div>
 
 </form>

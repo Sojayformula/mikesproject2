@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../environment/environment';
+import { CRMEnvironment, environment } from '../environment/environment';
 import { Observable } from 'rxjs/internal/Observable';
-import { addNewStaffModel, addUnitModel, allStaffModel, EditEmmergencyModel, EditEmploymentModel, editFamilyModel, editStaffModel, EducationDetailModel, educationModel, getStaffModel, getStaffResponseModel, PatchEducationPayload, responseDaumModel, UnitHead, unitModel, updateUnitModel } from '../model/pagesModel';
+import { addNewStaffModel, addUnitModel, allStaffModel, createPlaceHolModel, Data, EditEmmergencyModel, EditEmploymentModel, editFamilyModel, editStaffModel, EducationDetailModel, educationModel, getStaffModel, getStaffResponseModel, markAsReadModel, PatchEducationPayload, responseDaumModel, UnitHead, unitModel, updateUnitModel } from '../model/pagesModel';
 import { Root } from '../model/login-model';
 import { throwError } from 'rxjs';
+import { tableDataModel } from '../MPAPP/MPModel/MPModel';
 
 @Injectable({
   providedIn: 'root'
@@ -220,7 +221,82 @@ getRole(): Observable<any> {
     return this.http.get(`${environment.baseurl}/staff/${userId}`);
   }
 
+
+
+
+
+                // MP Service //
+  getTableTicket(item: tableDataModel): Observable<any> {
+    
+      console.log("give me ticket",item)
+    let url = `${CRMEnvironment.baseUrl}/ticket/list-tickets`    
+
+    let isFirstParam = true;
+
+    if (item.search) {
+      url += `${isFirstParam ? '?' : '&'}search=${item.search}`;
+      isFirstParam = false;
+    }
+
+     if (item.status) {
+      url += `${isFirstParam ? '?' : '&'}status=${item.status}`;
+      isFirstParam = false;
+    }
+
+     if (item.priority) {
+      url += `${isFirstParam ? '?' : '&'}priority=${item.priority}`;
+      isFirstParam = false;
+    }
+
+     if (item.startDate) {
+      url += `${isFirstParam ? '?' : '&'}startDate=${item.startDate}`;
+      isFirstParam = false;
+    }
+
+     if (item.endDate) {
+      url += `${isFirstParam ? '?' : '&'}endDate=${item.endDate}`;
+      isFirstParam = false;
+    }
+
+     if (item.page) {
+      url += `${isFirstParam ? '?' : '&'}page=${item.page}`;
+      isFirstParam = false;
+    }
+
+     if (item.pageSize) {
+      url += `${isFirstParam ? '?' : '&'}pageSize=${item.pageSize}`;
+      isFirstParam = false;
+    }
+
+     return this.http.get(url)
+  }
+
+  getTicket(payload: Data): Observable<any> {
+    return this.http.post(`${environment.baseurl}/ticket/create-ticket`, payload);
+  }
+
+
+  getPlaceHoder():Observable<any>{
+    return this.http.get(`${CRMEnvironment.baseUrl}/placeholder/list`)
+  }
+
+    getNotification():Observable<any>{
+    return this.http.get(`${CRMEnvironment.baseUrl}/notification`)
+  }
+
+      createPlaceHol(payload: createPlaceHolModel):Observable<any>{
+    return this.http.post(`${CRMEnvironment.baseUrl}/placeholder/create`, payload)
+  }
+
+  markNotificationAsRead(payload: { notificationId: string }): Observable<any> {
+  return this.http.patch(`${CRMEnvironment.baseUrl}/notification/mark-all-read`, payload);
 }
+
+
+
+
+}
+
 
 
 
